@@ -1,12 +1,13 @@
-# Knowledge Distillation 프로젝트
+# CIFAR-10 Knowledge Distillation 실습 예제
 
-Knowledge Distillation(지식 증류)의 원리를 학습하고, LLM → SLM 지식 전이를 실습하는 프로젝트.
+> CNN 기반 CIFAR-10 이미지 분류에서 **Logit-based Knowledge Distillation**을 실습하는 교육용 노트북.  
+> 본 프로젝트(LLM 지식 증류)의 핵심 개념을 작은 규모로 먼저 체험해 볼 수 있습니다.
 
 ---
 
 ## 노트북 소개
 
-### `[필로소피_AI_교육]_Knowledge_Distillation_지식_증류.ipynb`
+### `cifar10_knowledge_distillation.ipynb`
 
 CIFAR-10 이미지 분류 태스크에서 **Logit-based Knowledge Distillation**을 실습하는 교육용 노트북.
 
@@ -30,25 +31,21 @@ Teacher (DeepNN)  ──→  Soft Labels (확률 분포)  ──→  Student (Li
 
 > 두 모델 모두 라이브러리가 아니라 **노트북 안에서 직접 정의한 신경망 클래스**입니다.
 
-#### 셀 실행 순서 및 내용
+#### 노트북 흐름
 
-| 셀 | 내용 | 설명 |
-|----|------|------|
-| 1~3 | Import & Device 설정 | PyTorch, torchvision 로드. GPU/CPU 자동 감지 |
-| 5~6 | 데이터 전처리 & 다운로드 | CIFAR-10 (32x32 이미지 6만장, 10클래스) 자동 다운로드 |
-| 7~8 | DataLoader | batch_size=128로 데이터 로더 생성 |
-| 9~10 | Teacher 모델 정의 | `DeepNN` 클래스 (Conv 4층 + FC 2층) |
-| 11~12 | Student 모델 정의 | `LightNN` 클래스 (Conv 2층 + FC 2층) |
-| 13~14 | 일반 학습 함수 | CrossEntropyLoss + Adam (Hard Label 학습) |
-| 15~16 | 평가 함수 | 테스트셋 정확도 측정 |
-| 17~18 | Teacher 학습 | DeepNN을 10 에폭 학습 |
-| 19~20 | Student 2개 생성 | 같은 seed로 초기화 (공정 비교용) |
-| 21~22 | 파라미터 수 비교 | Teacher vs Student 크기 차이 확인 |
-| 23~24 | Student 단독 학습 | Hard Label만으로 학습 (baseline) |
-| 25~26 | 성능 비교 & 개념 설명 | Soft Target / Dark Knowledge 설명 |
-| 27~28 | **Knowledge Distillation** | Temperature=2, KL Divergence로 Teacher→Student 지식 전이 |
+| 단계 | 셀 | 내용 |
+|------|-----|------|
+| **준비** | 1~3 | Import, 디바이스(GPU/CPU) 설정 |
+| **데이터** | 4~6 | CIFAR-10 다운로드, 전처리, DataLoader 생성 |
+| **모델 정의** | 7~8 | Teacher(`DeepNN`) / Student(`LightNN`) 클래스 정의 |
+| **유틸 함수** | 9~10 | 일반 학습(`train`) / 평가(`test`) 함수 정의 |
+| **Teacher 학습** | 11~12 | DeepNN 10 에폭 학습 → 정확도 확인 |
+| **Student 준비** | 13~14 | 동일 seed로 Student 2개 생성 (공정 비교용), 파라미터 수 비교 |
+| **Student 단독 학습** | 15~16 | Hard Label만으로 학습 (baseline) |
+| **개념 설명** | 17~18 | Soft Target / Dark Knowledge / KD 필요성 설명 |
+| **Knowledge Distillation** | 19~20 | KD 학습 함수 정의 + 실행 → **3-Way 결과 비교** |
 
-#### 핵심 Loss 함수 (Cell 28)
+#### 핵심 Loss 함수
 
 $$L_{total} = 0.25 \times L_{KL}(Teacher, Student) \times T^2 + 0.75 \times L_{CE}(Student, Label)$$
 
@@ -65,6 +62,21 @@ Teacher 정확도     > KD Student 정확도     > 단독 Student 정확도
 
 ---
 
+## 본 프로젝트와의 관계
+
+| 항목 | 이 예제 (CIFAR-10) | 본 프로젝트 (LLM) |
+|------|---------------------|---------------------|
+| 도메인 | 이미지 분류 | 언어 모델링 |
+| Teacher | DeepNN (커스텀 CNN) | GPT-2 Large (774M) |
+| Student | LightNN (커스텀 CNN) | GPT-2 Small (124M) |
+| 데이터셋 | CIFAR-10 (6만장) | WikiText-2 |
+| KD Loss | KL Div + CE | KL Div + CE (동일 원리) |
+| 비교 방식 | 3-Way | 4-Way (FT baseline 추가) |
+
+> 이 예제에서 KD의 원리를 이해한 뒤, 본 프로젝트의 LLM 증류로 확장하는 것을 권장합니다.
+
+---
+
 ## 실행 방법
 
 ### 사전 요구사항
@@ -75,13 +87,13 @@ Teacher 정확도     > KD Student 정확도     > 단독 Student 정확도
 ### 1. 의존성 설치
 
 ```bash
-# .venv 생성 + 패키지 설치
+cd examples
 uv sync
 ```
 
 ### 2. 노트북 실행
 
-1. VS Code에서 `[필로소피_AI_교육]_Knowledge_Distillation_지식_증류.ipynb` 열기
+1. VS Code에서 `cifar10_knowledge_distillation.ipynb` 열기
 2. 우측 상단에서 커널을 `.venv` Python 인터프리터로 선택
 3. **Cell 1부터 순서대로 실행** (Run All 또는 셀 하나씩)
 
@@ -89,11 +101,17 @@ uv sync
 
 ### 3. 실행 시간 참고
 
-- GPU(CUDA) 환경이 CPU보다 학습 속도가 훨씬 빠릅니다.
-- CPU만 사용할 경우 학습 시간이 길어질 수 있으니, 필요하면 각 학습 셀의 `epochs` 값을 줄여서 먼저 실습한 뒤 점진적으로 늘려보세요.
+| 환경 | 예상 소요 시간 |
+|------|---------------|
+| GPU (CUDA) | ~5분 |
+| Apple Silicon (MPS) | ~10분 |
+| CPU | ~30분+ |
+
+> CPU만 사용할 경우 각 학습 셀의 `epochs` 값을 줄여서 먼저 실습해 보세요.
 
 ---
 
 ## 참고
 
-- 원본 논문: Hinton et al. (2015) - "Distilling the Knowledge in a Neural Network"
+- 원본 논문: Hinton et al. (2015) — *"Distilling the Knowledge in a Neural Network"*
+- 상위 프로젝트: [README.md](../README.md)

@@ -17,7 +17,7 @@
 
 | # | 세부 작업 | 상태 | 산출물 |
 |---|----------|------|--------|
-| 1.1.1 | 프로젝트 폴더 생성 | ✅ 완료 | `llm-distillation/` |
+| 1.1.1 | 프로젝트 폴더 생성 | ✅ 완료 | `knowledge-distillation/` |
 | 1.1.2 | README.md 작성 | ✅ 완료 | `README.md` |
 | 1.1.3 | 모델 선택 가이드 작성 | ✅ 완료 | `docs/model-selection-guide.md` |
 | 1.1.4 | 모델 설치 가이드 작성 | ✅ 완료 | `docs/model-installation-guide.md` |

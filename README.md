@@ -314,39 +314,45 @@ for batch in dataloader:
 ## 8. 프로젝트 구조
 
 ```
-llm-distillation/
+knowledge-distillation/
 │
-├── README.md                          # 이 문서 (프로젝트 전체 설명)
-├── requirements.txt                   # Python 의존성 목록
+├── README.md                        # 이 문서 (프로젝트 전체 설명)
+├── requirements.txt                 # Python 의존성 목록
 │
-├── docs/                              # 📖 문서
-│   ├── papers.md                      #   📄 논문 레퍼런스 & 개념 출처 매핑
-│   ├── model-selection-guide.md       #   모델 선택 가이드 (비교표, GPU별 추천)
-│   ├── model-installation-guide.md    #   모델 설치 가이드 (다운로드, 인증, 양자화)
-│   ├── schedule.md                    #   상세 진행 일정 (Phase별 체크리스트)
-│   ├── research-direction-guide.md    #   연구 방향 가이드 (모델/데이터 경로)
-│   ├── glossary.md                    #   용어집 (팀원 배경지식 보완)
-│   └── diagrams/                      #   📊 다이어그램 (SVG)
-│       ├── kd-architecture.svg        #     지식 증류 전체 아키텍처
-│       ├── 4way-comparison.svg        #     4-Way 비교 실험 구조
-│       ├── training-pipeline.svg      #     학습 파이프라인 흐름도
-│       └── local-install-flow.svg     #     로컬 설치 흐름도
+├── docs/                            # 📖 문서
+│   ├── papers.md                    #   📄 논문 레퍼런스 & 개념 출처 매핑
+│   ├── model-selection-guide.md     #   모델 선택 가이드 (비교표, GPU별 추천)
+│   ├── model-installation-guide.md  #   모델 설치 가이드 (다운로드, 인증, 양자화)
+│   ├── schedule.md                  #   상세 진행 일정 (Phase별 체크리스트)
+│   ├── research-direction-guide.md  #   연구 방향 가이드 (모델/데이터 경로)
+│   ├── glossary.md                  #   용어집 (팀원 배경지식 보완)
+│   └── diagrams/                    #   📊 다이어그램 (SVG)
+│       ├── kd-architecture.svg      #     지식 증류 전체 아키텍처
+│       ├── 4way-comparison.svg      #     4-Way 비교 실험 구조
+│       ├── training-pipeline.svg    #     학습 파이프라인 흐름도
+│       └── local-install-flow.svg   #     로컬 설치 흐름도
 │
-├── config.py                          # ⚙️ 하이퍼파라미터 & 경로 설정
-├── dataset.py                         # 📄 데이터 로드 & 전처리
-├── models.py                          # 🤖 Teacher/Student 모델 로드
+├── config.py                        # ⚙️ 하이퍼파라미터 & 경로 설정
+├── dataset.py                       # 📄 데이터 로드 & 전처리
+├── models.py                        # 🤖 Teacher/Student 모델 로드
 │
-├── distill.py                         # 🔥 지식 증류 학습 (핵심)
-├── train_baseline.py                  # 📝 Student 자체 Fine-tuning
-├── evaluate.py                        # 📏 개별 모델 평가
-├── compare.py                         # 🆚 4-Way 비교 & 시각화
+├── distill.py                       # 🔥 지식 증류 학습 (핵심)
+├── train_baseline.py                # 📝 Student 자체 Fine-tuning
+├── evaluate.py                      # 📏 개별 모델 평가
+├── compare.py                       # 🆚 4-Way 비교 & 시각화
 │
-├── verify_setup.py                    # ✅ 환경 검증 스크립트
+├── verify_setup.py                  # ✅ 환경 검증 스크립트
 │
-└── results/                           # 📁 실험 결과
-    ├── figures/                        #   시각화 차트 (PNG)
-    ├── logs/                           #   학습 로그
-    └── checkpoints/                    #   모델 체크포인트
+├── examples/                        # 📚 참고 예제 (CIFAR-10 CNN 기반 KD)
+│   ├── README.md                    #   예제 설명
+│   ├── cifar10_knowledge_...ipynb   #   CIFAR-10 KD 실습 노트북
+│   ├── main.py                      #   예제 실행 스크립트
+│   └── pyproject.toml               #   예제 의존성
+│
+└── results/                         # 📁 실험 결과
+    ├── figures/                     #   시각화 차트 (PNG)
+    ├── logs/                        #   학습 로그
+    └── checkpoints/                 #   모델 체크포인트
 ```
 
 ### 파일별 역할
@@ -389,7 +395,7 @@ llm-distillation/
 
 ```bash
 # 1. 프로젝트 폴더 진입
-cd llm-distillation
+cd knowledge-distillation
 
 # 2. 가상환경 생성 & 활성화
 python -m venv venv
