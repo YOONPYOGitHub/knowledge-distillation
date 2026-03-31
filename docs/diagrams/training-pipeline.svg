@@ -1,0 +1,122 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 900 820" font-family="Arial, Helvetica, sans-serif">
+
+  <!-- Background -->
+  <rect width="900" height="820" rx="12" fill="#f8fafc" stroke="#e2e8f0" stroke-width="1"/>
+
+  <!-- Title -->
+  <text x="450" y="35" text-anchor="middle" font-size="20" font-weight="bold" fill="#1e293b">Training Pipeline - 4-Way Comparison</text>
+  <text x="450" y="55" text-anchor="middle" font-size="12" fill="#64748b">Teacher / Student(KD) / Student(FT) / Student(Base)</text>
+
+  <!-- Step 1 -->
+  <rect x="300" y="75" width="300" height="50" rx="10" fill="#8b5cf6"/>
+  <text x="450" y="100" text-anchor="middle" font-size="13" font-weight="bold" fill="white">Step 1 - Environment Setup</text>
+  <text x="450" y="115" text-anchor="middle" font-size="10" fill="#ede9fe">Python, PyTorch, CUDA, transformers</text>
+  <!-- Arrow down -->
+  <line x1="450" y1="125" x2="450" y2="148" stroke="#475569" stroke-width="2"/>
+  <polygon points="443,148 450,158 457,148" fill="#475569"/>
+
+  <!-- Step 2 -->
+  <rect x="300" y="160" width="300" height="50" rx="10" fill="#a78bfa"/>
+  <text x="450" y="185" text-anchor="middle" font-size="13" font-weight="bold" fill="white">Step 2 - Data Preparation</text>
+  <text x="450" y="200" text-anchor="middle" font-size="10" fill="#ede9fe">WikiText-2 Load / Tokenize / DataLoader</text>
+  <!-- Arrow down -->
+  <line x1="450" y1="210" x2="450" y2="233" stroke="#475569" stroke-width="2"/>
+  <polygon points="443,233 450,243 457,233" fill="#475569"/>
+
+  <!-- Step 3 -->
+  <rect x="300" y="245" width="300" height="50" rx="10" fill="#6366f1"/>
+  <text x="450" y="270" text-anchor="middle" font-size="13" font-weight="bold" fill="white">Step 3 - Model Load</text>
+  <text x="450" y="285" text-anchor="middle" font-size="10" fill="#e0e7ff">Teacher (frozen) + Student (trainable)</text>
+  <!-- Arrow down -->
+  <line x1="450" y1="295" x2="450" y2="313" stroke="#475569" stroke-width="2"/>
+
+  <!-- Branch point -->
+  <circle cx="450" cy="325" r="14" fill="#1e293b"/>
+  <text x="450" y="330" text-anchor="middle" font-size="14" fill="white" font-weight="bold">V</text>
+
+  <!-- Branch lines -->
+  <line x1="436" y1="330" x2="155" y2="386" stroke="#3b82f6" stroke-width="2"/>
+  <polygon points="148,383 155,393 162,383" fill="#3b82f6"/>
+
+  <line x1="450" y1="339" x2="450" y2="386" stroke="#10b981" stroke-width="2"/>
+  <polygon points="443,386 450,396 457,386" fill="#10b981"/>
+
+  <line x1="464" y1="330" x2="745" y2="386" stroke="#6b7280" stroke-width="2"/>
+  <polygon points="738,383 745,393 752,383" fill="#6b7280"/>
+
+  <!-- Branch Labels -->
+  <text x="270" y="362" text-anchor="middle" font-size="11" fill="#3b82f6" font-weight="600">Path A: Knowledge Distillation</text>
+  <text x="450" y="380" text-anchor="middle" font-size="11" fill="#10b981" font-weight="600">Path B: Fine-tuning</text>
+  <text x="640" y="362" text-anchor="middle" font-size="11" fill="#6b7280" font-weight="600">Path C: No Training</text>
+
+  <!-- Path A: KD -->
+  <rect x="25" y="398" width="260" height="52" rx="10" fill="#3b82f6"/>
+  <text x="155" y="420" text-anchor="middle" font-size="12" font-weight="bold" fill="white">Step 4A - Distillation</text>
+  <text x="155" y="438" text-anchor="middle" font-size="10" fill="#dbeafe">Teacher soft logits -&gt; Student KD</text>
+
+  <rect x="25" y="458" width="260" height="32" rx="6" fill="#eff6ff" stroke="#3b82f6" stroke-width="1"/>
+  <text x="155" y="479" text-anchor="middle" font-size="10" fill="#1e40af">L = a*CE + (1-a)*T2*KL  |  T=3.0, a=0.5</text>
+
+  <!-- Path B: FT -->
+  <rect x="320" y="398" width="260" height="52" rx="10" fill="#10b981"/>
+  <text x="450" y="420" text-anchor="middle" font-size="12" font-weight="bold" fill="white">Step 4B - Fine-tuning</text>
+  <text x="450" y="438" text-anchor="middle" font-size="10" fill="#d1fae5">Hard label only Student training</text>
+
+  <rect x="320" y="458" width="260" height="32" rx="6" fill="#ecfdf5" stroke="#10b981" stroke-width="1"/>
+  <text x="450" y="479" text-anchor="middle" font-size="10" fill="#065f46">L = CE(y, y_student)  |  Same config</text>
+
+  <!-- Path C: Base -->
+  <rect x="615" y="398" width="260" height="52" rx="10" fill="#6b7280"/>
+  <text x="745" y="420" text-anchor="middle" font-size="12" font-weight="bold" fill="white">Step 4C - Skip</text>
+  <text x="745" y="438" text-anchor="middle" font-size="10" fill="#e5e7eb">No additional training</text>
+
+  <rect x="615" y="458" width="260" height="32" rx="6" fill="#f3f4f6" stroke="#6b7280" stroke-width="1"/>
+  <text x="745" y="479" text-anchor="middle" font-size="10" fill="#374151">Pretrained gpt2 as-is</text>
+
+  <!-- Arrows down to output models -->
+  <line x1="155" y1="490" x2="155" y2="523" stroke="#475569" stroke-width="2"/>
+  <polygon points="148,523 155,533 162,523" fill="#475569"/>
+
+  <line x1="450" y1="490" x2="450" y2="523" stroke="#475569" stroke-width="2"/>
+  <polygon points="443,523 450,533 457,523" fill="#475569"/>
+
+  <line x1="745" y1="490" x2="745" y2="523" stroke="#475569" stroke-width="2"/>
+  <polygon points="738,523 745,533 752,523" fill="#475569"/>
+
+  <!-- Output models -->
+  <rect x="40" y="536" width="230" height="35" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/>
+  <text x="155" y="558" text-anchor="middle" font-size="11" font-weight="600" fill="#1e40af">Student (KD) Model</text>
+
+  <rect x="335" y="536" width="230" height="35" rx="8" fill="#d1fae5" stroke="#10b981" stroke-width="1.5"/>
+  <text x="450" y="558" text-anchor="middle" font-size="11" font-weight="600" fill="#065f46">Student (FT) Model</text>
+
+  <rect x="630" y="536" width="230" height="35" rx="8" fill="#f3f4f6" stroke="#6b7280" stroke-width="1.5"/>
+  <text x="745" y="558" text-anchor="middle" font-size="11" font-weight="600" fill="#374151">Student (Base) Model</text>
+
+  <!-- Merge arrows to evaluation -->
+  <line x1="155" y1="571" x2="365" y2="633" stroke="#475569" stroke-width="2"/>
+  <polygon points="358,630 365,640 372,630" fill="#475569"/>
+
+  <line x1="450" y1="571" x2="450" y2="633" stroke="#475569" stroke-width="2"/>
+  <polygon points="443,633 450,643 457,633" fill="#475569"/>
+
+  <line x1="745" y1="571" x2="535" y2="633" stroke="#475569" stroke-width="2"/>
+  <polygon points="528,630 535,640 542,630" fill="#475569"/>
+
+  <!-- Teacher to evaluation -->
+  <rect x="350" y="596" width="200" height="25" rx="5" fill="#fef3c7" stroke="#f59e0b" stroke-width="1"/>
+  <text x="450" y="613" text-anchor="middle" font-size="10" fill="#92400e">+ Teacher Model (Upper Bound)</text>
+
+  <!-- Step 5 -->
+  <rect x="275" y="645" width="350" height="52" rx="10" fill="#059669"/>
+  <text x="450" y="668" text-anchor="middle" font-size="13" font-weight="bold" fill="white">Step 5 - 4-Way Evaluation</text>
+  <text x="450" y="686" text-anchor="middle" font-size="10" fill="#d1fae5">Perplexity, Speed, Memory, Generation Quality</text>
+  <!-- Arrow down -->
+  <line x1="450" y1="697" x2="450" y2="720" stroke="#475569" stroke-width="2"/>
+  <polygon points="443,720 450,730 457,720" fill="#475569"/>
+
+  <!-- Step 6 -->
+  <rect x="275" y="733" width="350" height="52" rx="10" fill="#1e293b"/>
+  <text x="450" y="756" text-anchor="middle" font-size="13" font-weight="bold" fill="white">Step 6 - Compare &amp; Visualize</text>
+  <text x="450" y="774" text-anchor="middle" font-size="10" fill="#94a3b8">Q1: Compression / Q2: KD Effect / Q3: FT Effect</text>
+</svg>
