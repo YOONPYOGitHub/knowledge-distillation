@@ -316,30 +316,30 @@ for batch in dataloader:
 ```
 knowledge-distillation/
 │
-├── README.md                        # 이 문서 (프로젝트 전체 설명)
-├── requirements.txt                 # Python 의존성 목록
+├── pyproject.toml                   # ⚙️ uv 프로젝트 설정 & 의존성
+├── README.md                        # 이 문서
 │
 ├── docs/                            # 📖 문서
 │   ├── papers.md                    #   📄 논문 레퍼런스 & 개념 출처 매핑
-│   ├── model-selection-guide.md     #   모델 선택 가이드 (비교표, GPU별 추천)
-│   ├── model-installation-guide.md  #   모델 설치 가이드 (다운로드, 인증, 양자화)
-│   ├── schedule.md                  #   상세 진행 일정 (Phase별 체크리스트)
-│   ├── research-direction-guide.md  #   연구 방향 가이드 (모델/데이터 경로)
-│   ├── glossary.md                  #   용어집 (팀원 배경지식 보완)
+│   ├── model-selection-guide.md     #   모델 선택 가이드
+│   ├── model-installation-guide.md  #   모델 설치 가이드
+│   ├── schedule.md                  #   상세 진행 일정
+│   ├── research-direction-guide.md  #   연구 방향 가이드
+│   ├── glossary.md                  #   용어집
 │   └── diagrams/                    #   📊 다이어그램 (SVG)
-│       ├── kd-architecture.svg      #     지식 증류 전체 아키텍처
-│       ├── 4way-comparison.svg      #     4-Way 비교 실험 구조
-│       ├── training-pipeline.svg    #     학습 파이프라인 흐름도
-│       └── local-install-flow.svg   #     로컬 설치 흐름도
+│       ├── kd-architecture.svg      #   지식 증류 전체 아키텍처
+│       ├── 4way-comparison.svg      #   4-Way 비교 실험 구조
+│       ├── training-pipeline.svg    #   학습 파이프라인 흐름도
+│       └── local-install-flow.svg   #   로컬 설치 흐름도
 │
-├── config.py                        # ⚙️ 하이퍼파라미터 & 경로 설정
-├── dataset.py                       # 📄 데이터 로드 & 전처리
-├── models.py                        # 🤖 Teacher/Student 모델 로드
-│
-├── distill.py                       # 🔥 지식 증류 학습 (핵심)
-├── train_baseline.py                # 📝 Student 자체 Fine-tuning
-├── evaluate.py                      # 📏 개별 모델 평가
-├── compare.py                       # 🆚 4-Way 비교 & 시각화
+├── src/                             # 💻 소스 코드
+│   ├── config.py                    #   하이퍼파라미터 & 경로 설정
+│   ├── dataset.py                   #   데이터 로드 & 전처리
+│   ├── models.py                    #   Teacher/Student 모델 로드
+│   ├── distill.py                   #   지식 증류 학습 (핵심)
+│   ├── train_baseline.py            #   Student 자체 Fine-tuning
+│   ├── evaluate.py                  #   개별 모델 평가
+│   └── compare.py                   #   4-Way 비교 & 시각화
 │
 ├── verify_setup.py                  # ✅ 환경 검증 스크립트
 │
@@ -360,13 +360,13 @@ knowledge-distillation/
 | 파일 | 실행 순서 | 입력 | 출력 |
 |------|----------|------|------|
 | `verify_setup.py` | 0 (선행) | - | 환경 정상 여부 |
-| `config.py` | - (설정) | - | 하이퍼파라미터 |
-| `dataset.py` | 1 | 데이터셋 이름 | DataLoader |
-| `models.py` | 2 | 모델 이름 | Teacher/Student 모델 |
-| `distill.py` | 3a | DataLoader + 모델 | Student(KD) 체크포인트 |
-| `train_baseline.py` | 3b | DataLoader + Student | Student(FT) 체크포인트 |
-| `evaluate.py` | 4 | 모델 체크포인트 | Perplexity, 속도 등 |
-| `compare.py` | 5 | 4개 모델 평가 결과 | 비교 차트 + 리포트 |
+| `src/config.py` | - (설정) | - | 하이퍼파라미터 |
+| `src/dataset.py` | 1 | 데이터셋 이름 | DataLoader |
+| `src/models.py` | 2 | 모델 이름 | Teacher/Student 모델 |
+| `src/distill.py` | 3a | DataLoader + 모델 | Student(KD) 체크포인트 |
+| `src/train_baseline.py` | 3b | DataLoader + Student | Student(FT) 체크포인트 |
+| `src/evaluate.py` | 4 | 모델 체크포인트 | Perplexity, 속도 등 |
+| `src/compare.py` | 5 | 4개 모델 평가 결과 | 비교 차트 + 리포트 |
 
 ---
 
@@ -406,28 +406,24 @@ else:
 # 1. 프로젝트 폴더 진입
 cd knowledge-distillation
 
-# 2. 가상환경 생성 & 활성화
-python -m venv venv
-source venv/bin/activate
+# 2. 의존성 설치 (uv가 가상환경 자동 생성)
+uv sync
 
-# 3. 의존성 설치
-pip install -r requirements.txt
+# 3. 환경 검증
+uv run python verify_setup.py
 
-# 4. 환경 검증
-python verify_setup.py
+# 4. 지식 증류 학습  (→ Student-KD 생성)
+uv run python src/distill.py
 
-# 5. 지식 증류 학습  (→ Student-KD 생성)
-python distill.py
+# 5. 베이스라인 학습   (→ Student-FT 생성)
+uv run python src/train_baseline.py
 
-# 6. 베이스라인 학습   (→ Student-FT 생성)
-python train_baseline.py
-
-# 7. 4-Way 평가 & 비교 (Teacher + KD + FT + Base)
-python evaluate.py
-python compare.py
+# 6. 4-Way 평가 & 비교 (Teacher + KD + FT + Base)
+uv run python src/evaluate.py
+uv run python src/compare.py
 ```
 
-> ⚠️ 5~7번 코드는 아직 구현 전입니다. Phase 2~4에서 순차 구현 예정.
+> ⚠️ 4~6번 코드는 아직 구현 전입니다. Phase 2~4에서 순차 구현 예정.
 
 ---
 
