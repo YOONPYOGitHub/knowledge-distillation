@@ -114,7 +114,7 @@ Temperature(T)를 높이면 확률 분포가 더 **부드러워집니다**:
 
 이 프로젝트의 LLM은 **로컬 설치형**입니다:
 
-- ☁️ ~~클라우드 API 호출~~ → ✅ **로컬 GPU에서 직접 실행**
+- ☁️ ~~클라우드 API 호출~~ → ✅ **로컬 디바이스에서 직접 실행** (CUDA GPU / Apple MPS / CPU 자동 감지)
 - Hugging Face Hub에서 모델 가중치를 다운로드하여 로컬 디스크에 저장
 - 최초 1회 다운로드 후 **오프라인에서도 실행 가능**
 - API 비용 없음, 데이터가 외부로 나가지 않음
@@ -372,22 +372,31 @@ knowledge-distillation/
 
 ## 9. 환경 요구사항
 
-### 하드웨어
+### 개발 환경
 
-| 항목 | 최소 | 권장 |
+| 환경 | 용도 | 비고 |
 |------|------|------|
-| **GPU** | RTX 3060 (12GB) | RTX 3090/4090 (24GB) |
-| **RAM** | 16GB | 32GB |
-| **디스크** | 10GB 여유 | 20GB+ |
+| **맥북** | 코드 작성, 디버깅, 소규모 테스트 | MPS 또는 CPU 사용 |
+| **GPU 서버** | 모델 학습, 본 실험 | CUDA GPU 사용 |
 
-### 소프트웨어
+### 의존성
 
-| 항목 | 버전 | 확인 명령 |
-|------|------|----------|
-| Python | 3.10+ | `python --version` |
-| PyTorch | 2.0+ | `python -c "import torch; print(torch.__version__)"` |
-| CUDA | 11.8+ | `nvidia-smi` |
-| transformers | 4.35+ | `python -c "import transformers; print(transformers.__version__)"` |
+`requirements.txt` 참조. 핵심: PyTorch, Transformers, datasets, accelerate
+
+### 디바이스 자동 감지
+
+코드 하나로 어디서든 동작합니다:
+
+```python
+import torch
+
+if torch.cuda.is_available():
+    device = torch.device("cuda")        # GPU 서버
+elif torch.backends.mps.is_available():
+    device = torch.device("mps")         # 맥북 Apple Silicon
+else:
+    device = torch.device("cpu")         # CPU 폴백
+```
 
 ---
 

@@ -31,20 +31,22 @@
 |---|----------|------|----------|
 | 1.2.1 | Python 3.10+ 설치 확인 | ⬜ 대기 | `python --version` |
 | 1.2.2 | 가상환경 생성 | ⬜ 대기 | `python -m venv venv` |
-| 1.2.3 | CUDA / cuDNN 버전 확인 | ⬜ 대기 | `nvidia-smi` |
-| 1.2.4 | PyTorch 설치 (CUDA 호환) | ⬜ 대기 | `torch.cuda.is_available()` |
+| 1.2.3 | 디바이스 확인 (CUDA / MPS / CPU) | ⬜ 대기 | 서버: `nvidia-smi` / 맥북: `torch.backends.mps.is_available()` |
+| 1.2.4 | PyTorch 설치 (환경에 맞게) | ⬜ 대기 | 서버: CUDA 버전 / 맥북: 기본 pip 설치 |
 | 1.2.5 | requirements.txt 의존성 설치 | ⬜ 대기 | `pip install -r requirements.txt` |
-| 1.2.6 | 설치 검증 스크립트 실행 | ⬜ 대기 | `python verify_setup.py` |
+| 1.2.6 | 설치 검증 스크립트 실행 | ⬜ 대기 | `python verify_setup.py` (CUDA/MPS/CPU 자동 감지) |
 
-### 1.3 GPU 환경 확인 및 모델 조합 결정
+### 1.3 환경 확인 및 모델 조합 결정
 
 | # | 세부 작업 | 상태 | 설명 |
 |---|----------|------|------|
-| 1.3.1 | GPU VRAM 확인 | ⬜ 대기 | `nvidia-smi` |
-| 1.3.2 | 모델 선택 가이드 참고하여 조합 결정 | ⬜ 대기 | Teacher/Student 쌍 확정 |
-| 1.3.3 | Teacher 모델 다운로드 테스트 | ⬜ 대기 | 인증 필요 여부 확인 |
-| 1.3.4 | Student 모델 다운로드 테스트 | ⬜ 대기 | 로드 시간, VRAM 확인 |
-| 1.3.5 | 동시 로드 테스트 | ⬜ 대기 | Teacher + Student 동시에 GPU 적재 가능한지 |
+| 1.3.1 | GPU 서버 디바이스/VRAM 확인 | ⬜ 대기 | `nvidia-smi` (학교 서버) |
+| 1.3.2 | 맥북 MPS 동작 확인 | ⬜ 대기 | `torch.backends.mps.is_available()` |
+| 1.3.3 | 모델 선택 가이드 참고하여 조합 결정 | ⬜ 대기 | Teacher/Student 쌍 확정 |
+| 1.3.4 | Teacher 모델 다운로드 테스트 | ⬜ 대기 | 인증 필요 여부 확인 |
+| 1.3.5 | Student 모델 다운로드 테스트 | ⬜ 대기 | 로드 시간, VRAM 확인 |
+| 1.3.6 | 동시 로드 테스트 (서버) | ⬜ 대기 | Teacher + Student 동시에 GPU 적재 가능한지 |
+| 1.3.7 | 맥북 소규모 테스트 | ⬜ 대기 | `distilgpt2` 또는 `gpt2` MPS에서 forward pass 확인 |
 
 ---
 

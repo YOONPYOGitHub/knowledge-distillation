@@ -25,8 +25,9 @@ python --version
 # pip 최신 버전으로 업데이트
 pip install --upgrade pip
 
-# NVIDIA GPU 드라이버 및 CUDA 확인
-nvidia-smi
+# 디바이스 확인 (환경에 따라 선택)
+nvidia-smi                    # GPU 서버 (CUDA)
+python -c "import torch; print(torch.backends.mps.is_available())"  # 맥북 (MPS)
 ```
 
 ### 2.2 핵심 라이브러리 설치
@@ -304,6 +305,9 @@ def check_environment():
     if torch.cuda.is_available():
         print(f"    GPU: {torch.cuda.get_device_name(0)}")
         print(f"    VRAM: {torch.cuda.get_device_properties(0).total_mem / 1e9:.1f} GB")
+    print(f"    MPS 사용 가능: {torch.backends.mps.is_available()}")
+    if torch.backends.mps.is_available():
+        print("    Apple Silicon MPS 백엔드 활성화됨")
     print("    ✅ OK")
 
     # 3. Transformers
@@ -320,15 +324,24 @@ def check_environment():
     print(f"    파라미터: {param_count:,}")
     print("    ✅ OK")
 
-    # 5. GPU 로드 테스트
+    # 5. 디바이스 로드 테스트 (CUDA > MPS > CPU 자동 감지)
     if torch.cuda.is_available():
-        print("\n[5] GPU 로드 테스트...")
-        model = model.to("cuda")
-        inputs = tokenizer("Hello, world!", return_tensors="pt").to("cuda")
-        with torch.no_grad():
-            outputs = model(**inputs)
-        print(f"    Output shape: {outputs.logits.shape}")
-        print("    ✅ OK")
+        device = torch.device("cuda")
+        print("\n[5] CUDA GPU 로드 테스트...")
+    elif torch.backends.mps.is_available():
+        device = torch.device("mps")
+        print("\n[5] Apple MPS 로드 테스트...")
+    else:
+        device = torch.device("cpu")
+        print("\n[5] CPU 로드 테스트...")
+
+    model = model.to(device)
+    inputs = tokenizer("Hello, world!", return_tensors="pt").to(device)
+    with torch.no_grad():
+        outputs = model(**inputs)
+    print(f"    Device: {device}")
+    print(f"    Output shape: {outputs.logits.shape}")
+    print("    ✅ OK")
 
     print("\n" + "=" * 50)
     print("모든 검증 통과! 🎉")

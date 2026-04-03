@@ -108,25 +108,33 @@
 ### 내 GPU 확인 방법
 
 ```bash
-# NVIDIA GPU 확인
+# NVIDIA GPU 확인 (GPU 서버)
 nvidia-smi
 
 # VRAM 용량 확인
 nvidia-smi --query-gpu=name,memory.total --format=csv
+
+# Apple Silicon MPS 확인 (맥북)
+python -c "import torch; print('MPS:', torch.backends.mps.is_available())"
 ```
 
 ### 환경별 추천
 
-| GPU | VRAM | 추천 조합 | 비고 |
-|-----|------|----------|------|
-| RTX 3060 | 12GB | 조합 A (`gpt2-medium` → `distilgpt2`) | FP16 필수 |
-| RTX 3080 | 10GB | 조합 A (`gpt2-medium` → `distilgpt2`) | FP16 필수 |
-| RTX 3090 | 24GB | 조합 B (`gpt2-large` → `gpt2`) ⭐ | 여유 있음 |
-| RTX 4090 | 24GB | 조합 B 또는 C | 속도 빠름 |
+| 환경 | GPU / 칩 | 추천 조합 | 비고 |
+|------|-----------|----------|------|
+| **맥북 (Apple M4, 16GB)** | MPS | 조합 A (`gpt2-medium` → `distilgpt2`) | 디버깅/테스트용, batch_size 작게 |
+| **맥북 (Apple M4 Pro+, 24GB+)** | MPS | 조합 A 또는 B | 소규모 실험 가능 |
+| RTX 4060 | 8GB | 조합 A (`gpt2-medium` → `distilgpt2`) | FP16 필수 |
+| RTX 4070 | 12GB | 조합 A 또는 B | FP16 권장 |
+| RTX 4080 | 16GB | 조합 B (`gpt2-large` → `gpt2`) | 여유 있음 |
+| RTX 4090 | 24GB | 조합 B 또는 C  | 속도 빠름 |
+| RTX 5090 | 32GB | 조합 C 또는 D | 최신 소비자 GPU |
 | A100 | 40GB | 조합 D (`Mistral-7B` → `TinyLlama`) | 전문 실험 |
 | A100 | 80GB | 조합 E, F | 대규모 실험 |
 | H100 | 80GB | 조합 F | 최대 단일 GPU |
 | Multi-GPU (2x A100/H100) | 160GB+ | 조합 G, H | Tier 3 분산 학습 필수 |
+
+> 팁: 맥북에서 코드 디버깅 → GPU 서버에서 본 학습 흐름이면, 맥북에서는 조합 A로 빠르게 테스트하고 서버에서 조합 B~D로 본 실험하세요.
 
 ### VRAM이 부족할 때 대처법
 
