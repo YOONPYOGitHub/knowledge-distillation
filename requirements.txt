@@ -6,3 +6,4 @@ tokenizers>=0.15.0
 matplotlib>=3.7.0
 numpy>=1.24.0
 tqdm>=4.65.0
+torchvision>=0.15.0

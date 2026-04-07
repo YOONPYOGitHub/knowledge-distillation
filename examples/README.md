@@ -115,3 +115,27 @@ uv sync
 
 - 원본 논문: Hinton et al. (2015) — *"Distilling the Knowledge in a Neural Network"*
 - 상위 프로젝트: [README.md](../README.md)
+
+
+## 개인정리
+
+### softmax
+- Softmax는 모델을 학습하거나 완성된 모델의 결과 값(Logit)을 합이 1인 확률 분포로 바꿔주는 것
+- 각 Logit에 자연상수 e^logit을 적용해서 전체 logit에 대하여 합을 구한 후 각각의 e^logit을 합으로 나눠주면 된다.
+
+### KD Divergence 
+- Teacher 모델과 Student 모델의 softmax값을 비교하는 것
+
+### CE loss
+- Soft label간의 관계로만 학습하는 것이 아닌 Hard label(정답)을 보고도 학습하는 것
+
+### alpha parameter
+- KD Divergence 와 CE Loss 간의 학습 영향도의 비율을 조정하는 것
+
+### Temperature
+- Softmax에서 자연상수 e^logit을 취할때 logit간의 값차이에 따라 e^logit값이 기하급수적으로 차이가 날 수 있음
+- 이런 경우 softmax하면 정답 label외에 것들은 사실상 의미가 아주 미미해짐
+- 이를 보완하기 위해 Logit값에 일정한 수를 나눠주는 개념
+- Logit에 대해서 z1 = 10 , z2 = 2 일때 자연상수 지수를 취하면 2980배의 값 차이를 가짐
+- Temperature = 10을 적용하면 z1/T = 1 , z2/T = 0.2 자연상수 지수 취하면 2.2배 차이
+- 즉 1등만 목소리가 큰 것이 아닌 2,3 등의 목소리도 들려오면서 각 객체들의 관계까지 학습할 수 있다는 개념
