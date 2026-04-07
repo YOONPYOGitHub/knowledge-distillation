@@ -1,0 +1,18 @@
+# exp05: WikiText-103 + gpt2-medium Teacher — 대규모 데이터 검증
+# 변경점: WikiText-2 → WikiText-103 (2M → 103M 토큰, 50배)
+# Teacher: gpt2-medium (exp04와 동일)
+# 목적: 큰 데이터에서 FT 외우기 차단 → KD 일반화 효과 검증
+
+teacher_model: gpt2-medium
+student_model: distilgpt2
+
+dataset_name: wikitext
+dataset_config: wikitext-103-raw-v1
+
+max_seq_length: 256
+temperature: 2.0
+alpha: 0.5
+
+epochs: 3
+batch_size: 4
+learning_rate: 5.0e-5

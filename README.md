@@ -318,6 +318,11 @@ knowledge-distillation/
 │
 ├── pyproject.toml                   # ⚙️ uv 프로젝트 설정 & 의존성
 ├── README.md                        # 이 문서
+├── main.py                          # 🚀 파이프라인 실행 진입점 (YAML config 기반)
+│
+├── configs/                         # 🔧 실험별 설정 파일 (YAML)
+│   ├── exp01_local_smoke.yaml       #   1차 실험: 로컬 smoke test
+│   └── exp02_local_longer.yaml      #   2차 실험: 패딩 완화 + 수렴 확인
 │
 ├── docs/                            # 📖 문서
 │   ├── papers.md                    #   📄 논문 레퍼런스 & 개념 출처 매핑
@@ -333,7 +338,7 @@ knowledge-distillation/
 │       └── local-install-flow.svg   #   로컬 설치 흐름도
 │
 ├── src/                             # 💻 소스 코드
-│   ├── config.py                    #   하이퍼파라미터 & 경로 설정
+│   ├── config.py                    #   하이퍼파라미터 & 경로 설정 (YAML 로딩 포함)
 │   ├── dataset.py                   #   데이터 로드 & 전처리
 │   ├── models.py                    #   Teacher/Student 모델 로드
 │   ├── distill.py                   #   지식 증류 학습 (핵심)
@@ -349,10 +354,10 @@ knowledge-distillation/
 │   ├── main.py                      #   예제 실행 스크립트
 │   └── pyproject.toml               #   예제 의존성
 │
-└── results/                         # 📁 실험 결과
-    ├── figures/                     #   시각화 차트 (PNG)
-    ├── logs/                        #   학습 로그
-    └── checkpoints/                 #   모델 체크포인트
+└── results/                         # 📁 실험 결과 (run_id별 정리)
+    ├── figures/{run_id}/            #   시각화 차트 (PNG)
+    ├── logs/{run_id}/               #   학습 로그, summary, notes
+    └── checkpoints/{run_id}/        #   모델 체크포인트 (.gitignore)
 ```
 
 ### 파일별 역할
@@ -360,13 +365,15 @@ knowledge-distillation/
 | 파일 | 실행 순서 | 입력 | 출력 |
 |------|----------|------|------|
 | `verify_setup.py` | 0 (선행) | - | 환경 정상 여부 |
-| `src/config.py` | - (설정) | - | 하이퍼파라미터 |
+| `main.py` | **통합 실행** | YAML config 파일 | 전체 파이프라인 결과 |
+| `configs/*.yaml` | - (설정) | - | 실험별 하이퍼파라미터 |
+| `src/config.py` | - (설정) | YAML 또는 프리셋 | KDConfig 객체 |
 | `src/dataset.py` | 1 | 데이터셋 이름 | DataLoader |
 | `src/models.py` | 2 | 모델 이름 | Teacher/Student 모델 |
 | `src/distill.py` | 3a | DataLoader + 모델 | Student(KD) 체크포인트 |
 | `src/train_baseline.py` | 3b | DataLoader + Student | Student(FT) 체크포인트 |
 | `src/evaluate.py` | 4 | 모델 체크포인트 | Perplexity, 속도 등 |
-| `src/compare.py` | 5 | 4개 모델 평가 결과 | 비교 차트 + 리포트 |
+| `src/compare.py` | 5 | 4개 모델 평가 결과 | 비교 차트 + 리포트 + 자동 진단 |
 
 ---
 
@@ -381,7 +388,7 @@ knowledge-distillation/
 
 ### 의존성
 
-`requirements.txt` 참조. 핵심: PyTorch, Transformers, datasets, accelerate
+`pyproject.toml`에 정의. `uv sync`로 설치. 핵심: PyTorch, Transformers, datasets, accelerate, pyyaml
 
 ### 디바이스 자동 감지
 
@@ -412,18 +419,42 @@ uv sync
 # 3. 환경 검증
 uv run python verify_setup.py
 
-# 4. 지식 증류 학습  (→ Student-KD 생성)
-uv run python src/distill.py
-
-# 5. 베이스라인 학습   (→ Student-FT 생성)
-uv run python src/train_baseline.py
-
-# 6. 4-Way 평가 & 비교 (Teacher + KD + FT + Base)
-uv run python src/evaluate.py
-uv run python src/compare.py
+# 4. 전체 파이프라인 실행 (YAML config 지정)
+uv run python main.py configs/exp02_local_longer.yaml
 ```
 
-> ⚠️ 4~6번 코드는 아직 구현 전입니다. Phase 2~4에서 순차 구현 예정.
+`main.py`가 아래 4단계를 순서대로 실행합니다:
+1. **Knowledge Distillation** — Teacher → Student 증류 학습
+2. **Baseline Fine-tuning** — Student CE-only 학습
+3. **Evaluation** — 4-Way 모델 평가 (PPL, 속도)
+4. **Comparison** — 비교 차트 + 자동 진단 + notes 생성
+
+특정 단계만 실행할 수도 있습니다:
+
+```bash
+# 증류만 실행
+uv run python main.py configs/exp02_local_longer.yaml --step distill
+
+# 평가 + 비교만 실행
+uv run python main.py configs/exp02_local_longer.yaml --step evaluate --step compare
+```
+
+### 실험 설정 관리
+
+실험별 파라미터는 `configs/` 폴더의 YAML 파일로 관리합니다:
+
+```yaml
+# configs/exp02_local_longer.yaml
+teacher_model: gpt2
+student_model: distilgpt2
+max_seq_length: 256
+temperature: 4.0
+alpha: 0.3
+epochs: 3
+batch_size: 4
+```
+
+YAML에 없는 필드는 `src/config.py`의 기본값이 적용됩니다.
 
 ---
 
@@ -433,20 +464,20 @@ uv run python src/compare.py
 
 | Phase | 내용 | 상태 |
 |-------|------|------|
-| **Phase 1** | 프로젝트 준비 (문서, 환경, GPU 확인) | 🔄 진행 중 |
-| **Phase 2** | 핵심 모듈 구현 (config, data, model) | ⬜ 대기 |
-| **Phase 3** | 학습 구현 및 실행 (distill, baseline) | ⬜ 대기 |
-| **Phase 4** | 평가 및 결과 분석 (4-Way 비교) | ⬜ 대기 |
+| **Phase 1** | 프로젝트 준비 (문서, 환경, GPU 확인) | ✅ 완료 |
+| **Phase 2** | 핵심 모듈 구현 (config, data, model) | ✅ 완료 |
+| **Phase 3** | 학습 구현 및 실행 (distill, baseline) | ✅ 완료 |
+| **Phase 4** | 평가 및 결과 분석 (4-Way 비교) | ✅ 완료 |
 
 ### 마일스톤
 
 | 마일스톤 | 완료 조건 | 상태 |
 |---------|----------|------|
-| **M1** | 환경 준비 완료, verify_setup.py 통과 | ⬜ |
-| **M2** | DataLoader에서 정상 배치 출력 확인 | ⬜ |
-| **M3** | distill.py 1 epoch 완주, loss 감소 확인 | ⬜ |
-| **M4** | 증류 학습 + FT 학습 모두 완료 | ⬜ |
-| **M5** | 4-Way 비교 차트 및 리포트 생성 | ⬜ |
+| **M1** | 환경 준비 완료, verify_setup.py 통과 | ✅ |
+| **M2** | DataLoader에서 정상 배치 출력 확인 | ✅ |
+| **M3** | distill.py 1 epoch 완주, loss 감소 확인 | ✅ |
+| **M4** | 증류 학습 + FT 학습 모두 완료 | ✅ |
+| **M5** | 4-Way 비교 차트 및 리포트 생성 | ✅ |
 
 > 📖 Phase별 세부 작업 체크리스트 → [상세 진행 일정](docs/schedule.md)
 
@@ -456,6 +487,7 @@ uv run python src/compare.py
 
 | 문서 | 경로 | 설명 |
 |------|------|------|
+| **코드 구조 & 파이프라인 가이드** | [docs/code-guide.md](docs/code-guide.md) | 전체 실행 흐름, 모듈별 상세 설명, 용어 설명 |
 | **논문 레퍼런스** | [docs/papers.md](docs/papers.md) | 참고 논문, 개념 출처 매핑, 읽기 순서 추천 |
 | **용어집** | [docs/glossary.md](docs/glossary.md) | 프로젝트 핵심 용어 정리 (배경지식 보완) |
 | **연구 방향 가이드** | [docs/research-direction-guide.md](docs/research-direction-guide.md) | 모델/데이터 선택에 따른 연구 경로 비교 |

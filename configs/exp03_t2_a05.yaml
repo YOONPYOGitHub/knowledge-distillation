@@ -1,0 +1,13 @@
+# exp03: T=2.0, α=0.5 — sharper distribution + CE 비중 증가
+# 변경점: temperature 4.0→2.0, alpha 0.3→0.5
+
+teacher_model: gpt2
+student_model: distilgpt2
+
+max_seq_length: 256
+temperature: 2.0           # 4.0→2.0: sharper distribution으로 dark knowledge 명확히 전달
+alpha: 0.5                 # 0.3→0.5: CE/KD 균등 비율
+
+epochs: 3
+batch_size: 4
+learning_rate: 5.0e-5

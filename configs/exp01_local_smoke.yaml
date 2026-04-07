@@ -1,0 +1,15 @@
+# exp01: 로컬 smoke test (1차 실험 — 코드 검증용)
+# 결과: results/logs/20260403_local_test/
+
+teacher_model: gpt2
+student_model: distilgpt2
+
+max_seq_length: 128
+temperature: 3.0
+alpha: 0.5
+
+epochs: 1
+batch_size: 2
+learning_rate: 5.0e-5
+
+run_id: "20260403_local_test"

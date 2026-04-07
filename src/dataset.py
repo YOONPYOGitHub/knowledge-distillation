@@ -16,42 +16,46 @@ def load_tokenizer(model_name: str) -> AutoTokenizer:
 
 
 def load_wikitext(config: KDConfig, tokenizer: AutoTokenizer):
-    """WikiText-2 데이터셋 로드 및 토크나이징
+    """WikiText-2 데이터셋 로드 및 토크나이징 (Packing 방식)
+
+    전체 텍스트를 연결한 뒤 max_seq_length 단위로 chunking.
+    패딩 없이 모든 토큰이 유효한 학습/평가 대상이 됨.
 
     Returns:
         dict: {"train": Dataset, "validation": Dataset, "test": Dataset}
     """
     raw_dataset = load_dataset(config.dataset_name, config.dataset_config)
+    seq_len = config.max_seq_length
 
-    def tokenize_and_chunk(examples):
-        # 빈 문자열 필터링 (WikiText-2에 빈 줄이 많음)
-        texts = [t for t in examples["text"] if t.strip()]
-        if not texts:
-            return {"input_ids": [], "attention_mask": [], "labels": []}
+    def tokenize_and_pack(examples):
+        # 전체 텍스트를 연결하여 토크나이즈
+        concatenated = tokenizer(
+            examples["text"],
+            return_attention_mask=False,
+        )["input_ids"]
 
-        tokenized = tokenizer(
-            texts,
-            truncation=True,
-            max_length=config.max_seq_length,
-            padding="max_length",
-            return_tensors=None,
-        )
-        # Causal LM: labels = input_ids (다음 토큰 예측)
-        tokenized["labels"] = tokenized["input_ids"].copy()
-        return tokenized
+        # 모든 토큰을 하나로 이어붙이기
+        all_ids = []
+        for ids in concatenated:
+            all_ids.extend(ids)
+
+        # seq_len 단위로 chunking (나머지는 버림)
+        total_length = (len(all_ids) // seq_len) * seq_len
+        all_ids = all_ids[:total_length]
+
+        result = {
+            "input_ids": [all_ids[i : i + seq_len] for i in range(0, total_length, seq_len)],
+            "attention_mask": [[1] * seq_len for _ in range(0, total_length, seq_len)],
+            "labels": [all_ids[i : i + seq_len] for i in range(0, total_length, seq_len)],
+        }
+        return result
 
     tokenized_dataset = raw_dataset.map(
-        tokenize_and_chunk,
+        tokenize_and_pack,
         batched=True,
         remove_columns=raw_dataset["train"].column_names,
     )
     tokenized_dataset.set_format("torch")
-
-    # 빈 샘플 필터링
-    for split in tokenized_dataset:
-        tokenized_dataset[split] = tokenized_dataset[split].filter(
-            lambda x: len(x["input_ids"]) > 0
-        )
 
     return tokenized_dataset
 

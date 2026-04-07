@@ -17,7 +17,7 @@ from src.models import load_teacher, load_student, model_info
 
 
 def kd_loss(student_logits, teacher_logits, labels, config: KDConfig):
-    """Knowledge Distillation Loss 계산
+    """Knowledge Distillation Loss 계산 (label shift 적용)
 
     Returns:
         total_loss, ce_loss, kd_loss_value (개별 추적용)
@@ -25,16 +25,21 @@ def kd_loss(student_logits, teacher_logits, labels, config: KDConfig):
     T = config.temperature
     alpha = config.alpha
 
+    # Causal LM label shift: logits[t] → labels[t+1]
+    shift_logits = student_logits[..., :-1, :].contiguous()
+    shift_teacher = teacher_logits[..., :-1, :].contiguous()
+    shift_labels = labels[..., 1:].contiguous()
+
     # Hard Label Loss: Student vs 정답
     ce_loss = F.cross_entropy(
-        student_logits.view(-1, student_logits.size(-1)),
-        labels.view(-1),
+        shift_logits.view(-1, shift_logits.size(-1)),
+        shift_labels.view(-1),
         ignore_index=-100,
     )
 
     # Soft Label Loss: Student vs Teacher (Temperature 적용)
-    teacher_soft = F.softmax(teacher_logits / T, dim=-1)
-    student_log_soft = F.log_softmax(student_logits / T, dim=-1)
+    teacher_soft = F.softmax(shift_teacher / T, dim=-1)
+    student_log_soft = F.log_softmax(shift_logits / T, dim=-1)
     kd_loss_value = F.kl_div(
         student_log_soft, teacher_soft, reduction="batchmean"
     ) * (T * T)

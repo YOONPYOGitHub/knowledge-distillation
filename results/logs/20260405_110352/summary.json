@@ -1,0 +1,51 @@
+{
+  "run_id": "20260405_110352",
+  "experiment": "exp06_wikitext103_gpt2medium",
+  "config": {
+    "teacher_model": "gpt2-medium",
+    "student_model": "distilgpt2",
+    "dataset": "wikitext-103-raw-v1",
+    "temperature": 2.0,
+    "alpha": 0.5,
+    "epochs": 3,
+    "batch_size": 4,
+    "max_seq_length": 256,
+    "device": "mps"
+  },
+  "results": {
+    "Teacher": {
+      "ppl": 31.320080395418362,
+      "tokens_per_sec": 5252.418217085528
+    },
+    "Student (KD)": {
+      "ppl": 40.962637803410765,
+      "tokens_per_sec": 22207.405489319473
+    },
+    "Student (FT)": {
+      "ppl": 22.71686223085643,
+      "tokens_per_sec": 22343.38414900919
+    },
+    "Student (Base)": {
+      "ppl": 65.26706107771084,
+      "tokens_per_sec": 22305.240509450377
+    }
+  },
+  "timing": {
+    "kd_total_seconds": 143119.89,
+    "kd_per_epoch_seconds": 47706.63,
+    "ft_total_seconds": 64264.1,
+    "ft_per_epoch_seconds": 21421.37,
+    "kd_ft_ratio": 2.23
+  },
+  "diagnosis": [
+    "⚠️ KD(40.96) >> FT(22.72) — 증류 효과 미확인",
+    "⚠️ FT student(22.72) < Teacher(31.32) — student가 teacher 능가",
+    "⚠️ 6회 연속 KD < FT — 현재 설정에서 KD 이점 없음"
+  ],
+  "next_actions": [
+    "alpha 값 탐색 (0.1~0.9) — CE/KD 비율 최적화",
+    "데이터 크기별 비교 — KD 우위 임계점 탐색",
+    "OOD 평가 (PTB, LAMBADA) — KD 일반화 이점 검증",
+    "Teacher 크기 효과 (gpt2-large, gpt2-xl)"
+  ]
+}

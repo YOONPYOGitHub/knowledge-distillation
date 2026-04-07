@@ -5,6 +5,7 @@ from datetime import datetime
 from pathlib import Path
 
 import torch
+import yaml
 
 
 def get_device() -> torch.device:
@@ -30,6 +31,11 @@ class KDConfig:
     # --- KD 하이퍼파라미터 ---
     temperature: float = 3.0
     alpha: float = 0.5  # CE vs KD 비율 (1.0 = CE만, 0.0 = KD만)
+
+    # --- Teacher Fine-tuning ---
+    teacher_epochs: int = 3
+    teacher_learning_rate: float = 2e-5
+    teacher_checkpoint: str = ""  # 비어있으면 pretrained 그대로, 경로 있으면 FT된 teacher 로드
 
     # --- 학습 ---
     epochs: int = 3
@@ -106,3 +112,11 @@ def server_config(**overrides) -> KDConfig:
     )
     defaults.update(overrides)
     return KDConfig(**defaults)
+
+
+def from_yaml(path: str, **overrides) -> KDConfig:
+    """YAML 파일에서 설정 로드"""
+    with open(path) as f:
+        data = yaml.safe_load(f)
+    data.update(overrides)
+    return KDConfig(**data)

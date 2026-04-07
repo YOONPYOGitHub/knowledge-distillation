@@ -27,15 +27,19 @@ def evaluate_perplexity(model, dataloader, device):
         labels = batch["labels"].to(device)
 
         outputs = model(input_ids=input_ids, attention_mask=attention_mask)
+
+        # Causal LM label shift: logits[t] → labels[t+1]
+        shift_logits = outputs.logits[..., :-1, :].contiguous()
+        shift_labels = labels[..., 1:].contiguous()
         loss = F.cross_entropy(
-            outputs.logits.view(-1, outputs.logits.size(-1)),
-            labels.view(-1),
+            shift_logits.view(-1, shift_logits.size(-1)),
+            shift_labels.view(-1),
             ignore_index=-100,
             reduction="sum",
         )
 
-        # pad 토큰 제외한 실제 토큰 수
-        num_tokens = (labels != -100).sum().item()
+        # 유효 토큰 수 (shift 후 기준)
+        num_tokens = (shift_labels != -100).sum().item()
         total_loss += loss.item()
         total_tokens += num_tokens
 
