@@ -35,6 +35,40 @@ exp07(α=0.3, epochs=5)에서 KD-FT gap이 0.21로 좁혀졌으나 여전히 FT 
 
 이것은 프로젝트 최초의 **KD > FT** 결과이다.
 
+## 시각화 결과
+
+### Perplexity 비교
+![Perplexity Comparison](../../figures/20260410_041631/perplexity_comparison.png)
+
+4모델의 Perplexity를 비교한 결과, 기대했던 **Teacher < KD < FT < Base** 순서가 처음으로 달성되었다.
+- **Teacher (FT) PPL 25.1**: 도메인 Fine-tuning 효과로 WikiText-2에 대한 예측력이 가장 높다. 이 soft target의 품질이 KD 성공의 전제 조건이었다.
+- **Student (KD) PPL 32.4 vs Student (FT) PPL 32.8**: KD가 FT를 0.4 PPL 차이로 이겼다. 같은 distilgpt2 모델이 같은 데이터로 학습했지만, Teacher의 soft target을 활용한 쪽이 hard label만으로 학습한 쪽보다 더 나은 일반화 성능을 보인다.
+- **Student (Base) PPL 65.3**: 추가 학습 없는 사전학습 모델은 도메인 특화 성능이 크게 떨어진다. FT와 KD 모두 Base 대비 약 2배의 PPL 개선을 달성했다.
+
+### 학습 Loss 곡선
+![Training Loss](../../figures/20260410_041631/training_loss.png)
+
+이 그래프에서 **train CE Loss**를 보면 FT(주황)가 KD(초록)보다 훨씬 빠르게 내려간다. 그러나 이것은 함정이다.
+- **FT의 train loss(2.787)가 KD(3.291)보다 낮지만**, val loss는 FT(3.636)가 KD(3.488)보다 높다. 즉, FT는 학습 데이터를 암기하고 있을 뿐 새로운 데이터에 대한 예측력은 떨어진다.
+- **KD는 train loss 하강이 느리지만**, soft target이 label smoothing처럼 작용하여 과적합을 억제한다. train-val gap이 FT(0.849) 대비 KD(0.197)로 **4.3배 작다**.
+- **Teacher FT(파란색)는 3 epoch만 학습**했으며, 이 짧은 학습만으로도 PPL 25.1을 달성해 KD를 위한 충분히 강한 soft target을 생성할 수 있었다.
+
+### Validation Loss 곡선 (KD 역전의 핵심 증거)
+![Validation Loss](../../figures/20260410_041631/val_loss.png)
+
+이 그래프가 exp08의 가장 중요한 결과물이다. train loss가 아닌 **val loss**(= 실제 일반화 성능)를 보여준다.
+- **FT(주황)는 epoch 2에서 바닥(3.499)을 찍고 6 epoch 연속 상승** — 전형적인 과적합 패턴이다. train loss는 계속 내려가지만 처음 보는 데이터에 대한 성능은 오히려 악화된다.
+- **KD(초록)는 8 epoch까지 꾸준히 하강** — soft target이 정규화 역할을 하여 과적합 없이 안정적으로 수렴한다.
+- **Epoch 6에서 역전**: KD(3.492)가 FT의 역대 best(3.499, 점선)를 처음으로 돌파했다. 이것이 프로젝트 최초의 진정한 KD > FT 역전이다.
+- 두 곡선이 벌어지는 가위 모양(scissors pattern)은 **KD의 정규화 효과가 장기 학습에서 빛을 발한다**는 것을 시각적으로 증명한다.
+
+### 추론 속도 비교
+![Inference Speed](../../figures/20260410_041631/inference_speed.png)
+
+추론 속도에서는 Student 3모델(KD·FT·Base)이 모두 약 22,000 tokens/sec로 동일하다. 이는 같은 distilgpt2(82M) 아키텍처이므로 당연한 결과이다.
+- **Teacher(14,023 tokens/sec)는 Student 대비 1.57배 느리다** — gpt2(124M)가 distilgpt2(82M)보다 1.5배 큰 모델이기 때문이다.
+- 핵심 의미: **KD는 성능(PPL)에서 Teacher의 지식을 흡수하면서도, 추론 속도는 Student의 경량 아키텍처를 그대로 유지한다.** 이것이 Knowledge Distillation의 실용적 가치다 — 큰 모델의 성능을 작은 모델의 속도로 근사하는 것.
+
 ## 학습 곡선 분석
 
 ### KD (Distillation) — val_ce_loss 추이

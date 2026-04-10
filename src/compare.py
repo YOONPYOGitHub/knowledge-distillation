@@ -135,6 +135,59 @@ def plot_training_curves(config: KDConfig, save_path: str):
     print(f"차트 저장 → {save_path}")
 
 
+def plot_val_loss_curves(config: KDConfig, save_path: str):
+    """KD / FT Validation CE Loss 곡선 비교 (역전 포인트 강조)"""
+    kd_path = config.log_dir / "distill_history.json"
+    ft_path = config.log_dir / "baseline_history.json"
+
+    if not kd_path.exists() or not ft_path.exists():
+        print("⚠️ 학습 로그가 부족하여 Val Loss 곡선을 그릴 수 없습니다.")
+        return
+
+    with open(kd_path) as f:
+        kd_hist = json.load(f)
+    with open(ft_path) as f:
+        ft_hist = json.load(f)
+
+    kd_epochs = [h["epoch"] for h in kd_hist]
+    kd_val = [h["val_ce_loss"] for h in kd_hist]
+    ft_epochs = [h["epoch"] for h in ft_hist]
+    ft_val = [h["val_ce_loss"] for h in ft_hist]
+
+    fig, ax = plt.subplots(figsize=(8, 5))
+
+    ax.plot(kd_epochs, kd_val, "o-", label="Student (KD) - Val CE", color="#4CAF50", linewidth=2)
+    ax.plot(ft_epochs, ft_val, "s-", label="Student (FT) - Val CE", color="#FF9800", linewidth=2)
+
+    # FT best 수평선
+    ft_best = min(ft_val)
+    ax.axhline(y=ft_best, color="#FF9800", linestyle="--", alpha=0.5, linewidth=1)
+    ax.text(max(kd_epochs) + 0.1, ft_best, f"FT best={ft_best:.3f}",
+            fontsize=8, color="#FF9800", va="center")
+
+    # 역전 포인트 탐색 및 표시
+    kd_best = min(kd_val)
+    if kd_best < ft_best:
+        # KD가 FT best를 처음 이긴 epoch 찾기
+        for i, (ep, val) in enumerate(zip(kd_epochs, kd_val)):
+            if val < ft_best:
+                ax.annotate(f"KD < FT best\n(ep{ep})",
+                            xy=(ep, val), xytext=(ep + 0.5, val + 0.02),
+                            fontsize=9, color="#4CAF50", fontweight="bold",
+                            arrowprops=dict(arrowstyle="->", color="#4CAF50"))
+                break
+
+    ax.set_xlabel("Epoch")
+    ax.set_ylabel("Validation CE Loss (↓ lower is better)")
+    ax.set_title("Validation Loss: KD vs FT (Overfitting Contrast)")
+    ax.legend()
+    ax.grid(alpha=0.3)
+    plt.tight_layout()
+    plt.savefig(save_path, dpi=150)
+    plt.close()
+    print(f"차트 저장 → {save_path}")
+
+
 def generate_summary(results: list, config: KDConfig) -> dict:
     """자동 진단 포함 summary.json 생성"""
     names = {r["name"]: r for r in results}
@@ -241,6 +294,7 @@ def compare(config: KDConfig):
     plot_perplexity(results, str(fig_dir / "perplexity_comparison.png"))
     plot_speed(results, str(fig_dir / "inference_speed.png"))
     plot_training_curves(config, str(fig_dir / "training_loss.png"))
+    plot_val_loss_curves(config, str(fig_dir / "val_loss.png"))
 
     summary = generate_summary(results, config)
 
