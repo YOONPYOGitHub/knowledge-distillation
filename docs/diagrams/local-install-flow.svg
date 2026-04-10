@@ -10,7 +10,7 @@
   <rect x="150" y="55" width="300" height="70" rx="10" fill="#ff9d00"/>
   <text x="300" y="82" text-anchor="middle" font-size="13" font-weight="bold" fill="white">Hugging Face Hub</text>
   <text x="300" y="100" text-anchor="middle" font-size="10" fill="#fff8e0">huggingface.co/models</text>
-  <text x="300" y="116" text-anchor="middle" font-size="10" fill="#fff8e0">gpt2-large (~3GB)</text>
+  <text x="300" y="116" text-anchor="middle" font-size="10" fill="#fff8e0">gpt2 (~0.5GB) / distilgpt2 (~0.3GB)</text>
 
   <!-- Arrow 1 -->
   <line x1="300" y1="125" x2="300" y2="168" stroke="#475569" stroke-width="2"/>

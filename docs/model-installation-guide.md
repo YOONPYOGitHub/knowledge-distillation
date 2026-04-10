@@ -115,19 +115,19 @@ model = AutoModelForCausalLM.from_pretrained("./models/gpt2-large")
 ```
 
 ```python
-# distilgpt2 (82M) - 가장 가벼움
+# distilgpt2 (82M) - Student 기본 모델
 tokenizer = AutoTokenizer.from_pretrained("distilgpt2")
 model = AutoModelForCausalLM.from_pretrained("distilgpt2")
 
-# gpt2 (124M) - Student 기본 모델
+# gpt2 (124M) - Teacher 기본 모델
 tokenizer = AutoTokenizer.from_pretrained("gpt2")
 model = AutoModelForCausalLM.from_pretrained("gpt2")
 
-# gpt2-medium (345M)
+# gpt2-medium (355M)
 tokenizer = AutoTokenizer.from_pretrained("gpt2-medium")
 model = AutoModelForCausalLM.from_pretrained("gpt2-medium")
 
-# gpt2-large (774M) - Teacher 기본 모델
+# gpt2-large (774M)
 tokenizer = AutoTokenizer.from_pretrained("gpt2-large")
 model = AutoModelForCausalLM.from_pretrained("gpt2-large")
 

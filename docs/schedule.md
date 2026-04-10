@@ -5,7 +5,7 @@
 ## 전체 로드맵
 
 아래 파이프라인은 프로젝트의 전체 진행 흐름을 나타냅니다.  
-데이터 준비 → Teacher 추론 → Student 학습(KD/FT) → 평가 & 비교 순서로 진행되며, 이 흐름이 아래 Phase 1~4의 세부 작업으로 구체화됩니다.
+데이터 준비 → Teacher FT(선택) → Teacher 추론 + KD → Student FT → 평가 & 비교 순서로 진행되며, 이 흐름이 아래 Phase 1~4의 세부 작업으로 구체화됩니다.
 
 ![Training Pipeline](diagrams/training-pipeline.svg)
 
@@ -42,7 +42,7 @@
 |---|----------|------|------|
 | 1.3.1 | GPU 서버 디바이스/VRAM 확인 | ⬜ 대기 | `nvidia-smi` (학교 서버) |
 | 1.3.2 | 맥북 MPS 동작 확인 | ✅ 완료 | MPS 정상 동작 확인됨 |
-| 1.3.3 | 모델 선택 가이드 참고하여 조합 결정 | ✅ 완료 | 로컬: gpt2→distilgpt2 / 서버: gpt2-large→gpt2 |
+| 1.3.3 | 모델 선택 가이드 참고하여 조합 결정 | ✅ 완료 | 로컬: gpt2→distilgpt2 / 서버: gpt2-medium→distilgpt2 |
 | 1.3.4 | Teacher 모델 다운로드 테스트 | ✅ 완료 | HF 캠시 정상 저장 |
 | 1.3.5 | Student 모델 다운로드 테스트 | ✅ 완료 | distilgpt2 로드 확인 |
 | 1.3.6 | 동시 로드 테스트 (서버) | ⬜ 대기 | Teacher + Student 동시에 GPU 적재 가능한지 |

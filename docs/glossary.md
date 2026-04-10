@@ -28,13 +28,14 @@ Student는 혼자 공부(Fine-tuning)하는 것보다 Teacher에게 배우면 �
 
 ### Teacher 모델
 
-지식을 **가르치는** 큰 모델. 이미 잘 학습되어 있으며, 증류 과정에서 가중치가 변하지 않습니다(고정).  
-이 프로젝트에서는 `gpt2-large` (774M 파라미터)를 기본 Teacher로 사용합니다.
+지식을 **가르치는** 큰 모델. KD 과정에서는 가중치가 고정됩니다(추론만 수행).  
+KD 전에 `train_teacher.py`로 target 도메인에 Fine-tuning하면 더 품질 높은 soft target을 제공할 수 있습니다.  
+이 프로젝트에서는 `gpt2` (124M 파라미터)를 기본 Teacher로 사용합니다.
 
 ### Student 모델
 
 지식을 **배우는** 작은 모델. 증류 과정에서 가중치가 업데이트됩니다.  
-이 프로젝트에서는 `gpt2` (124M 파라미터)를 기본 Student로 사용합니다.
+이 프로젝트에서는 `distilgpt2` (82M 파라미터)를 기본 Student로 사용합니다.
 
 ### Hard Label (하드 레이블)
 
@@ -92,10 +93,10 @@ GPT-4, Claude 같은 상용 API 모델에서 사용합니다. 내부 확률 분�
 
 | 모델 | 설명 | 역할 |
 |------|------|------|
-| **Teacher** | 큰 모델 (gpt2-large) 원본 | 성능 상한선 (Upper Bound) |
-| **Student (KD)** | 작은 모델, Teacher에게 배운 것 | 증류 효과 확인 |
-| **Student (FT)** | 작은 모델, 혼자 공부한 것 | 일반 학습 기준선 |
-| **Student (Base)** | 작은 모델, 아무 추가 학습 없음 | 성능 하한선 (Lower Bound) |
+| **Teacher** | 큰 모델 (gpt2, 124M) Fine-tuned | 성능 상한선 (Upper Bound) |
+| **Student (KD)** | 작은 모델 (distilgpt2, 82M), Teacher에게 배운 것 | 증류 효과 확인 |
+| **Student (FT)** | 작은 모델 (distilgpt2, 82M), 혼자 공부한 것 | 일반 학습 기준선 |
+| **Student (Base)** | 작은 모델 (distilgpt2, 82M), 아무 추가 학습 없음 | 성능 하한선 (Lower Bound) |
 
 KD와 FT를 비교하면 **"Teacher에게 배운 것이 혼자 공부한 것보다 얼마나 나은가"**를 알 수 있습니다.
 
@@ -412,8 +413,8 @@ Hugging Face에서 **사전학습된 모델이나 토크나이저를 로드하�
 최초 실행 시 인터넷에서 다운로드하고, 이후에는 로컬 캐시에서 로드합니다.
 
 ```python
-model = AutoModelForCausalLM.from_pretrained("gpt2-large")
-tokenizer = AutoTokenizer.from_pretrained("gpt2-large")
+model = AutoModelForCausalLM.from_pretrained("gpt2")
+tokenizer = AutoTokenizer.from_pretrained("gpt2")
 ```
 
 ### PyTorch

@@ -127,8 +127,8 @@ Temperature(T)를 높이면 확률 분포가 더 **부드러워집니다**:
 
 | 역할 | 모델 | 파라미터 | VRAM (FP16) | 선택 이유 |
 |------|------|---------|-------------|----------|
-| **Teacher** | `gpt2-large` | 774M | ~1.5GB | 충분한 크기차, 무제한 다운로드, 일반 GPU OK |
-| **Student** | `gpt2` (small) | 124M | ~0.25GB | 동일 토크나이저, 6.2x 크기비, 빠른 학습 |
+| **Teacher** | `gpt2` | 124M | ~0.25GB | 로컬 MPS 실행 가능, Fine-tuning 후 증류에 활용 |
+| **Student** | `distilgpt2` | 82M | ~0.16GB | 동일 토크나이저, 1.5x 크기비, 빠른 학습 |
 
 > 📖 모델 선택 기준, 호환성, GPU별 추천 → [모델 선택 가이드](docs/model-selection-guide.md)  
 > 📖 다운로드, 인증, 양자화, 캐시 관리 → [모델 설치 가이드](docs/model-installation-guide.md)
@@ -147,10 +147,10 @@ Temperature(T)를 높이면 확률 분포가 더 **부드러워집니다**:
 
 | # | 모델 | 아키텍처 | 학습 방식 | 역할 |
 |---|------|---------|----------|------|
-| 1 | **Teacher** | `gpt2-large` (774M) | 사전학습 그대로 | Upper Bound |
-| 2 | **Student (KD)** | `gpt2` (124M) | KD Loss + CE Loss | 증류 효과 검증 |
-| 3 | **Student (FT)** | `gpt2` (124M) | CE Loss만 Fine-tuning | Fine-tuning 기준선 |
-| 4 | **Student (Base)** | `gpt2` (124M) | 추가 학습 없음 (원본) | Lower Bound |
+| 1 | **Teacher** | `gpt2` (124M) | 사전학습 또는 Fine-tuned | Upper Bound |
+| 2 | **Student (KD)** | `distilgpt2` (82M) | KD Loss + CE Loss | 증류 효과 검증 |
+| 3 | **Student (FT)** | `distilgpt2` (82M) | CE Loss만 Fine-tuning | Fine-tuning 기준선 |
+| 4 | **Student (Base)** | `distilgpt2` (82M) | 추가 학습 없음 (원본) | Lower Bound |
 
 ### 왜 3-Way가 아니라 4-Way인가?
 
@@ -162,7 +162,7 @@ Temperature(T)를 높이면 확률 분포가 더 **부드러워집니다**:
 | 비교 | 질문 | 의미 |
 |------|------|------|
 | **Q1**: Teacher vs Student(KD) | 압축 손실은 얼마? | 모델 크기를 줄인 대가 측정 |
-| **Q2**: Student(KD) vs Student(FT) | **증류의 순수 효과는?** ⭐ | KD가 자체 학습 대비 얼마나 더 효과적인가 (핵심!) |
+| **Q2**: Student(KD) vs Student(FT) | **증류의 순수 효과는?**  | KD가 자체 학습 대비 얼마나 더 효과적인가 (핵심) |
 | **Q3**: Student(FT) vs Student(Base) | Fine-tuning 자체의 가치는? | 추가 학습이 원본 대비 얼마나 향상 시키는가 |
 
 > 📄 이 4-Way 구조는 DistilBERT, TinyBERT, MiniLLM, Zephyr 등 주요 논문에서 표준으로 사용됩니다.  
@@ -174,7 +174,7 @@ Student(KD)와 Student(FT)는 **Loss 함수를 제외하고 모든 조건이 동
 
 | 변인 | Student(KD) | Student(FT) | Student(Base) | 동일 여부 |
 |------|-------------|-------------|---------------|----------|
-| 기본 모델 | gpt2 (124M) | gpt2 (124M) | gpt2 (124M) | ✅ 동일 |
+| 기본 모델 | distilgpt2 (82M) | distilgpt2 (82M) | distilgpt2 (82M) | ✅ 동일 |
 | 학습 데이터 | WikiText-2 | WikiText-2 | - | ✅ 동일 (Base 제외) |
 | Epochs | 3~5 | 3~5 | - | ✅ 동일 |
 | Learning Rate | 5e-5 | 5e-5 | - | ✅ 동일 |
@@ -191,8 +191,8 @@ Student(KD)와 Student(FT)는 **Loss 함수를 제외하고 모든 조건이 동
 ![Training Pipeline](docs/diagrams/training-pipeline.svg)
 
 **파이프라인 주요 단계:**
-1. **데이터 준비** — WikiText-2 로드 및 토크나이징
-2. **Teacher 추론** — Teacher 모델로 soft label 생성 (가중치 고정)
+1. **Teacher Fine-tuning** — Teacher를 target 도메인에 적응 (선택적)
+2. **Teacher 추론** — FT된 Teacher로 soft label 생성 (가중치 고정)
 3. **Student(KD) 학습** — KD Loss(CE + KL)로 증류 학습
 4. **Student(FT) 학습** — CE Loss만으로 Fine-tuning (대조군)
 5. **평가 & 비교** — 4-Way(Teacher / KD / FT / Base) 성능 비교 및 시각화
@@ -293,6 +293,9 @@ for batch in dataloader:
 | `temperature` | 3.0 | 1.0 ~ 10.0 | Soft label 온도 |
 | `alpha` | 0.5 | 0.0 ~ 1.0 | CE vs KD 비율 |
 | `learning_rate` | 5e-5 | 1e-5 ~ 1e-4 | Student 학습률 |
+| `teacher_epochs` | 3 | 1 ~ 5 | Teacher FT 에폭 수 |
+| `teacher_learning_rate` | 2e-5 | 1e-5 ~ 5e-5 | Teacher FT 학습률 |
+| `teacher_checkpoint` | "" | 경로 | FT된 Teacher 가중치 (비어있으면 pretrained) |
 | `batch_size` | 8 | 4 ~ 32 | GPU 메모리에 따라 조정 |
 | `max_seq_length` | 512 | 128 ~ 1024 | 입력 토큰 최대 길이 |
 | `epochs` | 3 | 3 ~ 10 | 전체 데이터 반복 횟수 |
@@ -321,8 +324,13 @@ knowledge-distillation/
 ├── main.py                          # 🚀 파이프라인 실행 진입점 (YAML config 기반)
 │
 ├── configs/                         # 🔧 실험별 설정 파일 (YAML)
-│   ├── exp01_local_smoke.yaml       #   1차 실험: 로컬 smoke test
-│   └── exp02_local_longer.yaml      #   2차 실험: 패딩 완화 + 수렴 확인
+│   ├── exp01_local_smoke.yaml       #   1차: 로컬 smoke test
+│   ├── exp02_local_longer.yaml      #   2차: 패딩 완화 + 수렴 확인
+│   ├── exp03_t2_a05.yaml            #   3차: T=2.0, α=0.5
+│   ├── exp04_medium_teacher.yaml    #   4차: gpt2-medium teacher
+│   ├── exp05_wikitext103.yaml       #   5차: WikiText-103
+│   ├── exp06_teacher_ft_smoke.yaml  #   6차: Teacher FT + KD
+│   └── exp07_teacher_ft_alpha03.yaml #  7차: Teacher FT + α=0.3
 │
 ├── docs/                            # 📖 문서
 │   ├── papers.md                    #   📄 논문 레퍼런스 & 개념 출처 매핑
@@ -341,6 +349,7 @@ knowledge-distillation/
 │   ├── config.py                    #   하이퍼파라미터 & 경로 설정 (YAML 로딩 포함)
 │   ├── dataset.py                   #   데이터 로드 & 전처리
 │   ├── models.py                    #   Teacher/Student 모델 로드
+│   ├── train_teacher.py             #   Teacher Fine-tuning (도메인 적응)
 │   ├── distill.py                   #   지식 증류 학습 (핵심)
 │   ├── train_baseline.py            #   Student 자체 Fine-tuning
 │   ├── evaluate.py                  #   개별 모델 평가
@@ -370,8 +379,9 @@ knowledge-distillation/
 | `src/config.py` | - (설정) | YAML 또는 프리셋 | KDConfig 객체 |
 | `src/dataset.py` | 1 | 데이터셋 이름 | DataLoader |
 | `src/models.py` | 2 | 모델 이름 | Teacher/Student 모델 |
-| `src/distill.py` | 3a | DataLoader + 모델 | Student(KD) 체크포인트 |
-| `src/train_baseline.py` | 3b | DataLoader + Student | Student(FT) 체크포인트 |
+| `src/train_teacher.py` | 3a | DataLoader + Teacher | Teacher(FT) 체크포인트 |
+| `src/distill.py` | 3b | DataLoader + 모델 | Student(KD) 체크포인트 |
+| `src/train_baseline.py` | 3c | DataLoader + Student | Student(FT) 체크포인트 |
 | `src/evaluate.py` | 4 | 모델 체크포인트 | Perplexity, 속도 등 |
 | `src/compare.py` | 5 | 4개 모델 평가 결과 | 비교 차트 + 리포트 + 자동 진단 |
 
@@ -420,23 +430,27 @@ uv sync
 uv run python verify_setup.py
 
 # 4. 전체 파이프라인 실행 (YAML config 지정)
-uv run python main.py configs/exp02_local_longer.yaml
+uv run python main.py configs/exp06_teacher_ft_smoke.yaml
 ```
 
-`main.py`가 아래 4단계를 순서대로 실행합니다:
-1. **Knowledge Distillation** — Teacher → Student 증류 학습
-2. **Baseline Fine-tuning** — Student CE-only 학습
-3. **Evaluation** — 4-Way 모델 평가 (PPL, 속도)
-4. **Comparison** — 비교 차트 + 자동 진단 + notes 생성
+`main.py`가 아래 5단계를 순서대로 실행합니다:
+1. **Teacher Fine-tuning** — Teacher를 target 도메인에 적응 (선택적)
+2. **Knowledge Distillation** — Teacher → Student 증류 학습
+3. **Baseline Fine-tuning** — Student CE-only 학습
+4. **Evaluation** — 4-Way 모델 평가 (PPL, 속도)
+5. **Comparison** — 비교 차트 + 자동 진단 + notes 생성
 
 특정 단계만 실행할 수도 있습니다:
 
 ```bash
+# Teacher FT만 실행
+uv run python main.py configs/exp06_teacher_ft_smoke.yaml --step train_teacher
+
 # 증류만 실행
-uv run python main.py configs/exp02_local_longer.yaml --step distill
+uv run python main.py configs/exp06_teacher_ft_smoke.yaml --step distill
 
 # 평가 + 비교만 실행
-uv run python main.py configs/exp02_local_longer.yaml --step evaluate --step compare
+uv run python main.py configs/exp06_teacher_ft_smoke.yaml --step evaluate --step compare
 ```
 
 ### 실험 설정 관리
@@ -444,14 +458,18 @@ uv run python main.py configs/exp02_local_longer.yaml --step evaluate --step com
 실험별 파라미터는 `configs/` 폴더의 YAML 파일로 관리합니다:
 
 ```yaml
-# configs/exp02_local_longer.yaml
+# configs/exp06_teacher_ft_smoke.yaml
 teacher_model: gpt2
 student_model: distilgpt2
 max_seq_length: 256
-temperature: 4.0
-alpha: 0.3
+temperature: 2.0
+alpha: 0.5
 epochs: 3
 batch_size: 4
+
+# Teacher Fine-tuning
+teacher_epochs: 3
+teacher_learning_rate: 2.0e-5
 ```
 
 YAML에 없는 필드는 `src/config.py`의 기본값이 적용됩니다.

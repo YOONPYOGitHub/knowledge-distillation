@@ -20,8 +20,8 @@ def get_device() -> torch.device:
 @dataclass
 class KDConfig:
     # --- 모델 ---
-    teacher_model: str = "gpt2-large"
-    student_model: str = "gpt2"
+    teacher_model: str = "gpt2"
+    student_model: str = "distilgpt2"
 
     # --- 데이터 ---
     dataset_name: str = "wikitext"
@@ -102,8 +102,8 @@ def local_config(**overrides) -> KDConfig:
 def server_config(**overrides) -> KDConfig:
     """GPU 서버 본 실험용 설정"""
     defaults = dict(
-        teacher_model="gpt2-large",
-        student_model="gpt2",
+        teacher_model="gpt2-medium",
+        student_model="distilgpt2",
         batch_size=8,
         epochs=3,
         max_seq_length=512,

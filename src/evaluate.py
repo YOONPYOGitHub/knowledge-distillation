@@ -128,9 +128,10 @@ def evaluate_all(config: KDConfig):
 
     results = []
 
-    # 1. Teacher
+    # 1. Teacher (FT checkpoint가 있으면 Teacher (FT)로 표시)
     teacher = load_teacher(config)
-    results.append(evaluate_model(teacher, "Teacher", test_loader, config.device))
+    teacher_name = "Teacher (FT)" if config.teacher_checkpoint else "Teacher"
+    results.append(evaluate_model(teacher, teacher_name, test_loader, config.device))
     del teacher
     if config.device == "cuda":
         torch.cuda.empty_cache()

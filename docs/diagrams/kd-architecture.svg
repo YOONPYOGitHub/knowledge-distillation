@@ -48,13 +48,13 @@
   <!-- Teacher Model -->
   <rect x="100" y="190" width="240" height="100" rx="12" fill="url(#teacherGrad)" filter="url(#shadow)"/>
   <text x="220" y="225" text-anchor="middle" font-size="16" font-weight="bold" fill="#78350f">🎓 Teacher Model</text>
-  <text x="220" y="248" text-anchor="middle" font-size="12" fill="#92400e">gpt2-large (774M params)</text>
-  <text x="220" y="268" text-anchor="middle" font-size="11" fill="#92400e" font-style="italic">Frozen — Inference Only</text>
+  <text x="220" y="248" text-anchor="middle" font-size="12" fill="#92400e">gpt2 (124M) · Fine-tuned</text>
+  <text x="220" y="268" text-anchor="middle" font-size="11" fill="#92400e" font-style="italic">Domain-adapted, then Frozen</text>
 
   <!-- Student Model -->
   <rect x="560" y="190" width="240" height="100" rx="12" fill="url(#studentGrad)" filter="url(#shadow)"/>
   <text x="680" y="225" text-anchor="middle" font-size="16" font-weight="bold" fill="white">🧑‍🎓 Student Model</text>
-  <text x="680" y="248" text-anchor="middle" font-size="12" fill="#e0f2fe">gpt2 (124M params)</text>
+  <text x="680" y="248" text-anchor="middle" font-size="12" fill="#e0f2fe">distilgpt2 (82M params)</text>
   <text x="680" y="268" text-anchor="middle" font-size="11" fill="#e0f2fe" font-style="italic">Trainable — 학습 대상</text>
 
   <!-- Teacher Output -->

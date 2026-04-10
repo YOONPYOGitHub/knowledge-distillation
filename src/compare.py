@@ -92,9 +92,10 @@ def plot_speed(results: list, save_path: str):
 
 
 def plot_training_curves(config: KDConfig, save_path: str):
-    """KD vs FT 학습 Loss 곡선 비교"""
+    """Teacher FT / KD / FT 학습 Loss 곡선 비교"""
     kd_path = config.log_dir / "distill_history.json"
     ft_path = config.log_dir / "baseline_history.json"
+    teacher_path = config.log_dir / "teacher_history.json"
 
     if not kd_path.exists() or not ft_path.exists():
         print("⚠️ 학습 로그가 부족하여 학습 곡선을 그릴 수 없습니다.")
@@ -107,6 +108,14 @@ def plot_training_curves(config: KDConfig, save_path: str):
 
     fig, ax = plt.subplots(figsize=(8, 5))
 
+    # Teacher FT 곡선 (있을 때만)
+    if teacher_path.exists():
+        with open(teacher_path) as f:
+            teacher_hist = json.load(f)
+        t_epochs = [h["epoch"] for h in teacher_hist]
+        t_ce = [h["ce_loss"] for h in teacher_hist]
+        ax.plot(t_epochs, t_ce, "D-", label="Teacher (FT) - CE Loss", color="#2196F3")
+
     kd_epochs = [h["epoch"] for h in kd_hist]
     kd_ce = [h["ce_loss"] for h in kd_hist]
     ft_epochs = [h["epoch"] for h in ft_hist]
@@ -117,7 +126,7 @@ def plot_training_curves(config: KDConfig, save_path: str):
 
     ax.set_xlabel("Epoch")
     ax.set_ylabel("CE Loss")
-    ax.set_title("Training Loss: KD vs FT")
+    ax.set_title("Training Loss: Teacher FT / KD / FT")
     ax.legend()
     ax.grid(alpha=0.3)
     plt.tight_layout()
@@ -184,6 +193,9 @@ def generate_summary(results: list, config: KDConfig) -> dict:
             "temperature": config.temperature,
             "alpha": config.alpha,
             "epochs": config.epochs,
+            "teacher_epochs": config.teacher_epochs,
+            "teacher_learning_rate": config.teacher_learning_rate,
+            "teacher_checkpoint": config.teacher_checkpoint,
             "batch_size": config.batch_size,
             "max_seq_length": config.max_seq_length,
             "device": config.device,

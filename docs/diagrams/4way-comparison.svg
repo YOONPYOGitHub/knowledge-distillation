@@ -15,10 +15,10 @@
   <!-- ======= Teacher Column ======= -->
   <rect x="20" y="85" width="210" height="70" rx="10" fill="#f59e0b" filter="url(#shadow)"/>
   <text x="125" y="113" text-anchor="middle" font-size="14" font-weight="bold" fill="white">🎓 Teacher</text>
-  <text x="125" y="133" text-anchor="middle" font-size="10" fill="#fef3c7">gpt2-large (774M)</text>
+  <text x="125" y="133" text-anchor="middle" font-size="10" fill="#fef3c7">gpt2 (124M) · Fine-tuned</text>
 
   <rect x="20" y="168" width="210" height="30" rx="6" fill="#fef3c7" stroke="#f59e0b" stroke-width="1"/>
-  <text x="125" y="188" text-anchor="middle" font-size="11" fill="#92400e">사전학습 그대로 (학습 없음)</text>
+  <text x="125" y="188" text-anchor="middle" font-size="11" fill="#92400e">도메인 Fine-Tuning 후 Frozen</text>
 
   <rect x="20" y="210" width="210" height="26" rx="5" fill="white" stroke="#fbbf24" stroke-width="1"/>
   <text x="125" y="228" text-anchor="middle" font-size="10" fill="#78350f">→ Perplexity 측정</text>
@@ -32,7 +32,7 @@
   <!-- ======= Student KD Column ======= -->
   <rect x="255" y="85" width="210" height="70" rx="10" fill="#3b82f6" filter="url(#shadow)"/>
   <text x="360" y="113" text-anchor="middle" font-size="14" font-weight="bold" fill="white">🧑‍🎓 Student (KD)</text>
-  <text x="360" y="133" text-anchor="middle" font-size="10" fill="#dbeafe">gpt2 (124M) · 증류 학습</text>
+  <text x="360" y="133" text-anchor="middle" font-size="10" fill="#dbeafe">distilgpt2 (82M) · 증류 학습</text>
 
   <rect x="255" y="168" width="210" height="30" rx="6" fill="#dbeafe" stroke="#3b82f6" stroke-width="1"/>
   <text x="360" y="188" text-anchor="middle" font-size="11" fill="#1e40af">KD Loss + CE Loss 학습</text>
@@ -49,7 +49,7 @@
   <!-- ======= Student FT Column ======= -->
   <rect x="490" y="85" width="210" height="70" rx="10" fill="#10b981" filter="url(#shadow)"/>
   <text x="595" y="113" text-anchor="middle" font-size="14" font-weight="bold" fill="white">📝 Student (FT)</text>
-  <text x="595" y="133" text-anchor="middle" font-size="10" fill="#d1fae5">gpt2 (124M) · Fine-tuning</text>
+  <text x="595" y="133" text-anchor="middle" font-size="10" fill="#d1fae5">distilgpt2 (82M) · Fine-tuning</text>
 
   <rect x="490" y="168" width="210" height="30" rx="6" fill="#d1fae5" stroke="#10b981" stroke-width="1"/>
   <text x="595" y="188" text-anchor="middle" font-size="11" fill="#065f46">CE Loss만으로 학습</text>
@@ -66,7 +66,7 @@
   <!-- ======= Student Base Column ======= -->
   <rect x="725" y="85" width="210" height="70" rx="10" fill="#6b7280" filter="url(#shadow)"/>
   <text x="830" y="113" text-anchor="middle" font-size="14" font-weight="bold" fill="white">📦 Student (Base)</text>
-  <text x="830" y="133" text-anchor="middle" font-size="10" fill="#e5e7eb">gpt2 (124M) · 원본 그대로</text>
+  <text x="830" y="133" text-anchor="middle" font-size="10" fill="#e5e7eb">distilgpt2 (82M) · 원본 그대로</text>
 
   <rect x="725" y="168" width="210" height="30" rx="6" fill="#f3f4f6" stroke="#6b7280" stroke-width="1"/>
   <text x="830" y="188" text-anchor="middle" font-size="11" fill="#374151">추가 학습 없음 (Pretrained)</text>

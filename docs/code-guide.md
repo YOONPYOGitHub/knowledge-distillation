@@ -11,24 +11,30 @@ main.py 실행
   │
   ├─ Config 로드 (YAML → KDConfig)
   │
-  ├─ STEP 1: distill()         ─ KD 학습 (Teacher → Student 지식 전달)
+  ├─ STEP 1: train_teacher()   ─ Teacher Fine-tuning (도메인 적응, 선택적)
   │
-  ├─ STEP 2: train_baseline()  ─ FT 학습 (CE만으로 Student 학습, 비교 기준)
+  ├─ STEP 2: distill()         ─ KD 학습 (Teacher → Student 지식 전달)
   │
-  ├─ STEP 3: evaluate_all()    ─ 4-Way 평가 (PPL, 추론 속도)
+  ├─ STEP 3: train_baseline()  ─ FT 학습 (CE만으로 Student 학습, 비교 기준)
   │
-  └─ STEP 4: compare()         ─ 비교 차트 생성 + 자동 진단
+  ├─ STEP 4: evaluate_all()    ─ 4-Way 평가 (PPL, 추론 속도)
+  │
+  └─ STEP 5: compare()         ─ 비교 차트 생성 + 자동 진단
 ```
 
 ### 실행 방법
 
 ```bash
-# 전체 파이프라인
-uv run python main.py configs/exp05_wikitext103.yaml
+# 전체 파이프라인 (Teacher FT 포함)
+uv run python main.py configs/exp06_teacher_ft_smoke.yaml
 
 # 특정 단계만 실행
-uv run python main.py configs/exp05_wikitext103.yaml --step distill
-uv run python main.py configs/exp05_wikitext103.yaml --step evaluate --step compare
+uv run python main.py configs/exp06_teacher_ft_smoke.yaml --step train_teacher
+uv run python main.py configs/exp06_teacher_ft_smoke.yaml --step distill --step baseline
+uv run python main.py configs/exp06_teacher_ft_smoke.yaml --step evaluate --step compare
+
+# Teacher FT 없이 실행 (train_teacher 스텝 생략)
+uv run python main.py configs/exp05_wikitext103.yaml --step distill --step baseline --step evaluate --step compare
 ```
 
 ---
@@ -40,6 +46,7 @@ src/
   config.py         ─ 설정 관리 (KDConfig 데이터클래스)
   dataset.py        ─ 데이터 로드 & 전처리 (Packing)
   models.py         ─ Teacher/Student 모델 로드
+  train_teacher.py  ─ Teacher Fine-tuning (도메인 적응)
   distill.py        ─ Knowledge Distillation 학습
   train_baseline.py ─ Fine-tuning 학습 (비교 기준)
   evaluate.py       ─ Perplexity / 추론 속도 평가
@@ -77,6 +84,11 @@ class KDConfig:
     # KD 하이퍼파라미터
     temperature: float    # Soft label 평탄화 정도 (높을수록 flat)
     alpha: float          # CE vs KD 비율 (0.5 = 50:50)
+
+    # Teacher Fine-tuning
+    teacher_epochs: int         # Teacher FT 에폭 수 (기본: 3)
+    teacher_learning_rate: float # Teacher FT 학습률 (기본: 2e-5)
+    teacher_checkpoint: str     # FT된 Teacher 가중치 경로 (비어있으면 pretrained)
 
     # 학습
     epochs: int
@@ -141,15 +153,40 @@ class KDConfig:
 
 | 함수 | 역할 |
 |---|---|
-| `load_teacher(config)` | Teacher 모델 로드. `eval()` 모드 + 가중치 고정(`requires_grad=False`) |
+| `load_teacher(config)` | Teacher 모델 로드. `teacher_checkpoint`가 있으면 FT 가중치 로드. `eval()` 모드 + 가중치 고정 |
 | `load_student(config)` | Student 모델 로드. `train()` 모드 (학습 대상) |
 | `model_info(model, name)` | 파라미터 수, 메모리, 디바이스 출력 |
 
-Teacher는 학습 중 가중치가 변하지 않음 (추론만 수행). GPU에서 `fp16`이 활성화되면 반정밀도로 로드하여 메모리 절약.
+Teacher는 KD 학습 중 가중치가 변하지 않음 (추론만 수행). `teacher_checkpoint`가 설정되면 해당 경로의 fine-tuned 가중치를 로드. GPU에서 `fp16`이 활성화되면 반정밀도로 로드하여 메모리 절약.
 
 ---
 
-### 3.4 distill.py — Knowledge Distillation 학습
+### 3.4 train_teacher.py — Teacher Fine-tuning
+
+**역할**: Teacher를 target 도메인 데이터에 fine-tune. KD 전에 Teacher가 해당 데이터에서 충분히 강해야 soft target이 의미 있음.
+
+**왜 필요한가:**
+- Pretrained Teacher는 학습 데이터(WebText)와 다른 도메인(WikiText)에서 성능이 부족할 수 있음
+- Teacher PPL이 Student FT PPL보다 높으면 KD의 soft target이 오히려 방해
+- exp06에서 Teacher FT 적용 후 KD-FT 격차가 16.02 → 0.44로 97% 감소
+
+**주요 함수:**
+
+| 함수 | 역할 |
+|---|---|
+| `train_one_epoch(model, dataloader, optimizer, config)` | Teacher 1 epoch CE Loss 학습 |
+| `validate(model, dataloader, config)` | 검증 데이터로 loss 계산 |
+| `train_teacher(config)` | 전체 Teacher FT 파이프라인 |
+
+**산출물:**
+- `teacher_ft_best.pt` — 가장 좋은 epoch의 Teacher 가중치
+- `teacher_history.json` — epoch별 loss 기록
+
+파이프라인에서 `train_teacher` 실행 후 `teacher_checkpoint`가 자동으로 설정되어, 이후 `distill()` 단계에서 FT된 Teacher로 KD 수행.
+
+---
+
+### 3.5 distill.py — Knowledge Distillation 학습
 
 **역할**: Teacher의 지식을 Student에게 전달하는 핵심 학습 모듈.
 
@@ -208,7 +245,7 @@ logits:  [?, ?, ?, ?, ?]  ← 각 위치에서의 예측
 
 ---
 
-### 3.5 train_baseline.py — Fine-tuning 학습
+### 3.6 train_baseline.py — Fine-tuning 학습
 
 **역할**: KD 없이 CE Loss만으로 Student를 학습. KD 효과의 **비교 기준**(baseline).
 
@@ -221,11 +258,13 @@ distill.py와의 차이:
 | 학습 속도 | 느림 (Teacher forward 오버헤드) | 빠름 |
 | 산출물 | student_kd_best.pt | student_ft_best.pt |
 
+참고: `train_teacher.py`도 CE Loss만 사용하지만, Teacher 모델을 학습하는 별도 모듈.
+
 동일한 데이터, 동일한 Student, 동일한 optimizer로 학습하므로 **Loss 함수만 다른 공정 비교**.
 
 ---
 
-### 3.6 evaluate.py — 모델 평가
+### 3.7 evaluate.py — 모델 평가
 
 **역할**: 4개 모델의 Perplexity(PPL)와 추론 속도를 측정.
 
@@ -233,7 +272,7 @@ distill.py와의 차이:
 
 | # | 모델 | 설명 |
 |---|---|---|
-| 1 | Teacher | 원본 대형 모델 (gpt2-medium 등) |
+| 1 | Teacher / Teacher (FT) | 원본 또는 fine-tuned 대형 모델 |
 | 2 | Student (KD) | KD 학습된 Student (student_kd_best.pt) |
 | 3 | Student (FT) | FT 학습된 Student (student_ft_best.pt) |
 | 4 | Student (Base) | 추가 학습 없는 Student 원본 |
