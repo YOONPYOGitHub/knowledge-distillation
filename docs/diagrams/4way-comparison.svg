@@ -96,7 +96,7 @@
   <text x="167" y="480" text-anchor="middle" font-size="9" fill="#78350f">→ 모델 축소로 인한 성능 하락 측정</text>
 
   <rect x="332" y="425" width="295" height="65" rx="8" fill="#dbeafe" stroke="#3b82f6" stroke-width="1.5"/>
-  <text x="479" y="448" text-anchor="middle" font-size="11" font-weight="600" fill="#1e40af">Q2: 증류 효과는? ⭐ 핵심</text>
+  <text x="479" y="448" text-anchor="middle" font-size="11" font-weight="600" fill="#1e40af">Q2: 증류 효과는?</text>
   <text x="479" y="465" text-anchor="middle" font-size="10" fill="#2563eb">Student(KD) vs Student(FT)</text>
   <text x="479" y="480" text-anchor="middle" font-size="9" fill="#1e3a8a">→ 증류가 자체 학습 대비 얼마나 효과?</text>
 

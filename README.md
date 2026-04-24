@@ -114,7 +114,7 @@ Temperature(T)를 높이면 확률 분포가 더 **부드러워집니다**:
 
 이 프로젝트의 LLM은 **로컬 설치형**입니다:
 
-- ☁️ ~~클라우드 API 호출~~ → ✅ **로컬 디바이스에서 직접 실행** (CUDA GPU / Apple MPS / CPU 자동 감지)
+- **로컬 디바이스에서 직접 실행** (CUDA GPU / Apple MPS / CPU 자동 감지)
 - Hugging Face Hub에서 모델 가중치를 다운로드하여 로컬 디스크에 저장
 - 최초 1회 다운로드 후 **오프라인에서도 실행 가능**
 - API 비용 없음, 데이터가 외부로 나가지 않음
@@ -189,6 +189,8 @@ Student(KD)와 Student(FT)는 **Loss 함수를 제외하고 모든 조건이 동
 데이터 준비부터 4-Way 모델 학습, 평가, 결과 비교까지의 흐름을 한눈에 확인할 수 있습니다.
 
 ![Training Pipeline](docs/diagrams/training-pipeline.svg)
+
+> 📌 다이어그램의 **Step 1 (Data Preparation)** 은 독립 실행 단계가 아니라 각 학습/평가 단계에서 공통으로 호출되는 공유 유틸리티입니다 (`src/dataset.py`의 `create_dataloaders`). 아래 "파이프라인 주요 단계"는 `main.py`의 실제 실행 순서(`STEPS`)를 따릅니다.
 
 **파이프라인 주요 단계:**
 1. **Teacher Fine-tuning** — Teacher를 target 도메인에 적응 (선택적)
