@@ -1,0 +1,51 @@
+prompt,category
+The capital of France is,factual
+The capital of Japan is,factual
+The capital of Australia is,factual
+The largest planet in our solar system is,factual
+Water boils at a temperature of,factual
+The speed of light is approximately,factual
+Mount Everest is located in,factual
+The Great Wall of China was built,factual
+The Pacific Ocean is the,factual
+The human genome contains approximately,factual
+In a galaxy far far away,narrative
+Once upon a time there was,narrative
+The old lighthouse stood alone on,narrative
+She opened the letter slowly and,narrative
+The detective walked into the room where,narrative
+As the sun set over the mountains,narrative
+The first thing he noticed was,narrative
+Deep in the forest lived a,narrative
+When the clock struck midnight,narrative
+The train pulled into the station at,narrative
+Machine learning is a field,technical
+Knowledge distillation is a technique that,technical
+A transformer architecture consists of,technical
+Gradient descent optimizes a function by,technical
+The attention mechanism allows models to,technical
+Perplexity is a measure of,technical
+In natural language processing,technical
+Neural networks learn by adjusting,technical
+Reinforcement learning differs from supervised learning in,technical
+The bias-variance tradeoff describes,technical
+The history of artificial intelligence began,wiki
+The industrial revolution was a period of,wiki
+Philosophy as a discipline has,wiki
+Classical music emerged during,wiki
+The Roman Empire reached its greatest extent,wiki
+The discovery of penicillin in 1928,wiki
+Quantum mechanics was developed in the early,wiki
+The printing press revolutionized,wiki
+The theory of evolution proposed by Darwin,wiki
+The Silk Road connected,wiki
+The teacher asked the student about,dialogue
+He whispered to her that,dialogue
+The manager explained to the team,dialogue
+The doctor told the patient,dialogue
+The child looked up at his father and asked,dialogue
+The quick brown fox jumps over the lazy,completion
+A journey of a thousand miles begins with,completion
+The best way to predict the future is,completion
+An apple a day keeps,completion
+Rome was not built,completion
