@@ -22,9 +22,9 @@
 
 | 조합 | Teacher | Student | 비율 | 동시 VRAM (FP16) | 난이도 |
 |------|---------|---------|------|-----------------|--------|
-| **A (최소)** | `gpt2-medium` (345M) | `distilgpt2` (82M) | 4.2x | ~2.0GB | ⭐ |
-| **B (권장)** | `gpt2-large` (774M) | `gpt2` (124M) | 6.2x | ~3.5GB | ⭐⭐ |
-| **C (강화)** | `gpt2-xl` (1.5B) | `gpt2-medium` (345M) | 4.3x | ~7.0GB | ⭐⭐ |
+| **A (최소)** | `gpt2` (124M) | `distilgpt2` (82M) | 1.5x | ~0.5GB | ⭐ |
+| **B (권장)** | `gpt2-medium` (355M) | `distilgpt2` (82M) | 4.3x | ~2.0GB | ⭐⭐ |
+| **C (강화)** | `gpt2-large` (774M) | `gpt2` (124M) | 6.2x | ~3.5GB | ⭐⭐ |
 
 **장점:**
 - 동일 토크나이저 (`gpt2` tokenizer) → 별도 토큰 매핑 불필요
@@ -73,7 +73,7 @@
 |------|---------|--------|-------|--------|-------|---------|
 | `distilgpt2` | 82M | 6 | 12 | 768 | 50,257 | 1024 |
 | `gpt2` | 124M | 12 | 12 | 768 | 50,257 | 1024 |
-| `gpt2-medium` | 345M | 24 | 16 | 1024 | 50,257 | 1024 |
+| `gpt2-medium` | 355M | 24 | 16 | 1024 | 50,257 | 1024 |
 | `gpt2-large` | 774M | 36 | 20 | 1280 | 50,257 | 1024 |
 | `gpt2-xl` | 1.5B | 48 | 25 | 1600 | 50,257 | 1024 |
 
@@ -122,11 +122,11 @@ python -c "import torch; print('MPS:', torch.backends.mps.is_available())"
 
 | 환경 | GPU / 칩 | 추천 조합 | 비고 |
 |------|-----------|----------|------|
-| **맥북 (Apple M4, 16GB)** | MPS | 조합 A (`gpt2-medium` → `distilgpt2`) | 디버깅/테스트용, batch_size 작게 |
+| **맥북 (Apple M4, 16GB)** | MPS | 조합 A (`gpt2` → `distilgpt2`) | 디버깅/테스트용, batch_size 작게 |
 | **맥북 (Apple M4 Pro+, 24GB+)** | MPS | 조합 A 또는 B | 소규모 실험 가능 |
-| RTX 4060 | 8GB | 조합 A (`gpt2-medium` → `distilgpt2`) | FP16 필수 |
+| RTX 4060 | 8GB | 조합 A (`gpt2` → `distilgpt2`) | FP16 필수 |
 | RTX 4070 | 12GB | 조합 A 또는 B | FP16 권장 |
-| RTX 4080 | 16GB | 조합 B (`gpt2-large` → `gpt2`) | 여유 있음 |
+| RTX 4080 | 16GB | 조합 B (`gpt2-medium` → `distilgpt2`) | 여유 있음 |
 | RTX 4090 | 24GB | 조합 B 또는 C  | 속도 빠름 |
 | RTX 5090 | 32GB | 조합 C 또는 D | 최신 소비자 GPU |
 | A100 | 40GB | 조합 D (`Mistral-7B` → `TinyLlama`) | 전문 실험 |
@@ -157,11 +157,11 @@ teacher = AutoModelForCausalLM.from_pretrained(
 
 ## 6. 이 프로젝트의 기본 선택
 
-본 프로젝트는 **조합 B**를 기본으로 사용합니다:
+본 프로젝트는 **조합 A**를 기본으로 사용합니다:
 
 | 역할 | 모델 | 이유 |
 |------|------|------|
-| **Teacher** | `gpt2-large` (774M) | 충분한 크기 차이, 24GB GPU에서 여유, 무제한 다운로드 |
-| **Student** | `gpt2` (124M) | 동일 토크나이저, 6.2x 크기비, 빠른 학습 |
+| **Teacher** | `gpt2` (124M) | 로컬 MPS 실행 가능, Fine-tuning 후 증류 활용, 무제한 다운로드 |
+| **Student** | `distilgpt2` (82M) | 동일 토크나이저, 1.5x 크기비, 빠른 학습 |
 
 > 환경에 따라 [모델 설치 가이드](./model-installation-guide.md)를 참고하여 다른 조합으로 변경할 수 있습니다.

@@ -22,9 +22,6 @@
 # Python 버전 확인 (3.10 이상 권장)
 python --version
 
-# pip 최신 버전으로 업데이트
-pip install --upgrade pip
-
 # 디바이스 확인 (환경에 따라 선택)
 nvidia-smi                    # GPU 서버 (CUDA)
 python -c "import torch; print(torch.backends.mps.is_available())"  # 맥북 (MPS)
@@ -33,17 +30,14 @@ python -c "import torch; print(torch.backends.mps.is_available())"  # 맥북 (MP
 ### 2.2 핵심 라이브러리 설치
 
 ```bash
-# 프로젝트 루트에서 실행
-pip install -r requirements.txt
+# 프로젝트 루트에서 uv로 의존성 설치 (가상환경 자동 생성)
+uv sync
 ```
 
-또는 개별 설치:
+의존성은 `pyproject.toml`에 정의되어 있습니다. 개별 추가가 필요한 경우:
 
 ```bash
-pip install torch>=2.0.0              # PyTorch (CUDA 포함)
-pip install transformers>=4.35.0      # Hugging Face Transformers
-pip install datasets>=2.14.0          # 데이터셋 라이브러리
-pip install accelerate>=0.24.0        # 분산/혼합정밀 학습 지원
+uv add torch transformers datasets accelerate
 ```
 
 ### 2.3 (선택) Hugging Face CLI 인증
@@ -52,8 +46,8 @@ pip install accelerate>=0.24.0        # 분산/혼합정밀 학습 지원
 > LLaMA, Mistral 등 게이트드(gated) 모델은 인증이 필요합니다.
 
 ```bash
-# Hugging Face CLI 설치
-pip install huggingface_hub
+# Hugging Face CLI 설치 (필요 시)
+uv add huggingface_hub
 
 # 로그인 (https://huggingface.co/settings/tokens 에서 토큰 발급)
 huggingface-cli login
@@ -121,19 +115,19 @@ model = AutoModelForCausalLM.from_pretrained("./models/gpt2-large")
 ```
 
 ```python
-# distilgpt2 (82M) - 가장 가벼움
+# distilgpt2 (82M) - Student 기본 모델
 tokenizer = AutoTokenizer.from_pretrained("distilgpt2")
 model = AutoModelForCausalLM.from_pretrained("distilgpt2")
 
-# gpt2 (124M) - Student 기본 모델
+# gpt2 (124M) - Teacher 기본 모델
 tokenizer = AutoTokenizer.from_pretrained("gpt2")
 model = AutoModelForCausalLM.from_pretrained("gpt2")
 
-# gpt2-medium (345M)
+# gpt2-medium (355M)
 tokenizer = AutoTokenizer.from_pretrained("gpt2-medium")
 model = AutoModelForCausalLM.from_pretrained("gpt2-medium")
 
-# gpt2-large (774M) - Teacher 기본 모델
+# gpt2-large (774M)
 tokenizer = AutoTokenizer.from_pretrained("gpt2-large")
 model = AutoModelForCausalLM.from_pretrained("gpt2-large")
 
@@ -218,7 +212,7 @@ model = AutoModelForCausalLM.from_pretrained(
 ### 5.2 8-bit 양자화 (VRAM 부족 시)
 
 ```bash
-pip install bitsandbytes>=0.41.0
+uv add bitsandbytes>=0.41.0
 ```
 
 ```python
@@ -390,8 +384,6 @@ OSError: You are trying to access a gated repo
 ### pip 패키지 충돌
 
 ```bash
-# 가상환경 사용 권장
-python -m venv venv
-source venv/bin/activate  # Linux/Mac
-pip install -r requirements.txt
+# uv가 가상환경을 자동 관리합니다
+uv sync
 ```

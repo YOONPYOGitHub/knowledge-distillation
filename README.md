@@ -114,7 +114,7 @@ Temperature(T)를 높이면 확률 분포가 더 **부드러워집니다**:
 
 이 프로젝트의 LLM은 **로컬 설치형**입니다:
 
-- ☁️ ~~클라우드 API 호출~~ → ✅ **로컬 디바이스에서 직접 실행** (CUDA GPU / Apple MPS / CPU 자동 감지)
+- **로컬 디바이스에서 직접 실행** (CUDA GPU / Apple MPS / CPU 자동 감지)
 - Hugging Face Hub에서 모델 가중치를 다운로드하여 로컬 디스크에 저장
 - 최초 1회 다운로드 후 **오프라인에서도 실행 가능**
 - API 비용 없음, 데이터가 외부로 나가지 않음
@@ -127,8 +127,8 @@ Temperature(T)를 높이면 확률 분포가 더 **부드러워집니다**:
 
 | 역할 | 모델 | 파라미터 | VRAM (FP16) | 선택 이유 |
 |------|------|---------|-------------|----------|
-| **Teacher** | `gpt2-large` | 774M | ~1.5GB | 충분한 크기차, 무제한 다운로드, 일반 GPU OK |
-| **Student** | `gpt2` (small) | 124M | ~0.25GB | 동일 토크나이저, 6.2x 크기비, 빠른 학습 |
+| **Teacher** | `gpt2` | 124M | ~0.25GB | 로컬 MPS 실행 가능, Fine-tuning 후 증류에 활용 |
+| **Student** | `distilgpt2` | 82M | ~0.16GB | 동일 토크나이저, 1.5x 크기비, 빠른 학습 |
 
 > 📖 모델 선택 기준, 호환성, GPU별 추천 → [모델 선택 가이드](docs/model-selection-guide.md)  
 > 📖 다운로드, 인증, 양자화, 캐시 관리 → [모델 설치 가이드](docs/model-installation-guide.md)
@@ -147,10 +147,10 @@ Temperature(T)를 높이면 확률 분포가 더 **부드러워집니다**:
 
 | # | 모델 | 아키텍처 | 학습 방식 | 역할 |
 |---|------|---------|----------|------|
-| 1 | **Teacher** | `gpt2-large` (774M) | 사전학습 그대로 | Upper Bound |
-| 2 | **Student (KD)** | `gpt2` (124M) | KD Loss + CE Loss | 증류 효과 검증 |
-| 3 | **Student (FT)** | `gpt2` (124M) | CE Loss만 Fine-tuning | Fine-tuning 기준선 |
-| 4 | **Student (Base)** | `gpt2` (124M) | 추가 학습 없음 (원본) | Lower Bound |
+| 1 | **Teacher** | `gpt2` (124M) | 사전학습 또는 Fine-tuned | Upper Bound |
+| 2 | **Student (KD)** | `distilgpt2` (82M) | KD Loss + CE Loss | 증류 효과 검증 |
+| 3 | **Student (FT)** | `distilgpt2` (82M) | CE Loss만 Fine-tuning | Fine-tuning 기준선 |
+| 4 | **Student (Base)** | `distilgpt2` (82M) | 추가 학습 없음 (원본) | Lower Bound |
 
 ### 왜 3-Way가 아니라 4-Way인가?
 
@@ -162,7 +162,7 @@ Temperature(T)를 높이면 확률 분포가 더 **부드러워집니다**:
 | 비교 | 질문 | 의미 |
 |------|------|------|
 | **Q1**: Teacher vs Student(KD) | 압축 손실은 얼마? | 모델 크기를 줄인 대가 측정 |
-| **Q2**: Student(KD) vs Student(FT) | **증류의 순수 효과는?** ⭐ | KD가 자체 학습 대비 얼마나 더 효과적인가 (핵심!) |
+| **Q2**: Student(KD) vs Student(FT) | **증류의 순수 효과는?**  | KD가 자체 학습 대비 얼마나 더 효과적인가 (핵심) |
 | **Q3**: Student(FT) vs Student(Base) | Fine-tuning 자체의 가치는? | 추가 학습이 원본 대비 얼마나 향상 시키는가 |
 
 > 📄 이 4-Way 구조는 DistilBERT, TinyBERT, MiniLLM, Zephyr 등 주요 논문에서 표준으로 사용됩니다.  
@@ -174,7 +174,7 @@ Student(KD)와 Student(FT)는 **Loss 함수를 제외하고 모든 조건이 동
 
 | 변인 | Student(KD) | Student(FT) | Student(Base) | 동일 여부 |
 |------|-------------|-------------|---------------|----------|
-| 기본 모델 | gpt2 (124M) | gpt2 (124M) | gpt2 (124M) | ✅ 동일 |
+| 기본 모델 | distilgpt2 (82M) | distilgpt2 (82M) | distilgpt2 (82M) | ✅ 동일 |
 | 학습 데이터 | WikiText-2 | WikiText-2 | - | ✅ 동일 (Base 제외) |
 | Epochs | 3~5 | 3~5 | - | ✅ 동일 |
 | Learning Rate | 5e-5 | 5e-5 | - | ✅ 동일 |
@@ -190,9 +190,11 @@ Student(KD)와 Student(FT)는 **Loss 함수를 제외하고 모든 조건이 동
 
 ![Training Pipeline](docs/diagrams/training-pipeline.svg)
 
+> 📌 다이어그램의 **Step 1 (Data Preparation)** 은 독립 실행 단계가 아니라 각 학습/평가 단계에서 공통으로 호출되는 공유 유틸리티입니다 (`src/dataset.py`의 `create_dataloaders`). 아래 "파이프라인 주요 단계"는 `main.py`의 실제 실행 순서(`STEPS`)를 따릅니다.
+
 **파이프라인 주요 단계:**
-1. **데이터 준비** — WikiText-2 로드 및 토크나이징
-2. **Teacher 추론** — Teacher 모델로 soft label 생성 (가중치 고정)
+1. **Teacher Fine-tuning** — Teacher를 target 도메인에 적응 (선택적)
+2. **Teacher 추론** — FT된 Teacher로 soft label 생성 (가중치 고정)
 3. **Student(KD) 학습** — KD Loss(CE + KL)로 증류 학습
 4. **Student(FT) 학습** — CE Loss만으로 Fine-tuning (대조군)
 5. **평가 & 비교** — 4-Way(Teacher / KD / FT / Base) 성능 비교 및 시각화
@@ -293,6 +295,9 @@ for batch in dataloader:
 | `temperature` | 3.0 | 1.0 ~ 10.0 | Soft label 온도 |
 | `alpha` | 0.5 | 0.0 ~ 1.0 | CE vs KD 비율 |
 | `learning_rate` | 5e-5 | 1e-5 ~ 1e-4 | Student 학습률 |
+| `teacher_epochs` | 3 | 1 ~ 5 | Teacher FT 에폭 수 |
+| `teacher_learning_rate` | 2e-5 | 1e-5 ~ 5e-5 | Teacher FT 학습률 |
+| `teacher_checkpoint` | "" | 경로 | FT된 Teacher 가중치 (비어있으면 pretrained) |
 | `batch_size` | 8 | 4 ~ 32 | GPU 메모리에 따라 조정 |
 | `max_seq_length` | 512 | 128 ~ 1024 | 입력 토큰 최대 길이 |
 | `epochs` | 3 | 3 ~ 10 | 전체 데이터 반복 횟수 |
@@ -316,30 +321,42 @@ for batch in dataloader:
 ```
 knowledge-distillation/
 │
-├── README.md                        # 이 문서 (프로젝트 전체 설명)
-├── requirements.txt                 # Python 의존성 목록
+├── pyproject.toml                   # ⚙️ uv 프로젝트 설정 & 의존성
+├── README.md                        # 이 문서
+├── main.py                          # 🚀 파이프라인 실행 진입점 (YAML config 기반)
+│
+├── configs/                         # 🔧 실험별 설정 파일 (YAML)
+│   ├── exp01_local_smoke.yaml       #   1차: 로컬 smoke test
+│   ├── exp02_local_longer.yaml      #   2차: 패딩 완화 + 수렴 확인
+│   ├── exp03_t2_a05.yaml            #   3차: T=2.0, α=0.5
+│   ├── exp04_medium_teacher.yaml    #   4차: gpt2-medium teacher
+│   ├── exp05_wikitext103.yaml       #   5차: WikiText-103
+│   ├── exp06_teacher_ft_smoke.yaml  #   6차: Teacher FT + KD
+│   ├── exp07_teacher_ft_alpha03.yaml #  7차: Teacher FT + α=0.3
+│   └── exp08_alpha02_epoch8.yaml    #   8차: α=0.2, 8 epochs (KD가 FT 최초 역전)
 │
 ├── docs/                            # 📖 문서
 │   ├── papers.md                    #   📄 논문 레퍼런스 & 개념 출처 매핑
-│   ├── model-selection-guide.md     #   모델 선택 가이드 (비교표, GPU별 추천)
-│   ├── model-installation-guide.md  #   모델 설치 가이드 (다운로드, 인증, 양자화)
-│   ├── schedule.md                  #   상세 진행 일정 (Phase별 체크리스트)
-│   ├── research-direction-guide.md  #   연구 방향 가이드 (모델/데이터 경로)
-│   ├── glossary.md                  #   용어집 (팀원 배경지식 보완)
+│   ├── model-selection-guide.md     #   모델 선택 가이드
+│   ├── model-installation-guide.md  #   모델 설치 가이드
+│   ├── schedule.md                  #   상세 진행 일정
+│   ├── research-direction-guide.md  #   연구 방향 가이드
+│   ├── glossary.md                  #   용어집
 │   └── diagrams/                    #   📊 다이어그램 (SVG)
-│       ├── kd-architecture.svg      #     지식 증류 전체 아키텍처
-│       ├── 4way-comparison.svg      #     4-Way 비교 실험 구조
-│       ├── training-pipeline.svg    #     학습 파이프라인 흐름도
-│       └── local-install-flow.svg   #     로컬 설치 흐름도
+│       ├── kd-architecture.svg      #   지식 증류 전체 아키텍처
+│       ├── 4way-comparison.svg      #   4-Way 비교 실험 구조
+│       ├── training-pipeline.svg    #   학습 파이프라인 흐름도
+│       └── local-install-flow.svg   #   로컬 설치 흐름도
 │
-├── config.py                        # ⚙️ 하이퍼파라미터 & 경로 설정
-├── dataset.py                       # 📄 데이터 로드 & 전처리
-├── models.py                        # 🤖 Teacher/Student 모델 로드
-│
-├── distill.py                       # 🔥 지식 증류 학습 (핵심)
-├── train_baseline.py                # 📝 Student 자체 Fine-tuning
-├── evaluate.py                      # 📏 개별 모델 평가
-├── compare.py                       # 🆚 4-Way 비교 & 시각화
+├── src/                             # 💻 소스 코드
+│   ├── config.py                    #   하이퍼파라미터 & 경로 설정 (YAML 로딩 포함)
+│   ├── dataset.py                   #   데이터 로드 & 전처리
+│   ├── models.py                    #   Teacher/Student 모델 로드
+│   ├── train_teacher.py             #   Teacher Fine-tuning (도메인 적응)
+│   ├── distill.py                   #   지식 증류 학습 (핵심)
+│   ├── train_baseline.py            #   Student 자체 Fine-tuning
+│   ├── evaluate.py                  #   개별 모델 평가
+│   └── compare.py                   #   4-Way 비교 & 시각화
 │
 ├── verify_setup.py                  # ✅ 환경 검증 스크립트
 │
@@ -349,10 +366,10 @@ knowledge-distillation/
 │   ├── main.py                      #   예제 실행 스크립트
 │   └── pyproject.toml               #   예제 의존성
 │
-└── results/                         # 📁 실험 결과
-    ├── figures/                     #   시각화 차트 (PNG)
-    ├── logs/                        #   학습 로그
-    └── checkpoints/                 #   모델 체크포인트
+└── results/                         # 📁 실험 결과 (run_id별 정리)
+    ├── figures/{run_id}/            #   시각화 차트 (PNG)
+    ├── logs/{run_id}/               #   학습 로그, summary, notes
+    └── checkpoints/{run_id}/        #   모델 체크포인트 (.gitignore)
 ```
 
 ### 파일별 역할
@@ -360,13 +377,16 @@ knowledge-distillation/
 | 파일 | 실행 순서 | 입력 | 출력 |
 |------|----------|------|------|
 | `verify_setup.py` | 0 (선행) | - | 환경 정상 여부 |
-| `config.py` | - (설정) | - | 하이퍼파라미터 |
-| `dataset.py` | 1 | 데이터셋 이름 | DataLoader |
-| `models.py` | 2 | 모델 이름 | Teacher/Student 모델 |
-| `distill.py` | 3a | DataLoader + 모델 | Student(KD) 체크포인트 |
-| `train_baseline.py` | 3b | DataLoader + Student | Student(FT) 체크포인트 |
-| `evaluate.py` | 4 | 모델 체크포인트 | Perplexity, 속도 등 |
-| `compare.py` | 5 | 4개 모델 평가 결과 | 비교 차트 + 리포트 |
+| `main.py` | **통합 실행** | YAML config 파일 | 전체 파이프라인 결과 |
+| `configs/*.yaml` | - (설정) | - | 실험별 하이퍼파라미터 |
+| `src/config.py` | - (설정) | YAML 또는 프리셋 | KDConfig 객체 |
+| `src/dataset.py` | 1 | 데이터셋 이름 | DataLoader |
+| `src/models.py` | 2 | 모델 이름 | Teacher/Student 모델 |
+| `src/train_teacher.py` | 3a | DataLoader + Teacher | Teacher(FT) 체크포인트 |
+| `src/distill.py` | 3b | DataLoader + 모델 | Student(KD) 체크포인트 |
+| `src/train_baseline.py` | 3c | DataLoader + Student | Student(FT) 체크포인트 |
+| `src/evaluate.py` | 4 | 모델 체크포인트 | Perplexity, 속도 등 |
+| `src/compare.py` | 5 | 4개 모델 평가 결과 | 비교 차트 + 리포트 + 자동 진단 |
 
 ---
 
@@ -381,7 +401,7 @@ knowledge-distillation/
 
 ### 의존성
 
-`requirements.txt` 참조. 핵심: PyTorch, Transformers, datasets, accelerate
+`pyproject.toml`에 정의. `uv sync`로 설치. 핵심: PyTorch, Transformers, datasets, accelerate, pyyaml
 
 ### 디바이스 자동 감지
 
@@ -406,28 +426,56 @@ else:
 # 1. 프로젝트 폴더 진입
 cd knowledge-distillation
 
-# 2. 가상환경 생성 & 활성화
-python -m venv venv
-source venv/bin/activate
+# 2. 의존성 설치 (uv가 가상환경 자동 생성)
+uv sync
 
-# 3. 의존성 설치
-pip install -r requirements.txt
+# 3. 환경 검증
+uv run python verify_setup.py
 
-# 4. 환경 검증
-python verify_setup.py
-
-# 5. 지식 증류 학습  (→ Student-KD 생성)
-python distill.py
-
-# 6. 베이스라인 학습   (→ Student-FT 생성)
-python train_baseline.py
-
-# 7. 4-Way 평가 & 비교 (Teacher + KD + FT + Base)
-python evaluate.py
-python compare.py
+# 4. 전체 파이프라인 실행 (YAML config 지정)
+uv run python main.py configs/exp06_teacher_ft_smoke.yaml
 ```
 
-> ⚠️ 5~7번 코드는 아직 구현 전입니다. Phase 2~4에서 순차 구현 예정.
+`main.py`가 아래 5단계를 순서대로 실행합니다:
+1. **Teacher Fine-tuning** — Teacher를 target 도메인에 적응 (선택적)
+2. **Knowledge Distillation** — Teacher → Student 증류 학습
+3. **Baseline Fine-tuning** — Student CE-only 학습
+4. **Evaluation** — 4-Way 모델 평가 (PPL, 속도)
+5. **Comparison** — 비교 차트 + 자동 진단 + notes 생성
+
+특정 단계만 실행할 수도 있습니다:
+
+```bash
+# Teacher FT만 실행
+uv run python main.py configs/exp06_teacher_ft_smoke.yaml --step train_teacher
+
+# 증류만 실행
+uv run python main.py configs/exp06_teacher_ft_smoke.yaml --step distill
+
+# 평가 + 비교만 실행
+uv run python main.py configs/exp06_teacher_ft_smoke.yaml --step evaluate --step compare
+```
+
+### 실험 설정 관리
+
+실험별 파라미터는 `configs/` 폴더의 YAML 파일로 관리합니다:
+
+```yaml
+# configs/exp06_teacher_ft_smoke.yaml
+teacher_model: gpt2
+student_model: distilgpt2
+max_seq_length: 256
+temperature: 2.0
+alpha: 0.5
+epochs: 3
+batch_size: 4
+
+# Teacher Fine-tuning
+teacher_epochs: 3
+teacher_learning_rate: 2.0e-5
+```
+
+YAML에 없는 필드는 `src/config.py`의 기본값이 적용됩니다.
 
 ---
 
@@ -437,20 +485,20 @@ python compare.py
 
 | Phase | 내용 | 상태 |
 |-------|------|------|
-| **Phase 1** | 프로젝트 준비 (문서, 환경, GPU 확인) | 🔄 진행 중 |
-| **Phase 2** | 핵심 모듈 구현 (config, data, model) | ⬜ 대기 |
-| **Phase 3** | 학습 구현 및 실행 (distill, baseline) | ⬜ 대기 |
-| **Phase 4** | 평가 및 결과 분석 (4-Way 비교) | ⬜ 대기 |
+| **Phase 1** | 프로젝트 준비 (문서, 환경, GPU 확인) | ✅ 완료 |
+| **Phase 2** | 핵심 모듈 구현 (config, data, model) | ✅ 완료 |
+| **Phase 3** | 학습 구현 및 실행 (distill, baseline) | ✅ 완료 |
+| **Phase 4** | 평가 및 결과 분석 (4-Way 비교) | ✅ 완료 |
 
 ### 마일스톤
 
 | 마일스톤 | 완료 조건 | 상태 |
 |---------|----------|------|
-| **M1** | 환경 준비 완료, verify_setup.py 통과 | ⬜ |
-| **M2** | DataLoader에서 정상 배치 출력 확인 | ⬜ |
-| **M3** | distill.py 1 epoch 완주, loss 감소 확인 | ⬜ |
-| **M4** | 증류 학습 + FT 학습 모두 완료 | ⬜ |
-| **M5** | 4-Way 비교 차트 및 리포트 생성 | ⬜ |
+| **M1** | 환경 준비 완료, verify_setup.py 통과 | ✅ |
+| **M2** | DataLoader에서 정상 배치 출력 확인 | ✅ |
+| **M3** | distill.py 1 epoch 완주, loss 감소 확인 | ✅ |
+| **M4** | 증류 학습 + FT 학습 모두 완료 | ✅ |
+| **M5** | 4-Way 비교 차트 및 리포트 생성 | ✅ |
 
 > 📖 Phase별 세부 작업 체크리스트 → [상세 진행 일정](docs/schedule.md)
 
@@ -460,6 +508,7 @@ python compare.py
 
 | 문서 | 경로 | 설명 |
 |------|------|------|
+| **코드 구조 & 파이프라인 가이드** | [docs/code-guide.md](docs/code-guide.md) | 전체 실행 흐름, 모듈별 상세 설명, 용어 설명 |
 | **논문 레퍼런스** | [docs/papers.md](docs/papers.md) | 참고 논문, 개념 출처 매핑, 읽기 순서 추천 |
 | **용어집** | [docs/glossary.md](docs/glossary.md) | 프로젝트 핵심 용어 정리 (배경지식 보완) |
 | **연구 방향 가이드** | [docs/research-direction-guide.md](docs/research-direction-guide.md) | 모델/데이터 선택에 따른 연구 경로 비교 |

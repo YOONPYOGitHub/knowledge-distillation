@@ -28,13 +28,14 @@ Student는 혼자 공부(Fine-tuning)하는 것보다 Teacher에게 배우면 �
 
 ### Teacher 모델
 
-지식을 **가르치는** 큰 모델. 이미 잘 학습되어 있으며, 증류 과정에서 가중치가 변하지 않습니다(고정).  
-이 프로젝트에서는 `gpt2-large` (774M 파라미터)를 기본 Teacher로 사용합니다.
+지식을 **가르치는** 큰 모델. KD 과정에서는 가중치가 고정됩니다(추론만 수행).  
+KD 전에 `train_teacher.py`로 target 도메인에 Fine-tuning하면 더 품질 높은 soft target을 제공할 수 있습니다.  
+이 프로젝트에서는 `gpt2` (124M 파라미터)를 기본 Teacher로 사용합니다.
 
 ### Student 모델
 
 지식을 **배우는** 작은 모델. 증류 과정에서 가중치가 업데이트됩니다.  
-이 프로젝트에서는 `gpt2` (124M 파라미터)를 기본 Student로 사용합니다.
+이 프로젝트에서는 `distilgpt2` (82M 파라미터)를 기본 Student로 사용합니다.
 
 ### Hard Label (하드 레이블)
 
@@ -92,10 +93,10 @@ GPT-4, Claude 같은 상용 API 모델에서 사용합니다. 내부 확률 분�
 
 | 모델 | 설명 | 역할 |
 |------|------|------|
-| **Teacher** | 큰 모델 (gpt2-large) 원본 | 성능 상한선 (Upper Bound) |
-| **Student (KD)** | 작은 모델, Teacher에게 배운 것 | 증류 효과 확인 |
-| **Student (FT)** | 작은 모델, 혼자 공부한 것 | 일반 학습 기준선 |
-| **Student (Base)** | 작은 모델, 아무 추가 학습 없음 | 성능 하한선 (Lower Bound) |
+| **Teacher** | 큰 모델 (gpt2, 124M) Fine-tuned | 성능 상한선 (Upper Bound) |
+| **Student (KD)** | 작은 모델 (distilgpt2, 82M), Teacher에게 배운 것 | 증류 효과 확인 |
+| **Student (FT)** | 작은 모델 (distilgpt2, 82M), 혼자 공부한 것 | 일반 학습 기준선 |
+| **Student (Base)** | 작은 모델 (distilgpt2, 82M), 아무 추가 학습 없음 | 성능 하한선 (Lower Bound) |
 
 KD와 FT를 비교하면 **"Teacher에게 배운 것이 혼자 공부한 것보다 얼마나 나은가"**를 알 수 있습니다.
 
@@ -233,6 +234,33 @@ GPT-2, LLaMA 등의 모델이 이미 사전학습된 상태로 공개되어 있�
 
 모델이 한 번에 처리할 수 있는 **최대 토큰 수**.  
 GPT-2는 1024 토큰, LLaMA-2는 4096 토큰이 최대입니다.
+
+### Padding (패딩)
+
+길이가 다른 텍스트들을 같은 길이로 맞추기 위해 **빈칸(pad token)을 채워넣는** 전처리 방식.  
+짧은 문장에 패딩이 대량 발생하면, 모델이 패딩 토큰을 예측하는 법을 학습하게 되어 PPL이 왜곡됩니다.  
+이 프로젝트 초기에 패딩 방식을 사용했다가 Packing으로 교체했습니다.
+
+```
+"Hello world"  → [15496, 995, PAD, PAD, PAD]  ← 3개가 의미 없는 빈칸
+"Hi"           → [17250, PAD, PAD, PAD, PAD]  ← 4개가 빈칸
+```
+
+### Packing (패킹)
+
+모든 텍스트를 하나로 이어붙인 뒤 **고정 길이(max_seq_length)로 잘라내는** 전처리 방식.  
+패딩이 전혀 없으므로 모든 토큰이 유의미한 학습 대상입니다.  
+GPT-2, LLaMA 등 **Causal LM 학습의 표준 방식**이며, 이 프로젝트가 사용하는 방식입니다.
+
+```
+1단계: 모든 텍스트를 토크나이즈 후 연결
+  [15496, 995, 17250, 11274, 8496, ...] (총 수만 개)
+
+2단계: 256개씩 자르기
+  chunk1: [15496, 995, ..., ] (256개, 전부 유의미)
+  chunk2: [다음 256개]
+  나머지가 256 미만이면 → 버림
+```
 
 ---
 
@@ -385,8 +413,8 @@ Hugging Face에서 **사전학습된 모델이나 토크나이저를 로드하�
 최초 실행 시 인터넷에서 다운로드하고, 이후에는 로컬 캐시에서 로드합니다.
 
 ```python
-model = AutoModelForCausalLM.from_pretrained("gpt2-large")
-tokenizer = AutoTokenizer.from_pretrained("gpt2-large")
+model = AutoModelForCausalLM.from_pretrained("gpt2")
+tokenizer = AutoTokenizer.from_pretrained("gpt2")
 ```
 
 ### PyTorch

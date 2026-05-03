@@ -1,0 +1,42 @@
+[
+  {
+    "name": "Teacher",
+    "total_params": 124439808,
+    "size_mb": 497.759232,
+    "perplexity": 20803.176097401018,
+    "avg_loss": 9.942860951022844,
+    "tokens_per_sec": 6576.84126742577,
+    "ms_per_token": 0.1520486749395745,
+    "elapsed": 1.071639060974121
+  },
+  {
+    "name": "Student (KD)",
+    "total_params": 81912576,
+    "size_mb": 327.650304,
+    "perplexity": 57.07588050701337,
+    "avg_loss": 4.0443816194893865,
+    "tokens_per_sec": 9775.328823764388,
+    "ms_per_token": 0.10229834904059108,
+    "elapsed": 0.7209987640380859
+  },
+  {
+    "name": "Student (FT)",
+    "total_params": 81912576,
+    "size_mb": 327.650304,
+    "perplexity": 1.0000352615987362,
+    "avg_loss": 3.526097706073101e-05,
+    "tokens_per_sec": 9755.58595053541,
+    "ms_per_token": 0.10250537538907314,
+    "elapsed": 0.7224578857421875
+  },
+  {
+    "name": "Student (Base)",
+    "total_params": 81912576,
+    "size_mb": 327.650304,
+    "perplexity": 20138.81564397336,
+    "avg_loss": 9.910404358385179,
+    "tokens_per_sec": 9731.243454776963,
+    "ms_per_token": 0.10276179037624537,
+    "elapsed": 0.7242650985717773
+  }
+]

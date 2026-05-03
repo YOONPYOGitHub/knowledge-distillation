@@ -67,8 +67,8 @@ Teacher 정확도     > KD Student 정확도     > 단독 Student 정확도
 | 항목 | 이 예제 (CIFAR-10) | 본 프로젝트 (LLM) |
 |------|---------------------|---------------------|
 | 도메인 | 이미지 분류 | 언어 모델링 |
-| Teacher | DeepNN (커스텀 CNN) | GPT-2 Large (774M) |
-| Student | LightNN (커스텀 CNN) | GPT-2 Small (124M) |
+| Teacher | DeepNN (커스텀 CNN) | GPT-2 (124M) |
+| Student | LightNN (커스텀 CNN) | distilgpt2 (82M) |
 | 데이터셋 | CIFAR-10 (6만장) | WikiText-2 |
 | KD Loss | KL Div + CE | KL Div + CE (동일 원리) |
 | 비교 방식 | 3-Way | 4-Way (FT baseline 추가) |
