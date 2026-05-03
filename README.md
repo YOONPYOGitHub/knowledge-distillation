@@ -332,7 +332,8 @@ knowledge-distillation/
 │   ├── exp04_medium_teacher.yaml    #   4차: gpt2-medium teacher
 │   ├── exp05_wikitext103.yaml       #   5차: WikiText-103
 │   ├── exp06_teacher_ft_smoke.yaml  #   6차: Teacher FT + KD
-│   └── exp07_teacher_ft_alpha03.yaml #  7차: Teacher FT + α=0.3
+│   ├── exp07_teacher_ft_alpha03.yaml #  7차: Teacher FT + α=0.3
+│   └── exp08_alpha02_epoch8.yaml    #   8차: α=0.2, 8 epochs (KD가 FT 최초 역전)
 │
 ├── docs/                            # 📖 문서
 │   ├── papers.md                    #   📄 논문 레퍼런스 & 개념 출처 매핑
