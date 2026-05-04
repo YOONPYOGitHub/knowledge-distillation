@@ -126,6 +126,16 @@ def figure_url(run_id: str, filename: str) -> str:
     return f"{API_BASE_URL}/runs/{run_id}/figures/{filename}"
 
 
+def figure_bytes(run_id: str, filename: str) -> bytes:
+    """PNG 데이터를 바이트로 반환. backend 가 internal-only 이고
+    Storage 가 PE 뒤에 있을 때, 브라우저가 직접 접근 불가능하므로
+    Streamlit 서버가 대신 가져온다."""
+    with _client() as c:
+        r = c.get(f"/runs/{run_id}/figures/{filename}")
+        r.raise_for_status()
+        return r.content
+
+
 def token_analysis(
     run_id: str,
     model_ids: list[str],

@@ -12,7 +12,8 @@ import torch
 from transformers import AutoModelForCausalLM, AutoTokenizer
 
 from ui.backend.config import MODEL_CACHE_SIZE, resolve_device
-from ui.backend.results_reader import checkpoint_path, get_run_info
+from ui.backend.results_reader import checkpoint_rel_path, get_run_info
+from ui.backend.storage import get_storage
 
 log = logging.getLogger(__name__)
 
@@ -105,29 +106,30 @@ class ModelRegistry:
                 if mid in run_models.models:
                     continue
 
+                storage = get_storage()
                 if mid == "teacher_ft":
-                    ckpt = checkpoint_path(run_id, mid)
-                    if not ckpt.exists():
+                    rel = checkpoint_rel_path(run_id, mid)
+                    if not storage.exists(rel):
                         # FT 없으면 pretrained teacher 로 폴백
                         log.warning("teacher_ft 체크포인트 없음 → pretrained 사용")
                         model = self._load_single_model(run_models.teacher_model_name)
                     else:
                         model = self._load_single_model(
-                            run_models.teacher_model_name, str(ckpt)
+                            run_models.teacher_model_name, str(storage.local_path(rel))
                         )
                 elif mid == "student_kd":
-                    ckpt = checkpoint_path(run_id, mid)
-                    if not ckpt.exists():
-                        raise FileNotFoundError(f"체크포인트 없음: {ckpt}")
+                    rel = checkpoint_rel_path(run_id, mid)
+                    if not storage.exists(rel):
+                        raise FileNotFoundError(f"체크포인트 없음: {rel}")
                     model = self._load_single_model(
-                        run_models.student_model_name, str(ckpt)
+                        run_models.student_model_name, str(storage.local_path(rel))
                     )
                 elif mid == "student_ft":
-                    ckpt = checkpoint_path(run_id, mid)
-                    if not ckpt.exists():
-                        raise FileNotFoundError(f"체크포인트 없음: {ckpt}")
+                    rel = checkpoint_rel_path(run_id, mid)
+                    if not storage.exists(rel):
+                        raise FileNotFoundError(f"체크포인트 없음: {rel}")
                     model = self._load_single_model(
-                        run_models.student_model_name, str(ckpt)
+                        run_models.student_model_name, str(storage.local_path(rel))
                     )
                 elif mid == "student_base":
                     model = self._load_single_model(run_models.student_model_name)

@@ -1,13 +1,14 @@
-"""results/logs/{run_id}/summary.json 을 단일 소스로 스캔/파싱"""
+"""results/logs/{run_id}/summary.json 을 단일 소스로 스캔/파싱
+
+storage 추상화를 통해 로컬/Blob 양쪽에서 동작.
+"""
 
 from __future__ import annotations
 
-import json
 from datetime import datetime
-from pathlib import Path
 from typing import Optional
 
-from ui.backend.config import CHECKPOINTS_DIR, LOGS_DIR
+from ui.backend.storage import get_storage
 
 
 # summary.json 의 "Teacher (FT)" 등을 내부 모델 ID 로 매핑
@@ -19,42 +20,35 @@ _RESULTS_KEY_MAP = {
     "Student (Base)": "student_base",
 }
 
+_CKPT_FILENAMES = {
+    "teacher_ft": "teacher_ft_best.pt",
+    "student_kd": "student_kd_best.pt",
+    "student_ft": "student_ft_best.pt",
+}
+
 
 def list_run_ids() -> list[str]:
-    """logs/ 디렉토리에서 summary.json 이 있는 run_id 목록 반환 (최신순)"""
-    if not LOGS_DIR.exists():
-        return []
-    runs = []
-    for entry in LOGS_DIR.iterdir():
-        if entry.is_dir() and (entry / "summary.json").exists():
-            runs.append(entry.name)
-    # 이름(=타임스탬프) 기준 내림차순
-    runs.sort(reverse=True)
-    return runs
+    """summary.json 이 있는 run_id 목록 반환 (최신순)."""
+    return get_storage().list_run_ids()
 
 
 def load_summary(run_id: str) -> Optional[dict]:
-    path = LOGS_DIR / run_id / "summary.json"
-    if not path.exists():
-        return None
-    with open(path, encoding="utf-8") as f:
-        return json.load(f)
+    return get_storage().read_json(f"logs/{run_id}/summary.json")
 
 
-def checkpoint_path(run_id: str, model_id: str) -> Path:
-    """model_id → checkpoint 파일 경로 (실제 존재 여부는 별도 확인)"""
-    filename_map = {
-        "teacher_ft": "teacher_ft_best.pt",
-        "student_kd": "student_kd_best.pt",
-        "student_ft": "student_ft_best.pt",
-    }
-    if model_id not in filename_map:
+def checkpoint_rel_path(run_id: str, model_id: str) -> str:
+    """체크포인트 storage 상대 경로."""
+    if model_id not in _CKPT_FILENAMES:
         raise ValueError(f"checkpoint 를 사용하지 않는 모델: {model_id}")
-    return CHECKPOINTS_DIR / run_id / filename_map[model_id]
+    return f"checkpoints/{run_id}/{_CKPT_FILENAMES[model_id]}"
+
+
+def checkpoint_exists(run_id: str, model_id: str) -> bool:
+    return get_storage().exists(checkpoint_rel_path(run_id, model_id))
 
 
 def get_run_info(run_id: str) -> Optional[dict]:
-    """API 응답용 RunInfo 형태의 dict 반환 (summary + 체크포인트 존재 여부)"""
+    """API 응답용 RunInfo 형태의 dict 반환 (summary + 체크포인트 존재 여부)."""
     summary = load_summary(run_id)
     if summary is None:
         return None
@@ -73,13 +67,12 @@ def get_run_info(run_id: str) -> Optional[dict]:
             }
 
     # 체크포인트 존재 확인
-    ckpt_dir = CHECKPOINTS_DIR / run_id
+    storage = get_storage()
     checkpoints = {
-        "teacher_ft": (ckpt_dir / "teacher_ft_best.pt").exists(),
-        "student_kd": (ckpt_dir / "student_kd_best.pt").exists(),
-        "student_ft": (ckpt_dir / "student_ft_best.pt").exists(),
-        "student_base": True,  # 항상 pretrained 사용 가능
+        mid: storage.exists(f"checkpoints/{run_id}/{fname}")
+        for mid, fname in _CKPT_FILENAMES.items()
     }
+    checkpoints["student_base"] = True  # 항상 pretrained 사용 가능
 
     # created_at: run_id 가 YYYYMMDD_HHMMSS 형식이면 파싱
     created_at = None

@@ -14,3 +14,4 @@ results/checkpoints/
 .cache/
 # UI 정성 평가 수집 결과 (로컬에만)
 results/qualitative/
+infra/main.json

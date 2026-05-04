@@ -285,9 +285,12 @@ with tab_figures:
         st.markdown(f"#### `{rid}`")
         cols = st.columns(min(len(figs), 2))
         for i, f in enumerate(figs):
-            url = api_client.figure_url(rid, f["filename"])
             with cols[i % len(cols)]:
-                st.image(url, caption=f["filename"])
+                try:
+                    img = api_client.figure_bytes(rid, f["filename"])
+                    st.image(img, caption=f["filename"])
+                except Exception as e:
+                    st.error(f"로드 실패: {f['filename']} ({e})")
 
 
 # ============ Run Diff ============

@@ -1,0 +1,16 @@
+**/__pycache__
+**/*.pyc
+**/.pytest_cache
+.git
+.gitignore
+.venv
+.env
+.env.*
+!.env.example
+results/
+docs/
+examples/
+configs/
+notebooks/
+*.md
+!ui/README.md

@@ -1,47 +1,36 @@
 """/runs/{run_id}/history, /runs/{run_id}/evaluation, /runs/{run_id}/figures
 
-기존 엔드포인트는 runs.py 에 있고, 여기는 실험 리포트 전용으로 분리.
+storage 추상화를 통해 로컬/Blob 모두 지원.
 """
 
 from __future__ import annotations
 
-import json
-from pathlib import Path
-
 from fastapi import APIRouter, HTTPException
-from fastapi.responses import FileResponse
+from fastapi.responses import Response
 
-from ui.backend.config import FIGURES_DIR, LOGS_DIR
+from ui.backend.storage import get_storage
 
 router = APIRouter()
-
-
-def _read_json(path: Path) -> list | dict | None:
-    if not path.exists():
-        return None
-    with open(path, encoding="utf-8") as f:
-        return json.load(f)
 
 
 @router.get("/runs/{run_id}/history")
 def get_history(run_id: str):
     """teacher_history / distill_history / baseline_history 를 한 번에 반환"""
-    log_dir = LOGS_DIR / run_id
-    if not log_dir.exists():
+    storage = get_storage()
+    if not storage.exists(f"logs/{run_id}/summary.json"):
         raise HTTPException(status_code=404, detail=f"run 없음: {run_id}")
 
     return {
-        "teacher": _read_json(log_dir / "teacher_history.json"),
-        "distill": _read_json(log_dir / "distill_history.json"),
-        "baseline": _read_json(log_dir / "baseline_history.json"),
+        "teacher": storage.read_json(f"logs/{run_id}/teacher_history.json"),
+        "distill": storage.read_json(f"logs/{run_id}/distill_history.json"),
+        "baseline": storage.read_json(f"logs/{run_id}/baseline_history.json"),
     }
 
 
 @router.get("/runs/{run_id}/evaluation")
 def get_evaluation(run_id: str):
     """evaluation_results.json 반환 (4-Way PPL/속도/메모리)"""
-    path = LOGS_DIR / run_id / "evaluation_results.json"
-    data = _read_json(path)
+    data = get_storage().read_json(f"logs/{run_id}/evaluation_results.json")
     if data is None:
         raise HTTPException(status_code=404, detail=f"evaluation_results 없음: {run_id}")
     return data
@@ -49,23 +38,29 @@ def get_evaluation(run_id: str):
 
 @router.get("/runs/{run_id}/figures")
 def list_figures(run_id: str) -> list[dict]:
-    """results/figures/{run_id}/ 의 PNG 목록"""
-    d = FIGURES_DIR / run_id
-    if not d.exists():
-        return []
-    return [
-        {"filename": p.name, "size_bytes": p.stat().st_size}
-        for p in sorted(d.glob("*.png"))
-    ]
+    """figures/{run_id}/ 의 PNG 목록"""
+    items = get_storage().list_files(f"figures/{run_id}", suffix=".png")
+    return [{"filename": it["filename"], "size_bytes": it["size_bytes"]} for it in items]
 
 
 @router.get("/runs/{run_id}/figures/{filename}")
 def get_figure(run_id: str, filename: str):
-    """PNG 파일 직접 반환"""
-    # 경로 탈출 방지
-    if "/" in filename or ".." in filename:
+    """PNG 파일을 항상 백엔드를 통해 inline 반환.
+
+    Storage 가 PE / 차단된 네트워크 뒤에 있을 경우 SAS redirect 는 외부 브라우저
+    에서 도달 불가하므로, 백엔드가 VNet 내부에서 직접 읽어 전달한다.
+    """
+    if "/" in filename or ".." in filename or not filename.lower().endswith(".png"):
         raise HTTPException(status_code=400, detail="잘못된 파일명")
-    path = FIGURES_DIR / run_id / filename
-    if not path.exists() or path.suffix.lower() != ".png":
+
+    storage = get_storage()
+    rel = f"figures/{run_id}/{filename}"
+    if not storage.exists(rel):
         raise HTTPException(status_code=404, detail="figure 없음")
-    return FileResponse(path, media_type="image/png")
+
+    data = storage.read_bytes(rel)
+    return Response(
+        content=data,
+        media_type="image/png",
+        headers={"Cache-Control": "public, max-age=3600"},
+    )
