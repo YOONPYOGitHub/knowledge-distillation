@@ -43,10 +43,6 @@ def checkpoint_rel_path(run_id: str, model_id: str) -> str:
     return f"checkpoints/{run_id}/{_CKPT_FILENAMES[model_id]}"
 
 
-def checkpoint_exists(run_id: str, model_id: str) -> bool:
-    return get_storage().exists(checkpoint_rel_path(run_id, model_id))
-
-
 def get_run_info(run_id: str) -> Optional[dict]:
     """API 응답용 RunInfo 형태의 dict 반환 (summary + 체크포인트 존재 여부)."""
     summary = load_summary(run_id)

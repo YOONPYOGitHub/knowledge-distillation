@@ -145,8 +145,24 @@ def _event_stream(req: GenerateRequest) -> Iterator[str]:
 
     threading.Thread(target=_watch, daemon=True).start()
 
+    # 워커가 hang 되어도 클라이언트가 영원히 매달리지 않도록 idle timeout.
+    # max_new_tokens 1개당 최대 5초 + 30초 여유. 그동안 한 토큰도 안 오면 abort.
+    idle_timeout = max(60.0, 5.0 * float(req.params.max_new_tokens) + 30.0)
+
     while True:
-        item = out_q.get()
+        try:
+            item = out_q.get(timeout=idle_timeout)
+        except queue.Empty:
+            # 큐가 idle_timeout 동안 비어있다면 한 워커가 hang 됨
+            stuck = [m for m in req.model_ids if m not in done_models]
+            for mid in stuck:
+                err = {
+                    "type": "error",
+                    "model_id": mid,
+                    "error": f"no output for {idle_timeout:.0f}s (worker hung)",
+                }
+                yield f"data: {json.dumps(err, ensure_ascii=False)}\n\n"
+            break
         if item is _SENTINEL:
             break
         yield f"data: {json.dumps(item, ensure_ascii=False)}\n\n"

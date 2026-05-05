@@ -33,13 +33,6 @@ def list_runs() -> list[dict]:
         return r.json()
 
 
-def get_run(run_id: str) -> dict:
-    with _client() as c:
-        r = c.get(f"/runs/{run_id}")
-        r.raise_for_status()
-        return r.json()
-
-
 def load_models(run_id: str, model_ids: list[str]) -> dict:
     with _client() as c:
         r = c.post(
@@ -86,13 +79,6 @@ def save_feedback(
         return r.json()
 
 
-def list_feedback(run_id: str) -> list[dict]:
-    with _client() as c:
-        r = c.get(f"/feedback/{run_id}")
-        r.raise_for_status()
-        return r.json()
-
-
 def read_feedback_entries(run_id: str, mode: str | None = None) -> list[dict]:
     params = {"mode": mode} if mode else None
     with _client() as c:
@@ -120,10 +106,6 @@ def list_figures(run_id: str) -> list[dict]:
         r = c.get(f"/runs/{run_id}/figures")
         r.raise_for_status()
         return r.json()
-
-
-def figure_url(run_id: str, filename: str) -> str:
-    return f"{API_BASE_URL}/runs/{run_id}/figures/{filename}"
 
 
 def figure_bytes(run_id: str, filename: str) -> bytes:

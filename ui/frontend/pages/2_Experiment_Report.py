@@ -80,7 +80,8 @@ def _fetch_history(run_id: str) -> dict:
 def _fetch_evaluation(run_id: str) -> list[dict]:
     try:
         return api_client.get_evaluation(run_id)
-    except Exception:  # noqa: BLE001
+    except Exception as e:  # noqa: BLE001
+        st.warning(f"{run_id}: evaluation 조회 실패 ({e})")
         return []
 
 
