@@ -49,13 +49,16 @@ ui/
 │
 ├── backend/
 │   ├── __init__.py
-│   ├── app.py                         # FastAPI 엔트리, lifespan
+│   ├── app.py                         # FastAPI 엔트리, lifespan (기본 run 사전 로드)
 │   ├── schemas.py                     # Pydantic 모델 (요청/응답)
-│   ├── config.py                      # UI 전용 설정
-│   ├── model_registry.py              # run_id → 체크포인트 매핑, 캐시
-│   ├── generator.py                   # 생성 함수 (공통/스트리밍)
-│   ├── analysis.py                    # 토큰 확률/KL divergence 계산
+│   ├── config.py                      # UI 전용 설정 (.env 로드)
+│   ├── model_registry.py              # run_id → 체크포인트 매핑, LRU 캐시
+│   ├── generator.py                   # 생성 함수 (동기/스트리밍/배치)
+│   ├── token_analyzer.py              # 토큰 확률/KL divergence 계산 (v0.5)
 │   ├── results_reader.py              # results/logs 파싱
+│   ├── storage/                       # 저장소 추상화 (local / Azure Blob)
+│   ├── Dockerfile                     # Azure Container Apps 용
+│   ├── requirements-azure.txt
 │   └── routers/
 │       ├── runs.py                    # GET /runs, /runs/{id}/*
 │       ├── generate.py                # POST /generate (sync)
@@ -508,10 +511,26 @@ ui = [
 - [x] Batch Prompts 페이지 — CSV 업로드 / 멀티라인 텍스트, 진행률 바, CSV·JSONL 다운로드
 - [x] 샘플 데이터 `examples/sample_batch_prompts.csv` (50 prompt × 6 카테고리)
 
+### v0.7 — Azure 배포 & 저장소 추상화 ✅ **완료 (2026-05-05)**
+**목표: 학습 서버와 UI 호스팅을 분리하고, 클라우드에 배포해서 팀원과 공유한다**
+
+- [x] `ui/backend/storage/` — `local` / `blob` 두 백엔드 (환경변수 `STORAGE_BACKEND` 로 전환)
+  - `LocalStorage`: 기존 `results/` 폴더 직접 read
+  - `BlobStorage`: Azure Blob + 디스크 LRU 캐시 (`/tmp/kd-cache`, `AZURE_BLOB_CACHE_MAX_GB`)
+- [x] `model_registry`, `results_reader`, `feedback`, `reports` — 4 모듈을 storage 추상화로 마이그레이션
+- [x] `infra/` — Bicep IaC (`main.bicep` + `prereqs.bicep` + `apps.bicep`)
+  - VNet 통합 ManagedEnv, Storage Private Endpoint, UAMI, ACR
+  - 2단계 배포: `prereqs` (인프라 + 권한) → `apps` (Container Apps)
+- [x] `infra/deploy.sh` — `prereqs|apps|all` 래퍼, 네트워크 사전 리소스 멱등 보장
+- [x] `scripts/build_and_push.sh` — 클라우드 빌드(`az acr build`), `/tmp/kd-ctx` 스테이징
+- [x] `scripts/sync_to_azure.sh` — 학습 서버 → Blob 업로드 (run 단위 또는 전체)
+- [x] PNG 차트 inline 응답 (PE 환경에서 SAS redirect 불가 대응)
+- [x] Home 페이지 사용 가이드 탭 (`📊 대시보드` / `📖 사용 가이드` 2탭)
+
 ### 후순위 (필요시)
 - [ ] Attention 히트맵
-- [ ] Docker Compose 배포
-- [ ] 인증/외부 공유 모드
+- [x] Docker 이미지 (Container Apps 대상)  — v0.7에서 완료
+- [ ] 인증/외부 공유 모드 (Container Apps Authentication 설정 안내만 존재)
 
 ---
 
@@ -606,3 +625,4 @@ DEVICE=auto
 | 2026-04-24 | 0.6 | v0.5 백엔드 착수 (/token-analysis — top-k + KL divergence) |
 | 2026-04-24 | 0.7 | v0.5 완료 (Token Analysis 페이지 — top-k bar + KL 차트 + 정답 rank) |
 | 2026-04-24 | 0.8 | v0.6 완료 (SSE 실시간 스트리밍 `/generate/stream` + Compare Generate 토글 UI + 배치 처리 `/generate/batch` + Batch Prompts 페이지 — CSV 업로드/텍스트 입력, 진행률, 결과 CSV/JSONL 다운로드; 샘플 `examples/sample_batch_prompts.csv` 50개 prompt 6 카테고리) |
+| 2026-05-05 | 0.9 | v0.7 완료 (저장소 추상화 local/blob · 4 모듈 마이그레이션 · Bicep IaC + deploy.sh · Azure Container Apps 배포 · sync_to_azure.sh · PNG inline 응답 · Home 가이드 탭) |

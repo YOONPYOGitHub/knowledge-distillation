@@ -190,3 +190,7 @@ Phase 4 (분석)    ████░░░░░░░░░░░░░░░░
 
 - **현재 단계:** Phase 1~4 완료, exp02 (2차 실험) 진행 중
 - **다음 단계:** GPU 서버에서 server_config로 본 실험 수행
+
+> UI / 배포 트랙은 별도 문서에서 관리:
+> - 기능 마일스톤: [ui-development-plan.md §7](ui-development-plan.md#7-단계별-마일스톤) (v0.1 ~ v0.7 완료)
+> - Azure 배포: [ui-deployment-guide.md](ui-deployment-guide.md)

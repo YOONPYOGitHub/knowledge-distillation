@@ -477,3 +477,90 @@ learning_rate=5e-5 → 매 업데이트마다 가중치를 0.00005만큼 조정
 | **no_grad** | 역전파 계산을 **끄는** 설정. Teacher forward 시 사용. 메모리 절약 + 속도 향상. |
 
 > 더 상세한 용어 설명은 [glossary.md](glossary.md) 에 정리되어 있습니다.
+
+---
+
+## 7. UI 모듈 (`ui/`) — 비교 생성 + 평가 + 리포트
+
+학습 파이프라인과 별도로, 학습 결과를 인터랙티브하게 탐색·평가하는 웹 UI 가 `ui/` 폴더에 있습니다.
+
+```
+ui/
+├── backend/              ─ FastAPI (모델 서빙, 결과 파싱, feedback 저장)
+│   ├── app.py            ─ 엔트리 + lifespan (기본 run 사전 로드)
+│   ├── config.py         ─ 환경변수 (.env)
+│   ├── model_registry.py ─ run_id → 체크포인트 매핑, LRU 캐시
+│   ├── generator.py      ─ 생성 함수 (sync / stream / batch)
+│   ├── token_analyzer.py ─ 위치별 top-k + KL divergence
+│   ├── results_reader.py ─ results/logs 파싱
+│   ├── storage/          ─ 저장소 추상화 (local / azure blob)
+│   └── routers/          ─ runs, generate, generate_stream, generate_batch,
+│                           token_analysis, feedback, reports
+└── frontend/             ─ Streamlit (멀티페이지)
+    ├── app.py            ─ st.navigation 라우팅
+    ├── home.py           ─ 대시보드 + 사용 가이드 탭
+    ├── utils/            ─ api_client, state, prompts
+    └── pages/
+        ├── 1_Compare_Generate.py    ─ 모델별 동시 생성 + 리커트/선호도 평가
+        ├── 2_Experiment_Report.py   ─ Loss/PPL/속도/스캔/PNG/Diff 6 탭
+        ├── 3_Checkpoint_Browser.py  ─ Run 카드 그리드 + 빠른 전환
+        ├── 4_Blind_Evaluation.py    ─ A/B/C 셔플 블라인드 평가
+        ├── 5_Aggregation.py         ─ feedback JSONL 집계 (선호도 / 리커트)
+        ├── 6_Token_Analysis.py      ─ 위치별 top-k + KL divergence
+        └── 7_Batch_Prompts.py       ─ CSV / 텍스트 일괄 생성
+```
+
+### 7.1 실행
+
+```bash
+# 의존성 설치 (UI extras)
+uv sync --extra ui
+
+# 백엔드 (터미널 1)
+uv run uvicorn ui.backend.app:app --host 127.0.0.1 --port 8000
+
+# 프론트엔드 (터미널 2)
+uv run streamlit run ui/frontend/app.py --server.port 8501
+```
+
+### 7.2 저장소 추상화
+
+`STORAGE_BACKEND` 환경변수로 두 모드 전환:
+
+| 값 | 동작 | 추가 환경변수 |
+|---|---|---|
+| `local` (기본) | `results/` 폴더 직접 read/write | — |
+| `blob` | Azure Blob (UAMI 인증) + `/tmp/kd-cache/` LRU 디스크 캐시 | `AZURE_STORAGE_ACCOUNT`, `AZURE_BLOB_CONTAINER`, `AZURE_CLIENT_ID` |
+
+코드 변경 없이 동일 UI 가 로컬/클라우드 모두 지원. Azure 배포는 [ui-deployment-guide.md](ui-deployment-guide.md) 참조.
+
+### 7.3 산출물 (UI 가 새로 생성)
+
+```
+results/
+├── qualitative/{run_id}/                 ─ 사람의 정성 평가
+│   ├── session_{ts}.jsonl                  · Compare Generate 에서 저장
+│   └── blind_{ts}.jsonl                    · Blind Evaluation 에서 저장
+│                                          · `mode`, `prompt`, `params`, `outputs`,
+│                                          · `ratings`, `preference`, `comment`,
+│                                          · `blind_mapping` (blind 모드만)
+```
+
+이 JSONL 들이 Aggregation 페이지에서 통계로 변환됨.
+
+### 7.4 핵심 API 엔드포인트 요약
+
+| 메서드 / 경로 | 역할 |
+|---|---|
+| `GET /health` | 상태 + device + 캐시된 run |
+| `GET /runs` | 학습된 run 목록 + summary |
+| `POST /models/load` | 특정 run 의 체크포인트 메모리 적재 |
+| `POST /generate` | 동기 생성 (모델별 응답 병렬) |
+| `POST /generate/stream` | SSE 토큰 스트리밍 |
+| `POST /generate/batch` | 다수 prompt × 다수 모델 일괄 생성 (≤200) |
+| `POST /token-analysis` | 위치별 top-k + Teacher∥Student KL |
+| `POST /feedback/save` | 정성 평가 entry 저장 |
+| `GET /feedback/{run_id}/entries` | 저장된 entry 조회 (mode 필터) |
+| `GET /runs/{id}/history` `evaluation` `figures` `figures/{f}` | 리포트용 raw 데이터 / PNG inline |
+
+> 상세 스키마는 [ui-development-plan.md §4](ui-development-plan.md#4-api-명세) 참조.
