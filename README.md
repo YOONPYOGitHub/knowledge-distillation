@@ -8,6 +8,8 @@
 
 ## 결과 미리보기 (평가 영역 4장)
 
+> 아래는 최신 디자인 지침(`ppt_guideline_grad.md`)으로 만든 평가 영역 결과입니다. **이 밀도·구성이 우리 팀 발표자료의 목표 기준**이며, 다른 영역도 같은 지침을 쓰면 디자인이 자동으로 통일됩니다.
+
 | | |
 |---|---|
 | ![슬라이드 1](_preview/slide_1.png) | ![슬라이드 2](_preview/slide_2.png) |
@@ -21,10 +23,10 @@
 - `README`(이 파일) · `eval_section_sample.md` (작성 예시 — 직접 쓰실 분만)
 
 **🤖 LLM에 '복사해서 주기만' 하는 것 (내가 읽을 필요 없음)**
-- `LLM_프롬프트.md` (글 작성 맡길 때) · `ppt_guideline_grad.md` (PPT 변환할 때)
+- `LLM_프롬프트.md` (글 작성 맡길 때) · `ppt_guideline_grad.md` (PPT 변환할 때 — **최신 고밀도 디자인 지침**)
 
 **📦 완성 예시 / 도구 (안 건드려도 됨)**
-- `evaluation_plan_4slides_v4.pptx` (평가 영역 완성 예시) · `team_project_plan_sample_v3.pptx` (다른 유형 참고) · `_preview/` (미리보기) · `.py` (변환 도구, 고급)
+- `evaluation_plan_v8.pptx` (평가 영역 완성 예시 — 최신) · `team_project_plan_sample_v3.pptx` (다른 유형 참고) · `_preview/` (미리보기) · `.py` (변환 도구, 고급·안 써도 됨)
 
 ## [1단계] 내 영역 '내용' 작성 — 둘 중 편한 것
 
@@ -47,7 +49,7 @@ LLM(Claude 추천)에게 시키기 ─
 2. 이렇게 요청: *"첨부한 ppt_guideline_grad.md 규칙에 맞춰, 내 마크다운 내용을 PowerPoint(.pptx) 파일로 만들어줘."*
 3. LLM이 `.pptx` 를 만들어 줍니다. 받아서 열어보면 됩니다.
 
-> 완성되면 `evaluation_plan_4slides_v4.pptx` 같은 느낌으로 나옵니다. 디자인이 조금 어긋나면 *"글자가 넘쳐"*, *"줄을 더 줄여줘"* 처럼 한 번 더 말하면 LLM이 고쳐 줍니다.
+> 완성되면 위 미리보기의 `evaluation_plan_v8.pptx` 같은 느낌으로 나옵니다. 디자인이 조금 어긋나면 *"글자가 넘쳐"*, *"줄을 더 줄여줘"*, *"내용을 더 빽빽하게 채워줘"* 처럼 한 번 더 말하면 LLM이 고쳐 줍니다.
 > (제출용 최종 PPT는 나중에 팀원들 마크다운을 하나로 모아 한 번에 변환할 예정입니다.)
 
 ## [3단계] 작업한 자료 공유
@@ -62,3 +64,7 @@ LLM(Claude 추천)에게 시키기 ─
 - 🤖 **LLM에 복사해 주기만** (정독 불필요): `LLM_프롬프트.md` · `ppt_guideline_grad.md`
 
 즉, **나는 이 README 흐름만 따라가면 되고, 문서 변환 규칙은 LLM에게 위임하여 처리합니다.**
+
+---
+
+> **🔄 업데이트 (2026-05-31)** — 디자인 지침을 고도화했습니다(고밀도 개요·비교·표 포맷, 슬라이드 채움 강화). 이전에 파일을 받으신 분은 **`README.md` · `ppt_guideline_grad.md` · `evaluation_plan_v8.pptx` · `_preview/` 4장**을 새 파일로 교체해 주세요. 작성 흐름(0~3단계)은 그대로입니다.

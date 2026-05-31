@@ -25,10 +25,10 @@
 
    [LLM(ChatGPT·Claude)에게 '복사해서 줄' 파일 — 내가 읽을 필요 없음]
      LLM_프롬프트.md .......... 글 작성을 LLM에 맡길 때 주는 프롬프트
-     ppt_guideline_grad.md ... PPT 변환할 때 LLM에 주는 디자인 규칙
+     ppt_guideline_grad.md ... PPT 변환 규칙 (최신 고밀도 디자인 지침)
 
    [완성 예시 / 도구 — 안 건드려도 됨]
-     evaluation_plan_4slides_v4.pptx .. 완성된 평가 영역 PPT 예시 (메인)
+     evaluation_plan_v8.pptx ......... 완성된 평가 영역 PPT 예시 (최신·메인)
      team_project_plan_sample_v3.pptx . 다른 유형의 계획서 예시 (참고용)
      _preview 폴더 ............ 예시 슬라이드 미리보기 이미지
      (.py 로 끝나는 파일) ...... 변환 자동화 도구 (고급, 안 써도 됨)
@@ -68,7 +68,7 @@
          내 마크다운 내용을 PowerPoint(.pptx) 파일로 만들어줘."
    3) LLM이 .pptx 파일을 만들어 줍니다. 받아서 열어보면 됩니다.
 
-  ※ 완성되면 evaluation_plan_4slides_v4.pptx 같은 느낌으로 나옵니다.
+  ※ 완성되면 evaluation_plan_v8.pptx 같은 느낌으로 나옵니다.
     (미리보기는 _preview 폴더의 이미지 참고)
   ※ 처음엔 디자인이 조금 어긋날 수 있어요. "글자가 넘쳐", "줄을 더 줄여줘"
     처럼 한 번 더 말해주면 LLM이 고쳐 줍니다.
