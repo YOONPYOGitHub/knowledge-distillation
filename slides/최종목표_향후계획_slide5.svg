@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080">
+  <rect width="100%" height="100%" fill="#FFFFFF" />
+  <text x="80" y="80" font-family="Noto Sans, Arial" font-size="28" fill="#0066CC" font-weight="700">[평가] 정확도 90% 달성을 위한 3축 검증 체계</text>
+
+  <!-- Pillar 1 -->
+  <rect x="120" y="140" width="560" height="680" rx="12" fill="#0066CC" />
+  <text x="400" y="190" font-size="20" fill="#FFFFFF" font-weight="700" text-anchor="middle">① 기술 축: 지식증류 품질</text>
+  <text x="150" y="260" font-size="18" fill="#FFFFFF">• Teacher의 의료 지식 보존도 ≥85%</text>
+  <text x="150" y="300" font-size="18" fill="#FFFFFF">• Student의 손실 함수 수렴</text>
+  <text x="150" y="340" font-size="18" fill="#FFFFFF">• 온디바이스 실행 시 정확도 손실 &lt;5%</text>
+
+  <!-- Pillar 2 -->
+  <rect x="700" y="140" width="520" height="680" rx="12" fill="#FF0000" />
+  <text x="960" y="190" font-size="20" fill="#FFFFFF" font-weight="700" text-anchor="middle">② 의료 안전 축: 위험 응답 Gate</text>
+  <text x="720" y="260" font-size="18" fill="#FFFFFF">• 응급 상황(흉통·의식 소실·중독) 응답 정확도 100%</text>
+  <text x="720" y="300" font-size="18" fill="#FFFFFF">• 필수 정보 포함 여부 검사</text>
+  <text x="720" y="340" font-size="18" fill="#FFFFFF">• 금지 표현 배제 검사</text>
+
+  <!-- Pillar 3 -->
+  <rect x="1240" y="140" width="560" height="680" rx="12" fill="#00B050" />
+  <text x="1520" y="190" font-size="20" fill="#FFFFFF" font-weight="700" text-anchor="middle">③ 시니어 UX 축: 실효성 평가</text>
+  <text x="1260" y="260" font-size="18" fill="#FFFFFF">• 시니어 사용자 이해도 90% 이상</text>
+  <text x="1260" y="300" font-size="18" fill="#FFFFFF">• 응답 신뢰도 (LLM Judge) 90% 이상</text>
+  <text x="1260" y="340" font-size="18" fill="#FFFFFF">• 오프라인 환경 사용 성공률 95% 이상</text>
+
+  <rect x="120" y="880" width="1680" height="120" rx="8" fill="#000000" />
+  <text x="960" y="954" font-size="20" fill="#FFFFFF" font-weight="700" text-anchor="middle">→ 3축 모두 통과해야만 배포 가능 (가중 평균 아님)</text>
+</svg>

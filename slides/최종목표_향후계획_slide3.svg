@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080">
+  <rect width="100%" height="100%" fill="#FFFFFF" />
+  <text x="80" y="80" font-family="Noto Sans, Arial" font-size="28" fill="#0066CC" font-weight="700">[기술] Pilot·Beta·Full 각 단계별 데이터·모델·평가 목표 명확화</text>
+
+  <!-- Table area -->
+  <g font-family="Noto Sans, Arial" font-size="18">
+    <rect x="80" y="120" width="1760" height="760" fill="#FFFFFF" stroke="#E0E0E0" stroke-width="1"/>
+
+    <!-- Header Row -->
+    <rect x="80" y="120" width="440" height="80" fill="#0066CC" />
+    <rect x="520" y="120" width="440" height="80" fill="#0066CC" />
+    <rect x="960" y="120" width="440" height="80" fill="#0066CC" />
+    <rect x="1400" y="120" width="440" height="80" fill="#0066CC" />
+
+    <text x="300" y="168" font-size="20" fill="#FFFFFF" font-weight="700" text-anchor="middle">항목</text>
+    <text x="740" y="168" font-size="20" fill="#FFFFFF" font-weight="700" text-anchor="middle">Pilot</text>
+    <text x="1180" y="168" font-size="20" fill="#FFFFFF" font-weight="700" text-anchor="middle">Beta</text>
+    <text x="1620" y="168" font-size="20" fill="#FFFFFF" font-weight="700" text-anchor="middle">Full</text>
+
+    <!-- Rows -->
+    <!-- Row 1 -->
+    <rect x="80" y="200" width="1760" height="100" fill="#FFFFFF" />
+    <text x="300" y="255">공공 의료 데이터</text>
+    <text x="740" y="255">500개 Q&amp;A</text>
+    <text x="1180" y="255">3,000개 Q&amp;A</text>
+    <text x="1620" y="255">10,000개 Q&amp;A</text>
+
+    <!-- Row 2 -->
+    <rect x="80" y="300" width="1760" height="100" fill="#F2F2F2" />
+    <text x="300" y="355">시니어 질문 패턴</text>
+    <text x="740" y="355">50개 쿼리</text>
+    <text x="1180" y="355">500개 쿼리</text>
+    <text x="1620" y="355">2,000개 쿼리</text>
+
+    <!-- Row 3 -->
+    <rect x="80" y="400" width="1760" height="100" fill="#FFFFFF" />
+    <text x="300" y="455">의료 주제 범위</text>
+    <text x="740" y="455">주요 질환 5개</text>
+    <text x="1180" y="455">주요 질환 20개</text>
+    <text x="1620" y="455">모든 의료 상황 (1000+ 질환)</text>
+
+    <!-- Row 4 -->
+    <rect x="80" y="500" width="1760" height="100" fill="#F2F2F2" />
+    <text x="300" y="555">정확도 목표</text>
+    <text x="740" y="555">70% 이상</text>
+    <text x="1180" y="555">85% 이상</text>
+    <rect x="1400" y="520" width="440" height="60" fill="#FF9500" />
+    <text x="1620" y="555" fill="#FFFFFF" font-weight="700">90% 이상</text>
+
+    <!-- Row 5 -->
+    <rect x="80" y="600" width="1760" height="100" fill="#FFFFFF" />
+    <text x="300" y="655">응답 시간</text>
+    <text x="740" y="655">&lt;5초</text>
+    <text x="1180" y="655">&lt;3초</text>
+    <text x="1620" y="655">&lt;2초</text>
+
+    <!-- Row 6 -->
+    <rect x="80" y="700" width="1760" height="100" fill="#F2F2F2" />
+    <text x="300" y="755">배포 환경</text>
+    <text x="740" y="755">테스트 환경</text>
+    <text x="1180" y="755">베타 사용자 (100명)</text>
+    <text x="1620" y="755">모바일 앱 + 웹</text>
+  </g>
+
+  <text x="960" y="980" font-size="18" fill="#FF9500" font-weight="700" text-anchor="middle">→ 각 단계는 데이터 규모·정확도·응답 속도 목표가 명확하며, 미달 시 이전 단계로 재귀</text>
+</svg>

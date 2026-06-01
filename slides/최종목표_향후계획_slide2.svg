@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080">
+  <rect width="100%" height="100%" fill="#FFFFFF" />
+  <text x="80" y="80" font-family="Noto Sans, Arial" font-size="28" fill="#0066CC" font-weight="700">[방법론] 데이터 수집 → 모델 학습 → 안전 검증 → 배포의 4단계로 단계별 목표 달성</text>
+
+  <!-- Pilot -->
+  <rect x="120" y="140" width="540" height="380" rx="10" fill="#C8DCFF" stroke="#0066CC" stroke-width="2"/>
+  <text x="390" y="190" font-size="26" fill="#0066CC" font-weight="700" text-anchor="middle">Pilot</text>
+  <text x="390" y="230" font-size="16" fill="#666666" text-anchor="middle">1~2개월</text>
+  <text x="200" y="280" font-size="18" fill="#333333">• 공공 의료 데이터 수집 &amp; 정제: 500개 Q&amp;A 쌍</text>
+  <text x="200" y="320" font-size="18" fill="#333333">• 시니어 질문 패턴 분석: 50개 대표 쿼리</text>
+  <text x="200" y="360" font-size="18" fill="#333333">• 목표: 기술 가능성 검증 (손실 함수 수렴)</text>
+
+  <!-- Beta -->
+  <rect x="720" y="140" width="540" height="380" rx="10" fill="#64B4FF" stroke="#0066CC" stroke-width="2"/>
+  <text x="990" y="190" font-size="26" fill="#0066CC" font-weight="700" text-anchor="middle">Beta</text>
+  <text x="990" y="230" font-size="16" fill="#666666" text-anchor="middle">3~4개월</text>
+  <text x="800" y="280" font-size="18" fill="#333333">• 데이터 확장: 3,000개 Q&amp;A 쌍 (의료진 검수)</text>
+  <text x="800" y="320" font-size="18" fill="#333333">• 질문 다양화: 500개 쿼리 (증상, 약물, 응급)</text>
+  <text x="800" y="360" font-size="18" fill="#333333">• 목표: 정확도 85% 이상 달성 &amp; 실효성 평가</text>
+
+  <!-- Full -->
+  <rect x="1320" y="140" width="540" height="380" rx="10" fill="#0066CC" stroke="#004C99" stroke-width="2"/>
+  <text x="1590" y="190" font-size="26" fill="#FFFFFF" font-weight="700" text-anchor="middle">Full</text>
+  <text x="1590" y="230" font-size="16" fill="#E6F0FF" text-anchor="middle">5~6개월</text>
+  <text x="1400" y="280" font-size="18" fill="#FFFFFF">• 최종 데이터셋: 10,000개 Q&amp;A 쌍 + 2,000개 쿼리</text>
+  <text x="1400" y="320" font-size="18" fill="#FFFFFF">• 오프라인 환경 최적화 &amp; 배포 준비</text>
+  <text x="1400" y="360" font-size="18" fill="#FFFFFF">• 목표: 정확도 90% 이상 &amp; 의료 안전 Gate 통과</text>
+
+  <text x="960" y="960" font-size="18" fill="#FF9500" font-weight="700" text-anchor="middle">→ 각 단계마다 정확도·응답 시간·위험 응답 여부를 측정해 다음 단계 진행 여부 결정</text>
+</svg>

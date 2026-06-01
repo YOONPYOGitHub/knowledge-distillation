@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1920" height="1080" viewBox="0 0 1920 1080">
+  <rect width="100%" height="100%" fill="#0066CC" />
+  <text x="960" y="160" font-family="Noto Sans, Arial, Helvetica, sans-serif" font-size="44" fill="#FFFFFF" font-weight="700" text-anchor="middle">
+    13B 경량 모델 + 공공 의료 데이터로
+  </text>
+  <text x="960" y="220" font-family="Noto Sans, Arial, Helvetica, sans-serif" font-size="44" fill="#FFFFFF" font-weight="700" text-anchor="middle">
+    시니어 온디바이스 헬스케어 서비스 실현
+  </text>
+
+  <!-- 4 목표 박스 -->
+  <g font-family="Noto Sans, Arial, Helvetica, sans-serif">
+    <rect x="120" y="340" width="360" height="240" rx="12" fill="#004C99" />
+    <text x="300" y="380" font-size="22" fill="#FFFFFF" font-weight="700" text-anchor="middle">모델</text>
+    <text x="300" y="420" font-size="18" fill="#FFFFFF" text-anchor="middle">13B 지식증류</text>
+    <text x="300" y="450" font-size="18" fill="#FFFFFF" text-anchor="middle">(온디바이스 실행)</text>
+
+    <rect x="540" y="340" width="360" height="240" rx="12" fill="#00B050" />
+    <text x="720" y="380" font-size="22" fill="#FFFFFF" font-weight="700" text-anchor="middle">데이터</text>
+    <text x="720" y="420" font-size="18" fill="#FFFFFF" text-anchor="middle">공공의료 데이터 기반</text>
+    <text x="720" y="450" font-size="18" fill="#FFFFFF" text-anchor="middle">의료 Q&amp;A</text>
+
+    <rect x="960" y="340" width="360" height="240" rx="12" fill="#FF9500" />
+    <text x="1140" y="380" font-size="22" fill="#FFFFFF" font-weight="700" text-anchor="middle">정확도</text>
+    <text x="1140" y="420" font-size="18" fill="#FFFFFF" text-anchor="middle">90% 이상</text>
+    <text x="1140" y="450" font-size="18" fill="#FFFFFF" text-anchor="middle">(모든 의료 상황 커버)</text>
+
+    <rect x="1380" y="340" width="360" height="240" rx="12" fill="#8000FF" />
+    <text x="1560" y="380" font-size="22" fill="#FFFFFF" font-weight="700" text-anchor="middle">배포</text>
+    <text x="1560" y="420" font-size="18" fill="#FFFFFF" text-anchor="middle">모바일 앱 + 웹</text>
+    <text x="1560" y="450" font-size="18" fill="#FFFFFF" text-anchor="middle">(완전 오프라인 지원)</text>
+  </g>
+
+  <text x="960" y="980" font-family="Noto Sans, Arial" font-size="20" fill="#FF9500" font-weight="700" text-anchor="middle">→ 통신 없이도 시니어가 안전하게 의료 정보에 접근하는 서비스 실현</text>
+</svg>
