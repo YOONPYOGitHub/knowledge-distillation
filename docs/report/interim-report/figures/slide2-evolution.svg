@@ -1,0 +1,158 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1280 720" font-family="'Segoe UI', 'Apple SD Gothic Neo', Arial, sans-serif">
+  <defs>
+    <filter id="shadow" x="-3%" y="-3%" width="106%" height="110%">
+      <feDropShadow dx="1" dy="2" stdDeviation="2" flood-opacity="0.12"/>
+    </filter>
+  </defs>
+
+  <!-- Background -->
+  <rect width="1280" height="720" fill="#f8fafc"/>
+
+  <!-- Title -->
+  <text x="640" y="50" text-anchor="middle" font-size="26" font-weight="bold" fill="#0f172a">실험 진화 과정 — 6번 실패 후, 8번째에 KD가 FT를 역전</text>
+  <text x="640" y="78" text-anchor="middle" font-size="14" fill="#64748b">exp03 → exp08 · 한 번에 한 변수씩 가설 검증 · KD-FT Gap 추이</text>
+
+  <!-- ============================================ -->
+  <!-- Section A: Evolution Table (left)            -->
+  <!-- ============================================ -->
+  <g transform="translate(40, 110)">
+    <rect width="600" height="400" rx="12" fill="white" stroke="#cbd5e1" stroke-width="1.5" filter="url(#shadow)"/>
+
+    <!-- Header -->
+    <rect x="0" y="0" width="600" height="44" rx="12" fill="#1e293b"/>
+    <rect x="0" y="20" width="600" height="24" fill="#1e293b"/>
+    <text x="300" y="29" text-anchor="middle" font-size="14" font-weight="bold" fill="white">실험 히스토리 (요약)</text>
+
+    <!-- Column headers -->
+    <g font-size="12" font-weight="bold" fill="#475569">
+      <text x="40"  y="74" text-anchor="middle">Exp</text>
+      <text x="120" y="74" text-anchor="middle">Teacher FT</text>
+      <text x="210" y="74" text-anchor="middle">α</text>
+      <text x="280" y="74" text-anchor="middle">Epochs</text>
+      <text x="360" y="74" text-anchor="middle">KD PPL</text>
+      <text x="440" y="74" text-anchor="middle">FT PPL</text>
+      <text x="510" y="74" text-anchor="middle">Gap</text>
+      <text x="570" y="74" text-anchor="middle">승자</text>
+    </g>
+    <line x1="20" y1="86" x2="580" y2="86" stroke="#e2e8f0" stroke-width="1"/>
+
+    <!-- Row exp03 -->
+    <g font-size="13" fill="#334155">
+      <text x="40"  y="116" text-anchor="middle" font-weight="bold">exp03</text>
+      <text x="120" y="116" text-anchor="middle" fill="#dc2626">❌</text>
+      <text x="210" y="116" text-anchor="middle">0.3</text>
+      <text x="280" y="116" text-anchor="middle">3</text>
+      <text x="360" y="116" text-anchor="middle">48.96</text>
+      <text x="440" y="116" text-anchor="middle">32.56</text>
+      <text x="510" y="116" text-anchor="middle" fill="#dc2626" font-weight="bold">+16.40</text>
+      <text x="570" y="116" text-anchor="middle" fill="#94a3b8">FT</text>
+    </g>
+    <line x1="20" y1="128" x2="580" y2="128" stroke="#f1f5f9" stroke-width="1"/>
+
+    <!-- Row exp06 -->
+    <g font-size="13" fill="#334155">
+      <text x="40"  y="158" text-anchor="middle" font-weight="bold">exp06</text>
+      <text x="120" y="158" text-anchor="middle" fill="#16a34a">✅</text>
+      <text x="210" y="158" text-anchor="middle">0.5</text>
+      <text x="280" y="158" text-anchor="middle">3</text>
+      <text x="360" y="158" text-anchor="middle">33.00</text>
+      <text x="440" y="158" text-anchor="middle">32.56</text>
+      <text x="510" y="158" text-anchor="middle" fill="#ea580c" font-weight="bold">+0.44</text>
+      <text x="570" y="158" text-anchor="middle" fill="#94a3b8">FT</text>
+    </g>
+    <line x1="20" y1="170" x2="580" y2="170" stroke="#f1f5f9" stroke-width="1"/>
+
+    <!-- Row exp07 -->
+    <g font-size="13" fill="#334155">
+      <text x="40"  y="200" text-anchor="middle" font-weight="bold">exp07</text>
+      <text x="120" y="200" text-anchor="middle" fill="#16a34a">✅</text>
+      <text x="210" y="200" text-anchor="middle">0.3</text>
+      <text x="280" y="200" text-anchor="middle">5</text>
+      <text x="360" y="200" text-anchor="middle">32.89</text>
+      <text x="440" y="200" text-anchor="middle">32.68</text>
+      <text x="510" y="200" text-anchor="middle" fill="#f59e0b" font-weight="bold">+0.21</text>
+      <text x="570" y="200" text-anchor="middle" fill="#94a3b8">FT</text>
+    </g>
+    <line x1="20" y1="212" x2="580" y2="212" stroke="#f1f5f9" stroke-width="1"/>
+
+    <!-- Row exp08 (highlighted) -->
+    <rect x="10" y="222" width="580" height="40" rx="6" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+    <g font-size="14" font-weight="bold" fill="#14532d">
+      <text x="40"  y="247" text-anchor="middle">exp08</text>
+      <text x="120" y="247" text-anchor="middle" fill="#16a34a">✅</text>
+      <text x="210" y="247" text-anchor="middle">0.2</text>
+      <text x="280" y="247" text-anchor="middle">8</text>
+      <text x="360" y="247" text-anchor="middle">32.44</text>
+      <text x="440" y="247" text-anchor="middle">32.82</text>
+      <text x="510" y="247" text-anchor="middle" fill="#16a34a">−0.38</text>
+      <text x="570" y="247" text-anchor="middle" fill="#16a34a">KD ✅</text>
+    </g>
+
+    <!-- Caption -->
+    <text x="300" y="295" text-anchor="middle" font-size="13" fill="#475569" font-style="italic">
+      Teacher FT 적용 (exp06) · α 하향 (exp07) · Epoch 확장 (exp08)
+    </text>
+    <text x="300" y="315" text-anchor="middle" font-size="13" fill="#475569" font-style="italic">
+      → 한 번에 한 변수씩 바꾸며 가설을 검증
+    </text>
+
+    <!-- Gap progression bars -->
+    <text x="20" y="350" font-size="13" font-weight="bold" fill="#0f172a">KD−FT Gap 추이</text>
+
+    <g transform="translate(20, 360)" font-size="11" fill="#475569">
+      <text x="0" y="14">exp03</text>
+      <rect x="50" y="4" width="280" height="14" fill="#fecaca" rx="2"/>
+      <text x="340" y="14" fill="#dc2626" font-weight="bold">+16.40</text>
+    </g>
+    <g transform="translate(20, 380)" font-size="11" fill="#475569">
+      <text x="0" y="14">exp06</text>
+      <rect x="50" y="4" width="40" height="14" fill="#fed7aa" rx="2"/>
+      <text x="100" y="14" fill="#ea580c" font-weight="bold">+0.44</text>
+    </g>
+  </g>
+
+  <!-- ============================================ -->
+  <!-- Section B: 3 Key Conditions (right)          -->
+  <!-- ============================================ -->
+  <g transform="translate(680, 110)">
+    <text x="280" y="20" text-anchor="middle" font-size="18" font-weight="bold" fill="#0f172a">KD 역전의 3대 조건</text>
+
+    <!-- Card 1: Teacher Fine-Tuning -->
+    <g transform="translate(0, 40)">
+      <rect width="560" height="105" rx="10" fill="white" stroke="#3b82f6" stroke-width="2" filter="url(#shadow)"/>
+      <circle cx="38" cy="38" r="22" fill="#3b82f6"/>
+      <text x="38" y="46" text-anchor="middle" font-size="20" font-weight="bold" fill="white">1</text>
+      <text x="75" y="36" font-size="16" font-weight="bold" fill="#1e293b">Teacher Fine-Tuning 적용</text>
+      <text x="75" y="58" font-size="12" fill="#475569">exp03 → exp06 · Teacher가 도메인을 모르면 soft target 자체가 약함</text>
+      <text x="75" y="78" font-size="13" font-weight="bold" fill="#3b82f6">Gap 16.40 → 0.44 (97% 감소) · 돌파의 전제 조건</text>
+      <text x="75" y="96" font-size="11" fill="#94a3b8">근거: Teacher FT 없이는 soft label이 일반 GPT-2 분포에 가까워 의미 약함</text>
+    </g>
+
+    <!-- Card 2: Lower α -->
+    <g transform="translate(0, 165)">
+      <rect width="560" height="105" rx="10" fill="white" stroke="#10b981" stroke-width="2" filter="url(#shadow)"/>
+      <circle cx="38" cy="38" r="22" fill="#10b981"/>
+      <text x="38" y="46" text-anchor="middle" font-size="20" font-weight="bold" fill="white">2</text>
+      <text x="75" y="36" font-size="16" font-weight="bold" fill="#1e293b">α 를 0.5 → 0.2 로 하향</text>
+      <text x="75" y="58" font-size="12" fill="#475569">exp06 → exp08 · soft target 비중을 50% → 80% 로 키움</text>
+      <text x="75" y="78" font-size="13" font-weight="bold" fill="#10b981">α 0.1 ↓ 마다 KD가 약 0.3 PPL 씩 개선</text>
+      <text x="75" y="96" font-size="11" fill="#94a3b8">근거: 강한 Teacher일수록 hard label보다 soft target이 정보량 우세</text>
+    </g>
+
+    <!-- Card 3: More Epochs -->
+    <g transform="translate(0, 290)">
+      <rect width="560" height="105" rx="10" fill="white" stroke="#f59e0b" stroke-width="2" filter="url(#shadow)"/>
+      <circle cx="38" cy="38" r="22" fill="#f59e0b"/>
+      <text x="38" y="46" text-anchor="middle" font-size="20" font-weight="bold" fill="white">3</text>
+      <text x="75" y="36" font-size="16" font-weight="bold" fill="#1e293b">Epochs 를 3 → 8 로 확장</text>
+      <text x="75" y="58" font-size="12" fill="#475569">FT는 epoch 2에서 과적합 시작 / KD는 epoch 8까지 안정적 수렴</text>
+      <text x="75" y="78" font-size="13" font-weight="bold" fill="#f59e0b">시간이 지날수록 KD 편 — 정규화 효과로 train-val gap 4.3× 작음</text>
+      <text x="75" y="96" font-size="11" fill="#94a3b8">근거: soft target이 label smoothing 역할 → 암묵적 정규화</text>
+    </g>
+  </g>
+
+  <!-- Footer note -->
+  <text x="640" y="690" text-anchor="middle" font-size="12" fill="#64748b" font-style="italic">
+    데이터: WikiText-2 · Teacher: GPT-2 (124M) · Student: DistilGPT-2 (82M) · Device: Apple MPS
+  </text>
+</svg>
