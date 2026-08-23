@@ -11,7 +11,7 @@ from transformers import AutoModelForCausalLM
 
 from src.config import KDConfig
 from src.dataset import load_tokenizer, create_dataloaders
-from src.models import load_student, load_teacher, model_info
+from src.models import load_teacher, model_dtype_kwargs
 
 
 @torch.no_grad()
@@ -127,6 +127,7 @@ def evaluate_all(config: KDConfig):
     print(f"Test set: {len(test_loader.dataset)} samples\n")
 
     results = []
+    model_kwargs = model_dtype_kwargs(config)
 
     # 1. Teacher (FT checkpoint가 있으면 Teacher (FT)로 표시)
     teacher = load_teacher(config)
@@ -139,7 +140,9 @@ def evaluate_all(config: KDConfig):
     # 2. Student (KD) — 증류 학습된 모델
     kd_path = config.checkpoint_dir / "student_kd_best.pt"
     if kd_path.exists():
-        student_kd = AutoModelForCausalLM.from_pretrained(config.student_model)
+        student_kd = AutoModelForCausalLM.from_pretrained(
+            config.student_model, **model_kwargs
+        )
         student_kd.load_state_dict(torch.load(kd_path, map_location="cpu", weights_only=True))
         student_kd.to(config.device)
         student_kd.eval()
@@ -151,7 +154,9 @@ def evaluate_all(config: KDConfig):
     # 3. Student (FT) — Fine-tuning만 한 모델
     ft_path = config.checkpoint_dir / "student_ft_best.pt"
     if ft_path.exists():
-        student_ft = AutoModelForCausalLM.from_pretrained(config.student_model)
+        student_ft = AutoModelForCausalLM.from_pretrained(
+            config.student_model, **model_kwargs
+        )
         student_ft.load_state_dict(torch.load(ft_path, map_location="cpu", weights_only=True))
         student_ft.to(config.device)
         student_ft.eval()
@@ -161,7 +166,9 @@ def evaluate_all(config: KDConfig):
         print(f"\n⚠️ Student (FT) 체크포인트 없음: {ft_path}")
 
     # 4. Student (Base) — 추가 학습 없는 원본
-    student_base = AutoModelForCausalLM.from_pretrained(config.student_model)
+    student_base = AutoModelForCausalLM.from_pretrained(
+        config.student_model, **model_kwargs
+    )
     student_base.to(config.device)
     student_base.eval()
     results.append(evaluate_model(student_base, "Student (Base)", test_loader, config.device))

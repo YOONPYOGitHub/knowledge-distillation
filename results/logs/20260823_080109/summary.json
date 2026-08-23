@@ -1,0 +1,41 @@
+{
+  "run_id": "20260823_080109",
+  "config": {
+    "teacher_model": "Qwen/Qwen2.5-3B",
+    "student_model": "Qwen/Qwen2.5-1.5B",
+    "temperature": 2.0,
+    "alpha": 0.2,
+    "epochs": 8,
+    "teacher_epochs": 3,
+    "teacher_learning_rate": 2e-05,
+    "teacher_checkpoint": "/mnt/kd-results/qwen-4way/checkpoints/20260823_080109/teacher_ft_best.pt",
+    "batch_size": 2,
+    "max_seq_length": 256,
+    "device": "cuda"
+  },
+  "results": {
+    "Teacher (FT)": {
+      "ppl": 10.02298646228374,
+      "tokens_per_sec": 19341.621920155376
+    },
+    "Student (KD)": {
+      "ppl": 14.225834324376834,
+      "tokens_per_sec": 8287.847202657566
+    },
+    "Student (FT)": {
+      "ppl": 11.800220931488933,
+      "tokens_per_sec": 8200.030990434587
+    },
+    "Student (Base)": {
+      "ppl": 12.12541071318881,
+      "tokens_per_sec": 8245.439471255777
+    }
+  },
+  "diagnosis": [
+    "⚠️ KD(14.23) >= FT(11.80) — 증류 효과 미확인"
+  ],
+  "next_actions": [
+    "temperature 값 조정 (현재 → +2 시도)",
+    "alpha 값 낮추기 (CE 비율 줄이기)"
+  ]
+}

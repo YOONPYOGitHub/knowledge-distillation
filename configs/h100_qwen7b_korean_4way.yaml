@@ -20,6 +20,10 @@ alpha: 0.2
 
 teacher_epochs: 3
 teacher_learning_rate: 2.0e-5
+teacher_lora_rank: 16
+teacher_lora_alpha: 32
+teacher_lora_dropout: 0.05
+teacher_checkpoint: /var/lib/kd-results/qwen7b-4way/checkpoints/qwen7b-korean-4way-v1/teacher_ft_best_adapter
 
 epochs: 8
 batch_size: 2
@@ -33,4 +37,5 @@ device: cuda
 bf16: true
 optimizer: adafactor
 gradient_checkpointing: false
-output_dir: /mnt/kd-results/qwen7b-4way
+output_dir: /var/lib/kd-results/qwen7b-4way
+run_id: qwen7b-korean-4way-v1

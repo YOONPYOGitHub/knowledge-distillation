@@ -8,6 +8,13 @@ VM_NAME="${AZURE_VM_NAME:-vm-test-100}"
 CONFIG="${1:-configs/h100_qwen_korean.yaml}"
 shift || true
 
+RUNNER="${AZURE_H100_RUNNER:-scripts/run_azure_h100.sh}"
+
+if [[ ! "${RUNNER}" =~ ^scripts/[A-Za-z0-9_-]+\.sh$ ]]; then
+    echo "Invalid runner path: ${RUNNER}" >&2
+    exit 2
+fi
+
 if [[ ! "${CONFIG}" =~ ^[A-Za-z0-9_./-]+\.yaml$ ]]; then
     echo "Invalid config path: ${CONFIG}" >&2
     exit 2
@@ -34,7 +41,7 @@ set -eu
 mkdir -p /mnt/kd-results/jobs
 cd /mnt/knowledge-distillation
 nohup env HF_HOME=/mnt/huggingface HF_HUB_DISABLE_XET=1 TOKENIZERS_PARALLELISM=false \\
-  bash scripts/run_azure_h100.sh '${CONFIG}'${quoted_args} \\
+    bash '${RUNNER}' '${CONFIG}'${quoted_args} \\
   > '${remote_log}' 2>&1 < /dev/null &
 pid=\$!
 echo "\${pid}" > '${remote_pid}'

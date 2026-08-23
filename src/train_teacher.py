@@ -130,6 +130,20 @@ def train_teacher(config: KDConfig):
         kwargs["torch_dtype"] = torch.float16
 
     teacher = AutoModelForCausalLM.from_pretrained(config.teacher_model, **kwargs)
+    if config.teacher_lora_rank:
+        from peft import LoraConfig, TaskType, get_peft_model
+
+        teacher = get_peft_model(
+            teacher,
+            LoraConfig(
+                r=config.teacher_lora_rank,
+                lora_alpha=config.teacher_lora_alpha,
+                lora_dropout=config.teacher_lora_dropout,
+                target_modules=config.teacher_lora_target_modules,
+                bias="none",
+                task_type=TaskType.CAUSAL_LM,
+            ),
+        )
     if config.gradient_checkpointing:
         teacher.gradient_checkpointing_enable()
         teacher.config.use_cache = False
@@ -168,8 +182,12 @@ def train_teacher(config: KDConfig):
         # Best model 저장
         if is_main_process() and metrics["val_ce_loss"] < best_val_loss:
             best_val_loss = metrics["val_ce_loss"]
-            save_path = config.checkpoint_dir / "teacher_ft_best.pt"
-            torch.save(unwrap_model(teacher).state_dict(), save_path)
+            if config.teacher_lora_rank:
+                save_path = config.checkpoint_dir / "teacher_ft_best_adapter"
+                unwrap_model(teacher).save_pretrained(save_path)
+            else:
+                save_path = config.checkpoint_dir / "teacher_ft_best.pt"
+                torch.save(unwrap_model(teacher).state_dict(), save_path)
             print(f"  ✅ Best teacher saved → {save_path}")
 
         if is_main_process():

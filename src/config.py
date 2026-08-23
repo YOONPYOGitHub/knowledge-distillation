@@ -44,6 +44,12 @@ class KDConfig:
     teacher_epochs: int = 3
     teacher_learning_rate: float = 2e-5
     teacher_checkpoint: str = ""  # 비어있으면 pretrained 그대로, 경로 있으면 FT된 teacher 로드
+    teacher_lora_rank: int = 0  # 0이면 full fine-tuning
+    teacher_lora_alpha: int = 32
+    teacher_lora_dropout: float = 0.05
+    teacher_lora_target_modules: list[str] = field(
+        default_factory=lambda: ["q_proj", "k_proj", "v_proj", "o_proj"]
+    )
 
     # --- 학습 ---
     epochs: int = 3
@@ -86,6 +92,8 @@ class KDConfig:
             raise ValueError("optimizer must be 'adamw' or 'adafactor'")
         if self.max_train_steps < 0 or self.max_eval_steps < 0:
             raise ValueError("max_train_steps and max_eval_steps must be zero or greater")
+        if self.teacher_lora_rank < 0:
+            raise ValueError("teacher_lora_rank must be zero or greater")
         if self.fp16 and self.bf16:
             raise ValueError("fp16 and bf16 cannot both be enabled")
         if self.device == "auto":

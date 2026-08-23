@@ -37,9 +37,12 @@ def run_pipeline(config, steps=None):
         train_teacher(config)
         # teacher_checkpoint 자동 설정 (이후 distill에서 사용)
         if not config.teacher_checkpoint:
-            config.teacher_checkpoint = str(
-                config.checkpoint_dir / "teacher_ft_best.pt"
+            checkpoint_name = (
+                "teacher_ft_best_adapter"
+                if config.teacher_lora_rank
+                else "teacher_ft_best.pt"
             )
+            config.teacher_checkpoint = str(config.checkpoint_dir / checkpoint_name)
 
     if "distill" in steps:
         print("\n" + "=" * 50)

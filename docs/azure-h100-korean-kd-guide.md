@@ -41,6 +41,16 @@ scripts/start_azure_h100_job.sh configs/h100_qwen7b_korean_4way.yaml
 scripts/monitor_azure_h100.sh --watch
 ```
 
+H100 VM은 Spot 인스턴스이며 `/mnt`는 eviction 시 초기화된다. 7B 설정은 Teacher
+전체 checkpoint 대신 LoRA adapter를 사용하고, adapter·Student checkpoint·로그를
+영구 OS 디스크 `/var/lib/kd-results`에 저장한다. 재시작 후 아래 명령을 사용하면
+완료된 단계를 건너뛰고 중단 단계부터 다시 실행한다.
+
+```bash
+AZURE_H100_RUNNER=scripts/run_azure_h100_resumable.sh \
+	scripts/start_azure_h100_job.sh configs/h100_qwen7b_korean_4way.yaml
+```
+
 Azure Run Command는 동기 실행 중 다른 상태 조회를 막는다. Mac에서 실시간 진행률을 보려면 학습을 백그라운드 작업으로 시작한다.
 
 ```bash
