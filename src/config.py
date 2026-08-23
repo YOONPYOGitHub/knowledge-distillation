@@ -25,7 +25,14 @@ class KDConfig:
 
     # --- 데이터 ---
     dataset_name: str = "wikitext"
-    dataset_config: str = "wikitext-2-raw-v1"
+    dataset_config: str | None = "wikitext-2-raw-v1"
+    dataset_revision: str | None = None
+    dataset_text_column: str = "text"
+    dataset_streaming: bool = False
+    dataset_max_samples: int = 0  # 0이면 전체 사용
+    dataset_shuffle_buffer: int = 10_000
+    validation_ratio: float = 0.01
+    test_ratio: float = 0.01
     max_seq_length: int = 512
 
     # --- KD 하이퍼파라미터 ---
@@ -40,10 +47,14 @@ class KDConfig:
     # --- 학습 ---
     epochs: int = 3
     batch_size: int = 8
+    max_train_steps: int = 0  # 0이면 전체 epoch 사용
+    max_eval_steps: int = 0  # 0이면 전체 validation 사용
     learning_rate: float = 5e-5
     weight_decay: float = 0.01
     warmup_steps: int = 100
     gradient_clip: float = 1.0
+    optimizer: str = "adamw"  # "adamw" 또는 메모리 절약형 "adafactor"
+    gradient_checkpointing: bool = False
 
     # --- 경로 ---
     output_dir: str = "results"
@@ -51,15 +62,35 @@ class KDConfig:
 
     # --- 디바이스 ---
     device: str = "auto"  # "auto", "cuda", "mps", "cpu"
+    teacher_device: str = ""  # 비어있으면 device와 동일
 
     # --- 기타 ---
     seed: int = 42
     num_workers: int = 0  # DataLoader workers (MPS에서는 0 권장)
     fp16: bool = False  # CUDA 서버에서 활성화
+    bf16: bool = False  # RTX 30 시리즈 이상에서 권장
 
     def __post_init__(self):
+        if self.dataset_max_samples < 0:
+            raise ValueError("dataset_max_samples must be zero or greater")
+        if self.validation_ratio <= 0 or self.test_ratio <= 0:
+            raise ValueError("validation_ratio and test_ratio must be greater than zero")
+        if self.validation_ratio + self.test_ratio >= 1:
+            raise ValueError("validation_ratio + test_ratio must be less than one")
+        if self.dataset_streaming and self.dataset_max_samples == 0:
+            raise ValueError("streaming datasets require dataset_max_samples")
+        if self.dataset_shuffle_buffer <= 0:
+            raise ValueError("dataset_shuffle_buffer must be greater than zero")
+        if self.optimizer not in {"adamw", "adafactor"}:
+            raise ValueError("optimizer must be 'adamw' or 'adafactor'")
+        if self.max_train_steps < 0 or self.max_eval_steps < 0:
+            raise ValueError("max_train_steps and max_eval_steps must be zero or greater")
+        if self.fp16 and self.bf16:
+            raise ValueError("fp16 and bf16 cannot both be enabled")
         if self.device == "auto":
             self.device = str(get_device())
+        if not self.teacher_device:
+            self.teacher_device = self.device
         if not self.run_id:
             self.run_id = datetime.now().strftime("%Y%m%d_%H%M%S")
 

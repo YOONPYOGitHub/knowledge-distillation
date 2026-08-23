@@ -11,12 +11,19 @@ import time
 
 import torch
 import torch.nn.functional as F
-from torch.optim import AdamW
 from tqdm import tqdm
 
 from src.config import KDConfig
 from src.dataset import load_tokenizer, create_dataloaders
-from src.models import model_info
+from src.distributed import (
+    barrier,
+    is_main_process,
+    reduce_metrics,
+    set_epoch,
+    unwrap_model,
+    wrap_ddp,
+)
+from src.models import create_optimizer, model_info
 
 from transformers import AutoModelForCausalLM
 
@@ -27,7 +34,12 @@ def train_one_epoch(model, dataloader, optimizer, config: KDConfig):
     loss_sum = 0.0
     steps = 0
 
-    progress = tqdm(dataloader, desc="Teacher Training", leave=False)
+    progress = tqdm(
+        dataloader,
+        desc="Teacher Training",
+        leave=False,
+        disable=not is_main_process(),
+    )
     for batch in progress:
         input_ids = batch["input_ids"].to(config.device)
         attention_mask = batch["attention_mask"].to(config.device)
@@ -36,7 +48,7 @@ def train_one_epoch(model, dataloader, optimizer, config: KDConfig):
         outputs = model(input_ids=input_ids, attention_mask=attention_mask)
 
         # Causal LM label shift: logits[t] → labels[t+1]
-        shift_logits = outputs.logits[..., :-1, :].contiguous()
+        shift_logits = outputs.logits[..., :-1, :].float().contiguous()
         shift_labels = labels[..., 1:].contiguous()
         loss = F.cross_entropy(
             shift_logits.view(-1, shift_logits.size(-1)),
@@ -51,9 +63,11 @@ def train_one_epoch(model, dataloader, optimizer, config: KDConfig):
 
         loss_sum += loss.item()
         steps += 1
+        if config.max_train_steps and steps >= config.max_train_steps:
+            break
         progress.set_postfix(loss=f"{loss.item():.4f}")
 
-    return {"ce_loss": loss_sum / steps}
+    return reduce_metrics({"ce_loss": loss_sum / steps}, config.device)
 
 
 @torch.no_grad()
@@ -63,14 +77,19 @@ def validate(model, dataloader, config: KDConfig):
     loss_sum = 0.0
     steps = 0
 
-    for batch in tqdm(dataloader, desc="Teacher Validation", leave=False):
+    for batch in tqdm(
+        dataloader,
+        desc="Teacher Validation",
+        leave=False,
+        disable=not is_main_process(),
+    ):
         input_ids = batch["input_ids"].to(config.device)
         attention_mask = batch["attention_mask"].to(config.device)
         labels = batch["labels"].to(config.device)
 
         outputs = model(input_ids=input_ids, attention_mask=attention_mask)
 
-        shift_logits = outputs.logits[..., :-1, :].contiguous()
+        shift_logits = outputs.logits[..., :-1, :].float().contiguous()
         shift_labels = labels[..., 1:].contiguous()
         loss = F.cross_entropy(
             shift_logits.view(-1, shift_logits.size(-1)),
@@ -80,8 +99,10 @@ def validate(model, dataloader, config: KDConfig):
 
         loss_sum += loss.item()
         steps += 1
+        if config.max_eval_steps and steps >= config.max_eval_steps:
+            break
 
-    return {"val_ce_loss": loss_sum / steps}
+    return reduce_metrics({"val_ce_loss": loss_sum / steps}, config.device)
 
 
 def train_teacher(config: KDConfig):
@@ -103,59 +124,69 @@ def train_teacher(config: KDConfig):
 
     # Teacher 모델 로드 (학습 모드)
     kwargs = {}
-    if config.fp16 and config.device == "cuda":
+    if config.bf16 and config.device.startswith("cuda"):
+        kwargs["torch_dtype"] = torch.bfloat16
+    elif config.fp16 and config.device.startswith("cuda"):
         kwargs["torch_dtype"] = torch.float16
 
     teacher = AutoModelForCausalLM.from_pretrained(config.teacher_model, **kwargs)
+    if config.gradient_checkpointing:
+        teacher.gradient_checkpointing_enable()
+        teacher.config.use_cache = False
     teacher.to(config.device)
     teacher.train()
-    model_info(teacher, "Teacher (FT)")
-    print()
+    teacher = wrap_ddp(teacher, config.device)
+    if is_main_process():
+        model_info(teacher, "Teacher (FT)")
+        print()
 
     # Optimizer
-    optimizer = AdamW(
-        teacher.parameters(),
-        lr=config.teacher_learning_rate,
-        weight_decay=config.weight_decay,
-    )
+    optimizer = create_optimizer(teacher, config, config.teacher_learning_rate)
 
     # 학습 루프
     history = []
     best_val_loss = float("inf")
 
     for epoch in range(1, config.teacher_epochs + 1):
+        set_epoch(loaders["train"], epoch)
         start = time.time()
-        print(f"--- Teacher Epoch {epoch}/{config.teacher_epochs} ---")
+        if is_main_process():
+            print(f"--- Teacher Epoch {epoch}/{config.teacher_epochs} ---")
 
         train_metrics = train_one_epoch(teacher, loaders["train"], optimizer, config)
         val_metrics = validate(teacher, loaders["validation"], config)
 
         elapsed = time.time() - start
         metrics = {**train_metrics, **val_metrics, "epoch": epoch, "time": elapsed}
-        history.append(metrics)
+        if is_main_process():
+            history.append(metrics)
 
-        print(f"  Train CE Loss: {metrics['ce_loss']:.4f}")
-        print(f"  Val CE Loss:   {metrics['val_ce_loss']:.4f}")
-        print(f"  Time: {elapsed:.1f}s")
+            print(f"  Train CE Loss: {metrics['ce_loss']:.4f}")
+            print(f"  Val CE Loss:   {metrics['val_ce_loss']:.4f}")
+            print(f"  Time: {elapsed:.1f}s")
 
         # Best model 저장
-        if metrics["val_ce_loss"] < best_val_loss:
+        if is_main_process() and metrics["val_ce_loss"] < best_val_loss:
             best_val_loss = metrics["val_ce_loss"]
             save_path = config.checkpoint_dir / "teacher_ft_best.pt"
-            torch.save(teacher.state_dict(), save_path)
+            torch.save(unwrap_model(teacher).state_dict(), save_path)
             print(f"  ✅ Best teacher saved → {save_path}")
 
-        print()
+        if is_main_process():
+            print()
+        barrier()
 
     # 학습 로그 저장
     log_path = config.log_dir / "teacher_history.json"
-    with open(log_path, "w") as f:
-        json.dump(history, f, indent=2)
-    print(f"Teacher 학습 로그 저장 → {log_path}")
+    if is_main_process():
+        with open(log_path, "w") as f:
+            json.dump(history, f, indent=2)
+        print(f"Teacher 학습 로그 저장 → {log_path}")
+    barrier()
 
     # 메모리 해제 (이후 distill에서 checkpoint로 다시 로드)
     del teacher
-    if config.device == "cuda":
+    if config.device.startswith("cuda"):
         torch.cuda.empty_cache()
 
     return history

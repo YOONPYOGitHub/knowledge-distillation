@@ -8,12 +8,19 @@ import time
 
 import torch
 import torch.nn.functional as F
-from torch.optim import AdamW
 from tqdm import tqdm
 
 from src.config import KDConfig
 from src.dataset import load_tokenizer, create_dataloaders
-from src.models import load_teacher, load_student, model_info
+from src.distributed import (
+    barrier,
+    is_main_process,
+    reduce_metrics,
+    set_epoch,
+    unwrap_model,
+    wrap_ddp,
+)
+from src.models import create_optimizer, load_teacher, load_student, model_info
 
 
 def kd_loss(student_logits, teacher_logits, labels, config: KDConfig):
@@ -26,8 +33,8 @@ def kd_loss(student_logits, teacher_logits, labels, config: KDConfig):
     alpha = config.alpha
 
     # Causal LM label shift: logits[t] → labels[t+1]
-    shift_logits = student_logits[..., :-1, :].contiguous()
-    shift_teacher = teacher_logits[..., :-1, :].contiguous()
+    shift_logits = student_logits[..., :-1, :].float().contiguous()
+    shift_teacher = teacher_logits[..., :-1, :].float().contiguous()
     shift_labels = labels[..., 1:].contiguous()
 
     # Hard Label Loss: Student vs 정답
@@ -58,16 +65,27 @@ def train_one_epoch(teacher, student, dataloader, optimizer, config: KDConfig):
     kd_loss_sum = 0.0
     steps = 0
 
-    progress = tqdm(dataloader, desc="Training", leave=False)
+    progress = tqdm(
+        dataloader,
+        desc="Training",
+        leave=False,
+        disable=not is_main_process(),
+    )
+    teacher_device = next(teacher.parameters()).device
     for batch in progress:
-        input_ids = batch["input_ids"].to(config.device)
-        attention_mask = batch["attention_mask"].to(config.device)
-        labels = batch["labels"].to(config.device)
+        input_ids = batch["input_ids"].to(config.device, non_blocking=True)
+        attention_mask = batch["attention_mask"].to(config.device, non_blocking=True)
+        labels = batch["labels"].to(config.device, non_blocking=True)
+        teacher_input_ids = batch["input_ids"].to(teacher_device, non_blocking=True)
+        teacher_attention_mask = batch["attention_mask"].to(
+            teacher_device, non_blocking=True
+        )
 
-        # Teacher forward (no gradient)
+        # Separate CUDA devices execute these queued forwards concurrently.
         with torch.no_grad():
             teacher_outputs = teacher(
-                input_ids=input_ids, attention_mask=attention_mask
+                input_ids=teacher_input_ids,
+                attention_mask=teacher_attention_mask,
             )
 
         # Student forward
@@ -77,7 +95,10 @@ def train_one_epoch(teacher, student, dataloader, optimizer, config: KDConfig):
 
         # Loss 계산
         loss, ce, kd = kd_loss(
-            student_outputs.logits, teacher_outputs.logits, labels, config
+            student_outputs.logits,
+            teacher_outputs.logits.to(config.device, non_blocking=True),
+            labels,
+            config,
         )
 
         # Backpropagation
@@ -94,12 +115,14 @@ def train_one_epoch(teacher, student, dataloader, optimizer, config: KDConfig):
         progress.set_postfix(
             loss=f"{loss.item():.4f}", ce=f"{ce:.4f}", kd=f"{kd:.4f}"
         )
+        if config.max_train_steps and steps >= config.max_train_steps:
+            break
 
-    return {
+    return reduce_metrics({
         "total_loss": total_loss_sum / steps,
         "ce_loss": ce_loss_sum / steps,
         "kd_loss": kd_loss_sum / steps,
-    }
+    }, config.device)
 
 
 @torch.no_grad()
@@ -109,32 +132,48 @@ def validate(teacher, student, dataloader, config: KDConfig):
     total_loss_sum = 0.0
     ce_loss_sum = 0.0
     steps = 0
+    teacher_device = next(teacher.parameters()).device
 
-    for batch in tqdm(dataloader, desc="Validation", leave=False):
-        input_ids = batch["input_ids"].to(config.device)
-        attention_mask = batch["attention_mask"].to(config.device)
-        labels = batch["labels"].to(config.device)
+    for batch in tqdm(
+        dataloader,
+        desc="Validation",
+        leave=False,
+        disable=not is_main_process(),
+    ):
+        input_ids = batch["input_ids"].to(config.device, non_blocking=True)
+        attention_mask = batch["attention_mask"].to(config.device, non_blocking=True)
+        labels = batch["labels"].to(config.device, non_blocking=True)
+        teacher_input_ids = batch["input_ids"].to(teacher_device, non_blocking=True)
+        teacher_attention_mask = batch["attention_mask"].to(
+            teacher_device, non_blocking=True
+        )
 
         teacher_outputs = teacher(
-            input_ids=input_ids, attention_mask=attention_mask
+            input_ids=teacher_input_ids,
+            attention_mask=teacher_attention_mask,
         )
         student_outputs = student(
             input_ids=input_ids, attention_mask=attention_mask
         )
 
         loss, ce, kd = kd_loss(
-            student_outputs.logits, teacher_outputs.logits, labels, config
+            student_outputs.logits,
+            teacher_outputs.logits.to(config.device, non_blocking=True),
+            labels,
+            config,
         )
 
         total_loss_sum += loss.item()
         ce_loss_sum += ce
         steps += 1
+        if config.max_eval_steps and steps >= config.max_eval_steps:
+            break
 
     student.train()
-    return {
+    return reduce_metrics({
         "val_total_loss": total_loss_sum / steps,
         "val_ce_loss": ce_loss_sum / steps,
-    }
+    }, config.device)
 
 
 def distill(config: KDConfig):
@@ -150,31 +189,37 @@ def distill(config: KDConfig):
 
     # 토크나이저 & 데이터
     tokenizer = load_tokenizer(config.student_model)
+    teacher_tokenizer = load_tokenizer(config.teacher_model)
+    if teacher_tokenizer.get_vocab() != tokenizer.get_vocab():
+        raise ValueError(
+            "Teacher and student tokenizers must have identical vocabularies "
+            "for logit-based knowledge distillation"
+        )
     loaders = create_dataloaders(config, tokenizer)
     print(f"Train: {len(loaders['train'].dataset)} samples")
     print(f"Val:   {len(loaders['validation'].dataset)} samples\n")
 
     # 모델 로드
     teacher = load_teacher(config)
-    model_info(teacher, "Teacher")
     student = load_student(config)
-    model_info(student, "Student")
-    print()
+    student = wrap_ddp(student, config.device)
+    if is_main_process():
+        model_info(teacher, "Teacher")
+        model_info(student, "Student")
+        print()
 
     # Optimizer
-    optimizer = AdamW(
-        student.parameters(),
-        lr=config.learning_rate,
-        weight_decay=config.weight_decay,
-    )
+    optimizer = create_optimizer(student, config, config.learning_rate)
 
     # 학습 루프
     history = []
     best_val_loss = float("inf")
 
     for epoch in range(1, config.epochs + 1):
+        set_epoch(loaders["train"], epoch)
         start = time.time()
-        print(f"--- Epoch {epoch}/{config.epochs} ---")
+        if is_main_process():
+            print(f"--- Epoch {epoch}/{config.epochs} ---")
 
         train_metrics = train_one_epoch(
             teacher, student, loaders["train"], optimizer, config
@@ -183,32 +228,37 @@ def distill(config: KDConfig):
 
         elapsed = time.time() - start
         metrics = {**train_metrics, **val_metrics, "epoch": epoch, "time": elapsed}
-        history.append(metrics)
+        if is_main_process():
+            history.append(metrics)
 
-        print(
-            f"  Train Loss: {metrics['total_loss']:.4f} "
-            f"(CE: {metrics['ce_loss']:.4f}, KD: {metrics['kd_loss']:.4f})"
-        )
-        print(
-            f"  Val Loss:   {metrics['val_total_loss']:.4f} "
-            f"(CE: {metrics['val_ce_loss']:.4f})"
-        )
-        print(f"  Time: {elapsed:.1f}s")
+            print(
+                f"  Train Loss: {metrics['total_loss']:.4f} "
+                f"(CE: {metrics['ce_loss']:.4f}, KD: {metrics['kd_loss']:.4f})"
+            )
+            print(
+                f"  Val Loss:   {metrics['val_total_loss']:.4f} "
+                f"(CE: {metrics['val_ce_loss']:.4f})"
+            )
+            print(f"  Time: {elapsed:.1f}s")
 
         # Best model 저장
-        if metrics["val_total_loss"] < best_val_loss:
+        if is_main_process() and metrics["val_total_loss"] < best_val_loss:
             best_val_loss = metrics["val_total_loss"]
             save_path = config.checkpoint_dir / "student_kd_best.pt"
-            torch.save(student.state_dict(), save_path)
+            torch.save(unwrap_model(student).state_dict(), save_path)
             print(f"  ✅ Best model saved → {save_path}")
 
-        print()
+        if is_main_process():
+            print()
+        barrier()
 
     # 학습 로그 저장
     log_path = config.log_dir / "distill_history.json"
-    with open(log_path, "w") as f:
-        json.dump(history, f, indent=2)
-    print(f"학습 로그 저장 → {log_path}")
+    if is_main_process():
+        with open(log_path, "w") as f:
+            json.dump(history, f, indent=2)
+        print(f"학습 로그 저장 → {log_path}")
+    barrier()
 
     return student, history
 

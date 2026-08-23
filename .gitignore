@@ -9,6 +9,7 @@ uv.lock
 
 # 실험 결과 - 체크포인트만 제외 (대용량 모델 파일)
 results/checkpoints/
+results/logs/vessl-auto-extend-*.log
 
 # Hugging Face 캐시
 .cache/

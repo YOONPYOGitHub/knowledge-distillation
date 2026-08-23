@@ -3,6 +3,7 @@
 import torch
 from pathlib import Path
 from transformers import AutoModelForCausalLM
+from transformers.optimization import Adafactor
 
 from src.config import KDConfig
 
@@ -14,7 +15,9 @@ def load_teacher(config: KDConfig) -> AutoModelForCausalLM:
     비어있으면 pretrained 그대로 사용.
     """
     kwargs = {}
-    if config.fp16 and config.device == "cuda":
+    if config.bf16 and config.teacher_device.startswith("cuda"):
+        kwargs["torch_dtype"] = torch.bfloat16
+    elif config.fp16 and config.teacher_device.startswith("cuda"):
         kwargs["torch_dtype"] = torch.float16
 
     model = AutoModelForCausalLM.from_pretrained(config.teacher_model, **kwargs)
@@ -29,7 +32,7 @@ def load_teacher(config: KDConfig) -> AutoModelForCausalLM:
         else:
             raise FileNotFoundError(f"Teacher checkpoint not found: {checkpoint_path}")
 
-    model.to(config.device)
+    model.to(config.teacher_device)
     model.eval()
 
     # 가중치 고정 — 학습 시 Teacher는 업데이트하지 않음
@@ -41,10 +44,36 @@ def load_teacher(config: KDConfig) -> AutoModelForCausalLM:
 
 def load_student(config: KDConfig) -> AutoModelForCausalLM:
     """Student 모델 로드 (학습 대상)"""
-    model = AutoModelForCausalLM.from_pretrained(config.student_model)
+    kwargs = {}
+    if config.bf16 and config.device.startswith("cuda"):
+        kwargs["torch_dtype"] = torch.bfloat16
+    elif config.fp16 and config.device.startswith("cuda"):
+        kwargs["torch_dtype"] = torch.float16
+    model = AutoModelForCausalLM.from_pretrained(config.student_model, **kwargs)
+    if config.gradient_checkpointing:
+        model.gradient_checkpointing_enable()
+        model.config.use_cache = False
     model.to(config.device)
     model.train()
     return model
+
+
+def create_optimizer(model, config: KDConfig, learning_rate: float):
+    """Create the configured optimizer for a trainable model."""
+    if config.optimizer == "adafactor":
+        return Adafactor(
+            model.parameters(),
+            lr=learning_rate,
+            scale_parameter=False,
+            relative_step=False,
+            warmup_init=False,
+            weight_decay=config.weight_decay,
+        )
+    return torch.optim.AdamW(
+        model.parameters(),
+        lr=learning_rate,
+        weight_decay=config.weight_decay,
+    )
 
 
 def model_info(model: AutoModelForCausalLM, name: str = "Model"):

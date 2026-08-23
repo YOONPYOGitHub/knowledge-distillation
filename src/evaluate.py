@@ -60,7 +60,7 @@ def evaluate_speed(model, dataloader, device, num_batches=50):
     attention_mask = batch["attention_mask"].to(device)
     model(input_ids=input_ids, attention_mask=attention_mask)
 
-    if device == "cuda":
+    if device.startswith("cuda"):
         torch.cuda.synchronize()
 
     start = time.time()
@@ -72,7 +72,7 @@ def evaluate_speed(model, dataloader, device, num_batches=50):
         model(input_ids=input_ids, attention_mask=attention_mask)
         total_tokens += attention_mask.sum().item()
 
-    if device == "cuda":
+    if device.startswith("cuda"):
         torch.cuda.synchronize()
 
     elapsed = time.time() - start
@@ -133,7 +133,7 @@ def evaluate_all(config: KDConfig):
     teacher_name = "Teacher (FT)" if config.teacher_checkpoint else "Teacher"
     results.append(evaluate_model(teacher, teacher_name, test_loader, config.device))
     del teacher
-    if config.device == "cuda":
+    if config.device.startswith("cuda"):
         torch.cuda.empty_cache()
 
     # 2. Student (KD) — 증류 학습된 모델

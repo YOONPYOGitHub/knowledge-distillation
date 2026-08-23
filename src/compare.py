@@ -235,7 +235,7 @@ def generate_summary(results: list, config: KDConfig) -> dict:
         next_actions.append("max_seq_length를 512로 올려서 패딩 비율 줄이기")
 
     # 서버 실험 권장
-    if config.device != "cuda":
+    if not config.device.startswith("cuda"):
         next_actions.append("GPU 서버에서 server_config()로 본 실험 수행")
 
     summary = {

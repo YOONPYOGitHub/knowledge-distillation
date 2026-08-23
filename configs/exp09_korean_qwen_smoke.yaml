@@ -1,0 +1,32 @@
+# Qwen DDP 실행 경로 검증용: 각 GPU에서 train/eval 2 step만 수행
+
+teacher_model: Qwen/Qwen2.5-3B
+student_model: Qwen/Qwen2.5-1.5B
+
+dataset_name: wikimedia/wikipedia
+dataset_config: 20231101.ko
+dataset_revision: b04c8d1ceb2f5cd4588862100d08de323dccfbaa
+dataset_text_column: text
+dataset_streaming: true
+dataset_max_samples: 20
+dataset_shuffle_buffer: 10000
+validation_ratio: 0.1
+test_ratio: 0.1
+
+max_seq_length: 128
+temperature: 2.0
+alpha: 0.3
+epochs: 1
+batch_size: 1
+max_train_steps: 2
+max_eval_steps: 2
+learning_rate: 2.0e-5
+seed: 42
+num_workers: 0
+
+device: cuda
+fp16: false
+bf16: true
+optimizer: adafactor
+gradient_checkpointing: true
+output_dir: /tmp/kd-results
