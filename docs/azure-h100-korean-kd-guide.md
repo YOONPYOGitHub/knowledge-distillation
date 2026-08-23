@@ -23,6 +23,17 @@ bash scripts/setup_azure_h100.sh
 bash scripts/run_azure_h100.sh configs/h100_qwen_korean_smoke.yaml --step distill
 ```
 
+## 프로젝트 목적 4-Way 실험
+
+마지막 로컬 exp08과 같은 비교 구조를 실행한다. Teacher를 한국어 데이터에 먼저 fine-tuning하고, 같은 Student와 동일 학습 조건으로 KD와 CE-only baseline을 각각 8 epoch 학습한 뒤 Teacher/KD/FT/Base를 평가한다.
+
+```bash
+scripts/start_azure_h100_job.sh configs/h100_qwen_korean_4way.yaml
+scripts/monitor_azure_h100.sh --watch
+```
+
+`--step`을 전달하지 않아야 `train_teacher`, `distill`, `baseline`, `evaluate`, `compare`가 같은 `run_id`로 순서대로 실행된다.
+
 Azure Run Command는 동기 실행 중 다른 상태 조회를 막는다. Mac에서 실시간 진행률을 보려면 학습을 백그라운드 작업으로 시작한다.
 
 ```bash

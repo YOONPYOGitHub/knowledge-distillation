@@ -1,0 +1,38 @@
+# H100 Qwen Korean 4-way comparison
+# exp08 구조 재현: Teacher FT -> Student KD -> Student FT -> Evaluate -> Compare
+
+teacher_model: Qwen/Qwen2.5-3B
+student_model: Qwen/Qwen2.5-1.5B
+
+dataset_name: wikimedia/wikipedia
+dataset_config: 20231101.ko
+dataset_revision: b04c8d1ceb2f5cd4588862100d08de323dccfbaa
+dataset_text_column: text
+dataset_streaming: true
+dataset_max_samples: 1000
+dataset_shuffle_buffer: 10000
+validation_ratio: 0.05
+test_ratio: 0.05
+
+max_seq_length: 256
+temperature: 2.0
+alpha: 0.2
+
+# Teacher domain adaptation
+teacher_epochs: 3
+teacher_learning_rate: 2.0e-5
+
+# Student KD and CE-only baseline use identical conditions
+epochs: 8
+batch_size: 2
+learning_rate: 2.0e-5
+weight_decay: 0.01
+gradient_clip: 1.0
+seed: 42
+num_workers: 4
+
+device: cuda
+bf16: true
+optimizer: adafactor
+gradient_checkpointing: false
+output_dir: /mnt/kd-results/qwen-4way
