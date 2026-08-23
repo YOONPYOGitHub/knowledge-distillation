@@ -38,6 +38,7 @@ class KDConfig:
     # --- KD 하이퍼파라미터 ---
     temperature: float = 3.0
     alpha: float = 0.5  # CE vs KD 비율 (1.0 = CE만, 0.0 = KD만)
+    kd_vocab_size: int = 0  # 동일 tokenizer의 실제 vocabulary 크기
 
     # --- Teacher Fine-tuning ---
     teacher_epochs: int = 3

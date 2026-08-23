@@ -45,8 +45,16 @@ def kd_loss(student_logits, teacher_logits, labels, config: KDConfig):
     )
 
     # Soft Label Loss: Student vs Teacher (Temperature 적용)
-    teacher_soft = F.softmax(shift_teacher / T, dim=-1)
-    student_log_soft = F.log_softmax(shift_logits / T, dim=-1)
+    kd_vocab_size = config.kd_vocab_size or min(
+        shift_logits.size(-1), shift_teacher.size(-1)
+    )
+    if kd_vocab_size > min(shift_logits.size(-1), shift_teacher.size(-1)):
+        raise ValueError(
+            f"KD vocabulary size {kd_vocab_size} exceeds model logits: "
+            f"student={shift_logits.size(-1)}, teacher={shift_teacher.size(-1)}"
+        )
+    teacher_soft = F.softmax(shift_teacher[..., :kd_vocab_size] / T, dim=-1)
+    student_log_soft = F.log_softmax(shift_logits[..., :kd_vocab_size] / T, dim=-1)
     kd_loss_value = F.kl_div(
         student_log_soft, teacher_soft, reduction="batchmean"
     ) * (T * T)
@@ -195,6 +203,7 @@ def distill(config: KDConfig):
             "Teacher and student tokenizers must have identical vocabularies "
             "for logit-based knowledge distillation"
         )
+    config.kd_vocab_size = len(tokenizer)
     loaders = create_dataloaders(config, tokenizer)
     print(f"Train: {len(loaders['train'].dataset)} samples")
     print(f"Val:   {len(loaders['validation'].dataset)} samples\n")
