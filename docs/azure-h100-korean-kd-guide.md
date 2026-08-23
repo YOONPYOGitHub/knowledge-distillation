@@ -23,6 +23,20 @@ bash scripts/setup_azure_h100.sh
 bash scripts/run_azure_h100.sh configs/h100_qwen_korean_smoke.yaml --step distill
 ```
 
+Azure Run Command는 동기 실행 중 다른 상태 조회를 막는다. Mac에서 실시간 진행률을 보려면 학습을 백그라운드 작업으로 시작한다.
+
+```bash
+scripts/start_azure_h100_job.sh configs/h100_qwen_korean.yaml --step distill
+```
+
+출력된 원격 로그 경로를 사용하거나 가장 최근 작업을 자동 선택해 상태를 확인한다.
+
+```bash
+scripts/monitor_azure_h100.sh --watch
+```
+
+모니터는 30초마다 H100 메모리·사용률과 원격 로그의 최근 tqdm 진행률을 갱신한다. `INTERVAL=10`처럼 조회 간격을 바꿀 수 있다.
+
 ## 세 모델 본실험
 
 ```bash
