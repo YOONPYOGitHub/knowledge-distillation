@@ -34,6 +34,13 @@ scripts/monitor_azure_h100.sh --watch
 
 `--step`을 전달하지 않아야 `train_teacher`, `distill`, `baseline`, `evaluate`, `compare`가 같은 `run_id`로 순서대로 실행된다.
 
+Teacher와 Student의 성능 차이를 키운 `Qwen 7B → 1.5B` 비교는 동일 조건의 별도 설정으로 실행한다.
+
+```bash
+scripts/start_azure_h100_job.sh configs/h100_qwen7b_korean_4way.yaml
+scripts/monitor_azure_h100.sh --watch
+```
+
 Azure Run Command는 동기 실행 중 다른 상태 조회를 막는다. Mac에서 실시간 진행률을 보려면 학습을 백그라운드 작업으로 시작한다.
 
 ```bash
