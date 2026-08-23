@@ -37,9 +37,9 @@ nohup env HF_HOME=/mnt/huggingface HF_HUB_DISABLE_XET=1 TOKENIZERS_PARALLELISM=f
   bash scripts/run_azure_h100.sh '${CONFIG}'${quoted_args} \\
   > '${remote_log}' 2>&1 < /dev/null &
 pid=\$!
-echo \"\${pid}\" > '${remote_pid}'
+echo "\${pid}" > '${remote_pid}'
 echo 'JOB_NAME=${job_name}'
-echo 'PID='\"\${pid}\"
+echo "PID=\${pid}"
 echo 'LOG=${remote_log}'
 EOF
 )"

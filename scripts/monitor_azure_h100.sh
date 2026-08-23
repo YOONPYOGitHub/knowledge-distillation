@@ -24,28 +24,32 @@ snapshot() {
     remote_script="$(cat <<EOF
 set -eu
 log_file='${LOG_FILE}'
-if [ -z \"\${log_file}\" ]; then
+if [ -z "\${log_file}" ]; then
   log_file=\$(find /mnt/kd-results -type f -name '*.log' -printf '%T@ %p\\n' 2>/dev/null | sort -nr | head -1 | cut -d' ' -f2-)
 fi
-echo \"LOG=\${log_file:-none}\"
-if [ -n \"\${log_file}\" ]; then
-  pid_file=\"\${log_file%.log}.pid\"
-  if [ -f \"\${pid_file}\" ]; then
-    pid=\$(cat \"\${pid_file}\")
-    if kill -0 \"\${pid}\" 2>/dev/null; then
-      echo \"STATUS=running PID=\${pid}\"
+echo "LOG=\${log_file:-none}"
+if [ -n "\${log_file}" ]; then
+  pid_file="\${log_file%.log}.pid"
+  if [ -f "\${pid_file}" ]; then
+    pid=\$(tr -d '"' < "\${pid_file}")
+    if kill -0 "\${pid}" 2>/dev/null; then
+      echo "STATUS=running PID=\${pid}"
     else
-      echo \"STATUS=finished PID=\${pid}\"
+      echo "STATUS=finished PID=\${pid}"
     fi
+  elif grep -q '파이프라인 완료' "\${log_file}" 2>/dev/null; then
+    echo 'STATUS=finished'
+  elif pgrep -f '/mnt/kd-venv/bin/python main.py' >/dev/null 2>&1; then
+    echo 'STATUS=running'
   else
-    echo 'STATUS=unknown'
+    echo 'STATUS=starting-or-finished'
   fi
 fi
 echo 'GPU:'
 nvidia-smi --query-gpu=name,memory.used,memory.total,utilization.gpu,power.draw --format=csv,noheader
 echo 'PROGRESS:'
-if [ -n \"\${log_file}\" ] && [ -f \"\${log_file}\" ]; then
-  tail -c 32768 \"\${log_file}\" | tr '\\r' '\\n' | tail -30
+if [ -n "\${log_file}" ] && [ -f "\${log_file}" ]; then
+  python3 -c 'import sys; from pathlib import Path; text = Path(sys.argv[1]).read_bytes()[-65536:].decode("utf-8", errors="replace"); print("\\n".join(text.splitlines()[-12:]))' "\${log_file}"
 fi
 EOF
 )"
