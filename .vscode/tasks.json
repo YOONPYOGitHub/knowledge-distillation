@@ -1,0 +1,25 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Watch Azure H100 KD Retry",
+			"type": "shell",
+			"command": "caffeinate",
+			"args": [
+				"-i",
+				".venv/bin/python",
+				"scripts/watch_azure_h100_job.py",
+				"configs/h100_qwen7b_korean_t4_tokenmean.yaml",
+				"--runner",
+				"scripts/run_azure_h100_kd_retry.sh",
+				"--interval",
+				"60",
+				"--max-restarts",
+				"20"
+			],
+			"isBackground": true,
+			"problemMatcher": [],
+			"group": "build"
+		}
+	]
+}
