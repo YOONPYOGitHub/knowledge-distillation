@@ -24,7 +24,12 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--resource-group", default="rg-ai")
     parser.add_argument("--vm-name", default="vm-test-100")
     parser.add_argument("--interval", type=int, default=60)
-    parser.add_argument("--max-restarts", type=int, default=20)
+    parser.add_argument(
+        "--max-restarts",
+        type=int,
+        default=20,
+        help="Maximum VM start attempts; 0 retries indefinitely (default: 20)",
+    )
     parser.add_argument(
         "--runner",
         default="scripts/run_azure_h100_resumable.sh",
@@ -234,7 +239,7 @@ def main() -> int:
         if state != "PowerState/running":
             if args.status_only:
                 return 1
-            if restarts >= args.max_restarts:
+            if args.max_restarts and restarts >= args.max_restarts:
                 raise RuntimeError("Maximum VM restart attempts reached")
             restarts += 1
             if not start_vm(args):
