@@ -258,8 +258,8 @@ def distill(config: KDConfig):
             print(f"  Time: {elapsed:.1f}s")
 
         # Best model 저장
-        if is_main_process() and metrics["val_total_loss"] < best_val_loss:
-            best_val_loss = metrics["val_total_loss"]
+        if is_main_process() and metrics["val_ce_loss"] < best_val_loss:
+            best_val_loss = metrics["val_ce_loss"]
             save_path = config.checkpoint_dir / "student_kd_best.pt"
             torch.save(unwrap_model(student).state_dict(), save_path)
             print(f"  ✅ Best model saved → {save_path}")

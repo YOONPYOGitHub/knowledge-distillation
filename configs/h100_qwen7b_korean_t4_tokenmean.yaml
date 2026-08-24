@@ -39,4 +39,4 @@ bf16: true
 optimizer: adafactor
 gradient_checkpointing: false
 output_dir: /var/lib/kd-results/qwen7b-t4-tokenmean
-run_id: qwen7b-korean-t4-tokenmean-v1
+run_id: qwen7b-korean-t4-tokenmean-v2

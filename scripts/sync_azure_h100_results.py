@@ -77,7 +77,7 @@ def download_artifacts(args: argparse.Namespace, remote_dir: Path, local_dir: Pa
 set -eu
 cd '{remote_dir}'
 echo ARCHIVE_BASE64_BEGIN
-tar -czf - {names} | base64 -w0
+tar --dereference -czf - {names} | base64 -w0
 echo
 echo ARCHIVE_BASE64_END
 """
