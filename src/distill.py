@@ -55,9 +55,16 @@ def kd_loss(student_logits, teacher_logits, labels, config: KDConfig):
         )
     teacher_soft = F.softmax(shift_teacher[..., :kd_vocab_size] / T, dim=-1)
     student_log_soft = F.log_softmax(shift_logits[..., :kd_vocab_size] / T, dim=-1)
-    kd_loss_value = F.kl_div(
-        student_log_soft, teacher_soft, reduction="batchmean"
-    ) * (T * T)
+    if config.kd_reduction == "tokenmean":
+        token_kl = F.kl_div(
+            student_log_soft, teacher_soft, reduction="none"
+        ).sum(dim=-1)
+        valid_tokens = shift_labels != -100
+        kd_loss_value = token_kl[valid_tokens].mean() * (T * T)
+    else:
+        kd_loss_value = F.kl_div(
+            student_log_soft, teacher_soft, reduction="batchmean"
+        ) * (T * T)
 
     # Total Loss
     total_loss = alpha * ce_loss + (1 - alpha) * kd_loss_value

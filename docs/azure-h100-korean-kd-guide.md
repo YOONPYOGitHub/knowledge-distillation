@@ -51,6 +51,33 @@ AZURE_H100_RUNNER=scripts/run_azure_h100_resumable.sh \
 	scripts/start_azure_h100_job.sh configs/h100_qwen7b_korean_4way.yaml
 ```
 
+장시간 실험은 Mac에서 watchdog을 실행하는 것을 권장한다. VM이 회수되면 시작을
+재시도하고, `/mnt` 환경을 다시 설치하고, 영구 OS 디스크의 checkpoint를 기준으로
+미완료 단계부터 재개한다. 완료되면 JSON 로그를 로컬 `results`로 회수하고 차트를
+생성한다.
+
+```bash
+caffeinate -i .venv/bin/python scripts/watch_azure_h100_job.py \
+	configs/h100_qwen7b_korean_4way.yaml
+```
+
+7B 첫 결과에서 `batchmean` KL이 CE보다 약 100배 커져 KD가 과도하게 지배했다.
+다음 실험은 기존 Teacher adapter와 FT baseline을 재사용하고 Student KD만 다시
+학습한다. Temperature를 4로 높이고 KL을 유효 token 평균으로 정규화한다.
+
+```bash
+AZURE_H100_RUNNER=scripts/run_azure_h100_kd_retry.sh \
+	scripts/start_azure_h100_job.sh configs/h100_qwen7b_korean_t4_tokenmean.yaml
+```
+
+Spot 자동 복구와 로컬 결과 회수까지 포함하려면 watchdog에 retry runner를 지정한다.
+
+```bash
+caffeinate -i .venv/bin/python scripts/watch_azure_h100_job.py \
+	configs/h100_qwen7b_korean_t4_tokenmean.yaml \
+	--runner scripts/run_azure_h100_kd_retry.sh
+```
+
 Azure Run Command는 동기 실행 중 다른 상태 조회를 막는다. Mac에서 실시간 진행률을 보려면 학습을 백그라운드 작업으로 시작한다.
 
 ```bash

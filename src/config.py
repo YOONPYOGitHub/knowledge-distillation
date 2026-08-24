@@ -39,6 +39,7 @@ class KDConfig:
     temperature: float = 3.0
     alpha: float = 0.5  # CE vs KD 비율 (1.0 = CE만, 0.0 = KD만)
     kd_vocab_size: int = 0  # 동일 tokenizer의 실제 vocabulary 크기
+    kd_reduction: str = "batchmean"  # "batchmean" 또는 "tokenmean"
 
     # --- Teacher Fine-tuning ---
     teacher_epochs: int = 3
@@ -94,6 +95,8 @@ class KDConfig:
             raise ValueError("max_train_steps and max_eval_steps must be zero or greater")
         if self.teacher_lora_rank < 0:
             raise ValueError("teacher_lora_rank must be zero or greater")
+        if self.kd_reduction not in {"batchmean", "tokenmean"}:
+            raise ValueError("kd_reduction must be 'batchmean' or 'tokenmean'")
         if self.fp16 and self.bf16:
             raise ValueError("fp16 and bf16 cannot both be enabled")
         if self.device == "auto":
