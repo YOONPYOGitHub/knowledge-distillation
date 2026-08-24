@@ -5,6 +5,7 @@ KD Loss = α · CE(Student, Label) + (1-α) · T² · KL(Student ∥ Teacher)
 
 import json
 import time
+from pathlib import Path
 
 import torch
 import torch.nn.functional as F
@@ -53,18 +54,27 @@ def kd_loss(student_logits, teacher_logits, labels, config: KDConfig):
             f"KD vocabulary size {kd_vocab_size} exceeds model logits: "
             f"student={shift_logits.size(-1)}, teacher={shift_teacher.size(-1)}"
         )
-    teacher_soft = F.softmax(shift_teacher[..., :kd_vocab_size] / T, dim=-1)
-    student_log_soft = F.log_softmax(shift_logits[..., :kd_vocab_size] / T, dim=-1)
-    if config.kd_reduction == "tokenmean":
+    teacher_log_soft = F.log_softmax(
+        shift_teacher[..., :kd_vocab_size] / T, dim=-1
+    )
+    student_log_soft = F.log_softmax(
+        shift_logits[..., :kd_vocab_size] / T, dim=-1
+    )
+    if config.kd_divergence == "reverse_kl":
+        student_soft = student_log_soft.exp()
+        token_kl = (
+            student_soft * (student_log_soft - teacher_log_soft)
+        ).sum(dim=-1)
+    else:
+        teacher_soft = teacher_log_soft.exp()
         token_kl = F.kl_div(
             student_log_soft, teacher_soft, reduction="none"
         ).sum(dim=-1)
+    if config.kd_reduction == "tokenmean":
         valid_tokens = shift_labels != -100
         kd_loss_value = token_kl[valid_tokens].mean() * (T * T)
     else:
-        kd_loss_value = F.kl_div(
-            student_log_soft, teacher_soft, reduction="batchmean"
-        ) * (T * T)
+        kd_loss_value = token_kl.sum() / shift_logits.size(0) * (T * T)
 
     # Total Loss
     total_loss = alpha * ce_loss + (1 - alpha) * kd_loss_value
@@ -218,6 +228,16 @@ def distill(config: KDConfig):
     # 모델 로드
     teacher = load_teacher(config)
     student = load_student(config)
+    if config.distill_student_checkpoint:
+        checkpoint_path = Path(config.distill_student_checkpoint)
+        if not checkpoint_path.is_file():
+            raise FileNotFoundError(
+                f"Student initialization checkpoint not found: {checkpoint_path}"
+            )
+        student.load_state_dict(
+            torch.load(checkpoint_path, map_location="cpu", weights_only=True)
+        )
+        print(f"  ✅ Student 초기 checkpoint 로드 → {checkpoint_path}")
     student = wrap_ddp(student, config.device)
     if is_main_process():
         model_info(teacher, "Teacher")

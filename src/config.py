@@ -40,6 +40,7 @@ class KDConfig:
     alpha: float = 0.5  # CE vs KD 비율 (1.0 = CE만, 0.0 = KD만)
     kd_vocab_size: int = 0  # 동일 tokenizer의 실제 vocabulary 크기
     kd_reduction: str = "batchmean"  # "batchmean" 또는 "tokenmean"
+    kd_divergence: str = "forward_kl"  # "forward_kl" 또는 "reverse_kl"
 
     # --- Teacher Fine-tuning ---
     teacher_epochs: int = 3
@@ -63,6 +64,7 @@ class KDConfig:
     gradient_clip: float = 1.0
     optimizer: str = "adamw"  # "adamw" 또는 메모리 절약형 "adafactor"
     gradient_checkpointing: bool = False
+    distill_student_checkpoint: str = ""  # KD 전용 Student 초기 checkpoint
 
     # --- 경로 ---
     output_dir: str = "results"
@@ -97,6 +99,8 @@ class KDConfig:
             raise ValueError("teacher_lora_rank must be zero or greater")
         if self.kd_reduction not in {"batchmean", "tokenmean"}:
             raise ValueError("kd_reduction must be 'batchmean' or 'tokenmean'")
+        if self.kd_divergence not in {"forward_kl", "reverse_kl"}:
+            raise ValueError("kd_divergence must be 'forward_kl' or 'reverse_kl'")
         if self.fp16 and self.bf16:
             raise ValueError("fp16 and bf16 cannot both be enabled")
         if self.device == "auto":

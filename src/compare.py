@@ -246,6 +246,8 @@ def generate_summary(results: list, config: KDConfig) -> dict:
             "temperature": config.temperature,
             "alpha": config.alpha,
             "kd_reduction": config.kd_reduction,
+            "kd_divergence": config.kd_divergence,
+            "distill_student_checkpoint": config.distill_student_checkpoint,
             "epochs": config.epochs,
             "teacher_epochs": config.teacher_epochs,
             "teacher_learning_rate": config.teacher_learning_rate,

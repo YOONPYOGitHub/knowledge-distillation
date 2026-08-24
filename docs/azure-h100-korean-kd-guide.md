@@ -80,6 +80,24 @@ caffeinate -i .venv/bin/python scripts/watch_azure_h100_job.py \
 	--runner scripts/run_azure_h100_kd_retry.sh
 ```
 
+## v3: SFT 초기화 + Reverse KL
+
+MiniLLM은 Forward KL이 Teacher의 저확률 영역을 Student가 과대평가하게 만들 수
+있다고 지적하고 Reverse KL 및 SFT Student 초기화를 사용한다. GKD는 on-policy
+Student 생성이 더 효과적이라고 보고하지만, v3에서는 divergence와 초기화 효과를
+현재 plain-text off-policy 파이프라인에서 먼저 확인한다.
+
+```bash
+caffeinate -i .venv/bin/python scripts/watch_azure_h100_job.py \
+	configs/h100_qwen7b_korean_reverse_v3.yaml \
+	--runner scripts/run_azure_h100_kd_retry.sh
+```
+
+v3는 기존 Teacher adapter와 FT Student checkpoint를 초기값으로 재사용하고,
+`T=2`, `alpha=0.5`, valid-token 평균 Reverse KL, lr `1e-5`로 학습한다. true
+on-policy GKD는 student generation과 데이터 형식 변경이 필요하므로 후속 실험으로
+분리한다.
+
 Azure Run Command는 동기 실행 중 다른 상태 조회를 막는다. Mac에서 실시간 진행률을 보려면 학습을 백그라운드 작업으로 시작한다.
 
 ```bash
