@@ -4,15 +4,15 @@ set -euo pipefail
 
 REPO_URL="${REPO_URL:-https://github.com/YOONPYOGitHub/knowledge-distillation.git}"
 BRANCH="${BRANCH:-feature/azure-h100-korean-kd}"
-WORK_DIR="${WORK_DIR:-/mnt/knowledge-distillation}"
-VENV_DIR="${VENV_DIR:-/mnt/kd-venv}"
-HF_HOME="${HF_HOME:-/mnt/huggingface}"
+WORK_DIR="${WORK_DIR:-/var/lib/knowledge-distillation}"
+VENV_DIR="${VENV_DIR:-/var/lib/kd-venv}"
+HF_HOME="${HF_HOME:-/var/lib/huggingface}"
 
 export HF_HOME
 export HF_DATASETS_CACHE="${HF_HOME}/datasets"
 export HUGGINGFACE_HUB_CACHE="${HF_HOME}/hub"
 
-mkdir -p /mnt/kd-results "${HF_DATASETS_CACHE}" "${HUGGINGFACE_HUB_CACHE}"
+mkdir -p /var/lib/kd-results "${HF_DATASETS_CACHE}" "${HUGGINGFACE_HUB_CACHE}"
 
 if [[ -d "${WORK_DIR}/.git" ]]; then
     git -C "${WORK_DIR}" fetch origin "${BRANCH}"

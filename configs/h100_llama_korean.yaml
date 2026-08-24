@@ -27,4 +27,4 @@ device: cuda
 bf16: true
 optimizer: adafactor
 gradient_checkpointing: false
-output_dir: /mnt/kd-results/llama
+output_dir: /var/lib/kd-results/llama

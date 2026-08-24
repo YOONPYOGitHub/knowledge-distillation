@@ -2,9 +2,9 @@
 
 set -euo pipefail
 
-WORK_DIR="${WORK_DIR:-/mnt/knowledge-distillation}"
-VENV_DIR="${VENV_DIR:-/mnt/kd-venv}"
-HF_HOME="${HF_HOME:-/mnt/huggingface}"
+WORK_DIR="${WORK_DIR:-/var/lib/knowledge-distillation}"
+VENV_DIR="${VENV_DIR:-/var/lib/kd-venv}"
+HF_HOME="${HF_HOME:-/var/lib/huggingface}"
 CONFIG="${1:-configs/h100_qwen_korean_smoke.yaml}"
 shift || true
 

@@ -124,7 +124,7 @@ def bootstrap(args: argparse.Namespace) -> None:
     branch = os.environ.get("BRANCH", "feature/azure-h100-korean-kd")
     script = f"""
 set -eu
-repo=/mnt/knowledge-distillation
+    repo=/var/lib/knowledge-distillation
 if [ -d "${{repo}}/.git" ]; then
   git -C "${{repo}}" fetch origin '{branch}'
   git -C "${{repo}}" checkout '{branch}'
@@ -133,8 +133,8 @@ else
   git clone --branch '{branch}' --single-branch \
     https://github.com/YOONPYOGitHub/knowledge-distillation.git "${{repo}}"
 fi
-if [ ! -x /mnt/kd-venv/bin/python ] || \
-   ! /mnt/kd-venv/bin/python -c 'import torch, peft, transformers, datasets' >/dev/null 2>&1; then
+if [ ! -x /var/lib/kd-venv/bin/python ] || \
+    ! /var/lib/kd-venv/bin/python -c 'import torch, peft, transformers, datasets' >/dev/null 2>&1; then
   bash "${{repo}}/scripts/setup_azure_h100.sh"
 fi
 mkdir -p /var/lib/kd-results
@@ -191,8 +191,8 @@ def launch(args: argparse.Namespace, config_path: str) -> None:
     script = f"""
 set -eu
 mkdir -p '{jobs_dir}'
-cd /mnt/knowledge-distillation
-nohup env HF_HOME=/mnt/huggingface HF_HUB_DISABLE_XET=1 TOKENIZERS_PARALLELISM=false \
+cd /var/lib/knowledge-distillation
+nohup env HF_HOME=/var/lib/huggingface HF_HUB_DISABLE_XET=1 TOKENIZERS_PARALLELISM=false \
     bash '{args.runner}' '{config_path}' \
   >> '{log_file}' 2>&1 < /dev/null &
 pid=$!

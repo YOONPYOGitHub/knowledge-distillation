@@ -14,7 +14,7 @@ if [[ "${LOG_FILE}" == "--watch" ]]; then
     WATCH=true
 fi
 
-if [[ -n "${LOG_FILE}" && ! "${LOG_FILE}" =~ ^/mnt/kd-results/[A-Za-z0-9_./-]+\.log$ ]]; then
+if [[ -n "${LOG_FILE}" && ! "${LOG_FILE}" =~ ^/(mnt|var/lib)/kd-results/[A-Za-z0-9_./-]+\.log$ ]]; then
     echo "Invalid remote log path: ${LOG_FILE}" >&2
     exit 2
 fi
@@ -25,7 +25,7 @@ snapshot() {
 set -eu
 log_file='${LOG_FILE}'
 if [ -z "\${log_file}" ]; then
-  log_file=\$(find /mnt/kd-results -type f -name '*.log' -printf '%T@ %p\\n' 2>/dev/null | sort -nr | head -1 | cut -d' ' -f2-)
+  log_file=\$(find /var/lib/kd-results /mnt/kd-results -type f -name '*.log' -printf '%T@ %p\\n' 2>/dev/null | sort -nr | head -1 | cut -d' ' -f2-)
 fi
 echo "LOG=\${log_file:-none}"
 if [ -n "\${log_file}" ]; then

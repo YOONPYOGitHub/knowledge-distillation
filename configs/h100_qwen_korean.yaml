@@ -26,4 +26,4 @@ device: cuda
 bf16: true
 optimizer: adafactor
 gradient_checkpointing: false
-output_dir: /mnt/kd-results/qwen
+output_dir: /var/lib/kd-results/qwen

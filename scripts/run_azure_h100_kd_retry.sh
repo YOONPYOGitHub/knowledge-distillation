@@ -2,8 +2,8 @@
 
 set -euo pipefail
 
-WORK_DIR="${WORK_DIR:-/mnt/knowledge-distillation}"
-VENV_DIR="${VENV_DIR:-/mnt/kd-venv}"
+WORK_DIR="${WORK_DIR:-/var/lib/knowledge-distillation}"
+VENV_DIR="${VENV_DIR:-/var/lib/kd-venv}"
 CONFIG="${1:-configs/h100_qwen7b_korean_t4_tokenmean.yaml}"
 
 cd "${WORK_DIR}"

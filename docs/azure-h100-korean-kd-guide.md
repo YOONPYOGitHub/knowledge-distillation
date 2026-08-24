@@ -4,12 +4,14 @@
 
 ## 저장 경로
 
-- 소스: `/mnt/knowledge-distillation`
-- Python 환경: `/mnt/kd-venv`
-- Hugging Face 모델/데이터 캐시: `/mnt/huggingface`
-- 결과: `/mnt/kd-results/<model>`
+- 소스: `/var/lib/knowledge-distillation`
+- Python 환경: `/var/lib/kd-venv`
+- Hugging Face 모델/데이터 캐시: `/var/lib/huggingface`
+- 결과: `/var/lib/kd-results/<model>`
 
-OS 디스크가 아닌 `/mnt`의 120GB 임시 디스크를 사용한다. Azure 임시 디스크는 VM 재배포 또는 호스트 이동 시 유실될 수 있으므로 완료된 결과는 즉시 Blob Storage나 로컬로 회수해야 한다.
+OS 디스크를 128GB로 확장했으며 `/var/lib`에 소스, 환경, 모델 캐시와 결과를
+보존한다. `/mnt`는 Spot eviction 또는 호스트 이동 시 초기화되므로 학습 상태나
+필수 캐시 저장에 사용하지 않는다. 완료된 JSON과 차트는 추가로 로컬에 회수한다.
 
 ## 환경 설치
 

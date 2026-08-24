@@ -28,8 +28,8 @@ for argument in "$@"; do
 done
 
 job_name="$(basename "${CONFIG}" .yaml)-$(date +%Y%m%d-%H%M%S)"
-remote_log="/mnt/kd-results/jobs/${job_name}.log"
-remote_pid="/mnt/kd-results/jobs/${job_name}.pid"
+remote_log="/var/lib/kd-results/jobs/${job_name}.log"
+remote_pid="/var/lib/kd-results/jobs/${job_name}.pid"
 quoted_args=""
 for argument in "$@"; do
     printf -v quoted_argument '%q' "${argument}"
@@ -38,9 +38,9 @@ done
 
 remote_script="$(cat <<EOF
 set -eu
-mkdir -p /mnt/kd-results/jobs
-cd /mnt/knowledge-distillation
-nohup env HF_HOME=/mnt/huggingface HF_HUB_DISABLE_XET=1 TOKENIZERS_PARALLELISM=false \\
+mkdir -p /var/lib/kd-results/jobs
+cd /var/lib/knowledge-distillation
+nohup env HF_HOME=/var/lib/huggingface HF_HUB_DISABLE_XET=1 TOKENIZERS_PARALLELISM=false \
     bash '${RUNNER}' '${CONFIG}'${quoted_args} \\
   > '${remote_log}' 2>&1 < /dev/null &
 pid=\$!
