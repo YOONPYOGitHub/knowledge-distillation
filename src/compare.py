@@ -248,6 +248,8 @@ def generate_summary(results: list, config: KDConfig) -> dict:
             "kd_reduction": config.kd_reduction,
             "kd_divergence": config.kd_divergence,
             "distill_student_checkpoint": config.distill_student_checkpoint,
+            "early_stopping_patience": config.early_stopping_patience,
+            "early_stopping_min_delta": config.early_stopping_min_delta,
             "epochs": config.epochs,
             "teacher_epochs": config.teacher_epochs,
             "teacher_learning_rate": config.teacher_learning_rate,

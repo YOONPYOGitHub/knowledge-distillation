@@ -250,6 +250,7 @@ def distill(config: KDConfig):
     # 학습 루프
     history = []
     best_val_loss = float("inf")
+    epochs_without_improvement = 0
 
     for epoch in range(1, config.epochs + 1):
         set_epoch(loaders["train"], epoch)
@@ -277,16 +278,33 @@ def distill(config: KDConfig):
             )
             print(f"  Time: {elapsed:.1f}s")
 
-        # Best model 저장
-        if is_main_process() and metrics["val_ce_loss"] < best_val_loss:
+        improved = (
+            metrics["val_ce_loss"]
+            < best_val_loss - config.early_stopping_min_delta
+        )
+        if improved:
             best_val_loss = metrics["val_ce_loss"]
-            save_path = config.checkpoint_dir / "student_kd_best.pt"
-            torch.save(unwrap_model(student).state_dict(), save_path)
-            print(f"  ✅ Best model saved → {save_path}")
+            epochs_without_improvement = 0
+            if is_main_process():
+                save_path = config.checkpoint_dir / "student_kd_best.pt"
+                torch.save(unwrap_model(student).state_dict(), save_path)
+                print(f"  ✅ Best model saved → {save_path}")
+        else:
+            epochs_without_improvement += 1
 
         if is_main_process():
             print()
         barrier()
+        if (
+            config.early_stopping_patience
+            and epochs_without_improvement >= config.early_stopping_patience
+        ):
+            if is_main_process():
+                print(
+                    "  ⏹ Early stopping: validation CE did not improve "
+                    f"for {epochs_without_improvement} epoch(s)."
+                )
+            break
 
     # 학습 로그 저장
     log_path = config.log_dir / "distill_history.json"

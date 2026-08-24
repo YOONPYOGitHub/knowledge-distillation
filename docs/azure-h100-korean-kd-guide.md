@@ -98,6 +98,24 @@ v3는 기존 Teacher adapter와 FT Student checkpoint를 초기값으로 재사�
 on-policy GKD는 student generation과 데이터 형식 변경이 필요하므로 후속 실험으로
 분리한다.
 
+## v4: 한국어 데이터 10배 확대
+
+모델 계열 선정 전에 Qwen의 데이터 규모 효과를 확인한다. 한국어 Wikipedia 표본을
+1,000개에서 10,000개로 늘리고 Teacher, FT, KD를 모두 같은 새 split에서 다시
+학습한다. FT best를 KD 초기값으로 사용하며 validation CE early stopping으로
+과적합을 제어한다.
+
+```bash
+caffeinate -i .venv/bin/python scripts/watch_azure_h100_job.py \
+	configs/h100_qwen7b_korean_scale10k_v4.yaml \
+	--runner scripts/run_azure_h100_v4.sh
+```
+
+- Teacher 최대 3 epochs
+- Student FT/KD 최대 4 epochs
+- validation CE 개선이 0.005 미만인 epoch가 1회 나오면 중단
+- `T=2`, `alpha=0.5`, Reverse KL, tokenmean, lr `1e-5`
+
 Azure Run Command는 동기 실행 중 다른 상태 조회를 막는다. Mac에서 실시간 진행률을 보려면 학습을 백그라운드 작업으로 시작한다.
 
 ```bash

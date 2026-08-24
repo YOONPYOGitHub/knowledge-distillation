@@ -31,6 +31,7 @@ def parse_args() -> argparse.Namespace:
         choices=(
             "scripts/run_azure_h100_resumable.sh",
             "scripts/run_azure_h100_kd_retry.sh",
+            "scripts/run_azure_h100_v4.sh",
         ),
     )
     parser.add_argument("--status-only", action="store_true")

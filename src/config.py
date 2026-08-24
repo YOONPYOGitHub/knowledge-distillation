@@ -65,6 +65,8 @@ class KDConfig:
     optimizer: str = "adamw"  # "adamw" 또는 메모리 절약형 "adafactor"
     gradient_checkpointing: bool = False
     distill_student_checkpoint: str = ""  # KD 전용 Student 초기 checkpoint
+    early_stopping_patience: int = 0  # 0이면 비활성화
+    early_stopping_min_delta: float = 0.0
 
     # --- 경로 ---
     output_dir: str = "results"
@@ -101,6 +103,10 @@ class KDConfig:
             raise ValueError("kd_reduction must be 'batchmean' or 'tokenmean'")
         if self.kd_divergence not in {"forward_kl", "reverse_kl"}:
             raise ValueError("kd_divergence must be 'forward_kl' or 'reverse_kl'")
+        if self.early_stopping_patience < 0:
+            raise ValueError("early_stopping_patience must be zero or greater")
+        if self.early_stopping_min_delta < 0:
+            raise ValueError("early_stopping_min_delta must be zero or greater")
         if self.fp16 and self.bf16:
             raise ValueError("fp16 and bf16 cannot both be enabled")
         if self.device == "auto":
