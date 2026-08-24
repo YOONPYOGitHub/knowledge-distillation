@@ -32,7 +32,8 @@ if [ -n "\${log_file}" ]; then
   pid_file="\${log_file%.log}.pid"
   if [ -f "\${pid_file}" ]; then
     pid=\$(tr -d '"' < "\${pid_file}")
-    if kill -0 "\${pid}" 2>/dev/null; then
+    command=\$(ps -p "\${pid}" -o args= 2>/dev/null || true)
+    if printf '%s' "\${command}" | grep -Eq 'run_azure_h100(_kd_retry|_resumable)?\.sh|/(mnt|var/lib)/kd-venv/bin/python main\.py'; then
       echo "STATUS=running PID=\${pid}"
     else
       echo "STATUS=finished PID=\${pid}"
