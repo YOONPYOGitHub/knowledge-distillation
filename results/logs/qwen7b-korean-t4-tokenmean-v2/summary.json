@@ -1,0 +1,42 @@
+{
+  "run_id": "qwen7b-korean-t4-tokenmean-v2",
+  "config": {
+    "teacher_model": "Qwen/Qwen2.5-7B",
+    "student_model": "Qwen/Qwen2.5-1.5B",
+    "temperature": 4.0,
+    "alpha": 0.2,
+    "kd_reduction": "tokenmean",
+    "epochs": 8,
+    "teacher_epochs": 3,
+    "teacher_learning_rate": 2e-05,
+    "teacher_checkpoint": "/var/lib/kd-results/qwen7b-4way/checkpoints/qwen7b-korean-4way-v1/teacher_ft_best_adapter",
+    "batch_size": 2,
+    "max_seq_length": 256,
+    "device": "cuda"
+  },
+  "results": {
+    "Teacher (FT)": {
+      "ppl": 7.656845280347504,
+      "tokens_per_sec": 17353.024604715694
+    },
+    "Student (KD)": {
+      "ppl": 15.710539669384737,
+      "tokens_per_sec": 22989.740855740874
+    },
+    "Student (FT)": {
+      "ppl": 11.813621536575697,
+      "tokens_per_sec": 20133.06060289577
+    },
+    "Student (Base)": {
+      "ppl": 12.127221652905641,
+      "tokens_per_sec": 23737.41048800287
+    }
+  },
+  "diagnosis": [
+    "⚠️ KD(15.71) >= FT(11.81) — 증류 효과 미확인"
+  ],
+  "next_actions": [
+    "temperature grid 탐색 (예: 1, 2, 4)",
+    "alpha 값 높이기 (CE 비율 늘리기)"
+  ]
+}
