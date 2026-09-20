@@ -103,6 +103,10 @@ def main():
 
     setup_distributed(config)
     try:
+        if config.training_seed is not None:
+            from transformers import set_seed
+
+            set_seed(config.training_seed)
         # 설정 출력
         if is_main_process():
             print(f"   Teacher:  {config.teacher_model}")
@@ -116,6 +120,9 @@ def main():
                 print(f"   Teacher checkpoint: {config.teacher_checkpoint}")
             print(f"   seq={config.max_seq_length}, batch/GPU={config.batch_size}")
             print(f"   Device:   {config.device}")
+            print(f"   Teacher device: {config.teacher_device}")
+            if config.global_batch_size:
+                print(f"   Global batch: {config.global_batch_size} (no dropped/duplicated samples)")
             print(f"   Run ID:   {config.run_id}")
 
         run_pipeline(config, steps=args.step)

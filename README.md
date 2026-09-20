@@ -3,6 +3,14 @@
 > 대형 언어 모델(Teacher)의 지식을 소형 모델(Student)로 전이하는 지식 증류를 구현하고,  
 > **4가지 모델의 성능을 비교·분석**하는 실험 프로젝트
 
+## VESSL Remote Explorer 접속
+
+- **Windows 10/11:** [PowerShell 기반 단계별 접속 가이드](docs/vessl-remote-explorer-windows.md)
+- **macOS:** [Terminal 기반 단계별 접속 가이드](docs/vessl-remote-explorer-macos.md)
+- **접속 후 공통:** [RTX 3090 × 4 환경 확인·KD 실행·평가](docs/vessl-3090x4-remote-explorer-guide.md)
+
+계정·조직·워크스페이스·경로는 자신의 환경에 맞춰 사용합니다. 3090×4 구성은 Student DDP 2 ranks와 전용 Teacher GPU 2개를 사용해 유효 배치 2를 유지합니다. 작은 모델 검증 통과와 실제 7B 학습의 속도/품질 검증은 별개입니다.
+
 ---
 
 ## 목차

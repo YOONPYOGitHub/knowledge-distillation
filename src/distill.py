@@ -16,6 +16,7 @@ from src.dataset import load_tokenizer, create_dataloaders
 from src.distributed import (
     barrier,
     is_main_process,
+    normalize_batch_loss,
     reduce_metrics,
     set_epoch,
     unwrap_model,
@@ -43,7 +44,8 @@ def kd_loss(student_logits, teacher_logits, labels, config: KDConfig):
         shift_logits.view(-1, shift_logits.size(-1)),
         shift_labels.view(-1),
         ignore_index=-100,
-    )
+        reduction="sum",
+    ) / (shift_labels != -100).sum().clamp_min(1)
 
     # Soft Label Loss: Student vs Teacher (Temperature 적용)
     kd_vocab_size = config.kd_vocab_size or min(
@@ -72,7 +74,7 @@ def kd_loss(student_logits, teacher_logits, labels, config: KDConfig):
         ).sum(dim=-1)
     if config.kd_reduction == "tokenmean":
         valid_tokens = shift_labels != -100
-        kd_loss_value = token_kl[valid_tokens].mean() * (T * T)
+        kd_loss_value = token_kl[valid_tokens].sum() / valid_tokens.sum().clamp_min(1) * (T * T)
     else:
         kd_loss_value = token_kl.sum() / shift_logits.size(0) * (T * T)
 
@@ -125,6 +127,9 @@ def train_one_epoch(teacher, student, dataloader, optimizer, config: KDConfig):
             labels,
             config,
         )
+        loss, batch_metrics = normalize_batch_loss(
+            loss, {"total_loss": loss.item(), "ce_loss": ce, "kd_loss": kd}, labels, config,
+        )
 
         # Backpropagation
         optimizer.zero_grad()
@@ -132,9 +137,9 @@ def train_one_epoch(teacher, student, dataloader, optimizer, config: KDConfig):
         torch.nn.utils.clip_grad_norm_(student.parameters(), config.gradient_clip)
         optimizer.step()
 
-        total_loss_sum += loss.item()
-        ce_loss_sum += ce
-        kd_loss_sum += kd
+        total_loss_sum += batch_metrics["total_loss"]
+        ce_loss_sum += batch_metrics["ce_loss"]
+        kd_loss_sum += batch_metrics["kd_loss"]
         steps += 1
 
         progress.set_postfix(
@@ -187,9 +192,12 @@ def validate(teacher, student, dataloader, config: KDConfig):
             labels,
             config,
         )
+        _, batch_metrics = normalize_batch_loss(
+            loss, {"total_loss": loss.item(), "ce_loss": ce}, labels, config,
+        )
 
-        total_loss_sum += loss.item()
-        ce_loss_sum += ce
+        total_loss_sum += batch_metrics["total_loss"]
+        ce_loss_sum += batch_metrics["ce_loss"]
         steps += 1
         if config.max_eval_steps and steps >= config.max_eval_steps:
             break
@@ -238,7 +246,7 @@ def distill(config: KDConfig):
             torch.load(checkpoint_path, map_location="cpu", weights_only=True)
         )
         print(f"  ✅ Student 초기 checkpoint 로드 → {checkpoint_path}")
-    student = wrap_ddp(student, config.device)
+    student = wrap_ddp(student, config.device, fp32_reduce=bool(config.global_batch_size))
     if is_main_process():
         model_info(teacher, "Teacher")
         model_info(student, "Student")

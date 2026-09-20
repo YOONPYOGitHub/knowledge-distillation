@@ -11,6 +11,7 @@ from torch.utils.data.distributed import DistributedSampler
 from datasets import Dataset, DatasetDict, load_dataset, load_from_disk
 from transformers import AutoTokenizer
 
+from src.batching import GlobalBatchSampler, MaskedDataset
 from src.config import KDConfig
 from src.distributed import barrier, is_distributed, is_main_process, rank, world_size
 
@@ -175,20 +176,35 @@ def _distributed_dataset(config: KDConfig, tokenizer: AutoTokenizer) -> DatasetD
     return dataset
 
 
-def create_dataloaders(config: KDConfig, tokenizer: AutoTokenizer) -> dict:
+def create_dataloaders(config: KDConfig, tokenizer: AutoTokenizer, distributed: bool | None = None) -> dict:
     """Train/Validation/Test DataLoader 생성
 
     Returns:
         dict: {"train": DataLoader, "validation": DataLoader, "test": DataLoader}
     """
+    use_distributed = is_distributed() if distributed is None else distributed and is_distributed()
     dataset = (
         _distributed_dataset(config, tokenizer)
-        if is_distributed()
+        if use_distributed
         else load_lm_dataset(config, tokenizer)
     )
 
     loaders = {}
     for split in ["train", "validation", "test"]:
+        if config.global_batch_size and distributed is not False:
+            batch_sampler = GlobalBatchSampler(
+                len(dataset[split]), config.global_batch_size,
+                num_replicas=world_size() if use_distributed else 1,
+                rank=rank() if use_distributed else 0,
+                shuffle=(split == "train"),
+                seed=config.training_seed if config.training_seed is not None else config.seed,
+            )
+            loaders[split] = DataLoader(
+                MaskedDataset(dataset[split]), batch_sampler=batch_sampler,
+                num_workers=config.num_workers,
+                pin_memory=config.device.startswith("cuda"),
+            )
+            continue
         sampler = (
             DistributedSampler(
                 dataset[split],
@@ -197,7 +213,7 @@ def create_dataloaders(config: KDConfig, tokenizer: AutoTokenizer) -> dict:
                 shuffle=(split == "train"),
                 seed=config.seed,
             )
-            if is_distributed()
+            if use_distributed
             else None
         )
         loaders[split] = DataLoader(

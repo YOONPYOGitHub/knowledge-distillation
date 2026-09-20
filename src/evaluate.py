@@ -61,7 +61,7 @@ def evaluate_speed(model, dataloader, device, num_batches=50):
     model(input_ids=input_ids, attention_mask=attention_mask)
 
     if device.startswith("cuda"):
-        torch.cuda.synchronize()
+        torch.cuda.synchronize(device)
 
     start = time.time()
     for i, batch in enumerate(dataloader):
@@ -73,7 +73,7 @@ def evaluate_speed(model, dataloader, device, num_batches=50):
         total_tokens += attention_mask.sum().item()
 
     if device.startswith("cuda"):
-        torch.cuda.synchronize()
+        torch.cuda.synchronize(device)
 
     elapsed = time.time() - start
     tokens_per_sec = total_tokens / elapsed
@@ -122,7 +122,8 @@ def evaluate_all(config: KDConfig):
     config.ensure_dirs()
 
     tokenizer = load_tokenizer(config.student_model)
-    loaders = create_dataloaders(config, tokenizer)
+    # Only rank zero evaluates; never enter distributed dataset barriers or shard test data.
+    loaders = create_dataloaders(config, tokenizer, distributed=False)
     test_loader = loaders["test"]
     print(f"Test set: {len(test_loader.dataset)} samples\n")
 
@@ -132,7 +133,8 @@ def evaluate_all(config: KDConfig):
     # 1. Teacher (FT checkpoint가 있으면 Teacher (FT)로 표시)
     teacher = load_teacher(config)
     teacher_name = "Teacher (FT)" if config.teacher_checkpoint else "Teacher"
-    results.append(evaluate_model(teacher, teacher_name, test_loader, config.device))
+    teacher_device = str(next(teacher.parameters()).device)
+    results.append(evaluate_model(teacher, teacher_name, test_loader, teacher_device))
     del teacher
     if config.device.startswith("cuda"):
         torch.cuda.empty_cache()

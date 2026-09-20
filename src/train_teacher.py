@@ -18,6 +18,7 @@ from src.dataset import load_tokenizer, create_dataloaders
 from src.distributed import (
     barrier,
     is_main_process,
+    normalize_batch_loss,
     reduce_metrics,
     set_epoch,
     unwrap_model,
@@ -54,14 +55,16 @@ def train_one_epoch(model, dataloader, optimizer, config: KDConfig):
             shift_logits.view(-1, shift_logits.size(-1)),
             shift_labels.view(-1),
             ignore_index=-100,
-        )
+            reduction="sum",
+        ) / (shift_labels != -100).sum().clamp_min(1)
+        loss, batch_metrics = normalize_batch_loss(loss, {"ce_loss": loss.item()}, labels, config)
 
         optimizer.zero_grad()
         loss.backward()
         torch.nn.utils.clip_grad_norm_(model.parameters(), config.gradient_clip)
         optimizer.step()
 
-        loss_sum += loss.item()
+        loss_sum += batch_metrics["ce_loss"]
         steps += 1
         if config.max_train_steps and steps >= config.max_train_steps:
             break
@@ -95,9 +98,11 @@ def validate(model, dataloader, config: KDConfig):
             shift_logits.view(-1, shift_logits.size(-1)),
             shift_labels.view(-1),
             ignore_index=-100,
-        )
+            reduction="sum",
+        ) / (shift_labels != -100).sum().clamp_min(1)
+        _, batch_metrics = normalize_batch_loss(loss, {"ce_loss": loss.item()}, labels, config)
 
-        loss_sum += loss.item()
+        loss_sum += batch_metrics["ce_loss"]
         steps += 1
         if config.max_eval_steps and steps >= config.max_eval_steps:
             break
@@ -149,7 +154,7 @@ def train_teacher(config: KDConfig):
         teacher.config.use_cache = False
     teacher.to(config.device)
     teacher.train()
-    teacher = wrap_ddp(teacher, config.device)
+    teacher = wrap_ddp(teacher, config.device, fp32_reduce=bool(config.global_batch_size))
     if is_main_process():
         model_info(teacher, "Teacher (FT)")
         print()

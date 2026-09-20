@@ -1,5 +1,7 @@
 # VESSL GPU 서버 VS Code 원격 접속 가이드
 
+> **처음 접속하는 사용자는 OS별 최신 안내를 이용하세요:** [Windows](vessl-remote-explorer-windows.md) · [macOS](vessl-remote-explorer-macos.md). 이 문서 아래에는 기존 프로젝트 환경 예시가 포함되어 있습니다.
+
 VESSL Cloud 워크스페이스에 VS Code Remote-SSH로 접속하는 방법을 정리한 문서입니다.
 
 > **핵심 개념**: SSH 키는 **내 로컬 컴퓨터(Mac)에서 내가 직접** 만듭니다. GPU 센터나 VESSL이 만들어 주지 않습니다.

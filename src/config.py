@@ -56,6 +56,8 @@ class KDConfig:
     # --- 학습 ---
     epochs: int = 3
     batch_size: int = 8
+    global_batch_size: int = 0  # Opt-in identical global batches across DDP world sizes
+    training_seed: int | None = None  # Separate model/shuffle RNG from dataset split seed
     max_train_steps: int = 0  # 0이면 전체 epoch 사용
     max_eval_steps: int = 0  # 0이면 전체 validation 사용
     learning_rate: float = 5e-5
@@ -75,6 +77,7 @@ class KDConfig:
     # --- 디바이스 ---
     device: str = "auto"  # "auto", "cuda", "mps", "cpu"
     teacher_device: str = ""  # 비어있으면 device와 동일
+    teacher_devices: list[str] = field(default_factory=list)  # One dedicated teacher GPU per rank
 
     # --- 기타 ---
     seed: int = 42
@@ -83,6 +86,12 @@ class KDConfig:
     bf16: bool = False  # RTX 30 시리즈 이상에서 권장
 
     def __post_init__(self):
+        if self.batch_size <= 0 or self.global_batch_size < 0:
+            raise ValueError("batch_size must be positive and global_batch_size nonnegative")
+        if self.global_batch_size and self.kd_reduction != "tokenmean":
+            raise ValueError("global_batch_size requires tokenmean KD for masked final batches")
+        if len(set(self.teacher_devices)) != len(self.teacher_devices):
+            raise ValueError("teacher_devices must be distinct")
         if self.dataset_max_samples < 0:
             raise ValueError("dataset_max_samples must be zero or greater")
         if self.validation_ratio <= 0 or self.test_ratio <= 0:
