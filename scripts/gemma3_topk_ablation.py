@@ -28,6 +28,12 @@ from src.models import load_student, load_teacher
 
 
 def grad_of(student, teacher_logits, batch, config, top_k):
+    """KD 손실과 Student gradient 를 얻는다.
+
+    1B 짜리 gradient 를 하나의 텐서로 이어붙여 double 로 올리면 GPU 에서 OOM 이 난다
+    (1e9 x 8B x 2벌 = 16GB). 파라미터 단위로 CPU float32 사본을 들고 있다가
+    비교 시점에 조각별로 double 누적한다.
+    """
     config.kd_top_k = top_k
     student.zero_grad(set_to_none=True)
     outputs = student(
@@ -35,11 +41,31 @@ def grad_of(student, teacher_logits, batch, config, top_k):
     )
     total, ce, kd = kd_loss(outputs.logits, teacher_logits, batch["labels"], config)
     total.backward()
-    grad = torch.cat([
-        p.grad.detach().float().flatten()
+    grads = [
+        p.grad.detach().float().cpu()
         for p in student.parameters() if p.grad is not None
-    ])
-    return grad, float(total), ce, kd
+    ]
+    return grads, float(total), ce, kd
+
+
+def compare_grads(full, topk):
+    """코사인 유사도, norm 비, 상대 차이를 조각별 double 누적으로 계산한다."""
+    dot = norm_full = norm_topk = norm_diff = 0.0
+    for a, b in zip(full, topk):
+        x, y = a.double(), b.double()
+        dot += float((x * y).sum())
+        norm_full += float(x.pow(2).sum())
+        norm_topk += float(y.pow(2).sum())
+        norm_diff += float((y - x).pow(2).sum())
+    norm_full, norm_topk, norm_diff = (
+        norm_full ** 0.5, norm_topk ** 0.5, norm_diff ** 0.5
+    )
+    denominator = max(norm_full * norm_topk, 1e-30)
+    return {
+        "grad_cosine": dot / denominator,
+        "grad_norm_ratio": norm_topk / max(norm_full, 1e-30),
+        "grad_rel_diff": norm_diff / max(norm_full, 1e-30),
+    }
 
 
 def main() -> int:
@@ -82,21 +108,19 @@ def main() -> int:
             student, teacher_logits, moved, config, 128
         )
 
-        cosine = torch.nn.functional.cosine_similarity(
-            full_grad.double(), topk_grad.double(), dim=0
-        ).item()
-        rel_norm = (topk_grad.norm() / full_grad.norm().clamp_min(1e-12)).item()
-        rel_diff = ((topk_grad - full_grad).norm() / full_grad.norm().clamp_min(1e-12)).item()
+        stats = compare_grads(full_grad, topk_grad)
+        del full_grad, topk_grad
 
         rows.append({
             "batch": index,
             "kd_full": full_kd, "kd_topk": topk_kd,
             "ce_full": full_ce, "ce_topk": topk_ce,
             "total_full": full_total, "total_topk": topk_total,
-            "grad_cosine": cosine, "grad_norm_ratio": rel_norm, "grad_rel_diff": rel_diff,
+            **stats,
         })
         print(f"batch {index}: KD full {full_kd:.4f} / topK {topk_kd:.4f} "
-              f"| grad cos {cosine:.6f} | |Δg|/|g| {rel_diff:.4f}", flush=True)
+              f"| grad cos {stats['grad_cosine']:.6f} "
+              f"| |Δg|/|g| {stats['grad_rel_diff']:.4f}", flush=True)
 
     def mean(key):
         return sum(r[key] for r in rows) / len(rows)
