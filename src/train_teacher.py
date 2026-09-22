@@ -24,7 +24,7 @@ from src.distributed import (
     unwrap_model,
     wrap_ddp,
 )
-from src.models import create_optimizer, model_info
+from src.models import create_optimizer, model_info, teacher_quantization_config
 
 from transformers import AutoModelForCausalLM
 
@@ -134,7 +134,22 @@ def train_teacher(config: KDConfig):
     elif config.fp16 and config.device.startswith("cuda"):
         kwargs["torch_dtype"] = torch.float16
 
+    # QLoRA: 양자화된 base 위에서 LoRA 만 학습한다. 12B 급 Teacher 를 24GB 한 장에서
+    # fine-tuning 하기 위한 경로이며, 양자화 모델은 이후 .to() 로 옮길 수 없다.
+    quantization = teacher_quantization_config(config, config.teacher_ft_quantization)
+    if quantization is not None:
+        kwargs["quantization_config"] = quantization
+        kwargs["device_map"] = {"": config.device}
+
     teacher = AutoModelForCausalLM.from_pretrained(config.teacher_model, **kwargs)
+
+    if quantization is not None:
+        from peft import prepare_model_for_kbit_training
+
+        teacher = prepare_model_for_kbit_training(
+            teacher, use_gradient_checkpointing=config.gradient_checkpointing
+        )
+
     if config.teacher_lora_rank:
         from peft import LoraConfig, TaskType, get_peft_model
 
@@ -152,7 +167,8 @@ def train_teacher(config: KDConfig):
     if config.gradient_checkpointing:
         teacher.gradient_checkpointing_enable()
         teacher.config.use_cache = False
-    teacher.to(config.device)
+    if quantization is None:
+        teacher.to(config.device)
     teacher.train()
     teacher = wrap_ddp(teacher, config.device, fp32_reduce=bool(config.global_batch_size))
     if is_main_process():

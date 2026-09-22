@@ -1,0 +1,19 @@
+# Gemma 3 평가/증류용 스택. Qwen 실험의 requirements-vessl.txt(transformers 4.45.2)는
+# Gemma 3(gemma3 / gemma3_text)를 인식하지 못하므로 별도 venv 로 분리한다.
+#
+#   python3 -m venv --system-site-packages .venv-gemma
+#   .venv-gemma/bin/pip install -r requirements-gemma.txt
+#   .venv-gemma/bin/pip install --no-deps bitsandbytes==0.45.5
+#
+# bitsandbytes 는 --no-deps 로 설치한다. 기본 설치는 torch 를 최신(cu130)으로 올려
+# 드라이버(CUDA 12.4)와 어긋나 CUDA 를 못 쓰게 만든다.
+torch==2.3.1
+transformers==4.51.3
+tokenizers>=0.21,<0.22
+datasets==3.6.0
+accelerate==1.6.0
+peft==0.15.2
+numpy>=1.24,<2
+matplotlib>=3.7,<3.10
+pyyaml>=6.0
+tqdm>=4.65

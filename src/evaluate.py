@@ -48,11 +48,35 @@ def evaluate_perplexity(model, dataloader, device):
     return {"perplexity": perplexity, "avg_loss": avg_loss}
 
 
+def sync_target_devices(model, device) -> list[torch.device]:
+    """동기화해야 할 CUDA 장치 — 입력 장치 + 모델이 올라간 모든 장치.
+
+    분할 로드된 Teacher는 shard 가 모두 끝나야 한 스텝이 끝난 것이므로
+    입력 장치 한 곳만 동기화하면 속도가 실제보다 빠르게 측정된다.
+    """
+    devices = set()
+    if isinstance(device, str) and device.startswith("cuda"):
+        devices.add(torch.device(device))
+    elif isinstance(device, torch.device) and device.type == "cuda":
+        devices.add(device)
+
+    try:
+        for parameter in model.parameters():
+            parameter_device = parameter.device
+            if getattr(parameter_device, "type", None) == "cuda":
+                devices.add(parameter_device)
+    except TypeError:  # parameters() 를 흉내내지 않는 테스트 더블
+        pass
+
+    return sorted(devices, key=lambda d: d.index or 0)
+
+
 @torch.no_grad()
 def evaluate_speed(model, dataloader, device, num_batches=50):
     """추론 속도 측정: tokens/sec, ms/token"""
     model.eval()
     total_tokens = 0
+    sync_devices = sync_target_devices(model, device)
 
     # warmup
     batch = next(iter(dataloader))
@@ -60,8 +84,8 @@ def evaluate_speed(model, dataloader, device, num_batches=50):
     attention_mask = batch["attention_mask"].to(device)
     model(input_ids=input_ids, attention_mask=attention_mask)
 
-    if device.startswith("cuda"):
-        torch.cuda.synchronize(device)
+    for sync_device in sync_devices:
+        torch.cuda.synchronize(sync_device)
 
     start = time.time()
     for i, batch in enumerate(dataloader):
@@ -72,8 +96,8 @@ def evaluate_speed(model, dataloader, device, num_batches=50):
         model(input_ids=input_ids, attention_mask=attention_mask)
         total_tokens += attention_mask.sum().item()
 
-    if device.startswith("cuda"):
-        torch.cuda.synchronize(device)
+    for sync_device in sync_devices:
+        torch.cuda.synchronize(sync_device)
 
     elapsed = time.time() - start
     tokens_per_sec = total_tokens / elapsed
@@ -90,7 +114,18 @@ def get_model_size(model):
     """모델 파라미터 수 및 메모리"""
     total_params = sum(p.numel() for p in model.parameters())
     size_mb = sum(p.numel() * p.element_size() for p in model.parameters()) / 1e6
-    return {"total_params": total_params, "size_mb": size_mb}
+    info = {"total_params": total_params, "size_mb": size_mb}
+
+    # Gemma 3 12B 같은 멀티모달 Teacher는 텍스트 평가에 쓰이지 않는 vision tower를 포함한다.
+    vision_tower = getattr(model, "vision_tower", None) or getattr(
+        getattr(model, "model", None), "vision_tower", None
+    )
+    if vision_tower is not None:
+        vision_params = sum(p.numel() for p in vision_tower.parameters())
+        info["vision_params"] = vision_params
+        info["text_params"] = total_params - vision_params
+
+    return info
 
 
 def evaluate_model(model, name, dataloader, device):

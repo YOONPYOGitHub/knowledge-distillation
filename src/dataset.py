@@ -99,6 +99,13 @@ def load_lm_dataset(config: KDConfig, tokenizer: AutoTokenizer):
         )
     seq_len = config.max_seq_length
 
+    # Gemma 계열은 BOS 를 전제로 학습되어, 문서 중간에서 시작하는 청크에 BOS 가 없으면
+    # 사전학습 때 본 적 없는 입력이 된다. prepend_bos 는 청크마다 BOS 를 붙여 이를 맞춘다.
+    bos_id = tokenizer.bos_token_id if config.prepend_bos else None
+    if config.prepend_bos and bos_id is None:
+        raise ValueError(f"prepend_bos requires a bos_token_id: {tokenizer.name_or_path}")
+    body_len = seq_len - 1 if bos_id is not None else seq_len
+
     def tokenize_and_pack(examples):
         # 전체 텍스트를 연결하여 토크나이즈
         concatenated = tokenizer(
@@ -112,14 +119,18 @@ def load_lm_dataset(config: KDConfig, tokenizer: AutoTokenizer):
         for ids in concatenated:
             all_ids.extend(ids)
 
-        # seq_len 단위로 chunking (나머지는 버림)
-        total_length = (len(all_ids) // seq_len) * seq_len
+        # body_len 단위로 chunking (나머지는 버림)
+        total_length = (len(all_ids) // body_len) * body_len
         all_ids = all_ids[:total_length]
 
+        chunks = [all_ids[i : i + body_len] for i in range(0, total_length, body_len)]
+        if bos_id is not None:
+            chunks = [[bos_id] + chunk for chunk in chunks]
+
         result = {
-            "input_ids": [all_ids[i : i + seq_len] for i in range(0, total_length, seq_len)],
-            "attention_mask": [[1] * seq_len for _ in range(0, total_length, seq_len)],
-            "labels": [all_ids[i : i + seq_len] for i in range(0, total_length, seq_len)],
+            "input_ids": chunks,
+            "attention_mask": [[1] * len(chunk) for chunk in chunks],
+            "labels": [list(chunk) for chunk in chunks],
         }
         return result
 

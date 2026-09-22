@@ -18,3 +18,12 @@ results/logs/vessl-auto-extend-*.log
 # UI 정성 평가 수집 결과 (로컬에만)
 results/qualitative/
 infra/main.json
+
+# Gemma 3 평가용 별도 venv (transformers >= 4.50)
+.venv-gemma/
+
+# 비밀정보 — 토큰/키는 절대 커밋하지 않는다 (HF 토큰은 ~/.cache/huggingface/token 또는 환경변수)
+.env
+.env.*
+!.env.example
+*.token

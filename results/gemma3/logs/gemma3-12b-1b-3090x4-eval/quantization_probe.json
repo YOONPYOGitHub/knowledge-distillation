@@ -1,0 +1,48 @@
+{
+  "n_chunks": 16,
+  "ref_ppl": 126.93112182617188,
+  "runs": [
+    {
+      "label": "bf16 (2장 분할)",
+      "devices": [
+        0,
+        1
+      ],
+      "weights_gb": 24.37,
+      "peak_gb": 26.69,
+      "load_s": 7.2,
+      "fwd_s": 4.01,
+      "partial_ppl": 126.9311
+    },
+    {
+      "label": "int8",
+      "devices": [
+        3
+      ],
+      "weights_gb": 13.24,
+      "peak_gb": 15.76,
+      "load_s": 19.4,
+      "fwd_s": 5.05,
+      "partial_ppl": 131.9688,
+      "cos": 1.584747,
+      "kl_nats": 0.250002,
+      "kl_T2_nats": 0.084912,
+      "top1_agree": 0.8213
+    },
+    {
+      "label": "nf4",
+      "devices": [
+        3
+      ],
+      "weights_gb": 7.81,
+      "peak_gb": 11.87,
+      "load_s": 13.1,
+      "fwd_s": 4.25,
+      "partial_ppl": 125.139,
+      "cos": 1.566266,
+      "kl_nats": 0.502418,
+      "kl_T2_nats": 0.166101,
+      "top1_agree": 0.7312
+    }
+  ]
+}

@@ -34,6 +34,8 @@ class KDConfig:
     validation_ratio: float = 0.01
     test_ratio: float = 0.01
     max_seq_length: int = 512
+    # 청크마다 BOS 를 붙인다. Gemma 처럼 BOS 를 전제로 학습된 모델에 필요하다.
+    prepend_bos: bool = False
 
     # --- KD 하이퍼파라미터 ---
     temperature: float = 3.0
@@ -78,6 +80,15 @@ class KDConfig:
     device: str = "auto"  # "auto", "cuda", "mps", "cpu"
     teacher_device: str = ""  # 비어있으면 device와 동일
     teacher_devices: list[str] = field(default_factory=list)  # One dedicated teacher GPU per rank
+    # 한 장에 올라가지 않는 Teacher를 여러 GPU로 분할 (accelerate device_map). 예: "auto"
+    teacher_device_map: str = ""
+    # device_map 사용 시 GPU별 상한. 예: {"0": "22GiB", "1": "22GiB", "2": "0GiB", "3": "0GiB"}
+    teacher_max_memory: dict = field(default_factory=dict)
+    # 추론 전용 Teacher 양자화: "" | "int8" | "nf4" | "fp4".
+    # 12B급 Teacher를 24GB 한 장에 올려 rank별 전용 Teacher 구성을 가능하게 한다.
+    teacher_quantization: str = ""
+    # Teacher fine-tuning 단계의 base 양자화 (QLoRA). LoRA rank가 필요하다.
+    teacher_ft_quantization: str = ""
 
     # --- 기타 ---
     seed: int = 42
@@ -92,6 +103,17 @@ class KDConfig:
             raise ValueError("global_batch_size requires tokenmean KD for masked final batches")
         if len(set(self.teacher_devices)) != len(self.teacher_devices):
             raise ValueError("teacher_devices must be distinct")
+        if self.teacher_device_map and self.teacher_devices:
+            raise ValueError("teacher_device_map cannot be combined with per-rank teacher_devices")
+        if self.teacher_max_memory and not self.teacher_device_map:
+            raise ValueError("teacher_max_memory requires teacher_device_map")
+        if self.teacher_quantization not in {"", "int8", "nf4", "fp4"}:
+            raise ValueError("teacher_quantization must be '', 'int8', 'nf4', or 'fp4'")
+        if self.teacher_ft_quantization not in {"", "int8", "nf4", "fp4"}:
+            raise ValueError("teacher_ft_quantization must be '', 'int8', 'nf4', or 'fp4'")
+        if self.teacher_ft_quantization and not self.teacher_lora_rank:
+            # 양자화된 base 는 직접 학습할 수 없다. 학습되는 파라미터가 하나도 없게 된다.
+            raise ValueError("teacher_ft_quantization requires teacher_lora_rank > 0 (QLoRA)")
         if self.dataset_max_samples < 0:
             raise ValueError("dataset_max_samples must be zero or greater")
         if self.validation_ratio <= 0 or self.test_ratio <= 0:
