@@ -1,0 +1,81 @@
+# top-K 대조군: gemma3_12b_1b_3090x4_v3.yaml 과 kd_top_k 하나만 다르다 (128 -> 0).
+# Teacher FT 어댑터와 KD 초기 Student SFT 는 v3 실행의 산출물을 그대로 재사용하므로
+# KD 손실 계산 방식만 차이가 나는 A/B 가 된다. train_teacher / baseline 은 다시 돌리지 않는다.
+#
+# Gemma 3 12B -> 1B 4-way, Qwen v3(h100_qwen7b_korean_reverse_v3) 설정에 맞춤.
+# RTX 3090 24GB x 4. torchrun --nproc_per_node=2 로 실행한다.
+#
+# GPU 배치 (KD 단계):
+#   rank 0: Student 1B -> cuda:0 │ Teacher 12B int8 -> cuda:2
+#   rank 1: Student 1B -> cuda:1 │ Teacher 12B int8 -> cuda:3
+#
+# 실행 순서 — v3 는 KD 초기값으로 Student SFT 를 쓰므로 baseline 이 distill 보다 먼저다:
+#   1) --step train_teacher   (QLoRA nf4, 12B 는 bf16 으로 한 장에 안 올라간다)
+#   2) --step baseline        (Student SFT -> KD 초기값)
+#   3) --step distill         (top-K reverse KL, Teacher int8)
+#   4) --step evaluate/compare (Teacher 는 bf16 2장 분할로 별도 실행)
+
+teacher_model: google/gemma-3-12b-pt
+student_model: google/gemma-3-1b-pt
+
+# --- 데이터: Qwen v3 와 동일 조건 ---
+dataset_name: wikimedia/wikipedia
+dataset_config: 20231101.ko
+dataset_revision: b04c8d1ceb2f5cd4588862100d08de323dccfbaa
+dataset_text_column: text
+dataset_streaming: true
+dataset_max_samples: 1000
+dataset_shuffle_buffer: 10000
+validation_ratio: 0.05
+test_ratio: 0.05
+max_seq_length: 256
+# Gemma 는 BOS 를 전제로 학습되어, 없으면 12B Teacher 가 1B 보다 나쁘게 측정된다.
+prepend_bos: true
+
+# --- KD: Qwen v3 와 동일 ---
+temperature: 2.0
+alpha: 0.5
+kd_reduction: tokenmean
+kd_divergence: reverse_kl
+# full-vocab: 목표 분포를 자르지 않는다. Qwen v3 와 같은 KD 알고리즘이다.
+# batch 1 기준 KD 손실 버퍼 2.15GB (top-K 128 은 1.34GB).
+kd_top_k: 0
+
+# --- Teacher fine-tuning (QLoRA) ---
+teacher_epochs: 3
+teacher_learning_rate: 2.0e-5
+teacher_lora_rank: 16
+teacher_lora_alpha: 32
+teacher_lora_dropout: 0.05
+# vision tower 를 제외하고 언어 모델에만 LoRA 를 붙인다. vision 모듈은 텍스트 학습에서
+# gradient 를 받지 않아 DDP 가 unused parameter 로 실패한다.
+teacher_lora_target_modules: "^(?!.*vision).*\\.(q_proj|k_proj|v_proj|o_proj)$"
+teacher_ft_quantization: nf4
+teacher_checkpoint: results/gemma3/checkpoints/gemma3-12b-1b-v3/teacher_ft_best_adapter
+
+# --- KD 단계 Teacher 배치 ---
+teacher_quantization: int8
+teacher_devices: [cuda:2, cuda:3]
+
+# --- Student 학습: Qwen v3 와 동일 ---
+epochs: 8
+batch_size: 1
+global_batch_size: 2
+learning_rate: 1.0e-5
+weight_decay: 0.01
+gradient_clip: 1.0
+optimizer: adafactor
+early_stopping_patience: 0
+seed: 42
+training_seed: 42
+num_workers: 2
+distill_student_checkpoint: results/gemma3/checkpoints/gemma3-12b-1b-v3/student_ft_best.pt
+
+device: cuda:0
+bf16: true
+gradient_checkpointing: true
+# Gemma 3 는 학습 시 eager attention 을 권장한다.
+attn_implementation: eager
+
+output_dir: results/gemma3
+run_id: gemma3-12b-1b-v3-fullvocab
