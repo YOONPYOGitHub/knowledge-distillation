@@ -24,7 +24,12 @@ from src.distributed import (
     unwrap_model,
     wrap_ddp,
 )
-from src.models import create_optimizer, model_info, teacher_quantization_config
+from src.models import (
+    create_optimizer,
+    model_dtype_kwargs,
+    model_info,
+    teacher_quantization_config,
+)
 
 from transformers import AutoModelForCausalLM
 
@@ -128,11 +133,7 @@ def train_teacher(config: KDConfig):
     print(f"Val:   {len(loaders['validation'].dataset)} samples\n")
 
     # Teacher 모델 로드 (학습 모드)
-    kwargs = {}
-    if config.bf16 and config.device.startswith("cuda"):
-        kwargs["torch_dtype"] = torch.bfloat16
-    elif config.fp16 and config.device.startswith("cuda"):
-        kwargs["torch_dtype"] = torch.float16
+    kwargs = model_dtype_kwargs(config)
 
     # QLoRA: 양자화된 base 위에서 LoRA 만 학습한다. 12B 급 Teacher 를 24GB 한 장에서
     # fine-tuning 하기 위한 경로이며, 양자화 모델은 이후 .to() 로 옮길 수 없다.

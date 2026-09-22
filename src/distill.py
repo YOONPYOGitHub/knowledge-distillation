@@ -11,6 +11,8 @@ import torch
 import torch.nn.functional as F
 from tqdm import tqdm
 
+from transformers import AutoConfig
+
 from src.config import KDConfig
 from src.dataset import load_tokenizer, create_dataloaders
 from src.distributed import (
@@ -36,7 +38,7 @@ def kd_loss(student_logits, teacher_logits, labels, config: KDConfig):
 
     # Causal LM label shift: logits[t] → labels[t+1]
     shift_logits = student_logits[..., :-1, :].float().contiguous()
-    shift_teacher = teacher_logits[..., :-1, :].float().contiguous()
+    shift_teacher = teacher_logits[..., :-1, :].contiguous()
     shift_labels = labels[..., 1:].contiguous()
 
     # Hard Label Loss: Student vs 정답
@@ -56,12 +58,19 @@ def kd_loss(student_logits, teacher_logits, labels, config: KDConfig):
             f"KD vocabulary size {kd_vocab_size} exceeds model logits: "
             f"student={shift_logits.size(-1)}, teacher={shift_teacher.size(-1)}"
         )
-    teacher_log_soft = F.log_softmax(
-        shift_teacher[..., :kd_vocab_size] / T, dim=-1
-    )
-    student_log_soft = F.log_softmax(
-        shift_logits[..., :kd_vocab_size] / T, dim=-1
-    )
+    teacher_kd = shift_teacher[..., :kd_vocab_size]
+    student_kd = shift_logits[..., :kd_vocab_size]
+
+    if config.kd_top_k:
+        # Teacher 상위 K개 토큰만 목표 분포로 삼고 그 안에서 다시 정규화한다.
+        # (batch, seq, vocab) 크기의 fp32 중간 버퍼를 만들지 않는 것이 목적이다.
+        top_k = min(config.kd_top_k, kd_vocab_size)
+        top_index = teacher_kd.topk(top_k, dim=-1).indices
+        teacher_kd = teacher_kd.gather(-1, top_index)
+        student_kd = student_kd.gather(-1, top_index)
+
+    teacher_log_soft = F.log_softmax(teacher_kd.float() / T, dim=-1)
+    student_log_soft = F.log_softmax(student_kd / T, dim=-1)
     if config.kd_divergence == "reverse_kl":
         student_soft = student_log_soft.exp()
         token_kl = (
@@ -228,7 +237,18 @@ def distill(config: KDConfig):
             "Teacher and student tokenizers must have identical vocabularies "
             "for logit-based knowledge distillation"
         )
-    config.kd_vocab_size = len(tokenizer)
+    # KD 는 tokenizer 의 실제 vocabulary 로 제한한다. 다만 모델의 lm_head 가 그보다 작을 수
+    # 있다 (Gemma 3: tokenizer 262,145 vs 1B lm_head 262,144). 두 모델의 출력 폭을 넘지 않게 자른다.
+    teacher_vocab = AutoConfig.from_pretrained(config.teacher_model)
+    teacher_vocab = getattr(teacher_vocab, "text_config", teacher_vocab).vocab_size
+    student_vocab = AutoConfig.from_pretrained(config.student_model)
+    student_vocab = getattr(student_vocab, "text_config", student_vocab).vocab_size
+    config.kd_vocab_size = min(len(tokenizer), teacher_vocab, student_vocab)
+    if config.kd_vocab_size < len(tokenizer) and is_main_process():
+        print(
+            f"  KD vocabulary: {config.kd_vocab_size:,} "
+            f"(tokenizer {len(tokenizer):,}, teacher {teacher_vocab:,}, student {student_vocab:,})"
+        )
     loaders = create_dataloaders(config, tokenizer)
     print(f"Train: {len(loaders['train'].dataset)} samples")
     print(f"Val:   {len(loaders['validation'].dataset)} samples\n")

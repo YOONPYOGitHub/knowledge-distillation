@@ -43,6 +43,9 @@ class KDConfig:
     kd_vocab_size: int = 0  # 동일 tokenizer의 실제 vocabulary 크기
     kd_reduction: str = "batchmean"  # "batchmean" 또는 "tokenmean"
     kd_divergence: str = "forward_kl"  # "forward_kl" 또는 "reverse_kl"
+    # KD 목표 분포를 Teacher 상위 K개 토큰으로 제한한다. 0이면 full vocabulary.
+    # Gemma 처럼 vocabulary 가 큰 모델에서 KD 손실의 fp32 버퍼를 줄인다.
+    kd_top_k: int = 0
 
     # --- Teacher Fine-tuning ---
     teacher_epochs: int = 3
@@ -95,6 +98,8 @@ class KDConfig:
     num_workers: int = 0  # DataLoader workers (MPS에서는 0 권장)
     fp16: bool = False  # CUDA 서버에서 활성화
     bf16: bool = False  # RTX 30 시리즈 이상에서 권장
+    # attention 구현 지정. Gemma 3 는 학습 시 "eager" 를 권장한다 (비우면 라이브러리 기본값).
+    attn_implementation: str = ""
 
     def __post_init__(self):
         if self.batch_size <= 0 or self.global_batch_size < 0:
@@ -134,6 +139,8 @@ class KDConfig:
             raise ValueError("kd_reduction must be 'batchmean' or 'tokenmean'")
         if self.kd_divergence not in {"forward_kl", "reverse_kl"}:
             raise ValueError("kd_divergence must be 'forward_kl' or 'reverse_kl'")
+        if self.kd_top_k < 0:
+            raise ValueError("kd_top_k must be zero or greater")
         if self.early_stopping_patience < 0:
             raise ValueError("early_stopping_patience must be zero or greater")
         if self.early_stopping_min_delta < 0:

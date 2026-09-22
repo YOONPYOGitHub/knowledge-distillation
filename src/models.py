@@ -9,13 +9,16 @@ from src.config import KDConfig
 
 
 def model_dtype_kwargs(config: KDConfig, device: str | None = None) -> dict:
-    """Return model loading dtype options for the target device."""
+    """Return model loading dtype and attention options for the target device."""
     target_device = device or config.device
+    kwargs = {}
     if config.bf16 and target_device.startswith("cuda"):
-        return {"torch_dtype": torch.bfloat16}
-    if config.fp16 and target_device.startswith("cuda"):
-        return {"torch_dtype": torch.float16}
-    return {}
+        kwargs["torch_dtype"] = torch.bfloat16
+    elif config.fp16 and target_device.startswith("cuda"):
+        kwargs["torch_dtype"] = torch.float16
+    if config.attn_implementation:
+        kwargs["attn_implementation"] = config.attn_implementation
+    return kwargs
 
 
 def teacher_quantization_config(config: KDConfig, mode: str | None = None):
