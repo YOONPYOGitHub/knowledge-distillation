@@ -11,6 +11,7 @@ uv.lock
 results/checkpoints/
 results/imported/
 results/vessl/checkpoints/
+results/gemma3/checkpoints/
 results/logs/vessl-auto-extend-*.log
 
 # Hugging Face 캐시
