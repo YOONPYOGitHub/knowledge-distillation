@@ -3,6 +3,8 @@
 측정일: 2026-09-22. 브랜치: `feature/gemma3-12b-1b-3090x4-eval`.
 환경: RTX 3090 24GB × 4, PyTorch 2.3.1+cu121, transformers 4.51.3, bitsandbytes 0.45.5.
 
+> 후속: 이 기준선 위에서 4-way KD를 끝까지 돌린 결과는 [gemma3-4way-topk-kd.md](gemma3-4way-topk-kd.md)에 있다.
+
 Qwen 실험과 **동일한 지표**(Perplexity / tokens·sec / ms·token / 파라미터)와 **동일한 데이터 조건**
 (한국어 위키 `20231101.ko`, revision 고정, 1,000문서, seq 256, split seed 42)으로 측정했다.
 
