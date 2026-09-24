@@ -50,6 +50,10 @@ KD를 BOS 없이 돌리면 PPL 175 상태의 Teacher logits을 목표 분포로 
 | **int8** | 1장 | **13.24 GB** | 15.76 GB | **0.0849** | 82.1% |
 | nf4 | 1장 | 7.81 GB | 11.87 GB | 0.1661 | 73.1% |
 
+> ⚠️ 이 표는 pretrained Teacher, test 앞 16 chunk에서 쟀고, 기준 PPL이 126.9인 것으로 보아 BOS 없이 측정된 것으로 보인다.
+> BOS를 붙인 전체 test에서 KD용 int8 Teacher (FT)를 다시 재면 KL(T=2) 0.012, top-1 일치 93.6%, PPL +0.6%다
+> ([4-way 결과](gemma3-4way-topk-kd.md#kd에-실제로-쓴-teacher--int8--어댑터)).
+
 `teacher_quantization: int8` 이면 Teacher가 한 장에 들어가므로, 이 저장소가 이미 검증한
 rank별 전용 Teacher 배치를 그대로 쓸 수 있다:
 
@@ -72,7 +76,7 @@ Teacher fine-tuning 단계는 학습이 필요하므로 `teacher_ft_quantization
    PPL은 tokenization에 의존하므로 Qwen 실험의 PPL 11.68과 이 표의 8.21을 같은 축에서 비교하면 안 된다.
 3. **속도의 공정성.** Teacher는 2장에 분할된 상태로, Student는 단일 GPU로 측정했다.
    또한 `evaluate_speed`는 `generate()`가 아니라 teacher-forcing forward 처리량이다.
-4. **12B에서의 양자화-PPL 영향.** 위 KL은 test 앞 16 chunk 기준이다. 전체 test split에서
+4. **12B에서의 양자화-PPL 영향.** (후속 측정: FT Teacher 기준 int8 PPL 6.924 vs bf16 6.883, [4-way 결과](gemma3-4way-topk-kd.md#kd에-실제로-쓴-teacher--int8--어댑터)) 위 KL은 test 앞 16 chunk 기준이다. 전체 test split에서
    int8 Teacher의 PPL을 재지 않았다.
 5. **KD 손실 버퍼.** Gemma vocab 262,208은 Qwen의 1.7배라 `kd_loss`의 fp32 logit 버퍼가
    batch 1 × seq 256 기준 스텝당 약 1.6–2.5GB다. batch를 올리면 여기가 먼저 막힌다.

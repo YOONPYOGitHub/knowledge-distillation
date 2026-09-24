@@ -19,6 +19,9 @@
    거의 움직이지 못했기 때문이지, 두 목적함수가 같아서가 아니다.
 4. **top-K의 실익은 메모리뿐이었다.** KD 손실 버퍼 2.15 → 1.34GB(batch 1). 학습 시간은
    top-K 159분 / full-vocab 160분으로 같다. 이 구성(batch 1)에서는 full-vocab도 24GB 안에 들어간다.
+5. **KD에 쓴 int8 Teacher는 원인이 아니다.** KD 목표 분포를 만든 int8 Teacher (FT)는 PPL 6.924로
+   보고한 bf16 Teacher (FT) 6.883과 0.6% 차이이고, KL(T=2) 0.012, 상위 128개 토큰 93% 겹침이다.
+   Student와의 격차(11.66 vs 6.92)가 그대로 남아 있으므로 KD 신호가 약했던 이유를 양자화로 설명할 수 없다.
 
 자동 진단(`notes.md`, `summary.json`)은 KD < FT이면 무조건 "증류 효과 확인됨"으로 적는다.
 이번 실행에서는 그 판정이 **틀렸다.** 판정 근거는 아래 bootstrap을 볼 것.
@@ -31,6 +34,7 @@ test split 119 chunk × 256 토큰. Teacher는 bf16으로 GPU 2장 분할, Stude
 | 모델 | 파라미터 | PPL | tokens/s | ms/token |
 |---|---:|---:|---:|---:|
 | Teacher (FT, QLoRA) | 12,187,325,040 | **6.884** | 1,459 | 0.685 |
+| Teacher (FT, int8)² | 12,187,325,040 | 6.924 | — | — |
 | Teacher (pretrained)¹ | 12,187,325,040 | 8.214 | — | — |
 | Student (KD) | 999,885,952 | **11.643** | 4,594 | 0.218 |
 | Student (FT) | 999,885,952 | **11.663** | 4,521 | 0.221 |
@@ -38,6 +42,9 @@ test split 119 chunk × 256 토큰. Teacher는 bf16으로 GPU 2장 분할, Stude
 
 ¹ [기준선 평가](gemma3-3090x4-eval.md)의 값. 이번 실행은 `attn_implementation: eager`라 조건이 한 가지 다르지만,
 seq 256에서 eager의 PPL 영향은 +0.005 수준이다. 실제로 같은 Student (Base)가 두 실행에서 14.006 / 14.004로 일치한다.
+
+² KD 단계에서 목표 분포를 만든 Teacher(int8 base + 같은 LoRA 어댑터, 병합 없음). 평가 단계는 이 Teacher를 재지 않으므로
+`scripts/gemma3_teacher_kd_probe.py`로 따로 측정했다. [아래](#kd에-실제로-쓴-teacher--int8--어댑터) 참고.
 
 - **Teacher FT는 확실히 먹혔다.** 8.214 → 6.884 (−16.2%).
 - **Student는 Base → FT에서 크게 좋아진다.** 14.004 → 11.663 (−16.7%).
@@ -159,6 +166,34 @@ bootstrap 스크립트는 logits를 fp32로 올려 CE를 계산하고, evaluate�
 그래서 PPL이 조금 다르다(FT 11.654 vs 11.663, KD top-K 11.642 vs 11.643, Base 14.002 vs 14.004).
 **수치 정밀도 차이만으로 FT가 0.009 움직인다** — KD−FT 차이 0.020의 절반에 가까운 크기다.
 
+### KD에 실제로 쓴 Teacher — int8 + 어댑터
+
+Teacher는 단계마다 base 정밀도가 다르다. **보고한 Teacher PPL(bf16)과 Student가 배운 분포(int8)가 같은 모델이 아니다.**
+
+| 단계 | Teacher 형태 |
+|---|---|
+| Teacher FT 학습 | nf4 base + LoRA 학습 (QLoRA) |
+| KD 목표 분포 | **int8 base + 같은 LoRA 어댑터** (병합 없음) |
+| 평가 (위 표의 6.884) | bf16 base + 같은 LoRA 어댑터 (병합) |
+
+Qwen v3는 Teacher를 양자화 없이 bf16으로 학습하고 KD에도 그대로 썼으므로 이 차이는 Gemma에만 있다.
+같은 119개 test chunk에서 두 Teacher를 나란히 돌려 비교했다(`teacher_kd_probe.json`).
+
+| 지표 | 값 |
+|---|---:|
+| Teacher (FT) bf16 PPL | 6.8832 |
+| Teacher (FT) int8 PPL | **6.9244** (+0.6%) |
+| KL(bf16 ‖ int8), T=2 | **0.0121** nats/token |
+| top-1 일치 | 93.6% |
+| 상위 128개 토큰 겹침 (top-K KD의 목표 집합) | 93.4% |
+
+int8 Teacher는 bf16과 거의 같다. Teacher–Student 격차는 int8 기준으로도 4.74로 bf16 기준(4.78)과 차이가 없다.
+**양자화는 KD 효과가 없었던 원인이 아니다.**
+
+[기준선 평가](gemma3-3090x4-eval.md)의 양자화 표(int8 KL 0.085, top-1 82%)보다 훨씬 가깝게 나온다.
+그 표는 pretrained Teacher의 16개 chunk에서 쟀고, 기준 PPL이 126.9인 것으로 보아 BOS 없이 측정된 것으로 보인다.
+BOS가 없어 분포를 벗어난 입력에서는 양자화 오차가 더 크게 드러난다.
+
 ### Student SFT의 과적합
 
 `student_ft_best.pt`는 epoch 1 체크포인트다(그 뒤로 val CE가 두 배까지 나빠진다). 즉 이 실험의 Student (FT)는
@@ -174,8 +209,14 @@ PPL은 tokenizer에 의존하므로 절대값은 비교하지 않는다. 같은 
 |---|---:|---:|
 | Base → FT | 12.127 → 11.814 (−2.6%) | 14.004 → 11.663 (−16.7%) |
 | FT → KD | 11.814 → 11.685 (**−1.09%**) | 11.663 → 11.643 (**−0.17%**) |
+| Teacher (FT)와 FT의 격차 | 11.814 − 7.657 = 4.157 | 11.663 − 6.884 = 4.779 |
+| **격차 중 KD가 좁힌 비율** | **3.1%** | **0.4%** |
 
-Qwen v3에서 KD가 FT 대비 1.1% 이득을 냈다면, Gemma에서는 그 1/6 수준이다. Gemma 1B pt는 한국어 위키에서
+격차 중 KD가 좁힌 비율 = (FT − KD) / (FT − Teacher). 같은 tokenizer 안에서 PPL 차이끼리 나눈 값이라 단위가 없고,
+tokenizer가 다른 두 계열을 나란히 놓을 수 있다. Gemma는 KD 목표를 만든 int8 Teacher(6.924)로 계산해도 0.4%로 같고,
+full-vocab KD(11.699)는 −0.8%로 오히려 FT보다 멀어진다.
+
+Qwen v3에서 KD가 FT 대비 1.1% 이득을 냈다면, Gemma에서는 그 1/6 수준이다(격차 기준으로는 약 1/7). Gemma 1B pt는 한국어 위키에서
 SFT로 얻는 이득이 훨씬 커서(−16.7% vs −2.6%) KD가 개선할 여지가 SFT 단계에서 이미 소진된 것으로 보인다.
 다만 **Qwen v3의 1.1%도 bootstrap으로 검정하지 않았다.** 같은 판정을 Qwen 쪽에도 적용해야 두 결과를 나란히 놓을 수 있다.
 
@@ -218,6 +259,7 @@ tokens/s는 teacher-forcing forward 처리량이다(`generate()` 아님). Studen
 | `results/gemma3/logs/gemma3-12b-1b-v3-fullvocab/distill_history.json` | full-vocab KD 학습 곡선 |
 | `results/gemma3/logs/gemma3-12b-1b-v3/topk_ablation.json` | 정적 gradient 비교 (배치별) |
 | `results/gemma3/logs/gemma3-12b-1b-v3/paired_bootstrap.json` | bootstrap 결과 |
+| `results/gemma3/logs/gemma3-12b-1b-v3/teacher_kd_probe.json` | KD용 int8 Teacher vs bf16 Teacher 비교 |
 | `results/gemma3/figures/gemma3-12b-1b-v3{,-fullvocab}/` | PPL·속도·학습 곡선 차트 |
 | `results/gemma3/logs/gemma3-12b-1b-v3/pipeline.log`, `…-fullvocab/ab.log` | 전체 실행 로그 (1차 중단분 포함) |
 
@@ -238,6 +280,9 @@ scripts/run_gemma3_fullvocab_ab.sh
 
 # KD / FT 차이가 노이즈를 넘는지 판정 (두 실행이 끝난 뒤, GPU 1장)
 PYTHONPATH=. .venv-gemma/bin/python scripts/gemma3_paired_bootstrap.py
+
+# KD에 쓴 int8 Teacher와 보고한 bf16 Teacher 비교 (GPU 3장, 약 5분)
+PYTHONPATH=. .venv-gemma/bin/python scripts/gemma3_teacher_kd_probe.py
 ```
 
 장시간 실행은 `setsid nohup ... &`로 세션에서 분리한다. 원격 접속이 끊기면 torchrun이 SIGTERM을 받아 학습이 죽는다.
