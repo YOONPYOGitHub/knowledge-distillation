@@ -56,7 +56,7 @@ if trained teacher; then
 else
   banner "STEP 1a  Teacher FT (QLoRA nf4, GPU 0,1)"
   CUDA_VISIBLE_DEVICES=0,1 $TORCHRUN --master_port=29581 \
-    scripts/gemma3_stage.py "$CONFIG" train_teacher > "$LOGS/teacher.log" 2>&1 &
+    scripts/gemma3_stage.py "$CONFIG" train_teacher >> "$LOGS/teacher.log" 2>&1 &
   pids+=("$!:Teacher FT")
 fi
 if trained baseline; then
@@ -64,7 +64,7 @@ if trained baseline; then
 else
   banner "STEP 1b  Student SFT (GPU 2,3)"
   CUDA_VISIBLE_DEVICES=2,3 $TORCHRUN --master_port=29582 \
-    scripts/gemma3_stage.py "$CONFIG" baseline > "$LOGS/baseline.log" 2>&1 &
+    scripts/gemma3_stage.py "$CONFIG" baseline >> "$LOGS/baseline.log" 2>&1 &
   pids+=("$!:Student SFT")
 fi
 status=0
@@ -81,7 +81,7 @@ if trained distill; then
 else
   banner "STEP 2  KD (Student GPU 0,1 / Teacher int8 GPU 2,3)"
   $TORCHRUN --master_port=29583 scripts/gemma3_stage.py "$CONFIG" distill \
-    > "$LOGS/distill.log" 2>&1 || fail "STEP 2 KD"
+    >> "$LOGS/distill.log" 2>&1 || fail "STEP 2 KD"
   echo "✅ KD ($(date '+%H:%M:%S'))"
 fi
 
