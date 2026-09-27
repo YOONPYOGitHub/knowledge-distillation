@@ -31,6 +31,8 @@ PY="$PWD/.venv-gemma/bin/python"
 TORCHRUN="$PWD/.venv-gemma/bin/torchrun --nproc_per_node=2"
 export PYTHONPATH="$PWD"
 export TOKENIZERS_PARALLELISM=false
+# 2.1B Student 전체 학습에서 할당 단편화로 OOM 이 난다 (사용 11.6GB, 예약만 된 빈 공간 11.7GB).
+export PYTORCH_CUDA_ALLOC_CONF=expandable_segments:True
 
 mkdir -p "$LOGS"
 echo ""
