@@ -1,0 +1,42 @@
+# Kakao Kanana 1.5 8B (Teacher) -> 2.1B (Student) 기준선 평가 — RTX 3090 24GB x 4
+#
+# 평가 전용 설정이다. Kanana 학습 체크포인트가 아직 없으므로 `--step evaluate` 는
+# Teacher 와 Student (Base) 두 모델만 측정하고 KD/FT 는 "체크포인트 없음" 으로 건너뛴다.
+#
+# 두 모델 모두 LlamaForCausalLM 이고 tokenizer 가 같다 (vocab 128,256).
+# Teacher 8B 는 bf16 약 16GB 로 3090 한 장에 들어가므로 Gemma 12B 처럼 분할하지 않는다.
+#
+# GPU 배치:
+#   cuda:0 — Teacher 8B (bf16)
+#   cuda:1 — Student 2.1B
+#
+# 데이터 조건은 Qwen / Gemma 실험과 동일하게 유지한다.
+# 다만 tokenizer 가 다르므로 PPL 을 Qwen / Gemma 결과와 직접 비교하면 안 된다.
+
+teacher_model: kakaocorp/kanana-1.5-8b-base
+student_model: kakaocorp/kanana-1.5-2.1b-base
+
+dataset_name: wikimedia/wikipedia
+dataset_config: 20231101.ko
+dataset_revision: b04c8d1ceb2f5cd4588862100d08de323dccfbaa
+dataset_text_column: text
+dataset_streaming: true
+dataset_max_samples: 1000
+dataset_shuffle_buffer: 10000
+validation_ratio: 0.05
+test_ratio: 0.05
+
+max_seq_length: 256
+# Kanana 는 Llama 3 계열 tokenizer 로 문서 앞에 <|begin_of_text|> 를 붙인다.
+# 청크 BOS 유무의 영향은 scripts/kanana_smoke.py 로 측정해 정한다.
+prepend_bos: true
+batch_size: 2
+seed: 42
+num_workers: 2
+
+device: cuda:1
+teacher_device: cuda:0
+
+bf16: true
+output_dir: results/kanana
+run_id: kanana-8b-2b-3090x4-eval
