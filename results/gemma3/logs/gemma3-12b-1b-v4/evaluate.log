@@ -1,0 +1,63 @@
+📄 configs/gemma3_12b_1b_3090x4_v4.yaml | step=evaluate | run_id=gemma3-12b-1b-v4
+   Teacher: google/gemma-3-12b-pt (quant=bf16)
+   Student: google/gemma-3-1b-pt
+   kd_top_k=128, T=2.0, α=0.5, forward_kl/tokenmean
+==================================================
+STEP 4/5: Evaluation
+==================================================
+=== 4-Way Model Evaluation ===
+Device: cuda:0
+Test set: 832 samples
+  ✅ Teacher LoRA adapter 로드 → results/gemma3/checkpoints/gemma3-12b-1b-v4/teacher_ft_best_adapter
+--- Teacher (FT) 평가 ---
+  파라미터: 12,187,325,040 (24374.7 MB)
+  Perplexity: 5.42
+  속도: 1444 tokens/sec (0.69 ms/token)
+--- Student (KD) 평가 ---
+  파라미터: 999,885,952 (1999.8 MB)
+  Perplexity: 7.87
+  속도: 4559 tokens/sec (0.22 ms/token)
+--- Student (FT) 평가 ---
+  파라미터: 999,885,952 (1999.8 MB)
+  Perplexity: 8.36
+  속도: 4524 tokens/sec (0.22 ms/token)
+--- Student (Base) 평가 ---
+  파라미터: 999,885,952 (1999.8 MB)
+  Perplexity: 12.25
+  속도: 4523 tokens/sec (0.22 ms/token)
+평가 결과 저장 → results/gemma3/logs/gemma3-12b-1b-v4/evaluation_results.json
+✅ 파이프라인 완료!
+   결과: results/gemma3/logs/gemma3-12b-1b-v4
+   차트: results/gemma3/figures/gemma3-12b-1b-v4
+📄 configs/gemma3_12b_1b_3090x4_v4.yaml | step=compare | run_id=gemma3-12b-1b-v4
+   Teacher: google/gemma-3-12b-pt (quant=bf16)
+   Student: google/gemma-3-1b-pt
+   kd_top_k=128, T=2.0, α=0.5, forward_kl/tokenmean
+==================================================
+STEP 5/5: Comparison
+==================================================
+=== 4-Way Comparison ===
+======================================================================
+4-Way 비교 결과
+======================================================================
+모델                         파라미터        PPL   tokens/s   ms/tok
+----------------------------------------------------------------------
+Teacher (FT)       12,187,325,040       5.42       1444     0.69
+Student (KD)        999,885,952       7.87       4559     0.22
+Student (FT)        999,885,952       8.36       4524     0.22
+Student (Base)      999,885,952      12.25       4523     0.22
+======================================================================
+📊 증류 효과 (Q2): KD PPL 7.87 vs FT PPL 8.36
+   → KD가 FT 대비 PPL 0.50 낮음 (5.9% 개선)
+차트 저장 → results/gemma3/figures/gemma3-12b-1b-v4/perplexity_comparison.png
+차트 저장 → results/gemma3/figures/gemma3-12b-1b-v4/inference_speed.png
+차트 저장 → results/gemma3/figures/gemma3-12b-1b-v4/training_loss.png
+차트 저장 → results/gemma3/figures/gemma3-12b-1b-v4/val_loss.png
+서머리 저장 → results/gemma3/logs/gemma3-12b-1b-v4/summary.json
+노트 템플릿 생성 → results/gemma3/logs/gemma3-12b-1b-v4/notes.md
+--- 자동 진단 ---
+  ✅ KD(7.87) < FT(8.36) — 증류 효과 확인됨
+모든 비교 완료!
+✅ 파이프라인 완료!
+   결과: results/gemma3/logs/gemma3-12b-1b-v4
+   차트: results/gemma3/figures/gemma3-12b-1b-v4

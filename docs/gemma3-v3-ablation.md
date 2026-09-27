@@ -127,6 +127,8 @@ v4의 KD는 **Base 초기값 + forward KL**로 한다.
 - divergence: 유의한 차이는 없었다. 관측값이 가장 좋았던 forward를 쓴다. 고전적 KD 설정이기도 하다.
 - Student SFT는 KD 초기값으로는 쓰지 않지만 4-way의 Student (FT) 행을 위해 그대로 학습한다.
 
+> 결과: [v4](gemma3-v4.md)에서 KD 7.866 vs FT 8.363(−5.9%, 95% CI [−0.535, −0.459]), 격차 중 16.9%를 좁혔다.
+
 ## 산출물
 
 | 파일 | 내용 |
