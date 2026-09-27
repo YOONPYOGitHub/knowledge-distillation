@@ -27,9 +27,10 @@ validation_ratio: 0.05
 test_ratio: 0.05
 
 max_seq_length: 256
-# Kanana 는 Llama 3 계열 tokenizer 로 문서 앞에 <|begin_of_text|> 를 붙인다.
-# 청크 BOS 유무의 영향은 scripts/kanana_smoke.py 로 측정해 정한다.
-prepend_bos: true
+# Kanana 는 청크마다 BOS 를 붙이면 PPL 이 오히려 나빠진다 (Teacher 7.03 -> 7.73, Student 8.75 -> 9.36,
+# scripts/kanana_smoke.py). Gemma 와 달리 문서 중간에서 시작하는 입력에 익숙한 것으로 보여 붙이지 않는다.
+# tokenizer 는 문서 시작마다 <|begin_of_text|> 를 붙이므로 문서 경계의 BOS 는 그대로 남는다.
+prepend_bos: false
 batch_size: 2
 seed: 42
 num_workers: 2

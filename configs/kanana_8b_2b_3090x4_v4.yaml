@@ -1,0 +1,76 @@
+# Kanana 1.5 8B -> 2.1B v4: Gemma 3 v4(gemma3_12b_1b_3090x4_v4) 와 같은 조건으로 계열만 바꾼다.
+# 데이터 10배, early stopping, KD 는 Base 초기값 + forward KL, T=2, α=0.5, tokenmean, top-K 128, lr 1e-5.
+#
+# Gemma v4 와 다른 점 (모두 모델 특성 때문):
+#   - prepend_bos: false. Kanana 는 청크 BOS 를 붙이면 PPL 이 나빠진다 (scripts/kanana_smoke.py).
+#   - KD Teacher 를 양자화하지 않는다. 8B bf16 이 3090 한 장에 들어가 (피크 15.6GB) int8 오차가 없다.
+#   - attn_implementation 은 라이브러리 기본값(sdpa). eager 권장은 Gemma 3 에만 해당한다.
+#
+# 실행 (Teacher FT ‖ Student SFT -> KD -> 평가 / 비교 / bootstrap, 다시 실행하면 이어간다):
+#   setsid nohup scripts/run_gemma3_v4.sh configs/kanana_8b_2b_3090x4_v4.yaml \
+#     >> results/kanana/logs/kanana-8b-2b-v4/pipeline.log 2>&1 &
+#
+# GPU 배치 (KD 단계):
+#   rank 0: Student 2.1B -> cuda:0 │ Teacher 8B bf16 -> cuda:2
+#   rank 1: Student 2.1B -> cuda:1 │ Teacher 8B bf16 -> cuda:3
+
+teacher_model: kakaocorp/kanana-1.5-8b-base
+student_model: kakaocorp/kanana-1.5-2.1b-base
+
+# --- 데이터: Qwen v4 / Gemma v4 와 동일 조건 ---
+dataset_name: wikimedia/wikipedia
+dataset_config: 20231101.ko
+dataset_revision: b04c8d1ceb2f5cd4588862100d08de323dccfbaa
+dataset_text_column: text
+dataset_streaming: true
+dataset_max_samples: 10000
+dataset_shuffle_buffer: 10000
+validation_ratio: 0.05
+test_ratio: 0.05
+max_seq_length: 256
+prepend_bos: false
+
+# --- KD: Gemma v4 와 동일 ---
+temperature: 2.0
+alpha: 0.5
+kd_reduction: tokenmean
+kd_divergence: forward_kl
+# vocab 128,256. top-K 는 계열 간 조건을 맞추려고 Gemma v4 와 같게 둔다.
+kd_top_k: 128
+
+# --- Teacher fine-tuning (QLoRA): Gemma v4 와 동일 ---
+teacher_epochs: 3
+teacher_learning_rate: 2.0e-5
+teacher_lora_rank: 16
+teacher_lora_alpha: 32
+teacher_lora_dropout: 0.05
+# LoRA 대상은 기본값(q/k/v/o_proj) — Gemma 3 와 같은 모듈이다. Gemma 는 vision tower 를 빼려고 정규식을 썼다.
+teacher_ft_quantization: nf4
+teacher_checkpoint: results/kanana/checkpoints/kanana-8b-2b-v4/teacher_ft_best_adapter
+
+# --- KD 단계 Teacher 배치: bf16, rank 별 전용 GPU ---
+teacher_quantization: ""
+teacher_devices: [cuda:2, cuda:3]
+
+# --- Student 학습: Gemma v4 와 동일 ---
+epochs: 4
+batch_size: 1
+global_batch_size: 2
+learning_rate: 1.0e-5
+weight_decay: 0.01
+gradient_clip: 1.0
+optimizer: adafactor
+early_stopping_patience: 1
+early_stopping_min_delta: 0.005
+seed: 42
+training_seed: 42
+num_workers: 2
+distill_student_checkpoint: ""
+resume_training: true
+
+device: cuda:0
+bf16: true
+gradient_checkpointing: true
+
+output_dir: results/kanana
+run_id: kanana-8b-2b-v4

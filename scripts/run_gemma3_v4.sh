@@ -3,7 +3,7 @@
 #
 # v4 KD 는 Base 초기값이라 Student SFT 에 의존하지 않는다. 그래서 두 학습을 동시에 돌린다.
 #   1. Teacher FT (GPU 0,1)  ‖  Student SFT (GPU 2,3)
-#   2. KD (Student GPU 0,1 / Teacher int8 GPU 2,3)
+#   2. KD (Student GPU 0,1 / Teacher GPU 2,3, 양자화는 config 의 teacher_quantization)
 #   3. 평가 -> 비교 -> paired bootstrap
 # 순서대로 돌리는 run_gemma3_4way.sh 보다 Student SFT 시간(수 시간)만큼 짧다.
 #
@@ -11,16 +11,21 @@
 # 중간에 끊긴 학습 단계는 resume_training 으로 마지막 epoch 다음부터 이어간다.
 # 한 단계라도 실패하면 조건을 낮추지 않고 멈춘다.
 #
+# 결과 경로는 config 의 output_dir / run_id 를 따르므로 다른 계열(Kanana 등)의 v4 설정에도 쓴다.
+#
 # 사용법:
 #   setsid nohup scripts/run_gemma3_v4.sh >> results/gemma3/logs/gemma3-12b-1b-v4/pipeline.log 2>&1 &
+#   setsid nohup scripts/run_gemma3_v4.sh configs/kanana_8b_2b_3090x4_v4.yaml \
+#     >> results/kanana/logs/kanana-8b-2b-v4/pipeline.log 2>&1 &
 
 set -u
 cd "$(dirname "$0")/.."
 
 CONFIG=${1:-configs/gemma3_12b_1b_3090x4_v4.yaml}
 RUN_ID=$(awk '/^run_id:/ {print $2}' "$CONFIG")
-LOGS=results/gemma3/logs/$RUN_ID
-CKPT=results/gemma3/checkpoints/$RUN_ID
+OUTPUT_DIR=$(awk '/^output_dir:/ {print $2}' "$CONFIG")
+LOGS=$OUTPUT_DIR/logs/$RUN_ID
+CKPT=$OUTPUT_DIR/checkpoints/$RUN_ID
 
 PY="$PWD/.venv-gemma/bin/python"
 TORCHRUN="$PWD/.venv-gemma/bin/torchrun --nproc_per_node=2"
@@ -79,7 +84,7 @@ trained teacher && trained baseline || fail "STEP 1 (산출물 없음)"
 if trained distill; then
   echo "⏭️  KD 완료됨"
 else
-  banner "STEP 2  KD (Student GPU 0,1 / Teacher int8 GPU 2,3)"
+  banner "STEP 2  KD (Student GPU 0,1 / Teacher GPU 2,3)"
   $TORCHRUN --master_port=29583 scripts/gemma3_stage.py "$CONFIG" distill \
     >> "$LOGS/distill.log" 2>&1 || fail "STEP 2 KD"
   echo "✅ KD ($(date '+%H:%M:%S'))"
