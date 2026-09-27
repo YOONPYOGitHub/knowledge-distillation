@@ -30,6 +30,7 @@ from src.models import (
     model_info,
     teacher_quantization_config,
 )
+from src.resume import clear_state, load_state, save_state
 
 from transformers import AutoModelForCausalLM
 
@@ -183,8 +184,21 @@ def train_teacher(config: KDConfig):
     history = []
     best_val_loss = float("inf")
     epochs_without_improvement = 0
+    start_epoch = 1
 
-    for epoch in range(1, config.teacher_epochs + 1):
+    resumed = load_state(config, "teacher", teacher, optimizer)
+    if resumed:
+        history = resumed["history"]
+        best_val_loss = resumed["best_val_loss"]
+        epochs_without_improvement = resumed["epochs_without_improvement"]
+        start_epoch = resumed["epoch"] + 1
+        if (
+            config.early_stopping_patience
+            and epochs_without_improvement >= config.early_stopping_patience
+        ):
+            start_epoch = config.teacher_epochs + 1
+
+    for epoch in range(start_epoch, config.teacher_epochs + 1):
         set_epoch(loaders["train"], epoch)
         start = time.time()
         if is_main_process():
@@ -220,6 +234,10 @@ def train_teacher(config: KDConfig):
         else:
             epochs_without_improvement += 1
 
+        save_state(
+            config, "teacher", teacher, optimizer, epoch,
+            best_val_loss, epochs_without_improvement, history,
+        )
         if is_main_process():
             print()
         barrier()
@@ -241,6 +259,7 @@ def train_teacher(config: KDConfig):
             json.dump(history, f, indent=2)
         print(f"Teacher 학습 로그 저장 → {log_path}")
     barrier()
+    clear_state(config, "teacher")
 
     # 메모리 해제 (이후 distill에서 checkpoint로 다시 로드)
     del teacher

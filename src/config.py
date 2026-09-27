@@ -74,6 +74,8 @@ class KDConfig:
     distill_student_checkpoint: str = ""  # KD 전용 Student 초기 checkpoint
     early_stopping_patience: int = 0  # 0이면 비활성화
     early_stopping_min_delta: float = 0.0
+    # epoch 마다 <stage>_last.pt 를 저장하고, 있으면 다음 epoch 부터 이어간다 (src/resume.py).
+    resume_training: bool = False
 
     # --- 경로 ---
     output_dir: str = "results"
