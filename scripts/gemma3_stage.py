@@ -42,6 +42,10 @@ def build_config(config_path: str, step: str):
             # WORLD_SIZE=1 에서는 batch_size 와 맞지 않아 설정 검증에 걸린다.
             global_batch_size=0,
         )
+    if step in {"train_teacher", "baseline"}:
+        # teacher_devices 는 KD 단계의 Teacher 배치다. 이 단계들은 쓰지 않으며, GPU 일부만 보이게
+        # 해서 두 학습을 동시에 돌릴 때(run_gemma3_v4.sh) 없는 장치로 검증에 걸리지 않게 비운다.
+        return from_yaml(config_path, teacher_devices=[])
     return from_yaml(config_path)
 
 

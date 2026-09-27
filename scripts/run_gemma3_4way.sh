@@ -13,12 +13,17 @@
 # 시작단계를 주면 그 앞 단계는 건너뛴다. 중단된 실행을 이어갈 때 쓴다.
 # 앞 단계의 체크포인트(Teacher FT 어댑터 / student_ft_best.pt)가 남아 있어야 한다.
 #   scripts/run_gemma3_4way.sh configs/gemma3_12b_1b_3090x4_v3.yaml distill
+#
+# STOP_ON_FAIL=1 이면 단계가 실패하는 즉시 멈춘다. 조건을 낮춰 진행하지 않고,
+# resume_training 설정과 함께 같은 시작단계로 다시 실행해 epoch 단위로 이어간다.
+#   STOP_ON_FAIL=1 scripts/run_gemma3_4way.sh configs/gemma3_12b_1b_3090x4_v4.yaml
 
 set -u
 cd "$(dirname "$0")/.."
 
 CONFIG=${1:-configs/gemma3_12b_1b_3090x4_v3.yaml}
 START=${2:-train_teacher}
+STOP_ON_FAIL=${STOP_ON_FAIL:-0}
 PY="$PWD/.venv-gemma/bin/python"
 TORCHRUN="$PWD/.venv-gemma/bin/torchrun --nproc_per_node=2 --master_port=29571"
 export PYTHONPATH="$PWD"
@@ -55,6 +60,12 @@ run_stage() {
     RESULTS+=("✅ $name ($(( (SECONDS - start) / 60 ))분)")
   else
     RESULTS+=("❌ $name ($(( (SECONDS - start) / 60 ))분 후 실패)")
+    if [ "$STOP_ON_FAIL" = "1" ]; then
+      echo "❌ $name 실패로 멈춥니다. 이어가려면: $0 $CONFIG $stage"
+      for line in "${RESULTS[@]}"; do echo "  $line"; done
+      echo "PIPELINE_FAILED"
+      exit 1
+    fi
   fi
 }
 
@@ -64,7 +75,7 @@ run_stage train_teacher "STEP 1/4  Teacher FT (QLoRA nf4)" \
 run_stage baseline "STEP 2/4  Student SFT (baseline)" \
   $TORCHRUN scripts/gemma3_stage.py "$CONFIG" baseline
 
-run_stage distill "STEP 3/4  KD (top-K reverse KL, Teacher int8)" \
+run_stage distill "STEP 3/4  KD (Teacher int8, 설정은 config 참고)" \
   $TORCHRUN scripts/gemma3_stage.py "$CONFIG" distill
 
 run_stage evaluate "STEP 4/4  Evaluate (Teacher bf16 분할)" \
