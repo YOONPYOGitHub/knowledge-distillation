@@ -1,0 +1,8 @@
+{
+  "synced_at": "2026-09-20T07:37:33.712339+00:00",
+  "remote": "/var/lib/kd-results/h100-tuning-20260920",
+  "archive_sha256": "24d796a464e02429ed541aabe707ded155a459098193832e28af5cb99a869751",
+  "files": 51,
+  "test_results_present": true,
+  "figures": "/Users/hongyoonpyo/project/knowledge-distillation/results/figures/h100-tuning-20260920"
+}

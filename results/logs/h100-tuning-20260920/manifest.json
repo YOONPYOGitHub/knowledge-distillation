@@ -1,0 +1,89 @@
+{
+  "base_config": {
+    "teacher_model": "Qwen/Qwen2.5-7B",
+    "student_model": "Qwen/Qwen2.5-1.5B",
+    "dataset_name": "wikimedia/wikipedia",
+    "dataset_config": "20231101.ko",
+    "dataset_revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+    "dataset_text_column": "text",
+    "dataset_streaming": true,
+    "dataset_max_samples": 1000,
+    "dataset_shuffle_buffer": 10000,
+    "validation_ratio": 0.05,
+    "test_ratio": 0.05,
+    "max_seq_length": 256,
+    "temperature": 2.0,
+    "alpha": 0.5,
+    "kd_vocab_size": 0,
+    "kd_reduction": "tokenmean",
+    "kd_divergence": "reverse_kl",
+    "teacher_epochs": 3,
+    "teacher_learning_rate": 2e-05,
+    "teacher_checkpoint": "/var/lib/kd-results/qwen7b-4way/checkpoints/qwen7b-korean-4way-v1/teacher_ft_best_adapter",
+    "teacher_lora_rank": 16,
+    "teacher_lora_alpha": 32,
+    "teacher_lora_dropout": 0.05,
+    "teacher_lora_target_modules": [
+      "q_proj",
+      "k_proj",
+      "v_proj",
+      "o_proj"
+    ],
+    "epochs": 2,
+    "batch_size": 2,
+    "max_train_steps": 0,
+    "max_eval_steps": 0,
+    "learning_rate": 1e-05,
+    "weight_decay": 0.01,
+    "warmup_steps": 100,
+    "gradient_clip": 1.0,
+    "optimizer": "adafactor",
+    "gradient_checkpointing": false,
+    "distill_student_checkpoint": "/var/lib/kd-results/qwen7b-4way/checkpoints/qwen7b-korean-4way-v1/student_ft_best.pt",
+    "early_stopping_patience": 0,
+    "early_stopping_min_delta": 0.0,
+    "output_dir": "/var/lib/kd-results/h100-tuning-20260920",
+    "run_id": "validation-sweep",
+    "device": "cuda:0",
+    "teacher_device": "cuda:0",
+    "seed": 42,
+    "num_workers": 4,
+    "fp16": false,
+    "bf16": true
+  },
+  "training_seed": 42,
+  "validation_checks_per_epoch": 4,
+  "selection_metric": "validation token-weighted FP32 CE",
+  "vocabulary_size": 151665,
+  "splits": {
+    "train": {
+      "blocks": 1529,
+      "input_ids_sha256": "3bb106601baff2434d26ab8370afd04ec5ad697db08aa1b044f072449e418a8f"
+    },
+    "validation": {
+      "blocks": 87,
+      "input_ids_sha256": "590feca74414013ccb5def68a08e980c5192af011329093b115328cc4dae4c4a"
+    },
+    "test": {
+      "blocks": 141,
+      "input_ids_sha256": "b6571dfb62fe35abd0984c84397a609aadfd9b9d85343a2768a908a7ad4e9de4"
+    }
+  },
+  "initial_ft_sha256": "23a07d381f66e5af736d21a15a2455ae9e200a08ad4813ed9b8f79980cde611d",
+  "teacher_adapter_sha256": "7caf2ce3a69f7296a0421814aeac1605472123388fc861d31b0a7b2c9cc319f4",
+  "versions": {
+    "torch": "2.11.0+cu128",
+    "transformers": "4.55.4",
+    "datasets": "3.6.0",
+    "peft": "0.20.0",
+    "accelerate": "1.14.0",
+    "numpy": "2.5.2"
+  },
+  "source_sha256": {
+    "src/h100_tuning.py": "210112eeded345a63913ccd1e73f3ac36c9773f6f8ef1f2ca457d597cfb41a4e",
+    "src/distill.py": "6e91181e2ed595b20a6f7644ffaa863ad157421978df7ee4b4fbb7b4d7dfeb80",
+    "scripts/tune_h100.py": "f08802b0ca5eba3583afc277d3fbb668d8fdbd2ad5684e97ec3aed8f19cb7d5a"
+  },
+  "gpu": "NVIDIA H100 NVL",
+  "note": "Old H100 training RNG was not fixed; this is a new controlled comparison."
+}

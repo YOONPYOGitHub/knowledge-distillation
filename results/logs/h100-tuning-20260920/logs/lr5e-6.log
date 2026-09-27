@@ -1,0 +1,10 @@
+  ✅ Teacher LoRA adapter 로드 → /var/lib/kd-results/qwen7b-4way/checkpoints/qwen7b-korean-4way-v1/teacher_ft_best_adapter
+validation step=0 epoch=0.000 ce=2.078827 ppl=7.9951
+validation step=192 epoch=0.251 ce=2.068921 ppl=7.9163
+validation step=384 epoch=0.502 ce=2.066428 ppl=7.8966
+validation step=576 epoch=0.753 ce=2.061497 ppl=7.8577
+validation step=765 epoch=1.000 ce=2.056617 ppl=7.8195
+validation step=957 epoch=1.251 ce=2.058323 ppl=7.8328
+validation step=1149 epoch=1.502 ce=2.056292 ppl=7.8169
+validation step=1341 epoch=1.753 ce=2.054780 ppl=7.8051
+validation step=1530 epoch=2.000 ce=2.051868 ppl=7.7824

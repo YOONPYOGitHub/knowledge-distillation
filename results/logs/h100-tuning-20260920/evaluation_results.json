@@ -1,0 +1,32 @@
+[
+  {
+    "name": "student_ft_initial",
+    "perplexity": 11.814911107554344,
+    "avg_loss": 2.4693623869164796,
+    "tokens": 35955
+  },
+  {
+    "name": "student_kd_v3_reference",
+    "perplexity": 11.683635576914197,
+    "avg_loss": 2.4581891941138987,
+    "tokens": 35955
+  },
+  {
+    "name": "student_kd_selected",
+    "perplexity": 11.353113405876357,
+    "avg_loss": 2.429492015199392,
+    "tokens": 35955
+  },
+  {
+    "name": "student_ce_control_best",
+    "perplexity": 11.814911107554344,
+    "avg_loss": 2.4693623869164796,
+    "tokens": 35955
+  },
+  {
+    "name": "student_ce_at_kd_step",
+    "perplexity": 12.06861904233821,
+    "avg_loss": 2.490608616164357,
+    "tokens": 35955
+  }
+]

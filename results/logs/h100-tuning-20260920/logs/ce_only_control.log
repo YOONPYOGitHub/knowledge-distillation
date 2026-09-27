@@ -1,0 +1,9 @@
+validation step=0 epoch=0.000 ce=2.078827 ppl=7.9951
+validation step=192 epoch=0.251 ce=2.092219 ppl=8.1029
+validation step=384 epoch=0.502 ce=2.084525 ppl=8.0408
+validation step=576 epoch=0.753 ce=2.089946 ppl=8.0845
+validation step=765 epoch=1.000 ce=2.092058 ppl=8.1016
+validation step=957 epoch=1.251 ce=2.213428 ppl=9.1470
+validation step=1149 epoch=1.502 ce=2.211540 ppl=9.1298
+validation step=1341 epoch=1.753 ce=2.212500 ppl=9.1385
+validation step=1530 epoch=2.000 ce=2.222552 ppl=9.2309

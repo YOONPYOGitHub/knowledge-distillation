@@ -1,0 +1,48 @@
+{
+  "selected_parameters": {
+    "name": "alpha7",
+    "learning_rate": 1e-05,
+    "alpha": 0.7,
+    "temperature": 2.0,
+    "best_validation": {
+      "ce": 2.0310601431103152,
+      "ppl": 7.622162660235838,
+      "tokens": 22185
+    },
+    "best_step": 765,
+    "best_epoch": 1.0,
+    "best_checkpoint": "/var/lib/kd-results/h100-tuning-20260920/trials/alpha7/best.pt",
+    "final_step": 1530,
+    "elapsed_seconds": 362.2367411489995,
+    "peak_memory_gb": 23.674553871154785
+  },
+  "test": {
+    "student_ft_initial": {
+      "ce": 2.4693623869164796,
+      "ppl": 11.814911107554344,
+      "tokens": 35955
+    },
+    "student_kd_v3_reference": {
+      "ce": 2.4581891941138987,
+      "ppl": 11.683635576914197,
+      "tokens": 35955
+    },
+    "student_kd_selected": {
+      "ce": 2.429492015199392,
+      "ppl": 11.353113405876357,
+      "tokens": 35955
+    },
+    "student_ce_control_best": {
+      "ce": 2.4693623869164796,
+      "ppl": 11.814911107554344,
+      "tokens": 35955
+    },
+    "student_ce_at_kd_step": {
+      "ce": 2.490608616164357,
+      "ppl": 12.06861904233821,
+      "tokens": 35955
+    }
+  },
+  "selection": "Validation-only, test evaluated once after selection freeze",
+  "caution": "Single training seed, small Wikipedia holdout; not a general capability benchmark."
+}

@@ -1,0 +1,164 @@
+{
+  "winner": {
+    "name": "alpha7",
+    "learning_rate": 1e-05,
+    "alpha": 0.7,
+    "temperature": 2.0,
+    "best_validation": {
+      "ce": 2.0310601431103152,
+      "ppl": 7.622162660235838,
+      "tokens": 22185
+    },
+    "best_step": 765,
+    "best_epoch": 1.0,
+    "best_checkpoint": "/var/lib/kd-results/h100-tuning-20260920/trials/alpha7/best.pt",
+    "final_step": 1530,
+    "elapsed_seconds": 362.2367411489995,
+    "peak_memory_gb": 23.674553871154785
+  },
+  "ce_control": {
+    "name": "ce_only_control",
+    "learning_rate": 1e-05,
+    "alpha": 1.0,
+    "temperature": 2.0,
+    "best_validation": {
+      "ce": 2.0788269084236606,
+      "ppl": 7.995084444737214,
+      "tokens": 22185
+    },
+    "best_step": 0,
+    "best_epoch": 0.0,
+    "best_checkpoint": "/var/lib/kd-results/qwen7b-4way/checkpoints/qwen7b-korean-4way-v1/student_ft_best.pt",
+    "final_step": 1530,
+    "elapsed_seconds": 226.19779697000013,
+    "peak_memory_gb": 9.447247982025146
+  },
+  "ce_at_kd_step": {
+    "ce": 2.092057818519604,
+    "ppl": 8.101569582467569,
+    "tokens": 22185
+  },
+  "ce_at_kd_checkpoint": "/var/lib/kd-results/h100-tuning-20260920/trials/ce_only_control/matched.pt",
+  "candidates": [
+    {
+      "name": "lr10e-6",
+      "learning_rate": 1e-05,
+      "alpha": 0.5,
+      "temperature": 2.0,
+      "best_validation": {
+        "ce": 2.0504416760867423,
+        "ppl": 7.771332760253563,
+        "tokens": 22185
+      },
+      "best_step": 765,
+      "best_epoch": 1.0,
+      "best_checkpoint": "/var/lib/kd-results/h100-tuning-20260920/trials/lr10e-6/best.pt",
+      "final_step": 1530,
+      "elapsed_seconds": 364.8448401509995,
+      "peak_memory_gb": 23.674553871154785
+    },
+    {
+      "name": "lr5e-6",
+      "learning_rate": 5e-06,
+      "alpha": 0.5,
+      "temperature": 2.0,
+      "best_validation": {
+        "ce": 2.051868345696082,
+        "ppl": 7.782427797120747,
+        "tokens": 22185
+      },
+      "best_step": 1530,
+      "best_epoch": 2.0,
+      "best_checkpoint": "/var/lib/kd-results/h100-tuning-20260920/trials/lr5e-6/best.pt",
+      "final_step": 1530,
+      "elapsed_seconds": 439.1589408359996,
+      "peak_memory_gb": 23.674553871154785
+    },
+    {
+      "name": "lr2e-6",
+      "learning_rate": 2e-06,
+      "alpha": 0.5,
+      "temperature": 2.0,
+      "best_validation": {
+        "ce": 2.063921771115055,
+        "ppl": 7.876800323683365,
+        "tokens": 22185
+      },
+      "best_step": 1530,
+      "best_epoch": 2.0,
+      "best_checkpoint": "/var/lib/kd-results/h100-tuning-20260920/trials/lr2e-6/best.pt",
+      "final_step": 1530,
+      "elapsed_seconds": 457.15111935500136,
+      "peak_memory_gb": 23.674553871154785
+    },
+    {
+      "name": "alpha3",
+      "learning_rate": 1e-05,
+      "alpha": 0.3,
+      "temperature": 2.0,
+      "best_validation": {
+        "ce": 2.0788269084236606,
+        "ppl": 7.995084444737214,
+        "tokens": 22185
+      },
+      "best_step": 0,
+      "best_epoch": 0.0,
+      "best_checkpoint": "/var/lib/kd-results/qwen7b-4way/checkpoints/qwen7b-korean-4way-v1/student_ft_best.pt",
+      "final_step": 1530,
+      "elapsed_seconds": 269.0654991269985,
+      "peak_memory_gb": 23.674553871154785
+    },
+    {
+      "name": "alpha7",
+      "learning_rate": 1e-05,
+      "alpha": 0.7,
+      "temperature": 2.0,
+      "best_validation": {
+        "ce": 2.0310601431103152,
+        "ppl": 7.622162660235838,
+        "tokens": 22185
+      },
+      "best_step": 765,
+      "best_epoch": 1.0,
+      "best_checkpoint": "/var/lib/kd-results/h100-tuning-20260920/trials/alpha7/best.pt",
+      "final_step": 1530,
+      "elapsed_seconds": 362.2367411489995,
+      "peak_memory_gb": 23.674553871154785
+    },
+    {
+      "name": "temperature1",
+      "learning_rate": 1e-05,
+      "alpha": 0.7,
+      "temperature": 1.0,
+      "best_validation": {
+        "ce": 2.0399741082732032,
+        "ppl": 7.690410078304519,
+        "tokens": 22185
+      },
+      "best_step": 765,
+      "best_epoch": 1.0,
+      "best_checkpoint": "/var/lib/kd-results/h100-tuning-20260920/trials/temperature1/best.pt",
+      "final_step": 1530,
+      "elapsed_seconds": 376.1936508359995,
+      "peak_memory_gb": 23.674553871154785
+    },
+    {
+      "name": "temperature4",
+      "learning_rate": 1e-05,
+      "alpha": 0.7,
+      "temperature": 4.0,
+      "best_validation": {
+        "ce": 2.074661947494964,
+        "ppl": 7.961854479193722,
+        "tokens": 22185
+      },
+      "best_step": 765,
+      "best_epoch": 1.0,
+      "best_checkpoint": "/var/lib/kd-results/h100-tuning-20260920/trials/temperature4/best.pt",
+      "final_step": 1530,
+      "elapsed_seconds": 272.27463509299923,
+      "peak_memory_gb": 23.674553871154785
+    }
+  ],
+  "test_used_for_selection": false
+}

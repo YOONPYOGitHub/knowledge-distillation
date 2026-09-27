@@ -3,6 +3,16 @@
 > 대형 언어 모델(Teacher)의 지식을 소형 모델(Student)로 전이하는 지식 증류를 구현하고,  
 > **4가지 모델의 성능을 비교·분석**하는 실험 프로젝트
 
+## H100 튜닝 결과 및 개발 재개
+
+이 브랜치는 **`feature/azure-h100-kd-tuning`**입니다. VESSL 3090×4 구현은 별도 `feature/vessl-3090x4-h100-parity` 브랜치에 있습니다.
+
+- [실험 결과·다른 머신에서 이어 작업하는 방법](docs/h100-kd-tuning-plan.md)
+- [최종 보고서](results/logs/h100-tuning-20260920/report.md) · [평가 JSON](results/logs/h100-tuning-20260920/test_results.json) · [후보별 CSV](results/logs/h100-tuning-20260920/parameter_search.csv)
+- [PPL 비교](results/figures/h100-tuning-20260920/perplexity_comparison.png) · [검증 곡선](results/figures/h100-tuning-20260920/val_loss.png)
+
+2026-09-20 실험 완료: **LR=1e-5, alpha=0.7, T=2**, 선택 checkpoint는 1 epoch / 765 step, test PPL **11.3531**. 같은 평가기의 기존 KD v3는 11.6836입니다. 단일 seed·소규모 한국어 Wikipedia 결과이며 일반 성능 향상을 보장하지 않습니다. 코드·로그·그림은 Git에 포함되지만 모델 가중치·데이터 캐시·인증 정보는 포함되지 않습니다.
+
 ---
 
 ## 목차

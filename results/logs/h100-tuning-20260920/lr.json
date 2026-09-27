@@ -1,0 +1,53 @@
+[
+  {
+    "name": "lr10e-6",
+    "learning_rate": 1e-05,
+    "alpha": 0.5,
+    "temperature": 2.0,
+    "best_validation": {
+      "ce": 2.0504416760867423,
+      "ppl": 7.771332760253563,
+      "tokens": 22185
+    },
+    "best_step": 765,
+    "best_epoch": 1.0,
+    "best_checkpoint": "/var/lib/kd-results/h100-tuning-20260920/trials/lr10e-6/best.pt",
+    "final_step": 1530,
+    "elapsed_seconds": 364.8448401509995,
+    "peak_memory_gb": 23.674553871154785
+  },
+  {
+    "name": "lr5e-6",
+    "learning_rate": 5e-06,
+    "alpha": 0.5,
+    "temperature": 2.0,
+    "best_validation": {
+      "ce": 2.051868345696082,
+      "ppl": 7.782427797120747,
+      "tokens": 22185
+    },
+    "best_step": 1530,
+    "best_epoch": 2.0,
+    "best_checkpoint": "/var/lib/kd-results/h100-tuning-20260920/trials/lr5e-6/best.pt",
+    "final_step": 1530,
+    "elapsed_seconds": 439.1589408359996,
+    "peak_memory_gb": 23.674553871154785
+  },
+  {
+    "name": "lr2e-6",
+    "learning_rate": 2e-06,
+    "alpha": 0.5,
+    "temperature": 2.0,
+    "best_validation": {
+      "ce": 2.063921771115055,
+      "ppl": 7.876800323683365,
+      "tokens": 22185
+    },
+    "best_step": 1530,
+    "best_epoch": 2.0,
+    "best_checkpoint": "/var/lib/kd-results/h100-tuning-20260920/trials/lr2e-6/best.pt",
+    "final_step": 1530,
+    "elapsed_seconds": 457.15111935500136,
+    "peak_memory_gb": 23.674553871154785
+  }
+]

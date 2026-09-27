@@ -1,0 +1,1212 @@
+{
+  "suite_id": "h100-tuning-20260920",
+  "status": "completed",
+  "completed": true,
+  "provisional": false,
+  "validation_only": false,
+  "selection_frozen": true,
+  "selection": {
+    "winner": {
+      "name": "alpha7",
+      "learning_rate": 1e-05,
+      "alpha": 0.7,
+      "temperature": 2.0,
+      "best_validation": {
+        "ce": 2.0310601431103152,
+        "ppl": 7.622162660235838,
+        "tokens": 22185
+      },
+      "best_step": 765,
+      "best_epoch": 1.0,
+      "best_checkpoint": "/var/lib/kd-results/h100-tuning-20260920/trials/alpha7/best.pt",
+      "final_step": 1530,
+      "elapsed_seconds": 362.2367411489995,
+      "peak_memory_gb": 23.674553871154785
+    },
+    "ce_control": {
+      "name": "ce_only_control",
+      "learning_rate": 1e-05,
+      "alpha": 1.0,
+      "temperature": 2.0,
+      "best_validation": {
+        "ce": 2.0788269084236606,
+        "ppl": 7.995084444737214,
+        "tokens": 22185
+      },
+      "best_step": 0,
+      "best_epoch": 0.0,
+      "best_checkpoint": "/var/lib/kd-results/qwen7b-4way/checkpoints/qwen7b-korean-4way-v1/student_ft_best.pt",
+      "final_step": 1530,
+      "elapsed_seconds": 226.19779697000013,
+      "peak_memory_gb": 9.447247982025146
+    },
+    "ce_at_kd_step": {
+      "ce": 2.092057818519604,
+      "ppl": 8.101569582467569,
+      "tokens": 22185
+    },
+    "ce_at_kd_checkpoint": "/var/lib/kd-results/h100-tuning-20260920/trials/ce_only_control/matched.pt",
+    "candidates": [
+      {
+        "name": "lr10e-6",
+        "learning_rate": 1e-05,
+        "alpha": 0.5,
+        "temperature": 2.0,
+        "best_validation": {
+          "ce": 2.0504416760867423,
+          "ppl": 7.771332760253563,
+          "tokens": 22185
+        },
+        "best_step": 765,
+        "best_epoch": 1.0,
+        "best_checkpoint": "/var/lib/kd-results/h100-tuning-20260920/trials/lr10e-6/best.pt",
+        "final_step": 1530,
+        "elapsed_seconds": 364.8448401509995,
+        "peak_memory_gb": 23.674553871154785
+      },
+      {
+        "name": "lr5e-6",
+        "learning_rate": 5e-06,
+        "alpha": 0.5,
+        "temperature": 2.0,
+        "best_validation": {
+          "ce": 2.051868345696082,
+          "ppl": 7.782427797120747,
+          "tokens": 22185
+        },
+        "best_step": 1530,
+        "best_epoch": 2.0,
+        "best_checkpoint": "/var/lib/kd-results/h100-tuning-20260920/trials/lr5e-6/best.pt",
+        "final_step": 1530,
+        "elapsed_seconds": 439.1589408359996,
+        "peak_memory_gb": 23.674553871154785
+      },
+      {
+        "name": "lr2e-6",
+        "learning_rate": 2e-06,
+        "alpha": 0.5,
+        "temperature": 2.0,
+        "best_validation": {
+          "ce": 2.063921771115055,
+          "ppl": 7.876800323683365,
+          "tokens": 22185
+        },
+        "best_step": 1530,
+        "best_epoch": 2.0,
+        "best_checkpoint": "/var/lib/kd-results/h100-tuning-20260920/trials/lr2e-6/best.pt",
+        "final_step": 1530,
+        "elapsed_seconds": 457.15111935500136,
+        "peak_memory_gb": 23.674553871154785
+      },
+      {
+        "name": "alpha3",
+        "learning_rate": 1e-05,
+        "alpha": 0.3,
+        "temperature": 2.0,
+        "best_validation": {
+          "ce": 2.0788269084236606,
+          "ppl": 7.995084444737214,
+          "tokens": 22185
+        },
+        "best_step": 0,
+        "best_epoch": 0.0,
+        "best_checkpoint": "/var/lib/kd-results/qwen7b-4way/checkpoints/qwen7b-korean-4way-v1/student_ft_best.pt",
+        "final_step": 1530,
+        "elapsed_seconds": 269.0654991269985,
+        "peak_memory_gb": 23.674553871154785
+      },
+      {
+        "name": "alpha7",
+        "learning_rate": 1e-05,
+        "alpha": 0.7,
+        "temperature": 2.0,
+        "best_validation": {
+          "ce": 2.0310601431103152,
+          "ppl": 7.622162660235838,
+          "tokens": 22185
+        },
+        "best_step": 765,
+        "best_epoch": 1.0,
+        "best_checkpoint": "/var/lib/kd-results/h100-tuning-20260920/trials/alpha7/best.pt",
+        "final_step": 1530,
+        "elapsed_seconds": 362.2367411489995,
+        "peak_memory_gb": 23.674553871154785
+      },
+      {
+        "name": "temperature1",
+        "learning_rate": 1e-05,
+        "alpha": 0.7,
+        "temperature": 1.0,
+        "best_validation": {
+          "ce": 2.0399741082732032,
+          "ppl": 7.690410078304519,
+          "tokens": 22185
+        },
+        "best_step": 765,
+        "best_epoch": 1.0,
+        "best_checkpoint": "/var/lib/kd-results/h100-tuning-20260920/trials/temperature1/best.pt",
+        "final_step": 1530,
+        "elapsed_seconds": 376.1936508359995,
+        "peak_memory_gb": 23.674553871154785
+      },
+      {
+        "name": "temperature4",
+        "learning_rate": 1e-05,
+        "alpha": 0.7,
+        "temperature": 4.0,
+        "best_validation": {
+          "ce": 2.074661947494964,
+          "ppl": 7.961854479193722,
+          "tokens": 22185
+        },
+        "best_step": 765,
+        "best_epoch": 1.0,
+        "best_checkpoint": "/var/lib/kd-results/h100-tuning-20260920/trials/temperature4/best.pt",
+        "final_step": 1530,
+        "elapsed_seconds": 272.27463509299923,
+        "peak_memory_gb": 23.674553871154785
+      }
+    ],
+    "test_used_for_selection": false
+  },
+  "selected_parameters": {
+    "name": "alpha7",
+    "learning_rate": 1e-05,
+    "alpha": 0.7,
+    "temperature": 2.0,
+    "best_validation": {
+      "ce": 2.0310601431103152,
+      "ppl": 7.622162660235838,
+      "tokens": 22185
+    },
+    "best_step": 765,
+    "best_epoch": 1.0,
+    "best_checkpoint": "/var/lib/kd-results/h100-tuning-20260920/trials/alpha7/best.pt",
+    "final_step": 1530,
+    "elapsed_seconds": 362.2367411489995,
+    "peak_memory_gb": 23.674553871154785
+  },
+  "initial_validation": {
+    "ce": 2.0788269084236606,
+    "ppl": 7.995084444737214,
+    "tokens": 22185
+  },
+  "completed_trials": 8,
+  "trials": [
+    {
+      "name": "alpha3",
+      "status": "completed",
+      "completed": true,
+      "history": [
+        {
+          "epoch": 0.0,
+          "step": 0,
+          "ce": 2.0788269084236606,
+          "ppl": 7.995084444737214,
+          "tokens": 22185,
+          "elapsed_seconds": 7.08840492499985
+        },
+        {
+          "epoch": 0.25098039215686274,
+          "step": 192,
+          "ce": 2.1250493453487715,
+          "ppl": 8.373310661868063,
+          "tokens": 22185,
+          "elapsed_seconds": 41.05455116399935
+        },
+        {
+          "epoch": 0.5019607843137255,
+          "step": 384,
+          "ce": 2.116320432121753,
+          "ppl": 8.300538831238917,
+          "tokens": 22185,
+          "elapsed_seconds": 73.27864490899992
+        },
+        {
+          "epoch": 0.7529411764705882,
+          "step": 576,
+          "ce": 2.1149401874727083,
+          "ppl": 8.289089959872213,
+          "tokens": 22185,
+          "elapsed_seconds": 105.62470949599992
+        },
+        {
+          "epoch": 1.0,
+          "step": 765,
+          "ce": 2.1058183492506197,
+          "ppl": 8.213822035073228,
+          "tokens": 22185,
+          "elapsed_seconds": 139.161082102999
+        },
+        {
+          "epoch": 1.2509803921568627,
+          "step": 957,
+          "ce": 2.1026000852758937,
+          "ppl": 8.187430278122026,
+          "tokens": 22185,
+          "elapsed_seconds": 171.89170948899846
+        },
+        {
+          "epoch": 1.5019607843137255,
+          "step": 1149,
+          "ce": 2.098654648697212,
+          "ppl": 8.15519093218574,
+          "tokens": 22185,
+          "elapsed_seconds": 204.47449188799874
+        },
+        {
+          "epoch": 1.7529411764705882,
+          "step": 1341,
+          "ce": 2.092717643361224,
+          "ppl": 8.106916963307542,
+          "tokens": 22185,
+          "elapsed_seconds": 237.01950130599835
+        },
+        {
+          "epoch": 2.0,
+          "step": 1530,
+          "ce": 2.091107217626634,
+          "ppl": 8.093871882487917,
+          "tokens": 22185,
+          "elapsed_seconds": 268.96744515799946
+        }
+      ],
+      "learning_rate": 1e-05,
+      "alpha": 0.3,
+      "temperature": 2.0,
+      "best_step": 0,
+      "best_epoch": 0.0,
+      "best_checkpoint": "/var/lib/kd-results/qwen7b-4way/checkpoints/qwen7b-korean-4way-v1/student_ft_best.pt",
+      "final_step": 1530,
+      "elapsed_seconds": 269.0654991269985,
+      "peak_memory_gb": 23.674553871154785,
+      "initial_validation": {
+        "ce": 2.0788269084236606,
+        "ppl": 7.995084444737214,
+        "tokens": 22185
+      },
+      "best_validation": {
+        "ce": 2.0788269084236606,
+        "ppl": 7.995084444737214,
+        "tokens": 22185
+      },
+      "final_validation": {
+        "ce": 2.091107217626634,
+        "ppl": 8.093871882487917,
+        "tokens": 22185
+      }
+    },
+    {
+      "name": "alpha7",
+      "status": "completed",
+      "completed": true,
+      "history": [
+        {
+          "epoch": 0.0,
+          "step": 0,
+          "ce": 2.0788269084236606,
+          "ppl": 7.995084444737214,
+          "tokens": 22185,
+          "elapsed_seconds": 7.080559053998513
+        },
+        {
+          "epoch": 0.25098039215686274,
+          "step": 192,
+          "ce": 2.050195953527334,
+          "ppl": 7.7694234030733735,
+          "tokens": 22185,
+          "elapsed_seconds": 43.10095331899902
+        },
+        {
+          "epoch": 0.5019607843137255,
+          "step": 384,
+          "ce": 2.0385563841590426,
+          "ppl": 7.679514923475472,
+          "tokens": 22185,
+          "elapsed_seconds": 124.26681280699995
+        },
+        {
+          "epoch": 0.7529411764705882,
+          "step": 576,
+          "ce": 2.033174547011019,
+          "ppl": 7.638296040927341,
+          "tokens": 22185,
+          "elapsed_seconds": 176.47479659799865
+        },
+        {
+          "epoch": 1.0,
+          "step": 765,
+          "ce": 2.0310601431103152,
+          "ppl": 7.622162660235838,
+          "tokens": 22185,
+          "elapsed_seconds": 233.36288513699947
+        },
+        {
+          "epoch": 1.2509803921568627,
+          "step": 957,
+          "ce": 2.0549294864430148,
+          "ppl": 7.8062874041366666,
+          "tokens": 22185,
+          "elapsed_seconds": 265.8354934589988
+        },
+        {
+          "epoch": 1.5019607843137255,
+          "step": 1149,
+          "ce": 2.061166064761258,
+          "ppl": 7.855124055416211,
+          "tokens": 22185,
+          "elapsed_seconds": 298.1735689779998
+        },
+        {
+          "epoch": 1.7529411764705882,
+          "step": 1341,
+          "ce": 2.060662265422512,
+          "ppl": 7.851167645813279,
+          "tokens": 22185,
+          "elapsed_seconds": 330.3954016919997
+        },
+        {
+          "epoch": 2.0,
+          "step": 1530,
+          "ce": 2.058580463126567,
+          "ppl": 7.83484006827342,
+          "tokens": 22185,
+          "elapsed_seconds": 362.1509919359996
+        }
+      ],
+      "learning_rate": 1e-05,
+      "alpha": 0.7,
+      "temperature": 2.0,
+      "best_step": 765,
+      "best_epoch": 1.0,
+      "best_checkpoint": "/var/lib/kd-results/h100-tuning-20260920/trials/alpha7/best.pt",
+      "final_step": 1530,
+      "elapsed_seconds": 362.2367411489995,
+      "peak_memory_gb": 23.674553871154785,
+      "initial_validation": {
+        "ce": 2.0788269084236606,
+        "ppl": 7.995084444737214,
+        "tokens": 22185
+      },
+      "best_validation": {
+        "ce": 2.0310601431103152,
+        "ppl": 7.622162660235838,
+        "tokens": 22185
+      },
+      "final_validation": {
+        "ce": 2.058580463126567,
+        "ppl": 7.83484006827342,
+        "tokens": 22185
+      }
+    },
+    {
+      "name": "ce_only_control",
+      "status": "completed",
+      "completed": true,
+      "history": [
+        {
+          "epoch": 0.0,
+          "step": 0,
+          "ce": 2.0788269084236606,
+          "ppl": 7.995084444737214,
+          "tokens": 22185,
+          "elapsed_seconds": 4.084254388999398
+        },
+        {
+          "epoch": 0.25098039215686274,
+          "step": 192,
+          "ce": 2.0922188401840174,
+          "ppl": 8.102874215720389,
+          "tokens": 22185,
+          "elapsed_seconds": 32.656883526000456
+        },
+        {
+          "epoch": 0.5019607843137255,
+          "step": 384,
+          "ce": 2.0845254983616113,
+          "ppl": 8.040775215343379,
+          "tokens": 22185,
+          "elapsed_seconds": 59.73340300000018
+        },
+        {
+          "epoch": 0.7529411764705882,
+          "step": 576,
+          "ce": 2.0899464959520087,
+          "ppl": 8.084482600188172,
+          "tokens": 22185,
+          "elapsed_seconds": 86.9425237129999
+        },
+        {
+          "epoch": 1.0,
+          "step": 765,
+          "ce": 2.092057818519604,
+          "ppl": 8.101569582467569,
+          "tokens": 22185,
+          "elapsed_seconds": 116.65347959099927
+        },
+        {
+          "epoch": 1.2509803921568627,
+          "step": 957,
+          "ce": 2.2134282515987715,
+          "ppl": 9.147020991698893,
+          "tokens": 22185,
+          "elapsed_seconds": 144.17559601299945
+        },
+        {
+          "epoch": 1.5019607843137255,
+          "step": 1149,
+          "ce": 2.2115404962553,
+          "ppl": 9.129769941948654,
+          "tokens": 22185,
+          "elapsed_seconds": 171.7970579849989
+        },
+        {
+          "epoch": 1.7529411764705882,
+          "step": 1341,
+          "ce": 2.212500247607125,
+          "ppl": 9.138536457156782,
+          "tokens": 22185,
+          "elapsed_seconds": 199.1425658349999
+        },
+        {
+          "epoch": 2.0,
+          "step": 1530,
+          "ce": 2.2225524971123507,
+          "ppl": 9.230862570858145,
+          "tokens": 22185,
+          "elapsed_seconds": 226.1059226159996
+        }
+      ],
+      "learning_rate": 1e-05,
+      "alpha": 1.0,
+      "temperature": 2.0,
+      "best_step": 0,
+      "best_epoch": 0.0,
+      "best_checkpoint": "/var/lib/kd-results/qwen7b-4way/checkpoints/qwen7b-korean-4way-v1/student_ft_best.pt",
+      "final_step": 1530,
+      "elapsed_seconds": 226.19779697000013,
+      "peak_memory_gb": 9.447247982025146,
+      "initial_validation": {
+        "ce": 2.0788269084236606,
+        "ppl": 7.995084444737214,
+        "tokens": 22185
+      },
+      "best_validation": {
+        "ce": 2.0788269084236606,
+        "ppl": 7.995084444737214,
+        "tokens": 22185
+      },
+      "final_validation": {
+        "ce": 2.2225524971123507,
+        "ppl": 9.230862570858145,
+        "tokens": 22185
+      }
+    },
+    {
+      "name": "lr10e-6",
+      "status": "completed",
+      "completed": true,
+      "history": [
+        {
+          "epoch": 0.0,
+          "step": 0,
+          "ce": 2.0788269084236606,
+          "ppl": 7.995084444737214,
+          "tokens": 22185,
+          "elapsed_seconds": 7.038026845000786
+        },
+        {
+          "epoch": 0.25098039215686274,
+          "step": 192,
+          "ce": 2.073123927586031,
+          "ppl": 7.9496184005709996,
+          "tokens": 22185,
+          "elapsed_seconds": 42.53533714399964
+        },
+        {
+          "epoch": 0.5019607843137255,
+          "step": 384,
+          "ce": 2.0601542031144353,
+          "ppl": 7.847179776586851,
+          "tokens": 22185,
+          "elapsed_seconds": 119.76930196399917
+        },
+        {
+          "epoch": 0.7529411764705882,
+          "step": 576,
+          "ce": 2.0573802563691155,
+          "ppl": 7.825442281051913,
+          "tokens": 22185,
+          "elapsed_seconds": 177.9048019589991
+        },
+        {
+          "epoch": 1.0,
+          "step": 765,
+          "ce": 2.0504416760867423,
+          "ppl": 7.771332760253563,
+          "tokens": 22185,
+          "elapsed_seconds": 237.506628051
+        },
+        {
+          "epoch": 1.2509803921568627,
+          "step": 957,
+          "ce": 2.061960829983484,
+          "ppl": 7.861369516340551,
+          "tokens": 22185,
+          "elapsed_seconds": 269.7353460409995
+        },
+        {
+          "epoch": 1.5019607843137255,
+          "step": 1149,
+          "ce": 2.0628286365563198,
+          "ppl": 7.868194625487283,
+          "tokens": 22185,
+          "elapsed_seconds": 301.48573481399944
+        },
+        {
+          "epoch": 1.7529411764705882,
+          "step": 1341,
+          "ce": 2.0611878706953775,
+          "ppl": 7.8552953456014265,
+          "tokens": 22185,
+          "elapsed_seconds": 333.3242531929991
+        },
+        {
+          "epoch": 2.0,
+          "step": 1530,
+          "ce": 2.05770633706967,
+          "ppl": 7.8279944228325435,
+          "tokens": 22185,
+          "elapsed_seconds": 364.73268432400073
+        }
+      ],
+      "learning_rate": 1e-05,
+      "alpha": 0.5,
+      "temperature": 2.0,
+      "best_step": 765,
+      "best_epoch": 1.0,
+      "best_checkpoint": "/var/lib/kd-results/h100-tuning-20260920/trials/lr10e-6/best.pt",
+      "final_step": 1530,
+      "elapsed_seconds": 364.8448401509995,
+      "peak_memory_gb": 23.674553871154785,
+      "initial_validation": {
+        "ce": 2.0788269084236606,
+        "ppl": 7.995084444737214,
+        "tokens": 22185
+      },
+      "best_validation": {
+        "ce": 2.0504416760867423,
+        "ppl": 7.771332760253563,
+        "tokens": 22185
+      },
+      "final_validation": {
+        "ce": 2.05770633706967,
+        "ppl": 7.8279944228325435,
+        "tokens": 22185
+      }
+    },
+    {
+      "name": "lr2e-6",
+      "status": "completed",
+      "completed": true,
+      "history": [
+        {
+          "epoch": 0.0,
+          "step": 0,
+          "ce": 2.0788269084236606,
+          "ppl": 7.995084444737214,
+          "tokens": 22185,
+          "elapsed_seconds": 7.063609170001655
+        },
+        {
+          "epoch": 0.25098039215686274,
+          "step": 192,
+          "ce": 2.0678262520997084,
+          "ppl": 7.907615259785399,
+          "tokens": 22185,
+          "elapsed_seconds": 42.824426864001
+        },
+        {
+          "epoch": 0.5019607843137255,
+          "step": 384,
+          "ce": 2.066835054643041,
+          "ppl": 7.899781134875339,
+          "tokens": 22185,
+          "elapsed_seconds": 128.68246042900137
+        },
+        {
+          "epoch": 0.7529411764705882,
+          "step": 576,
+          "ce": 2.0663202134021263,
+          "ppl": 7.895715048537188,
+          "tokens": 22185,
+          "elapsed_seconds": 182.09369920300014
+        },
+        {
+          "epoch": 1.0,
+          "step": 765,
+          "ce": 2.065888422342042,
+          "ppl": 7.892306485312778,
+          "tokens": 22185,
+          "elapsed_seconds": 236.07768066600147
+        },
+        {
+          "epoch": 1.2509803921568627,
+          "step": 957,
+          "ce": 2.0655094390036908,
+          "ppl": 7.889315999361652,
+          "tokens": 22185,
+          "elapsed_seconds": 289.021664928001
+        },
+        {
+          "epoch": 1.5019607843137255,
+          "step": 1149,
+          "ce": 2.0654672467496336,
+          "ppl": 7.888983138358796,
+          "tokens": 22185,
+          "elapsed_seconds": 341.28344082700096
+        },
+        {
+          "epoch": 1.7529411764705882,
+          "step": 1341,
+          "ce": 2.0641065190443992,
+          "ppl": 7.878255680665978,
+          "tokens": 22185,
+          "elapsed_seconds": 396.61317958100153
+        },
+        {
+          "epoch": 2.0,
+          "step": 1530,
+          "ce": 2.063921771115055,
+          "ppl": 7.876800323683365,
+          "tokens": 22185,
+          "elapsed_seconds": 457.0540797500016
+        }
+      ],
+      "learning_rate": 2e-06,
+      "alpha": 0.5,
+      "temperature": 2.0,
+      "best_step": 1530,
+      "best_epoch": 2.0,
+      "best_checkpoint": "/var/lib/kd-results/h100-tuning-20260920/trials/lr2e-6/best.pt",
+      "final_step": 1530,
+      "elapsed_seconds": 457.15111935500136,
+      "peak_memory_gb": 23.674553871154785,
+      "initial_validation": {
+        "ce": 2.0788269084236606,
+        "ppl": 7.995084444737214,
+        "tokens": 22185
+      },
+      "best_validation": {
+        "ce": 2.063921771115055,
+        "ppl": 7.876800323683365,
+        "tokens": 22185
+      },
+      "final_validation": {
+        "ce": 2.063921771115055,
+        "ppl": 7.876800323683365,
+        "tokens": 22185
+      }
+    },
+    {
+      "name": "lr5e-6",
+      "status": "completed",
+      "completed": true,
+      "history": [
+        {
+          "epoch": 0.0,
+          "step": 0,
+          "ce": 2.0788269084236606,
+          "ppl": 7.995084444737214,
+          "tokens": 22185,
+          "elapsed_seconds": 7.009011127998747
+        },
+        {
+          "epoch": 0.25098039215686274,
+          "step": 192,
+          "ce": 2.068921289106519,
+          "ppl": 7.916279133896131,
+          "tokens": 22185,
+          "elapsed_seconds": 42.68267502100025
+        },
+        {
+          "epoch": 0.5019607843137255,
+          "step": 384,
+          "ce": 2.066427702406169,
+          "ppl": 7.896563796698688,
+          "tokens": 22185,
+          "elapsed_seconds": 122.42208342999947
+        },
+        {
+          "epoch": 0.7529411764705882,
+          "step": 576,
+          "ce": 2.0614974497566627,
+          "ppl": 7.857727557022076,
+          "tokens": 22185,
+          "elapsed_seconds": 174.09348125699944
+        },
+        {
+          "epoch": 1.0,
+          "step": 765,
+          "ce": 2.056617470982646,
+          "ppl": 7.819475424042245,
+          "tokens": 22185,
+          "elapsed_seconds": 229.26665058300023
+        },
+        {
+          "epoch": 1.2509803921568627,
+          "step": 957,
+          "ce": 2.0583226889781594,
+          "ppl": 7.832820709327359,
+          "tokens": 22185,
+          "elapsed_seconds": 261.7084858299986
+        },
+        {
+          "epoch": 1.5019607843137255,
+          "step": 1149,
+          "ce": 2.0562916984154023,
+          "ppl": 7.816928468345529,
+          "tokens": 22185,
+          "elapsed_seconds": 319.10664326000006
+        },
+        {
+          "epoch": 1.7529411764705882,
+          "step": 1341,
+          "ce": 2.054779590592074,
+          "ppl": 7.805117361737975,
+          "tokens": 22185,
+          "elapsed_seconds": 378.4449350759987
+        },
+        {
+          "epoch": 2.0,
+          "step": 1530,
+          "ce": 2.051868345696082,
+          "ppl": 7.782427797120747,
+          "tokens": 22185,
+          "elapsed_seconds": 439.0567586750003
+        }
+      ],
+      "learning_rate": 5e-06,
+      "alpha": 0.5,
+      "temperature": 2.0,
+      "best_step": 1530,
+      "best_epoch": 2.0,
+      "best_checkpoint": "/var/lib/kd-results/h100-tuning-20260920/trials/lr5e-6/best.pt",
+      "final_step": 1530,
+      "elapsed_seconds": 439.1589408359996,
+      "peak_memory_gb": 23.674553871154785,
+      "initial_validation": {
+        "ce": 2.0788269084236606,
+        "ppl": 7.995084444737214,
+        "tokens": 22185
+      },
+      "best_validation": {
+        "ce": 2.051868345696082,
+        "ppl": 7.782427797120747,
+        "tokens": 22185
+      },
+      "final_validation": {
+        "ce": 2.051868345696082,
+        "ppl": 7.782427797120747,
+        "tokens": 22185
+      }
+    },
+    {
+      "name": "temperature1",
+      "status": "completed",
+      "completed": true,
+      "history": [
+        {
+          "epoch": 0.0,
+          "step": 0,
+          "ce": 2.0788269084236606,
+          "ppl": 7.995084444737214,
+          "tokens": 22185,
+          "elapsed_seconds": 7.109876283000631
+        },
+        {
+          "epoch": 0.25098039215686274,
+          "step": 192,
+          "ce": 2.0565828458774402,
+          "ppl": 7.819204678570356,
+          "tokens": 22185,
+          "elapsed_seconds": 43.049904945999515
+        },
+        {
+          "epoch": 0.5019607843137255,
+          "step": 384,
+          "ce": 2.041581239457439,
+          "ppl": 7.702779513150773,
+          "tokens": 22185,
+          "elapsed_seconds": 136.87734338700102
+        },
+        {
+          "epoch": 0.7529411764705882,
+          "step": 576,
+          "ce": 2.040692489448635,
+          "ppl": 7.695936709012177,
+          "tokens": 22185,
+          "elapsed_seconds": 188.61977851099982
+        },
+        {
+          "epoch": 1.0,
+          "step": 765,
+          "ce": 2.0399741082732032,
+          "ppl": 7.690410078304519,
+          "tokens": 22185,
+          "elapsed_seconds": 247.31676974699985
+        },
+        {
+          "epoch": 1.2509803921568627,
+          "step": 957,
+          "ce": 2.0862678863133346,
+          "ppl": 8.054797577851295,
+          "tokens": 22185,
+          "elapsed_seconds": 279.75800499400066
+        },
+        {
+          "epoch": 1.5019607843137255,
+          "step": 1149,
+          "ce": 2.0897556651409666,
+          "ppl": 8.082939979011229,
+          "tokens": 22185,
+          "elapsed_seconds": 312.0761679879997
+        },
+        {
+          "epoch": 1.7529411764705882,
+          "step": 1341,
+          "ce": 2.0912771173820643,
+          "ppl": 8.09524714616641,
+          "tokens": 22185,
+          "elapsed_seconds": 344.4115169830002
+        },
+        {
+          "epoch": 2.0,
+          "step": 1530,
+          "ce": 2.094098220904292,
+          "ppl": 8.118116920236192,
+          "tokens": 22185,
+          "elapsed_seconds": 376.0860169890002
+        }
+      ],
+      "learning_rate": 1e-05,
+      "alpha": 0.7,
+      "temperature": 1.0,
+      "best_step": 765,
+      "best_epoch": 1.0,
+      "best_checkpoint": "/var/lib/kd-results/h100-tuning-20260920/trials/temperature1/best.pt",
+      "final_step": 1530,
+      "elapsed_seconds": 376.1936508359995,
+      "peak_memory_gb": 23.674553871154785,
+      "initial_validation": {
+        "ce": 2.0788269084236606,
+        "ppl": 7.995084444737214,
+        "tokens": 22185
+      },
+      "best_validation": {
+        "ce": 2.0399741082732032,
+        "ppl": 7.690410078304519,
+        "tokens": 22185
+      },
+      "final_validation": {
+        "ce": 2.094098220904292,
+        "ppl": 8.118116920236192,
+        "tokens": 22185
+      }
+    },
+    {
+      "name": "temperature4",
+      "status": "completed",
+      "completed": true,
+      "history": [
+        {
+          "epoch": 0.0,
+          "step": 0,
+          "ce": 2.0788269084236606,
+          "ppl": 7.995084444737214,
+          "tokens": 22185,
+          "elapsed_seconds": 7.185680208000122
+        },
+        {
+          "epoch": 0.25098039215686274,
+          "step": 192,
+          "ce": 2.10639072750935,
+          "ppl": 8.218524793977267,
+          "tokens": 22185,
+          "elapsed_seconds": 41.44587413900081
+        },
+        {
+          "epoch": 0.5019607843137255,
+          "step": 384,
+          "ce": 2.0878069241626696,
+          "ppl": 8.067203760535884,
+          "tokens": 22185,
+          "elapsed_seconds": 73.93142566200004
+        },
+        {
+          "epoch": 0.7529411764705882,
+          "step": 576,
+          "ce": 2.0811829122251453,
+          "ppl": 8.013943100891689,
+          "tokens": 22185,
+          "elapsed_seconds": 106.34249535500021
+        },
+        {
+          "epoch": 1.0,
+          "step": 765,
+          "ce": 2.074661947494964,
+          "ppl": 7.961854479193722,
+          "tokens": 22185,
+          "elapsed_seconds": 141.68571575600072
+        },
+        {
+          "epoch": 1.2509803921568627,
+          "step": 957,
+          "ce": 2.110245740717264,
+          "ppl": 8.250268462425973,
+          "tokens": 22185,
+          "elapsed_seconds": 174.37885587500023
+        },
+        {
+          "epoch": 1.5019607843137255,
+          "step": 1149,
+          "ce": 2.121471858459844,
+          "ppl": 8.343408771460146,
+          "tokens": 22185,
+          "elapsed_seconds": 207.60458559499966
+        },
+        {
+          "epoch": 1.7529411764705882,
+          "step": 1341,
+          "ce": 2.119395829536691,
+          "ppl": 8.326105580709712,
+          "tokens": 22185,
+          "elapsed_seconds": 240.17714702100056
+        },
+        {
+          "epoch": 2.0,
+          "step": 1530,
+          "ce": 2.119817603512984,
+          "ppl": 8.329618056050798,
+          "tokens": 22185,
+          "elapsed_seconds": 272.15880406699944
+        }
+      ],
+      "learning_rate": 1e-05,
+      "alpha": 0.7,
+      "temperature": 4.0,
+      "best_step": 765,
+      "best_epoch": 1.0,
+      "best_checkpoint": "/var/lib/kd-results/h100-tuning-20260920/trials/temperature4/best.pt",
+      "final_step": 1530,
+      "elapsed_seconds": 272.27463509299923,
+      "peak_memory_gb": 23.674553871154785,
+      "initial_validation": {
+        "ce": 2.0788269084236606,
+        "ppl": 7.995084444737214,
+        "tokens": 22185
+      },
+      "best_validation": {
+        "ce": 2.074661947494964,
+        "ppl": 7.961854479193722,
+        "tokens": 22185
+      },
+      "final_validation": {
+        "ce": 2.119817603512984,
+        "ppl": 8.329618056050798,
+        "tokens": 22185
+      }
+    }
+  ],
+  "evaluation_results": [
+    {
+      "name": "student_ft_initial",
+      "perplexity": 11.814911107554344,
+      "avg_loss": 2.4693623869164796,
+      "tokens": 35955
+    },
+    {
+      "name": "student_kd_v3_reference",
+      "perplexity": 11.683635576914197,
+      "avg_loss": 2.4581891941138987,
+      "tokens": 35955
+    },
+    {
+      "name": "student_kd_selected",
+      "perplexity": 11.353113405876357,
+      "avg_loss": 2.429492015199392,
+      "tokens": 35955
+    },
+    {
+      "name": "student_ce_control_best",
+      "perplexity": 11.814911107554344,
+      "avg_loss": 2.4693623869164796,
+      "tokens": 35955
+    },
+    {
+      "name": "student_ce_at_kd_step",
+      "perplexity": 12.06861904233821,
+      "avg_loss": 2.490608616164357,
+      "tokens": 35955
+    }
+  ],
+  "manifest": {
+    "base_config": {
+      "teacher_model": "Qwen/Qwen2.5-7B",
+      "student_model": "Qwen/Qwen2.5-1.5B",
+      "dataset_name": "wikimedia/wikipedia",
+      "dataset_config": "20231101.ko",
+      "dataset_revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "dataset_text_column": "text",
+      "dataset_streaming": true,
+      "dataset_max_samples": 1000,
+      "dataset_shuffle_buffer": 10000,
+      "validation_ratio": 0.05,
+      "test_ratio": 0.05,
+      "max_seq_length": 256,
+      "temperature": 2.0,
+      "alpha": 0.5,
+      "kd_vocab_size": 0,
+      "kd_reduction": "tokenmean",
+      "kd_divergence": "reverse_kl",
+      "teacher_epochs": 3,
+      "teacher_learning_rate": 2e-05,
+      "teacher_checkpoint": "/var/lib/kd-results/qwen7b-4way/checkpoints/qwen7b-korean-4way-v1/teacher_ft_best_adapter",
+      "teacher_lora_rank": 16,
+      "teacher_lora_alpha": 32,
+      "teacher_lora_dropout": 0.05,
+      "teacher_lora_target_modules": [
+        "q_proj",
+        "k_proj",
+        "v_proj",
+        "o_proj"
+      ],
+      "epochs": 2,
+      "batch_size": 2,
+      "max_train_steps": 0,
+      "max_eval_steps": 0,
+      "learning_rate": 1e-05,
+      "weight_decay": 0.01,
+      "warmup_steps": 100,
+      "gradient_clip": 1.0,
+      "optimizer": "adafactor",
+      "gradient_checkpointing": false,
+      "distill_student_checkpoint": "/var/lib/kd-results/qwen7b-4way/checkpoints/qwen7b-korean-4way-v1/student_ft_best.pt",
+      "early_stopping_patience": 0,
+      "early_stopping_min_delta": 0.0,
+      "output_dir": "/var/lib/kd-results/h100-tuning-20260920",
+      "run_id": "validation-sweep",
+      "device": "cuda:0",
+      "teacher_device": "cuda:0",
+      "seed": 42,
+      "num_workers": 4,
+      "fp16": false,
+      "bf16": true
+    },
+    "training_seed": 42,
+    "validation_checks_per_epoch": 4,
+    "selection_metric": "validation token-weighted FP32 CE",
+    "vocabulary_size": 151665,
+    "splits": {
+      "train": {
+        "blocks": 1529,
+        "input_ids_sha256": "3bb106601baff2434d26ab8370afd04ec5ad697db08aa1b044f072449e418a8f"
+      },
+      "validation": {
+        "blocks": 87,
+        "input_ids_sha256": "590feca74414013ccb5def68a08e980c5192af011329093b115328cc4dae4c4a"
+      },
+      "test": {
+        "blocks": 141,
+        "input_ids_sha256": "b6571dfb62fe35abd0984c84397a609aadfd9b9d85343a2768a908a7ad4e9de4"
+      }
+    },
+    "initial_ft_sha256": "23a07d381f66e5af736d21a15a2455ae9e200a08ad4813ed9b8f79980cde611d",
+    "teacher_adapter_sha256": "7caf2ce3a69f7296a0421814aeac1605472123388fc861d31b0a7b2c9cc319f4",
+    "versions": {
+      "torch": "2.11.0+cu128",
+      "transformers": "4.55.4",
+      "datasets": "3.6.0",
+      "peft": "0.20.0",
+      "accelerate": "1.14.0",
+      "numpy": "2.5.2"
+    },
+    "source_sha256": {
+      "src/h100_tuning.py": "210112eeded345a63913ccd1e73f3ac36c9773f6f8ef1f2ca457d597cfb41a4e",
+      "src/distill.py": "6e91181e2ed595b20a6f7644ffaa863ad157421978df7ee4b4fbb7b4d7dfeb80",
+      "scripts/tune_h100.py": "f08802b0ca5eba3583afc277d3fbb668d8fdbd2ad5684e97ec3aed8f19cb7d5a"
+    },
+    "gpu": "NVIDIA H100 NVL",
+    "note": "Old H100 training RNG was not fixed; this is a new controlled comparison."
+  },
+  "limitations": [
+    "Selection uses validation only; test is never used to rank candidates.",
+    "Validation CE is token-weighted FP32 next-token cross-entropy, not training loss.",
+    "Training loss and inference speed were not measured in these artifacts; no train-loss or inference-speed figures are generated.",
+    "Observed elapsed time includes model loading, validation, and checkpoint saving; it is not pure training time or inference speed. Incomplete trials show only the last recorded elapsed time, not a live duration.",
+    "Single training seed and small Wikipedia holdout: not a general capability benchmark.",
+    "Artifact status does not prove a training process is currently alive.",
+    "Single training seed, small Wikipedia holdout; not a general capability benchmark."
+  ],
+  "warnings": [],
+  "sources": [
+    "alpha.json",
+    "initial_validation.json",
+    "lr.json",
+    "manifest.json",
+    "plans/alpha3.json",
+    "plans/alpha7.json",
+    "plans/ce_only_control.json",
+    "plans/lr10e-6.json",
+    "plans/lr2e-6.json",
+    "plans/lr5e-6.json",
+    "plans/temperature1.json",
+    "plans/temperature4.json",
+    "selection.json",
+    "temperature.json",
+    "test_results.json",
+    "trials/alpha3/config.json",
+    "trials/alpha3/result.json",
+    "trials/alpha3/validation_history.json",
+    "trials/alpha7/config.json",
+    "trials/alpha7/result.json",
+    "trials/alpha7/validation_history.json",
+    "trials/ce_only_control/config.json",
+    "trials/ce_only_control/result.json",
+    "trials/ce_only_control/validation_history.json",
+    "trials/lr10e-6/config.json",
+    "trials/lr10e-6/result.json",
+    "trials/lr10e-6/validation_history.json",
+    "trials/lr2e-6/config.json",
+    "trials/lr2e-6/result.json",
+    "trials/lr2e-6/validation_history.json",
+    "trials/lr5e-6/config.json",
+    "trials/lr5e-6/result.json",
+    "trials/lr5e-6/validation_history.json",
+    "trials/temperature1/config.json",
+    "trials/temperature1/result.json",
+    "trials/temperature1/validation_history.json",
+    "trials/temperature4/config.json",
+    "trials/temperature4/result.json",
+    "trials/temperature4/validation_history.json"
+  ],
+  "files": {
+    "summary.json": "/Users/hongyoonpyo/project/knowledge-distillation/results/logs/h100-tuning-20260920/summary.json",
+    "parameter_search.csv": "/Users/hongyoonpyo/project/knowledge-distillation/results/logs/h100-tuning-20260920/parameter_search.csv",
+    "distill_history.json": "/Users/hongyoonpyo/project/knowledge-distillation/results/logs/h100-tuning-20260920/distill_history.json",
+    "baseline_history.json": "/Users/hongyoonpyo/project/knowledge-distillation/results/logs/h100-tuning-20260920/baseline_history.json",
+    "notes.md": "/Users/hongyoonpyo/project/knowledge-distillation/results/logs/h100-tuning-20260920/notes.md",
+    "report.md": "/Users/hongyoonpyo/project/knowledge-distillation/results/logs/h100-tuning-20260920/report.md",
+    "val_loss.png": "/Users/hongyoonpyo/project/knowledge-distillation/results/figures/h100-tuning-20260920/val_loss.png",
+    "parameter_search.png": "/Users/hongyoonpyo/project/knowledge-distillation/results/figures/h100-tuning-20260920/parameter_search.png",
+    "training_time.png": "/Users/hongyoonpyo/project/knowledge-distillation/results/figures/h100-tuning-20260920/training_time.png",
+    "perplexity_comparison.png": "/Users/hongyoonpyo/project/knowledge-distillation/results/figures/h100-tuning-20260920/perplexity_comparison.png",
+    "evaluation_results.json": "/Users/hongyoonpyo/project/knowledge-distillation/results/logs/h100-tuning-20260920/evaluation_results.json"
+  },
+  "figures": {
+    "val_loss.png": "/Users/hongyoonpyo/project/knowledge-distillation/results/figures/h100-tuning-20260920/val_loss.png",
+    "parameter_search.png": "/Users/hongyoonpyo/project/knowledge-distillation/results/figures/h100-tuning-20260920/parameter_search.png",
+    "training_time.png": "/Users/hongyoonpyo/project/knowledge-distillation/results/figures/h100-tuning-20260920/training_time.png",
+    "perplexity_comparison.png": "/Users/hongyoonpyo/project/knowledge-distillation/results/figures/h100-tuning-20260920/perplexity_comparison.png"
+  }
+}

@@ -1,0 +1,25 @@
+FULL_MODEL_SMOKE already completed
+START lr10e-6: lr=1e-05 alpha=0.5 T=2.0
+DONE lr10e-6: best_ce=2.050442 best_step=765 epoch=1.000 seconds=364.8 peak_GiB=23.67
+START lr5e-6: lr=5e-06 alpha=0.5 T=2.0
+DONE lr5e-6: best_ce=2.051868 best_step=1530 epoch=2.000 seconds=439.2 peak_GiB=23.67
+START lr2e-6: lr=2e-06 alpha=0.5 T=2.0
+DONE lr2e-6: best_ce=2.063922 best_step=1530 epoch=2.000 seconds=457.2 peak_GiB=23.67
+PHASE_WINNER {"name": "lr10e-6", "learning_rate": 1e-05, "alpha": 0.5, "temperature": 2.0, "best_validation": {"ce": 2.0504416760867423, "ppl": 7.771332760253563, "tokens": 22185}, "best_step": 765, "best_epoch": 1.0, "best_checkpoint": "/var/lib/kd-results/h100-tuning-20260920/trials/lr10e-6/best.pt", "final_step": 1530, "elapsed_seconds": 364.8448401509995, "peak_memory_gb": 23.674553871154785}
+START alpha3: lr=1e-05 alpha=0.3 T=2.0
+DONE alpha3: best_ce=2.078827 best_step=0 epoch=0.000 seconds=269.1 peak_GiB=23.67
+START alpha7: lr=1e-05 alpha=0.7 T=2.0
+DONE alpha7: best_ce=2.031060 best_step=765 epoch=1.000 seconds=362.2 peak_GiB=23.67
+PHASE_WINNER {"name": "alpha7", "learning_rate": 1e-05, "alpha": 0.7, "temperature": 2.0, "best_validation": {"ce": 2.0310601431103152, "ppl": 7.622162660235838, "tokens": 22185}, "best_step": 765, "best_epoch": 1.0, "best_checkpoint": "/var/lib/kd-results/h100-tuning-20260920/trials/alpha7/best.pt", "final_step": 1530, "elapsed_seconds": 362.2367411489995, "peak_memory_gb": 23.674553871154785}
+START temperature1: lr=1e-05 alpha=0.7 T=1.0
+DONE temperature1: best_ce=2.039974 best_step=765 epoch=1.000 seconds=376.2 peak_GiB=23.67
+START temperature4: lr=1e-05 alpha=0.7 T=4.0
+DONE temperature4: best_ce=2.074662 best_step=765 epoch=1.000 seconds=272.3 peak_GiB=23.67
+PHASE_WINNER {"name": "alpha7", "learning_rate": 1e-05, "alpha": 0.7, "temperature": 2.0, "best_validation": {"ce": 2.0310601431103152, "ppl": 7.622162660235838, "tokens": 22185}, "best_step": 765, "best_epoch": 1.0, "best_checkpoint": "/var/lib/kd-results/h100-tuning-20260920/trials/alpha7/best.pt", "final_step": 1530, "elapsed_seconds": 362.2367411489995, "peak_memory_gb": 23.674553871154785}
+START ce_only_control: lr=1e-05 alpha=1.0 T=2.0
+DONE ce_only_control: best_ce=2.078827 best_step=0 epoch=0.000 seconds=226.2 peak_GiB=9.45
+FINAL_TEST student_ft_initial: {"ce": 2.4693623869164796, "ppl": 11.814911107554344, "tokens": 35955}
+FINAL_TEST student_kd_v3_reference: {"ce": 2.4581891941138987, "ppl": 11.683635576914197, "tokens": 35955}
+FINAL_TEST student_kd_selected: {"ce": 2.429492015199392, "ppl": 11.353113405876357, "tokens": 35955}
+FINAL_TEST student_ce_control_best: {"ce": 2.4693623869164796, "ppl": 11.814911107554344, "tokens": 35955}
+FINAL_TEST student_ce_at_kd_step: {"ce": 2.490608616164357, "ppl": 12.06861904233821, "tokens": 35955}

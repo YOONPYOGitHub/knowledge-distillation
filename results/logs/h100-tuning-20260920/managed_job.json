@@ -1,0 +1,9 @@
+{
+  "name": "kd-tuning-20260920-064348-ae3213",
+  "phase": "all",
+  "vm_name": "vm-test-100",
+  "resource_group": "rg-ai",
+  "subscription": "66679423-9d1a-4f45-8ae3-3078b8b62e99",
+  "location": "koreacentral",
+  "remote_log": "/var/lib/kd-results/h100-tuning-20260920/runner-logs/kd-tuning-20260920-064348-ae3213.log"
+}
