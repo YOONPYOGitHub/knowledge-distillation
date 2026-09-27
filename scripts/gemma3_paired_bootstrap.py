@@ -7,9 +7,11 @@ evaluate 단계는 test split 전체의 PPL 한 값만 낸다. 두 Student 의 P
 PPL 차이의 분포를 만든다. 두 모델이 같은 chunk 를 보므로(paired) chunk 난이도 차이는 상쇄된다.
 
 사용법:
-    python scripts/gemma3_paired_bootstrap.py [config.yaml] [resamples]
+    python scripts/gemma3_paired_bootstrap.py [config.yaml] [resamples] [set]
 
-결과: results/gemma3/logs/<run_id>/paired_bootstrap.json
+set: v3 (기본, top-K vs full-vocab), ablation (초기값 × divergence 2×2),
+     run (config 의 run_id 하나에서 Base / FT / KD).
+결과: results/gemma3/logs/<run_id>/paired_bootstrap.json (ablation 은 paired_bootstrap_ablation.json)
 """
 
 import json
@@ -32,20 +34,65 @@ from src.models import model_dtype_kwargs
 CHECKPOINTS = Path("results/gemma3/checkpoints")
 
 # (이름, 체크포인트). None 이면 pretrained Student.
-MODELS = [
+BASE_MODELS = [
     ("Student (Base)", None),
     ("Student (FT)", CHECKPOINTS / "gemma3-12b-1b-v3" / "student_ft_best.pt"),
-    ("Student (KD, top-K 128)", CHECKPOINTS / "gemma3-12b-1b-v3" / "student_kd_best.pt"),
-    ("Student (KD, full-vocab)", CHECKPOINTS / "gemma3-12b-1b-v3-fullvocab" / "student_kd_best.pt"),
 ]
 
 # (A, B): PPL(A) - PPL(B) 가 음수면 A 가 낫다.
-PAIRS = [
-    ("Student (KD, top-K 128)", "Student (FT)"),
-    ("Student (KD, full-vocab)", "Student (FT)"),
-    ("Student (KD, top-K 128)", "Student (KD, full-vocab)"),
-    ("Student (FT)", "Student (Base)"),
-]
+SETS = {
+    "v3": (
+        BASE_MODELS + [
+            ("Student (KD, top-K 128)", CHECKPOINTS / "gemma3-12b-1b-v3" / "student_kd_best.pt"),
+            ("Student (KD, full-vocab)", CHECKPOINTS / "gemma3-12b-1b-v3-fullvocab" / "student_kd_best.pt"),
+        ],
+        [
+            ("Student (KD, top-K 128)", "Student (FT)"),
+            ("Student (KD, full-vocab)", "Student (FT)"),
+            ("Student (KD, top-K 128)", "Student (KD, full-vocab)"),
+            ("Student (FT)", "Student (Base)"),
+        ],
+    ),
+    # 초기값(FT/Base) × divergence(reverse/forward). 모두 top-K 128.
+    "ablation": (
+        BASE_MODELS + [
+            ("KD FT+rev (v3)", CHECKPOINTS / "gemma3-12b-1b-v3" / "student_kd_best.pt"),
+            ("KD FT+fwd", CHECKPOINTS / "gemma3-12b-1b-v3-abl-ft-fwd" / "student_kd_best.pt"),
+            ("KD Base+rev", CHECKPOINTS / "gemma3-12b-1b-v3-abl-base-rev" / "student_kd_best.pt"),
+            ("KD Base+fwd", CHECKPOINTS / "gemma3-12b-1b-v3-abl-base-fwd" / "student_kd_best.pt"),
+        ],
+        [
+            # divergence 효과 (초기값 고정)
+            ("KD FT+rev (v3)", "KD FT+fwd"),
+            ("KD Base+rev", "KD Base+fwd"),
+            # 초기화 효과 (divergence 고정)
+            ("KD FT+rev (v3)", "KD Base+rev"),
+            ("KD FT+fwd", "KD Base+fwd"),
+            # Base 에서 시작한 KD 가 Base 에서 시작한 SFT 를 이기는가
+            ("KD Base+rev", "Student (FT)"),
+            ("KD Base+fwd", "Student (FT)"),
+            # FT 위에 얹은 KD
+            ("KD FT+rev (v3)", "Student (FT)"),
+            ("KD FT+fwd", "Student (FT)"),
+            ("Student (FT)", "Student (Base)"),
+        ],
+    ),
+}
+
+
+def run_set(config_path):
+    """config 의 run_id 하나에서 Base / FT / KD 를 비교한다 (v4 등 단일 실행)."""
+    checkpoint_dir = from_yaml(config_path).checkpoint_dir
+    models = BASE_MODELS[:1] + [
+        ("Student (FT)", checkpoint_dir / "student_ft_best.pt"),
+        ("Student (KD)", checkpoint_dir / "student_kd_best.pt"),
+    ]
+    pairs = [
+        ("Student (KD)", "Student (FT)"),
+        ("Student (KD)", "Student (Base)"),
+        ("Student (FT)", "Student (Base)"),
+    ]
+    return models, pairs
 
 
 @torch.no_grad()
@@ -92,6 +139,11 @@ def paired_bootstrap(a, b, tokens, resamples, rng):
 def main() -> int:
     config_path = sys.argv[1] if len(sys.argv) > 1 else "configs/gemma3_12b_1b_3090x4_v3.yaml"
     resamples = int(sys.argv[2]) if len(sys.argv) > 2 else 10000
+    set_name = sys.argv[3] if len(sys.argv) > 3 else "v3"
+    if set_name == "run":
+        models, pairs = run_set(config_path)
+    else:
+        models, pairs = SETS[set_name]
 
     # 평가 단계와 같은 조건 (scripts/gemma3_stage.py 의 evaluate 설정).
     config = from_yaml(config_path, device="cuda:0", num_workers=0, global_batch_size=0)
@@ -101,7 +153,7 @@ def main() -> int:
 
     per_model = {}
     tokens = None
-    for name, checkpoint in MODELS:
+    for name, checkpoint in models:
         if checkpoint is not None and not checkpoint.exists():
             print(f"⚠️  건너뜀 (체크포인트 없음): {name} → {checkpoint}")
             continue
@@ -123,7 +175,7 @@ def main() -> int:
     comparisons = []
     print(f"\npaired bootstrap ({resamples:,}회, chunk {len(tokens)}개 복원추출)")
     print(f"{'A':<26}{'B':<26}{'PPL(A)-PPL(B)':>14}{'95% CI':>22}{'P(A<B)':>9}{'chunk A<B':>11}")
-    for a, b in PAIRS:
+    for a, b in pairs:
         if a not in per_model or b not in per_model:
             continue
         result = paired_bootstrap(per_model[a], per_model[b], tokens, resamples, rng)
@@ -133,7 +185,8 @@ def main() -> int:
         print(f"{a:<26}{b:<26}{result['observed']:>+14.4f}{f'[{low:+.4f}, {high:+.4f}]':>22}"
               f"{result['p_a_better']:>9.3f}{result['chunks_a_better']:>6}/{result['chunks']}")
 
-    out = config.log_dir / "paired_bootstrap.json"
+    suffix = "" if set_name in {"v3", "run"} else f"_{set_name}"
+    out = config.log_dir / f"paired_bootstrap{suffix}.json"
     with open(out, "w", encoding="utf-8") as handle:
         json.dump({
             "resamples": resamples,

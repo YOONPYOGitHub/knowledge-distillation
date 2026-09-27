@@ -1,0 +1,461 @@
+==================================================================
+ ABL ft_fwd  KD  (13:55:55)
+==================================================================
+W0926 13:55:56.380000 139765804036096 torch/distributed/run.py:757]
+W0926 13:55:56.380000 139765804036096 torch/distributed/run.py:757] *****************************************
+W0926 13:55:56.380000 139765804036096 torch/distributed/run.py:757] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed.
+W0926 13:55:56.380000 139765804036096 torch/distributed/run.py:757] *****************************************
+📄 configs/gemma3_12b_1b_3090x4_v3_abl_ft_fwd.yaml | step=distill | run_id=gemma3-12b-1b-v3-abl-ft-fwd
+   Teacher: google/gemma-3-12b-pt (quant=int8)
+   Student: google/gemma-3-1b-pt
+   kd_top_k=128, T=2.0, α=0.5, forward_kl/tokenmean
+==================================================
+STEP 2/5: Knowledge Distillation
+==================================================
+=== Knowledge Distillation ===
+Device: cuda:0
+Teacher: google/gemma-3-12b-pt → Student: google/gemma-3-1b-pt
+T=2.0, α=0.5, lr=1e-05
+Epochs: 8, Batch: 1, SeqLen: 256
+==================================================
+STEP 2/5: Knowledge Distillation
+==================================================
+=== Knowledge Distillation ===
+Device: cuda:1
+Teacher: google/gemma-3-12b-pt → Student: google/gemma-3-1b-pt
+T=2.0, α=0.5, lr=1e-05
+Epochs: 8, Batch: 1, SeqLen: 256
+  KD vocabulary: 262,144 (tokenizer 262,145, teacher 262,208, student 262,144)
+Saving the dataset (0/1 shards):   0%|          | 0/1327 [00:00<?, ? examples/s]
+Saving the dataset (1/1 shards): 100%|██████████| 1327/1327 [00:00<00:00, 246221.69 examples/s]
+Saving the dataset (1/1 shards): 100%|██████████| 1327/1327 [00:00<00:00, 240508.23 examples/s]
+Saving the dataset (0/1 shards):   0%|          | 0/75 [00:00<?, ? examples/s]
+Saving the dataset (1/1 shards): 100%|██████████| 75/75 [00:00<00:00, 26514.90 examples/s]
+Saving the dataset (1/1 shards): 100%|██████████| 75/75 [00:00<00:00, 25537.65 examples/s]
+Saving the dataset (0/1 shards):   0%|          | 0/119 [00:00<?, ? examples/s]
+Saving the dataset (1/1 shards): 100%|██████████| 119/119 [00:00<00:00, 40744.67 examples/s]
+Saving the dataset (1/1 shards): 100%|██████████| 119/119 [00:00<00:00, 39307.15 examples/s]
+Train: 1327 samples
+Val:   75 samples
+Train: 1327 samples
+Val:   75 samples
+  ✅ Teacher LoRA adapter 로드 (병합 없음, 양자화) → results/gemma3/checkpoints/gemma3-12b-1b-v3/teacher_ft_best_adapter
+  ✅ Teacher LoRA adapter 로드 (병합 없음, 양자화) → results/gemma3/checkpoints/gemma3-12b-1b-v3/teacher_ft_best_adapter
+  ✅ Student 초기 checkpoint 로드 → results/gemma3/checkpoints/gemma3-12b-1b-v3/student_ft_best.pt
+  ✅ Student 초기 checkpoint 로드 → results/gemma3/checkpoints/gemma3-12b-1b-v3/student_ft_best.pt
+[Teacher]
+  파라미터: 12,208,558,704 (학습 가능: 0)
+  메모리: 13290.1 MB
+  디바이스: cuda:2
+[Student]
+  파라미터: 999,885,952 (학습 가능: 999,885,952)
+  메모리: 1999.8 MB
+  디바이스: cuda:0
+--- Epoch 1/8 ---
+  Train Loss: 1.3423 (CE: 1.7900, KD: 0.8946)
+  Val Loss:   1.5134 (CE: 2.0706)
+  Time: 1205.6s
+  ✅ Best model saved → results/gemma3/checkpoints/gemma3-12b-1b-v3-abl-ft-fwd/student_kd_best.pt
+--- Epoch 2/8 ---
+  Train Loss: 1.1303 (CE: 1.5218, KD: 0.7388)
+  Val Loss:   1.5112 (CE: 2.0662)
+  Time: 1200.5s
+  ✅ Best model saved → results/gemma3/checkpoints/gemma3-12b-1b-v3-abl-ft-fwd/student_kd_best.pt
+--- Epoch 3/8 ---
+  Train Loss: 0.9873 (CE: 1.2657, KD: 0.7089)
+  Val Loss:   1.5372 (CE: 2.0934)
+  Time: 1204.9s
+--- Epoch 4/8 ---
+  Train Loss: 0.8772 (CE: 1.0611, KD: 0.6933)
+  Val Loss:   1.5649 (CE: 2.1133)
+  Time: 1201.2s
+  ⏹ Early stopping: validation CE did not improve for 2 epoch(s).
+학습 로그 저장 → results/gemma3/logs/gemma3-12b-1b-v3-abl-ft-fwd/distill_history.json
+✅ 파이프라인 완료!
+   결과: results/gemma3/logs/gemma3-12b-1b-v3-abl-ft-fwd
+   차트: results/gemma3/figures/gemma3-12b-1b-v3-abl-ft-fwd
+==================================================================
+ ABL ft_fwd  Evaluate + Compare  (15:17:11)
+==================================================================
+📄 configs/gemma3_12b_1b_3090x4_v3_abl_ft_fwd.yaml | step=evaluate | run_id=gemma3-12b-1b-v3-abl-ft-fwd
+   Teacher: google/gemma-3-12b-pt (quant=bf16)
+   Student: google/gemma-3-1b-pt
+   kd_top_k=128, T=2.0, α=0.5, forward_kl/tokenmean
+==================================================
+STEP 4/5: Evaluation
+==================================================
+=== 4-Way Model Evaluation ===
+Device: cuda:0
+Test set: 119 samples
+  ✅ Teacher LoRA adapter 로드 → results/gemma3/checkpoints/gemma3-12b-1b-v3/teacher_ft_best_adapter
+--- Teacher (FT) 평가 ---
+  파라미터: 12,187,325,040 (24374.7 MB)
+  Perplexity: 6.88
+  속도: 1450 tokens/sec (0.69 ms/token)
+--- Student (KD) 평가 ---
+  파라미터: 999,885,952 (1999.8 MB)
+  Perplexity: 11.66
+  속도: 4509 tokens/sec (0.22 ms/token)
+--- Student (FT) 평가 ---
+  파라미터: 999,885,952 (1999.8 MB)
+  Perplexity: 11.66
+  속도: 4444 tokens/sec (0.23 ms/token)
+--- Student (Base) 평가 ---
+  파라미터: 999,885,952 (1999.8 MB)
+  Perplexity: 14.00
+  속도: 4513 tokens/sec (0.22 ms/token)
+평가 결과 저장 → results/gemma3/logs/gemma3-12b-1b-v3-abl-ft-fwd/evaluation_results.json
+✅ 파이프라인 완료!
+   결과: results/gemma3/logs/gemma3-12b-1b-v3-abl-ft-fwd
+   차트: results/gemma3/figures/gemma3-12b-1b-v3-abl-ft-fwd
+📄 configs/gemma3_12b_1b_3090x4_v3_abl_ft_fwd.yaml | step=compare | run_id=gemma3-12b-1b-v3-abl-ft-fwd
+   Teacher: google/gemma-3-12b-pt (quant=bf16)
+   Student: google/gemma-3-1b-pt
+   kd_top_k=128, T=2.0, α=0.5, forward_kl/tokenmean
+==================================================
+STEP 5/5: Comparison
+==================================================
+=== 4-Way Comparison ===
+======================================================================
+4-Way 비교 결과
+======================================================================
+모델                         파라미터        PPL   tokens/s   ms/tok
+----------------------------------------------------------------------
+Teacher (FT)       12,187,325,040       6.88       1450     0.69
+Student (KD)        999,885,952      11.66       4509     0.22
+Student (FT)        999,885,952      11.66       4444     0.23
+Student (Base)      999,885,952      14.00       4513     0.22
+======================================================================
+📊 증류 효과 (Q2): KD PPL 11.66 vs FT PPL 11.66
+   → KD가 FT 대비 PPL 0.00 낮음 (0.0% 개선)
+차트 저장 → results/gemma3/figures/gemma3-12b-1b-v3-abl-ft-fwd/perplexity_comparison.png
+차트 저장 → results/gemma3/figures/gemma3-12b-1b-v3-abl-ft-fwd/inference_speed.png
+⚠️ 학습 로그가 부족하여 학습 곡선을 그릴 수 없습니다.
+⚠️ 학습 로그가 부족하여 Val Loss 곡선을 그릴 수 없습니다.
+서머리 저장 → results/gemma3/logs/gemma3-12b-1b-v3-abl-ft-fwd/summary.json
+노트 템플릿 생성 → results/gemma3/logs/gemma3-12b-1b-v3-abl-ft-fwd/notes.md
+--- 자동 진단 ---
+  ✅ KD(11.66) < FT(11.66) — 증류 효과 확인됨
+모든 비교 완료!
+✅ 파이프라인 완료!
+   결과: results/gemma3/logs/gemma3-12b-1b-v3-abl-ft-fwd
+   차트: results/gemma3/figures/gemma3-12b-1b-v3-abl-ft-fwd
+==================================================================
+ ABL base_rev  KD  (15:18:48)
+==================================================================
+W0926 15:18:49.244000 139924551266304 torch/distributed/run.py:757]
+W0926 15:18:49.244000 139924551266304 torch/distributed/run.py:757] *****************************************
+W0926 15:18:49.244000 139924551266304 torch/distributed/run.py:757] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed.
+W0926 15:18:49.244000 139924551266304 torch/distributed/run.py:757] *****************************************
+📄 configs/gemma3_12b_1b_3090x4_v3_abl_base_rev.yaml | step=distill | run_id=gemma3-12b-1b-v3-abl-base-rev
+   Teacher: google/gemma-3-12b-pt (quant=int8)
+   Student: google/gemma-3-1b-pt
+   kd_top_k=128, T=2.0, α=0.5, reverse_kl/tokenmean
+==================================================
+STEP 2/5: Knowledge Distillation
+==================================================
+=== Knowledge Distillation ===
+Device: cuda:0
+Teacher: google/gemma-3-12b-pt → Student: google/gemma-3-1b-pt
+T=2.0, α=0.5, lr=1e-05
+Epochs: 8, Batch: 1, SeqLen: 256
+==================================================
+STEP 2/5: Knowledge Distillation
+==================================================
+=== Knowledge Distillation ===
+Device: cuda:1
+Teacher: google/gemma-3-12b-pt → Student: google/gemma-3-1b-pt
+T=2.0, α=0.5, lr=1e-05
+Epochs: 8, Batch: 1, SeqLen: 256
+  KD vocabulary: 262,144 (tokenizer 262,145, teacher 262,208, student 262,144)
+Train: 1327 samples
+Val:   75 samples
+Train: 1327 samples
+Val:   75 samples
+  ✅ Teacher LoRA adapter 로드 (병합 없음, 양자화) → results/gemma3/checkpoints/gemma3-12b-1b-v3/teacher_ft_best_adapter
+  ✅ Teacher LoRA adapter 로드 (병합 없음, 양자화) → results/gemma3/checkpoints/gemma3-12b-1b-v3/teacher_ft_best_adapter
+[Teacher]
+  파라미터: 12,208,558,704 (학습 가능: 0)
+  메모리: 13290.1 MB
+  디바이스: cuda:2
+[Student]
+  파라미터: 999,885,952 (학습 가능: 999,885,952)
+  메모리: 1999.8 MB
+  디바이스: cuda:0
+--- Epoch 1/8 ---
+  Train Loss: 1.7099 (CE: 2.3796, KD: 1.0403)
+  Val Loss:   1.5220 (CE: 2.0946)
+  Time: 1199.7s
+  ✅ Best model saved → results/gemma3/checkpoints/gemma3-12b-1b-v3-abl-base-rev/student_kd_best.pt
+--- Epoch 2/8 ---
+  Train Loss: 1.3623 (CE: 1.9490, KD: 0.7755)
+  Val Loss:   1.5108 (CE: 2.0677)
+  Time: 1195.6s
+  ✅ Best model saved → results/gemma3/checkpoints/gemma3-12b-1b-v3-abl-base-rev/student_kd_best.pt
+--- Epoch 3/8 ---
+  Train Loss: 1.1590 (CE: 1.6244, KD: 0.6935)
+  Val Loss:   1.5206 (CE: 2.0681)
+  Time: 1200.5s
+--- Epoch 4/8 ---
+  Train Loss: 1.0175 (CE: 1.3639, KD: 0.6712)
+  Val Loss:   1.5514 (CE: 2.0839)
+  Time: 1196.0s
+  ⏹ Early stopping: validation CE did not improve for 2 epoch(s).
+학습 로그 저장 → results/gemma3/logs/gemma3-12b-1b-v3-abl-base-rev/distill_history.json
+✅ 파이프라인 완료!
+   결과: results/gemma3/logs/gemma3-12b-1b-v3-abl-base-rev
+   차트: results/gemma3/figures/gemma3-12b-1b-v3-abl-base-rev
+==================================================================
+ ABL base_rev  Evaluate + Compare  (16:39:29)
+==================================================================
+📄 configs/gemma3_12b_1b_3090x4_v3_abl_base_rev.yaml | step=evaluate | run_id=gemma3-12b-1b-v3-abl-base-rev
+   Teacher: google/gemma-3-12b-pt (quant=bf16)
+   Student: google/gemma-3-1b-pt
+   kd_top_k=128, T=2.0, α=0.5, reverse_kl/tokenmean
+==================================================
+STEP 4/5: Evaluation
+==================================================
+=== 4-Way Model Evaluation ===
+Device: cuda:0
+Test set: 119 samples
+  ✅ Teacher LoRA adapter 로드 → results/gemma3/checkpoints/gemma3-12b-1b-v3/teacher_ft_best_adapter
+--- Teacher (FT) 평가 ---
+  파라미터: 12,187,325,040 (24374.7 MB)
+  Perplexity: 6.88
+  속도: 1448 tokens/sec (0.69 ms/token)
+--- Student (KD) 평가 ---
+  파라미터: 999,885,952 (1999.8 MB)
+  Perplexity: 11.51
+  속도: 4644 tokens/sec (0.22 ms/token)
+--- Student (FT) 평가 ---
+  파라미터: 999,885,952 (1999.8 MB)
+  Perplexity: 11.66
+  속도: 4650 tokens/sec (0.22 ms/token)
+--- Student (Base) 평가 ---
+  파라미터: 999,885,952 (1999.8 MB)
+  Perplexity: 14.00
+  속도: 4580 tokens/sec (0.22 ms/token)
+평가 결과 저장 → results/gemma3/logs/gemma3-12b-1b-v3-abl-base-rev/evaluation_results.json
+✅ 파이프라인 완료!
+   결과: results/gemma3/logs/gemma3-12b-1b-v3-abl-base-rev
+   차트: results/gemma3/figures/gemma3-12b-1b-v3-abl-base-rev
+📄 configs/gemma3_12b_1b_3090x4_v3_abl_base_rev.yaml | step=compare | run_id=gemma3-12b-1b-v3-abl-base-rev
+   Teacher: google/gemma-3-12b-pt (quant=bf16)
+   Student: google/gemma-3-1b-pt
+   kd_top_k=128, T=2.0, α=0.5, reverse_kl/tokenmean
+==================================================
+STEP 5/5: Comparison
+==================================================
+=== 4-Way Comparison ===
+======================================================================
+4-Way 비교 결과
+======================================================================
+모델                         파라미터        PPL   tokens/s   ms/tok
+----------------------------------------------------------------------
+Teacher (FT)       12,187,325,040       6.88       1448     0.69
+Student (KD)        999,885,952      11.51       4644     0.22
+Student (FT)        999,885,952      11.66       4650     0.22
+Student (Base)      999,885,952      14.00       4580     0.22
+======================================================================
+📊 증류 효과 (Q2): KD PPL 11.51 vs FT PPL 11.66
+   → KD가 FT 대비 PPL 0.16 낮음 (1.3% 개선)
+차트 저장 → results/gemma3/figures/gemma3-12b-1b-v3-abl-base-rev/perplexity_comparison.png
+차트 저장 → results/gemma3/figures/gemma3-12b-1b-v3-abl-base-rev/inference_speed.png
+⚠️ 학습 로그가 부족하여 학습 곡선을 그릴 수 없습니다.
+⚠️ 학습 로그가 부족하여 Val Loss 곡선을 그릴 수 없습니다.
+서머리 저장 → results/gemma3/logs/gemma3-12b-1b-v3-abl-base-rev/summary.json
+노트 템플릿 생성 → results/gemma3/logs/gemma3-12b-1b-v3-abl-base-rev/notes.md
+--- 자동 진단 ---
+  ✅ KD(11.51) < FT(11.66) — 증류 효과 확인됨
+모든 비교 완료!
+✅ 파이프라인 완료!
+   결과: results/gemma3/logs/gemma3-12b-1b-v3-abl-base-rev
+   차트: results/gemma3/figures/gemma3-12b-1b-v3-abl-base-rev
+==================================================================
+ ABL base_fwd  KD  (16:41:04)
+==================================================================
+W0926 16:41:05.721000 140613102452736 torch/distributed/run.py:757]
+W0926 16:41:05.721000 140613102452736 torch/distributed/run.py:757] *****************************************
+W0926 16:41:05.721000 140613102452736 torch/distributed/run.py:757] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed.
+W0926 16:41:05.721000 140613102452736 torch/distributed/run.py:757] *****************************************
+📄 configs/gemma3_12b_1b_3090x4_v3_abl_base_fwd.yaml | step=distill | run_id=gemma3-12b-1b-v3-abl-base-fwd
+   Teacher: google/gemma-3-12b-pt (quant=int8)
+   Student: google/gemma-3-1b-pt
+   kd_top_k=128, T=2.0, α=0.5, forward_kl/tokenmean
+==================================================
+STEP 2/5: Knowledge Distillation
+==================================================
+=== Knowledge Distillation ===
+Device: cuda:0
+Teacher: google/gemma-3-12b-pt → Student: google/gemma-3-1b-pt
+T=2.0, α=0.5, lr=1e-05
+Epochs: 8, Batch: 1, SeqLen: 256
+==================================================
+STEP 2/5: Knowledge Distillation
+==================================================
+=== Knowledge Distillation ===
+Device: cuda:1
+Teacher: google/gemma-3-12b-pt → Student: google/gemma-3-1b-pt
+T=2.0, α=0.5, lr=1e-05
+Epochs: 8, Batch: 1, SeqLen: 256
+  KD vocabulary: 262,144 (tokenizer 262,145, teacher 262,208, student 262,144)
+Train: 1327 samples
+Val:   75 samples
+Train: 1327 samples
+Val:   75 samples
+  ✅ Teacher LoRA adapter 로드 (병합 없음, 양자화) → results/gemma3/checkpoints/gemma3-12b-1b-v3/teacher_ft_best_adapter
+  ✅ Teacher LoRA adapter 로드 (병합 없음, 양자화) → results/gemma3/checkpoints/gemma3-12b-1b-v3/teacher_ft_best_adapter
+[Teacher]
+  파라미터: 12,208,558,704 (학습 가능: 0)
+  메모리: 13290.1 MB
+  디바이스: cuda:2
+[Student]
+  파라미터: 999,885,952 (학습 가능: 999,885,952)
+  메모리: 1999.8 MB
+  디바이스: cuda:0
+--- Epoch 1/8 ---
+  Train Loss: 1.6879 (CE: 2.3588, KD: 1.0170)
+  Val Loss:   1.5019 (CE: 2.0799)
+  Time: 1198.8s
+  ✅ Best model saved → results/gemma3/checkpoints/gemma3-12b-1b-v3-abl-base-fwd/student_kd_best.pt
+--- Epoch 2/8 ---
+  Train Loss: 1.3316 (CE: 1.9027, KD: 0.7606)
+  Val Loss:   1.4846 (CE: 2.0565)
+  Time: 1193.0s
+  ✅ Best model saved → results/gemma3/checkpoints/gemma3-12b-1b-v3-abl-base-fwd/student_kd_best.pt
+--- Epoch 3/8 ---
+  Train Loss: 1.1299 (CE: 1.5729, KD: 0.6869)
+  Val Loss:   1.5034 (CE: 2.0685)
+  Time: 1196.7s
+--- Epoch 4/8 ---
+  Train Loss: 0.9903 (CE: 1.3099, KD: 0.6707)
+  Val Loss:   1.5273 (CE: 2.0814)
+  Time: 1193.5s
+  ⏹ Early stopping: validation CE did not improve for 2 epoch(s).
+학습 로그 저장 → results/gemma3/logs/gemma3-12b-1b-v3-abl-base-fwd/distill_history.json
+✅ 파이프라인 완료!
+   결과: results/gemma3/logs/gemma3-12b-1b-v3-abl-base-fwd
+   차트: results/gemma3/figures/gemma3-12b-1b-v3-abl-base-fwd
+==================================================================
+ ABL base_fwd  Evaluate + Compare  (18:01:35)
+==================================================================
+📄 configs/gemma3_12b_1b_3090x4_v3_abl_base_fwd.yaml | step=evaluate | run_id=gemma3-12b-1b-v3-abl-base-fwd
+   Teacher: google/gemma-3-12b-pt (quant=bf16)
+   Student: google/gemma-3-1b-pt
+   kd_top_k=128, T=2.0, α=0.5, forward_kl/tokenmean
+==================================================
+STEP 4/5: Evaluation
+==================================================
+=== 4-Way Model Evaluation ===
+Device: cuda:0
+Test set: 119 samples
+  ✅ Teacher LoRA adapter 로드 → results/gemma3/checkpoints/gemma3-12b-1b-v3/teacher_ft_best_adapter
+--- Teacher (FT) 평가 ---
+  파라미터: 12,187,325,040 (24374.7 MB)
+  Perplexity: 6.88
+  속도: 1475 tokens/sec (0.68 ms/token)
+--- Student (KD) 평가 ---
+  파라미터: 999,885,952 (1999.8 MB)
+  Perplexity: 11.46
+  속도: 4651 tokens/sec (0.21 ms/token)
+--- Student (FT) 평가 ---
+  파라미터: 999,885,952 (1999.8 MB)
+  Perplexity: 11.66
+  속도: 4713 tokens/sec (0.21 ms/token)
+--- Student (Base) 평가 ---
+  파라미터: 999,885,952 (1999.8 MB)
+  Perplexity: 14.00
+  속도: 4590 tokens/sec (0.22 ms/token)
+평가 결과 저장 → results/gemma3/logs/gemma3-12b-1b-v3-abl-base-fwd/evaluation_results.json
+✅ 파이프라인 완료!
+   결과: results/gemma3/logs/gemma3-12b-1b-v3-abl-base-fwd
+   차트: results/gemma3/figures/gemma3-12b-1b-v3-abl-base-fwd
+📄 configs/gemma3_12b_1b_3090x4_v3_abl_base_fwd.yaml | step=compare | run_id=gemma3-12b-1b-v3-abl-base-fwd
+   Teacher: google/gemma-3-12b-pt (quant=bf16)
+   Student: google/gemma-3-1b-pt
+   kd_top_k=128, T=2.0, α=0.5, forward_kl/tokenmean
+==================================================
+STEP 5/5: Comparison
+==================================================
+=== 4-Way Comparison ===
+======================================================================
+4-Way 비교 결과
+======================================================================
+모델                         파라미터        PPL   tokens/s   ms/tok
+----------------------------------------------------------------------
+Teacher (FT)       12,187,325,040       6.88       1475     0.68
+Student (KD)        999,885,952      11.46       4651     0.21
+Student (FT)        999,885,952      11.66       4713     0.21
+Student (Base)      999,885,952      14.00       4590     0.22
+======================================================================
+📊 증류 효과 (Q2): KD PPL 11.46 vs FT PPL 11.66
+   → KD가 FT 대비 PPL 0.21 낮음 (1.8% 개선)
+차트 저장 → results/gemma3/figures/gemma3-12b-1b-v3-abl-base-fwd/perplexity_comparison.png
+차트 저장 → results/gemma3/figures/gemma3-12b-1b-v3-abl-base-fwd/inference_speed.png
+⚠️ 학습 로그가 부족하여 학습 곡선을 그릴 수 없습니다.
+⚠️ 학습 로그가 부족하여 Val Loss 곡선을 그릴 수 없습니다.
+서머리 저장 → results/gemma3/logs/gemma3-12b-1b-v3-abl-base-fwd/summary.json
+노트 템플릿 생성 → results/gemma3/logs/gemma3-12b-1b-v3-abl-base-fwd/notes.md
+--- 자동 진단 ---
+  ✅ KD(11.46) < FT(11.66) — 증류 효과 확인됨
+모든 비교 완료!
+✅ 파이프라인 완료!
+   결과: results/gemma3/logs/gemma3-12b-1b-v3-abl-base-fwd
+   차트: results/gemma3/figures/gemma3-12b-1b-v3-abl-base-fwd
+==================================================================
+ ABL  paired bootstrap  (18:03:09)
+==================================================================
+Test set: 119 chunks
+  Student (Base)             PPL 14.0023
+  Student (FT)               PPL 11.6541
+  KD FT+rev (v3)             PPL 11.6424
+  KD FT+fwd                  PPL 11.6627
+  KD Base+rev                PPL 11.5126
+  KD Base+fwd                PPL 11.4598
+paired bootstrap (10,000회, chunk 119개 복원추출)
+A                         B                          PPL(A)-PPL(B)                95% CI   P(A<B)  chunk A<B
+KD FT+rev (v3)            KD FT+fwd                        -0.0202    [-0.0742, +0.0334]    0.776    70/119
+KD Base+rev               KD Base+fwd                      +0.0528    [-0.0136, +0.1229]    0.062    61/119
+KD FT+rev (v3)            KD Base+rev                      +0.1299    [+0.0328, +0.2242]    0.004    40/119
+KD FT+fwd                 KD Base+fwd                      +0.2029    [+0.1282, +0.2782]    0.000    24/119
+KD Base+rev               Student (FT)                     -0.1415    [-0.2626, -0.0273]    0.993    67/119
+KD Base+fwd               Student (FT)                     -0.1944    [-0.3200, -0.0804]    1.000    69/119
+KD FT+rev (v3)            Student (FT)                     -0.0117    [-0.1513, +0.1203]    0.557    49/119
+KD FT+fwd                 Student (FT)                     +0.0085    [-0.1417, +0.1509]    0.445    52/119
+Student (FT)              Student (Base)                   -2.3482    [-3.1472, -1.6194]    1.000    76/119
+저장 → results/gemma3/logs/gemma3-12b-1b-v3/paired_bootstrap_ablation.json
+CI 가 0 을 포함하면 두 모델의 PPL 차이는 test chunk 구성에 따른 흔들림과 구분되지 않는다.
+==================================================================
+ ABL  2×2 요약표  (18:07:08)
+==================================================================
+==============================================================================
+v3 요인 분리 — Student (KD) PPL  (공통: T=2, α=0.5, lr 1e-5, tokenmean, top-K 128)
+==============================================================================
+  Student (FT) 11.663 | Student (Base) 14.004
+                    reverse KL      forward KL
+FT 초기값                  11.643          11.660
+Base 초기값                11.507          11.457
+실행                                   KD PPL    FT 대비  best ep  best vCE  epochs     분
+-------------------------------------------------------------------------------------
+gemma3-12b-1b-v3                     11.643   -0.020        2    2.0736       8   158
+gemma3-12b-1b-v3-abl-ft-fwd          11.660   -0.003        2    2.0662       4    80
+gemma3-12b-1b-v3-abl-base-rev        11.507   -0.156        2    2.0677       4    80
+gemma3-12b-1b-v3-abl-base-fwd        11.457   -0.206        2    2.0565       4    80
+val CE 곡선
+    FT+rev  2.0788 → 2.0736 → 2.0900 → 2.1124 → 2.1144 → 2.1424 → 2.1438 → 2.1541
+    FT+for  2.0706 → 2.0662 → 2.0934 → 2.1133
+  Base+rev  2.0946 → 2.0677 → 2.0681 → 2.0839
+  Base+for  2.0799 → 2.0565 → 2.0685 → 2.0814
+저장 → results/gemma3/logs/gemma3-12b-1b-v3/ablation_summary.json
+==================================================================
+ ablation 요약  (2026-09-26 18:07:09)
+==================================================================
+  ✅ ABL ft_fwd  KD (81분)
+  ✅ ABL ft_fwd  Evaluate + Compare (1분)
+  ✅ ABL base_rev  KD (80분)
+  ✅ ABL base_rev  Evaluate + Compare (1분)
+  ✅ ABL base_fwd  KD (80분)
+  ✅ ABL base_fwd  Evaluate + Compare (1분)
+  ✅ ABL  paired bootstrap (3분)
+  ✅ ABL  2×2 요약표 (0분)
+ABLATION_DONE

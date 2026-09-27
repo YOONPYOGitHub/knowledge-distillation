@@ -9,6 +9,9 @@
 
 ## 결론
 
+> 후속: KD 초기값을 SFT 대신 Base로 바꾸면 KD가 FT를 유의하게 이긴다(11.457 vs 11.663, 95% CI [−0.320, −0.080]).
+> [초기값 × divergence 요인 분리](gemma3-v3-ablation.md) 참고.
+
 1. **Student는 SFT만으로 크게 좋아지고, KD는 그 위에 유의한 이득을 더하지 못했다.**
    Base 14.00 → FT 11.66 (−16.7%)은 확실하다. KD 11.64 vs FT 11.66의 차이 0.02는
    paired bootstrap 95% CI [−0.148, +0.118]이 0을 포함해 **노이즈와 구분되지 않는다.**
@@ -244,7 +247,7 @@ tokens/s는 teacher-forcing forward 처리량이다(`generate()` 아님). Studen
 1. **다른 seed.** 모든 실행이 seed 42 하나다. bootstrap은 test chunk 구성의 흔들림만 잡고,
    학습 seed에 따른 흔들림은 잡지 못한다. KD vs FT가 seed를 바꿔도 같은 결론인지는 모른다.
 2. **더 큰 데이터.** 1,000문서가 KD 이득을 막고 있다는 해석은 가설이다. 문서 수를 늘린 실행이 필요하다.
-3. **early stopping을 켠 KD.** `early_stopping_patience: 0`(Qwen v3 parity)이라 8 epoch을 다 돌았다.
+3. **early stopping을 켠 KD.** (후속 [요인 분리](gemma3-v3-ablation.md)에서 patience 2로 적용, 같은 best epoch을 고르고 KD 시간이 절반이 됐다.) `early_stopping_patience: 0`(Qwen v3 parity)이라 8 epoch을 다 돌았다.
    best만 저장하므로 PPL 결과는 같겠지만, 학습 시간은 top-K 기준 약 2/3을 줄일 수 있었다.
 4. **다른 K.** K = 128 하나만 봤다. gradient 상대 차이 46%가 K에 따라 어떻게 줄어드는지 모른다.
 5. **생성 품질.** PPL과 처리량만 쟀다. 한국어 생성 결과의 정성 비교는 하지 않았다.
