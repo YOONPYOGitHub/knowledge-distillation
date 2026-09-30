@@ -7,10 +7,17 @@
 #
 # bitsandbytes 는 --no-deps 로 설치한다. 기본 설치는 torch 를 최신(cu130)으로 올려
 # 드라이버(CUDA 12.4)와 어긋나 CUDA 를 못 쓰게 만든다.
+#
+# 시스템 torch 를 그대로 쓰므로 venv 에 torchrun 스크립트가 생기지 않는다. 러너가 .venv-gemma/bin/torchrun 을
+# 부르므로 직접 만든다:
+#   printf "#!%s\nimport sys\nfrom torch.distributed.run import main\nsys.exit(main())\n" \
+#     "$PWD/.venv-gemma/bin/python" > .venv-gemma/bin/torchrun && chmod +x .venv-gemma/bin/torchrun
 torch==2.3.1
 transformers==4.51.3
 tokenizers>=0.21,<0.22
 datasets==3.6.0
+# 시스템 fsspec 2024.2.0 은 datasets 3.6.0 의 save_to_disk(Path) 에서 TypeError 를 낸다
+fsspec[http]==2025.3.0
 accelerate==1.6.0
 peft==0.15.2
 numpy>=1.24,<2
