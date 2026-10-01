@@ -1,0 +1,43 @@
+{
+  "run_id": "kanana-8b-2b-v4",
+  "config": {
+    "teacher_model": "kakaocorp/kanana-1.5-8b-base",
+    "student_model": "kakaocorp/kanana-1.5-2.1b-base",
+    "temperature": 2.0,
+    "alpha": 0.5,
+    "kd_reduction": "tokenmean",
+    "kd_divergence": "forward_kl",
+    "distill_student_checkpoint": "",
+    "early_stopping_patience": 1,
+    "early_stopping_min_delta": 0.005,
+    "epochs": 4,
+    "teacher_epochs": 3,
+    "teacher_learning_rate": 2e-05,
+    "teacher_checkpoint": "results/kanana/checkpoints/kanana-8b-2b-v4/teacher_ft_best_adapter",
+    "batch_size": 1,
+    "max_seq_length": 256,
+    "device": "cuda:0"
+  },
+  "results": {
+    "Teacher (FT)": {
+      "ppl": 5.448665062761822,
+      "tokens_per_sec": 3245.7011747305964
+    },
+    "Student (KD)": {
+      "ppl": 6.929427099255197,
+      "tokens_per_sec": 8915.716291817622
+    },
+    "Student (FT)": {
+      "ppl": 7.34132869207764,
+      "tokens_per_sec": 8932.410350777074
+    },
+    "Student (Base)": {
+      "ppl": 8.136192622611565,
+      "tokens_per_sec": 8845.08194871222
+    }
+  },
+  "diagnosis": [
+    "✅ KD(6.93) < FT(7.34) — 증류 효과 확인됨"
+  ],
+  "next_actions": []
+}

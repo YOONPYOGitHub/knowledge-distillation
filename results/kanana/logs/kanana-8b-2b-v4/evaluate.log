@@ -1,0 +1,78 @@
+📄 configs/kanana_8b_2b_3090x4_v4.yaml | step=evaluate | run_id=kanana-8b-2b-v4
+   Teacher: kakaocorp/kanana-1.5-8b-base (quant=bf16)
+   Student: kakaocorp/kanana-1.5-2.1b-base
+   kd_top_k=128, T=2.0, α=0.5, forward_kl/tokenmean
+==================================================
+STEP 4/5: Evaluation
+==================================================
+=== 4-Way Model Evaluation ===
+Device: cuda:0
+Map: 100%|██████████| 9000/9000 [00:05<00:00, 1550.17 examples/s]
+Map: 100%|██████████| 9000/9000 [00:05<00:00, 1536.49 examples/s]
+Map: 100%|██████████| 500/500 [00:00<00:00, 1380.16 examples/s]
+Map: 100%|██████████| 500/500 [00:00<00:00, 1362.99 examples/s]
+Map: 100%|██████████| 500/500 [00:00<00:00, 1311.76 examples/s]
+Map: 100%|██████████| 500/500 [00:00<00:00, 1294.49 examples/s]
+Test set: 820 samples
+Loading checkpoint shards: 100%|██████████| 4/4 [00:03<00:00,  1.63it/s]
+Loading checkpoint shards: 100%|██████████| 4/4 [00:03<00:00,  1.29it/s]
+  ✅ Teacher LoRA adapter 로드 → results/kanana/checkpoints/kanana-8b-2b-v4/teacher_ft_best_adapter
+--- Teacher (FT) 평가 ---
+  파라미터: 8,030,261,248 (16060.5 MB)
+Perplexity: 100%|█████████▉| 817/820 [01:04<00:00, 12.58it/s]
+Perplexity: 100%|█████████▉| 819/820 [01:04<00:00, 12.60it/s]
+  Perplexity: 5.45
+  속도: 3246 tokens/sec (0.31 ms/token)
+--- Student (KD) 평가 ---
+  파라미터: 2,086,979,328 (4174.0 MB)
+Perplexity: 100%|█████████▉| 818/820 [00:23<00:00, 34.53it/s]
+  Perplexity: 6.93
+  속도: 8916 tokens/sec (0.11 ms/token)
+--- Student (FT) 평가 ---
+  파라미터: 2,086,979,328 (4174.0 MB)
+Perplexity: 100%|█████████▉| 816/820 [00:23<00:00, 34.37it/s]
+Perplexity: 100%|██████████| 820/820 [00:23<00:00, 34.43it/s]
+  Perplexity: 7.34
+  속도: 8932 tokens/sec (0.11 ms/token)
+--- Student (Base) 평가 ---
+  파라미터: 2,086,979,328 (4174.0 MB)
+Perplexity: 100%|█████████▉| 816/820 [00:23<00:00, 34.12it/s]
+Perplexity: 100%|██████████| 820/820 [00:23<00:00, 34.16it/s]
+  Perplexity: 8.14
+  속도: 8845 tokens/sec (0.11 ms/token)
+평가 결과 저장 → results/kanana/logs/kanana-8b-2b-v4/evaluation_results.json
+✅ 파이프라인 완료!
+   결과: results/kanana/logs/kanana-8b-2b-v4
+   차트: results/kanana/figures/kanana-8b-2b-v4
+📄 configs/kanana_8b_2b_3090x4_v4.yaml | step=compare | run_id=kanana-8b-2b-v4
+   Teacher: kakaocorp/kanana-1.5-8b-base (quant=bf16)
+   Student: kakaocorp/kanana-1.5-2.1b-base
+   kd_top_k=128, T=2.0, α=0.5, forward_kl/tokenmean
+==================================================
+STEP 5/5: Comparison
+==================================================
+=== 4-Way Comparison ===
+======================================================================
+4-Way 비교 결과
+======================================================================
+모델                         파라미터        PPL   tokens/s   ms/tok
+----------------------------------------------------------------------
+Teacher (FT)       8,030,261,248       5.45       3246     0.31
+Student (KD)       2,086,979,328       6.93       8916     0.11
+Student (FT)       2,086,979,328       7.34       8932     0.11
+Student (Base)     2,086,979,328       8.14       8845     0.11
+======================================================================
+📊 증류 효과 (Q2): KD PPL 6.93 vs FT PPL 7.34
+   → KD가 FT 대비 PPL 0.41 낮음 (5.6% 개선)
+차트 저장 → results/kanana/figures/kanana-8b-2b-v4/perplexity_comparison.png
+차트 저장 → results/kanana/figures/kanana-8b-2b-v4/inference_speed.png
+차트 저장 → results/kanana/figures/kanana-8b-2b-v4/training_loss.png
+차트 저장 → results/kanana/figures/kanana-8b-2b-v4/val_loss.png
+서머리 저장 → results/kanana/logs/kanana-8b-2b-v4/summary.json
+노트 템플릿 생성 → results/kanana/logs/kanana-8b-2b-v4/notes.md
+--- 자동 진단 ---
+  ✅ KD(6.93) < FT(7.34) — 증류 효과 확인됨
+모든 비교 완료!
+✅ 파이프라인 완료!
+   결과: results/kanana/logs/kanana-8b-2b-v4
+   차트: results/kanana/figures/kanana-8b-2b-v4

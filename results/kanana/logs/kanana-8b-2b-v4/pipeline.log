@@ -61,3 +61,5 @@ kakaocorp/kanana-1.5-2.1b-base -> /root/.cache/huggingface/hub/models--kakaocorp
 ==================================================================
  STEP 3  평가 + 비교 + paired bootstrap  (20:05:12)
 ==================================================================
+✅ 평가 / 비교 / bootstrap (20:14:54)
+PIPELINE_DONE  2026-10-01 20:14:54
