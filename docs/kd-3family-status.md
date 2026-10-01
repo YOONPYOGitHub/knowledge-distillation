@@ -1,6 +1,6 @@
 # 한국어 KD 3개 계열 비교 — 진행 현황
 
-기준 시각: **2026-10-01 13:20 KST** · 브랜치: `feature/kanana-4way-kd` · 조모임(10/1 21:30) 공유용
+기준 시각: **2026-10-02 00:50 KST** (처음 작성 10/1 13:20) · 브랜치: `feature/kanana-4way-kd` · 조모임(10/1 21:30) 공유용
 
 Qwen2.5, Gemma 3, Kanana 1.5 세 계열에서 같은 한국어 위키 데이터로 Teacher → Student 지식증류(KD)를 4-way
 (Teacher FT / Student KD / Student FT / Student Base)로 비교한다. 이 문서는 각 실험 문서의 숫자를 한곳에 모은 현황판이다.
@@ -9,7 +9,8 @@ Qwen2.5, Gemma 3, Kanana 1.5 세 계열에서 같은 한국어 위키 데이터�
 
 1. **데이터가 1,000문서일 때는 KD 이득이 작거나 불확실했다.** 1만 문서로 늘린 Gemma v4에서 처음으로 KD가 FT를 크게, 통계적으로 확실하게 이겼다(−5.9%).
 2. **세 계열을 같은 조건으로 놓을 수 있는 것은 아직 Gemma v4와 Kanana v4 둘뿐이다.** Qwen은 1,000문서·다른 KD 설정(v3)까지만 있다.
-3. **Kanana v4는 Teacher FT와 Student SFT를 마치고 KD 진행 중이다.** KD 완료와 4-way 평가는 10/2 새벽 예정이다.
+3. **Kanana v4는 KD epoch 2까지 마쳤고, Gemma v4와 같은 경향이 보인다.** KD의 val CE가 epoch 1부터 SFT best보다 낮고(2.0029 vs 2.0541) epoch 2에서 더 내려갔다(1.9954).
+   test PPL과 통계 검정은 KD가 끝난 뒤 4-way 평가에서 나온다(10/2 오전 예정).
 4. **3개 계열 공정 비교를 완성하려면 Qwen v4(1만 문서, Gemma·Kanana v4와 같은 KD 설정)가 필요하다.**
 
 ## 1. 비교 대상
@@ -90,16 +91,24 @@ test 35,955 토큰으로 작고 seed 하나다.
 |---|---|---|---:|---|
 | Teacher FT (QLoRA nf4) | 1.7985 → 1.7842 → 1.7801 | epoch 2 ² | 약 109분 | ✅ 10/1 06:10 |
 | Student SFT | **2.0541** → 2.1345 | epoch 1 | 약 315분 | ✅ 10/1 11:14 (epoch 2 과적합, early stopping) |
-| KD (Base 초기값 + forward) | 진행 중 | — | 약 320분 | 🔄 10/1 13:01 시작 |
+| KD (Base 초기값 + forward) | **2.0029** → **1.9954** → (epoch 3 진행 중) | epoch 2 (현재까지) | 약 320분 | 🔄 10/1 13:01 시작, epoch 2 완료 23:44 |
 | 4-way 평가 + bootstrap | — | — | — | ⏳ KD 직후 자동 실행 |
 
 ² epoch 3의 val CE가 가장 낮지만 개선폭 0.0041이 기준(min_delta 0.005)에 못 미쳐 best로 저장되지 않았다.
 
 - **SFT는 Gemma v4와 같은 양상이다.** epoch 1 이후 바로 과적합한다.
-- 예상 일정(KST): KD epoch 1 완료 10/1 18:25 → epoch 2 23:50 → epoch 3 10/2 05:15 → 평가·GitHub push 10/2 05:30 전후.
-  epoch 2 또는 3에서 early stopping이 걸리면 더 일찍 끝난다.
-- **KD epoch 1의 val CE가 SFT best 2.0541보다 낮으면** Gemma v4와 같은 경향이다(Gemma v4는 KD epoch 1에서 이미 2.2065로 SFT best 2.2428보다 낮았다).
-  val CE는 같은 split·같은 tokenizer라 계열 안에서는 바로 비교할 수 있다.
+- **KD는 epoch 1부터 SFT best보다 낮고, SFT가 과적합한 epoch 2에서도 계속 내려갔다.** val CE는 같은 split·같은 tokenizer라 계열 안에서는 바로 비교할 수 있다.
+
+| val CE | epoch 1 | epoch 2 | SFT best | KD − SFT best (epoch 2) |
+|---|---:|---:|---:|---:|
+| Gemma v4 SFT | 2.2428 | 2.2942 (과적합) | 2.2428 | |
+| Gemma v4 KD | 2.2065 | 2.1761 | | −0.067 |
+| Kanana v4 SFT | 2.0541 | 2.1345 (과적합) | 2.0541 | |
+| Kanana v4 KD | 2.0029 | 1.9954 | | **−0.059** |
+
+- epoch 2 개선폭 0.0075가 early stopping 기준(0.005)을 넘어 epoch 3을 학습 중이다. 예상 일정(KST): epoch 3 완료 10/2 05:10 전후.
+  개선폭이 0.005 미만이면 그때 멈추고 평가로 넘어가고, 넘으면 epoch 4(약 10:40 완료)까지 간다.
+- val CE 차이는 진행 신호일 뿐이다. 결론은 4-way test PPL과 paired bootstrap으로 낸다.
 - 기준 평가(1,000문서 test, 학습 전): Teacher 8B 7.029, Student 2.1B 8.748. Teacher와 Student의 격차가 다른 계열보다 훨씬 작아(Gemma pt 8.214 vs 14.004),
   KD가 좁힐 수 있는 간격 자체가 작을 수 있다.
 
@@ -108,14 +117,14 @@ test 35,955 토큰으로 작고 seed 하나다.
 1. **KD 이득을 좌우한 것은 데이터 규모와 KD 시작점이었다.** 1,000문서에서는 SFT가 이미 대부분의 이득을 가져가고 KD 몫이 작았다.
    Base에서 시작하는 KD를 1만 문서로 돌리자 이득이 분명해졌다(Gemma).
 2. **KD는 "더 오래 학습"이 아니라 "과적합 방지"로 이득을 낸다.** 같은 epoch에서 CE만 학습한 SFT는 나빠지고 KD는 좋아졌다.
-3. Kanana에서도 같은 결과가 나오면 다국어(Gemma)와 한국어 특화(Kanana) 계열 모두에서 성립한다는 근거가 된다.
+3. **Kanana도 validation에서는 같은 경향을 보인다.** test PPL과 bootstrap에서도 확인되면 다국어(Gemma)와 한국어 특화(Kanana) 계열 모두에서 성립한다는 근거가 된다.
 
 ## 5. 남은 일과 논의할 것
 
 | 항목 | 내용 | 비고 |
 |---|---|---|
 | **Qwen v4** | 1만 문서, Base 초기값 + forward KL, top-K 128로 Gemma·Kanana v4와 같은 조건 실행 | 3개 계열 공정 비교의 필수 조건. 담당·장비·일정 논의 필요 |
-| Kanana v4 완료 | KD → 4-way 평가 → bootstrap → 결과 문서 | 10/2 새벽 자동 진행, 자동 commit·push |
+| Kanana v4 완료 | KD → 4-way 평가 → bootstrap → 결과 문서 | 10/2 오전 자동 진행, 자동 commit·push |
 | seed 반복 | 모든 실험이 seed 42 하나 | 최소 3회 권장. 실험당 약 18~30시간(3090 × 4) |
 | 계열 간 절대 비교 지표 | bits-per-byte 추가 | tokenizer와 무관한 지표. 현재 미측정 |
 | 생성 품질 | 한국어 생성 결과 정성 비교 | PPL만으로는 답변 품질을 보여주기 어렵다 |
