@@ -1,0 +1,48 @@
+### model download 2026-09-30 15:16:24
+Fetching 15 files: 100%|██████████| 15/15 [19:55<00:00, 79.73s/it] 
+kakaocorp/kanana-1.5-8b-base -> /root/.cache/huggingface/hub/models--kakaocorp--kanana-1.5-8b-base/snapshots/5a5aad571a4e651a916d0bc74a768bb9f9ef05f3
+Fetching 13 files: 100%|██████████| 13/13 [05:13<00:00, 24.13s/it]
+kakaocorp/kanana-1.5-2.1b-base -> /root/.cache/huggingface/hub/models--kakaocorp--kanana-1.5-2.1b-base/snapshots/83fdd4426138b2becb3b33197126de2e4f5dfcd3
+############ v4 러너 시작 — 2026-09-30 15:41:34 ############
+==================================================================
+ STEP 1a  Teacher FT (QLoRA nf4, GPU 0,1)  (15:41:34)
+==================================================================
+ STEP 1b  Student SFT (GPU 2,3)  (15:41:34)
+==================================================================
+❌ Teacher FT
+❌ Student SFT
+❌ STEP 1 실패로 멈춥니다. 원인을 해결한 뒤 같은 명령으로 다시 실행하면 이어갑니다.
+PIPELINE_FAILED
+### model download 2026-09-30 15:42:04
+Fetching 15 files: 100%|██████████| 15/15 [00:00<00:00, 89367.27it/s]
+kakaocorp/kanana-1.5-8b-base -> /root/.cache/huggingface/hub/models--kakaocorp--kanana-1.5-8b-base/snapshots/5a5aad571a4e651a916d0bc74a768bb9f9ef05f3
+Fetching 13 files: 100%|██████████| 13/13 [00:00<00:00, 10249.24it/s]
+kakaocorp/kanana-1.5-2.1b-base -> /root/.cache/huggingface/hub/models--kakaocorp--kanana-1.5-2.1b-base/snapshots/83fdd4426138b2becb3b33197126de2e4f5dfcd3
+############ v4 러너 시작 — 2026-09-30 15:42:05 ############
+==================================================================
+ STEP 1a  Teacher FT (QLoRA nf4, GPU 0,1)  (15:42:05)
+==================================================================
+ STEP 1b  Student SFT (GPU 2,3)  (15:42:05)
+==================================================================
+❌ Teacher FT
+❌ Student SFT
+❌ STEP 1 실패로 멈춥니다. 원인을 해결한 뒤 같은 명령으로 다시 실행하면 이어갑니다.
+PIPELINE_FAILED
+### model download 2026-09-30 15:44:10
+Fetching 15 files: 100%|██████████| 15/15 [00:00<00:00, 69365.56it/s]
+kakaocorp/kanana-1.5-8b-base -> /root/.cache/huggingface/hub/models--kakaocorp--kanana-1.5-8b-base/snapshots/5a5aad571a4e651a916d0bc74a768bb9f9ef05f3
+Fetching 13 files: 100%|██████████| 13/13 [00:00<00:00, 11812.38it/s]
+kakaocorp/kanana-1.5-2.1b-base -> /root/.cache/huggingface/hub/models--kakaocorp--kanana-1.5-2.1b-base/snapshots/83fdd4426138b2becb3b33197126de2e4f5dfcd3
+############ v4 러너 시작 — 2026-09-30 15:44:11 ############
+==================================================================
+ STEP 1a  Teacher FT (QLoRA nf4, GPU 0,1)  (15:44:11)
+==================================================================
+ STEP 1b  Student SFT (GPU 2,3)  (15:44:11)
+==================================================================
+✅ Teacher FT (21:10:37)
+✅ Student SFT (02:14:50)
+==================================================================
+ STEP 2  KD (Student GPU 0,1 / Teacher GPU 2,3)  (02:14:50)
+==================================================================
+❌ STEP 2 KD 실패로 멈춥니다. 원인을 해결한 뒤 같은 명령으로 다시 실행하면 이어갑니다.
+PIPELINE_FAILED
