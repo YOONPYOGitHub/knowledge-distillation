@@ -46,3 +46,18 @@ kakaocorp/kanana-1.5-2.1b-base -> /root/.cache/huggingface/hub/models--kakaocorp
 ==================================================================
 ❌ STEP 2 KD 실패로 멈춥니다. 원인을 해결한 뒤 같은 명령으로 다시 실행하면 이어갑니다.
 PIPELINE_FAILED
+### model download 2026-10-01 04:01:15
+Fetching 15 files: 100%|██████████| 15/15 [00:00<00:00, 103307.98it/s]
+kakaocorp/kanana-1.5-8b-base -> /root/.cache/huggingface/hub/models--kakaocorp--kanana-1.5-8b-base/snapshots/5a5aad571a4e651a916d0bc74a768bb9f9ef05f3
+Fetching 13 files: 100%|██████████| 13/13 [00:00<00:00, 84405.50it/s]
+kakaocorp/kanana-1.5-2.1b-base -> /root/.cache/huggingface/hub/models--kakaocorp--kanana-1.5-2.1b-base/snapshots/83fdd4426138b2becb3b33197126de2e4f5dfcd3
+############ v4 러너 시작 — 2026-10-01 04:01:16 ############
+⏭️  Teacher FT 완료됨
+⏭️  Student SFT 완료됨
+==================================================================
+ STEP 2  KD (Student GPU 0,1 / Teacher GPU 2,3)  (04:01:16)
+==================================================================
+✅ KD (20:05:12)
+==================================================================
+ STEP 3  평가 + 비교 + paired bootstrap  (20:05:12)
+==================================================================
