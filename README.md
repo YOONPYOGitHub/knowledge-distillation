@@ -11,6 +11,10 @@
 - [최종 보고서](results/logs/h100-tuning-20260920/report.md) · [평가 JSON](results/logs/h100-tuning-20260920/test_results.json) · [후보별 CSV](results/logs/h100-tuning-20260920/parameter_search.csv)
 - [PPL 비교](results/figures/h100-tuning-20260920/perplexity_comparison.png) · [검증 곡선](results/figures/h100-tuning-20260920/val_loss.png)
 
+**2026-10-14 재개 상태:** 새 Azure 구독의 Korea Central H100 Spot 사용 요청은 사용자 제출 완료, 승인 대기다. 새 VM은 아직 생성하지 않았다. [새 구독·다른 랩탑 인수인계](docs/h100-kd-tuning-plan.md#현재-재개-상태-2026-10-14)를 먼저 읽는다.
+
+실제 제품 목표는 **보급형 스마트폰에서 로컬로 동작하는 한국어 실버·의료 지원 LLM**이다. [모바일 모델 선정 조사 보고서](docs/mobile-silvercare-llm-selection-20260920.md)의 Qwen3.5·LFM·Gemma 후보는 후속 검증 계획이며, 이 브랜치에서 학습·모바일 배포를 완료한 모델이 아니다.
+
 2026-09-20 실험 완료: **LR=1e-5, alpha=0.7, T=2**, 선택 checkpoint는 1 epoch / 765 step, test PPL **11.3531**. 같은 평가기의 기존 KD v3는 11.6836입니다. 단일 seed·소규모 한국어 Wikipedia 결과이며 일반 성능 향상을 보장하지 않습니다. 코드·로그·그림은 Git에 포함되지만 모델 가중치·데이터 캐시·인증 정보는 포함되지 않습니다.
 
 ---

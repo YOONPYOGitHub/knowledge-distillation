@@ -3,6 +3,57 @@
 브랜치: `feature/azure-h100-kd-tuning` (기준 `ae7fa1c`). VESSL 브랜치는 변경하지 않는다.
 원본 Azure checkout과 체크포인트는 보존하고 별도 checkout/결과 경로를 사용한다.
 
+## 현재 재개 상태 (2026-10-14)
+
+다른 랩탑에서는 **`feature/azure-h100-kd-tuning`**으로 이어간다. 단일 Azure H100 학습 코드·완료 결과·회귀 테스트·본 인수인계와 [모바일 모델 선정 조사 보고서](mobile-silvercare-llm-selection-20260920.md)를 포함한다. VESSL 3090×4 전용 코드가 필요할 때만 별도 `feature/vessl-3090x4-h100-parity` 브랜치를 사용한다. 두 브랜치를 이번에 병합하지 않았다.
+
+### Azure 전환 상태
+
+| 항목 | 값 / 상태 |
+|---|---|
+| 새 테넌트 | `ef7d55d6-c61d-4085-9064-4e83adf15ee3` |
+| 새 구독 | `e4b60458-f41b-4144-95e5-673e7c6bd7da`, 조회 당시 Enabled |
+| 우선 지역 | `koreacentral`; 다른 지역은 해당 구독의 SKU·Spot 용량 확인 후 선택 |
+| 학습 VM 목표 | `Standard_NC40ads_H100_v5`, 40 vCPU / RAM 320 GiB / H100 NVL 94GB × 1 |
+| Spot 정책 | `Spot`, `Deallocate`, 기존과 같은 `maxPrice=-1`을 후보로 검증 |
+| Compute 제공자 | Registered; Korea Central도 지원 지역에 포함 |
+| Korea Central Spot 할당량 | 사용 0 / 한도 100 vCPU, 단일 H100의 40 vCPU 요구량 충족 |
+| SKU 조회 | 새 구독에 `NotAvailableForSubscription` 표시 |
+| 실제 Spot 사전 검증 | `SkuNotAvailable / Capacity Restrictions`, **검증 실패** |
+| 사용 가능 요청 | **사용자가 제출했다고 확인**, 승인 대기; 요청 번호·승인은 이 저장소에서 확인하지 않음 |
+| 새 학습 VM·디스크 | **아직 생성하지 않음**; 대상 이름 `vm-kd-h100`은 검증 후보일 뿐 존재하는 VM이 아님 |
+| 기존 구독 | `66679423-9d1a-4f45-8ae3-3078b8b62e99`, 현재 ARM 조회 Disabled |
+
+실제 Spot 사전 검증 tracking ID: `f29c72b0-9e1f-4569-9a85-6c54be09977f`. CLI 2.84.0이 뒤이어 `The content for this response was already consumed` 오류를 냈지만, 핵심 ARM 오류는 위 `SkuNotAvailable`다. `--validate`만 실행했고 새 학습 리소스가 생성되지 않은 것을 조회로 확인했다.
+
+이 제한은 단순 `Microsoft.Compute` 미등록 문제가 아니다. 일반 H100 계열 할당량 0만으로 Spot 실패를 설명하지 않는다. Spot은 별도 할당량 풀을 사용하며 기존 구독도 일반 H100 할당량 0에서 Spot 40 vCPU 사용량을 보였다. GPU SKU 접근 허용과 실제 용량은 Azure 지원팀 확인 및 승인 후 재검증이 필요하다. 기존 구독의 제한 없는 SKU 응답도 현재 재기동 가능성·물리 용량을 보장하지 않는다.
+
+### 새 랩탑의 Azure 인증
+
+코드는 아래의 기존 clone 절차로 받고, 인증은 새 랩탑에서 직접 수행한다. Azure CLI 캐시·SSH 개인키·토큰·가상환경은 Git에 없고 자동 이전되지 않는다.
+
+```bash
+az login --tenant ef7d55d6-c61d-4085-9064-4e83adf15ee3
+az account set --subscription e4b60458-f41b-4144-95e5-673e7c6bd7da
+az account show --query '{subscription:id,tenant:tenantId,state:state}' -o json
+az vm list-usage --location koreacentral \
+	--subscription e4b60458-f41b-4144-95e5-673e7c6bd7da \
+	--query '[?name.value==`lowPriorityCores`].{used:currentValue,limit:limit}' -o json
+```
+
+브라우저 로그인이 어려운 환경에서는 `az login`에 `--use-device-code`를 추가한다. 인증이 끝나기 전에 같은 터미널에 다른 명령을 보내지 않는다. 새 랩탑의 CLI 인증 성공을 GPU 접근 승인으로 해석하지 않는다.
+
+### 승인 후 진행 순서
+
+1. 새 구독의 Korea Central H100 SKU 제한과 Spot 할당량을 다시 조회하고 실제 Spot 구성 검증을 통과시킨다. 다른 지역에 배포할 때도 해당 지역의 승인·할당량·용량을 확인한다.
+2. 실제 VM·네트워크·영구 디스크를 생성하고 리소스 ID를 새 실행 기록에 저장한다. **저장소의 `infra/deploy.sh`는 UI Container Apps 배포용이며 H100 VM 생성기가 아니다.** 기존 H100은 수동 배포했다. `scripts/azure_h100_tuning.py deploy`도 기존 VM에 코드를 올리는 기능이지 VM을 새로 생성하는 명령이 아니다.
+3. 새 VM에서는 Ubuntu·NVIDIA 드라이버·`nvidia-smi`·Python/CUDA 환경을 검증한다. 단일 H100에서는 DDP를 사용하지 않는다. 기존 패키지 manifest는 참고 자료이며 새 환경 설치·호환성은 별도 검증한다.
+4. 학습 상태·캐시·체크포인트는 `/mnt` 임시 디스크가 아닌 관리 디스크에 저장한다. 기존 방식은 128GB OS 관리 디스크의 `/var/lib`였으며, 새 구성의 후보는 OS 128GB `StandardSSD_LRS`, VM 삭제 시 `Detach`, Spot 회수 시 `Deallocate`다. 실제 모델/캐시 용량과 비용에 맞춰 확정한다. VM 삭제와 리소스 그룹/디스크 삭제는 다르며, 디스크 보존 설정은 백업을 대체하지 않는다.
+5. 기존 Teacher adapter·Student FT·최우수 KD 가중치의 **접근 가능성과 별도 백업**을 먼저 확인한다. 기존 구독 Disabled 상태에서 경로가 문서에 있다고 읽을 수 있다고 가정하지 않는다. 복구가 불가능하면 기준 가중치부터 재학습해야 하며 과거 결과의 정확한 이어 학습이라고 주장하지 않는다.
+6. CPU 회귀 테스트와 실제 모델 2-update smoke 후 새 실험을 시작한다. 새 VM 식별자를 `--subscription`, `--resource-group`, `--vm-name`으로 명시하고, 기존 완료 `managed_job.json`을 새 작업 식별자로 사용하지 않는다. 아래의 suite 경로 일반화·resume 제한도 먼저 해결한다.
+
+**승인 대기 중 가능한 작업:** 로컬 개발·테스트, 과거 결과 검토, 모델 선정 및 도메인 데이터·안전 평가 설계. 제품 목표는 보급형 폰의 한국어 실버·의료 지원이며, Wikipedia PPL은 연구 기준선이지 임상 안전성·모바일 성능 지표가 아니다. 모바일 조사 보고서는 2026-09-20 자료이며 후속 실행 전에 모델·라이선스·런타임의 현재 버전을 다시 확인한다.
+
 ## 완료 결과 (2026-09-20)
 
 8개 실험(7 KD + 1 CE-only)과 최종 평가가 16:31 KST에 성공했다. 16:38 KST에 원본 산출물 51개 회수와 로컬 보고서/그림 생성까지 완료했고 감시기는 종료됐다. **2026-09-27 인수인계 시 VM의 현재 전원/보존 상태는 재조회하지 않았다.** 과거 성공 기록을 현재 실행 중으로 해석하지 않는다.
