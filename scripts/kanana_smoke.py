@@ -1,6 +1,7 @@
-"""Kanana 1.5 8B -> 2.1B 스모크 테스트 (RTX 3090 x 4)
+"""Kanana 1.5 8B -> 2.1B 스모크 테스트 (RTX 3090 x 4). 다른 계열(Qwen3 등)에도 설정만 바꿔 쓴다.
 
 4-way KD 를 돌리기 전에 Gemma 때 문제가 됐던 항목을 먼저 확인한다.
+BOS 가 없는 tokenizer(Qwen 계열)는 2의 BOS 비교를 건너뛰고, 3·4 는 BOS 없는 청크로 잰다.
 
   1. tokenizer: Teacher / Student vocabulary 가 같은가, 문서마다 BOS 가 붙는가
   2. BOS: 청크 BOS 유무에 따라 Teacher / Student PPL 이 어떻게 달라지는가 (Gemma 는 순서가 뒤집혔다)
@@ -130,7 +131,10 @@ def free(*models):
 
 
 def bos_and_quantization(config, tokenizer):
-    loaders = {bos: test_loader(config, tokenizer, bos) for bos in (True, False)}
+    has_bos = tokenizer.bos_token_id is not None
+    # 양자화 비교는 KD 에서 실제로 쓸 청크 조건으로 한다. BOS 가 없으면 BOS 없는 청크다.
+    quant_bos = has_bos
+    loaders = {bos: test_loader(config, tokenizer, bos) for bos in ((True, False) if has_bos else (False,))}
     n_bytes = {bos: count_bytes(loader, tokenizer) for bos, loader in loaders.items()}
     result = {"bos": {}, "quantization": {}}
 
@@ -145,17 +149,16 @@ def bos_and_quantization(config, tokenizer):
     result["quantization"]["bf16"] = {"device": TEACHER_BF16, "weights_gb": weights, "load_s": load_s}
     ref_logits = None
     for bos, loader in loaders.items():
-        nll, tokens, kept = nll_and_logits(teacher, loader, TEACHER_BF16, keep_logits=bos)
+        nll, tokens, kept = nll_and_logits(teacher, loader, TEACHER_BF16, keep_logits=bos == quant_bos)
         result["bos"][str(bos)]["teacher"] = ppl_row(nll, tokens, n_bytes[bos])
-        if bos:
+        if bos == quant_bos:
             ref_logits = kept
     result["quantization"]["bf16"]["peak_gb"] = gb(torch.cuda.max_memory_allocated(TEACHER_BF16))
     free(teacher)
     print(json.dumps(result["bos"], indent=2))
 
-    # int8 Teacher 는 BOS 청크에서 bf16 Teacher 와 비교한다 (KD 에서 실제로 쓸 조건).
     teacher, load_s, weights = load(config.teacher_model, TEACHER_INT8, config, "int8")
-    nll, tokens, kept = nll_and_logits(teacher, loaders[True], TEACHER_INT8, keep_logits=True)
+    nll, tokens, kept = nll_and_logits(teacher, loaders[quant_bos], TEACHER_INT8, keep_logits=True)
     kl, agree, positions = 0.0, 0, 0
     for ref, q in zip(ref_logits, kept):
         p = F.log_softmax(ref / 2.0, dim=-1)
@@ -168,7 +171,8 @@ def bos_and_quantization(config, tokenizer):
         "weights_gb": weights,
         "peak_gb": gb(torch.cuda.max_memory_allocated(TEACHER_INT8)),
         "load_s": load_s,
-        **ppl_row(nll, tokens, n_bytes[True]),
+        **ppl_row(nll, tokens, n_bytes[quant_bos]),
+        "chunk_bos": quant_bos,
         "kl_T2_nats": round(kl / positions, 6),
         "top1_agree": round(agree / positions, 4),
     }
@@ -184,7 +188,7 @@ def kd_step(config, tokenizer, top_k=128):
         config, kd_top_k=top_k, kd_vocab_size=len(tokenizer), temperature=2.0, alpha=0.5,
         kd_reduction="tokenmean", kd_divergence="forward_kl", optimizer="adafactor",
     )
-    loader = test_loader(cfg, tokenizer, prepend_bos=True)
+    loader = test_loader(cfg, tokenizer, prepend_bos=tokenizer.bos_token_id is not None)
     batch = next(iter(DataLoader(loader.dataset, batch_size=1)))
 
     teacher, _, _ = load(cfg.teacher_model, TEACHER_BF16, cfg)

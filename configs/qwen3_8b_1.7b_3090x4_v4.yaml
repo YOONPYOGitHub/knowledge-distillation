@@ -1,0 +1,74 @@
+# Qwen3 8B Base -> 1.7B Base v4: Gemma 3 v4 / Kanana v4 와 같은 조건으로 계열만 바꾼다.
+# 데이터 10배, early stopping, KD 는 Base 초기값 + forward KL, T=2, α=0.5, tokenmean, top-K 128, lr 1e-5.
+#
+# Kanana v4(kanana_8b_2b_3090x4_v4) 와 다른 점은 모델뿐이다.
+#   - prepend_bos: false. Qwen 계열 tokenizer 에는 BOS 가 없다.
+#   - KD Teacher 는 Kanana 처럼 양자화하지 않는다 (8B bf16 이 3090 한 장에 들어간다).
+#
+# 실행 (Teacher FT ‖ Student SFT -> KD -> 평가 / 비교 / bootstrap, 다시 실행하면 이어간다):
+#   setsid nohup scripts/run_gemma3_v4.sh configs/qwen3_8b_1.7b_3090x4_v4.yaml \
+#     >> results/qwen3/logs/qwen3-8b-1.7b-v4/pipeline.log 2>&1 &
+#
+# GPU 배치 (KD 단계):
+#   rank 0: Student 1.7B -> cuda:0 │ Teacher 8B bf16 -> cuda:2
+#   rank 1: Student 1.7B -> cuda:1 │ Teacher 8B bf16 -> cuda:3
+
+teacher_model: Qwen/Qwen3-8B-Base
+student_model: Qwen/Qwen3-1.7B-Base
+
+# --- 데이터: Gemma v4 / Kanana v4 와 동일 조건 ---
+dataset_name: wikimedia/wikipedia
+dataset_config: 20231101.ko
+dataset_revision: b04c8d1ceb2f5cd4588862100d08de323dccfbaa
+dataset_text_column: text
+dataset_streaming: true
+dataset_max_samples: 10000
+dataset_shuffle_buffer: 10000
+validation_ratio: 0.05
+test_ratio: 0.05
+max_seq_length: 256
+prepend_bos: false
+
+# --- KD: Gemma v4 / Kanana v4 와 동일 ---
+temperature: 2.0
+alpha: 0.5
+kd_reduction: tokenmean
+kd_divergence: forward_kl
+kd_top_k: 128
+
+# --- Teacher fine-tuning (QLoRA): Gemma v4 / Kanana v4 와 동일 ---
+teacher_epochs: 3
+teacher_learning_rate: 2.0e-5
+teacher_lora_rank: 16
+teacher_lora_alpha: 32
+teacher_lora_dropout: 0.05
+# LoRA 대상은 기본값(q/k/v/o_proj). Qwen3 attention 도 같은 모듈 이름을 쓴다.
+teacher_ft_quantization: nf4
+teacher_checkpoint: results/qwen3/checkpoints/qwen3-8b-1.7b-v4/teacher_ft_best_adapter
+
+# --- KD 단계 Teacher 배치: bf16, rank 별 전용 GPU ---
+teacher_quantization: ""
+teacher_devices: [cuda:2, cuda:3]
+
+# --- Student 학습: Gemma v4 / Kanana v4 와 동일 ---
+epochs: 4
+batch_size: 1
+global_batch_size: 2
+learning_rate: 1.0e-5
+weight_decay: 0.01
+gradient_clip: 1.0
+optimizer: adafactor
+early_stopping_patience: 1
+early_stopping_min_delta: 0.005
+seed: 42
+training_seed: 42
+num_workers: 2
+distill_student_checkpoint: ""
+resume_training: true
+
+device: cuda:0
+bf16: true
+gradient_checkpointing: true
+
+output_dir: results/qwen3
+run_id: qwen3-8b-1.7b-v4
