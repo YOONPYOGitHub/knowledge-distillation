@@ -1,5 +1,8 @@
 # 한국어 KD 3개 계열 비교 — 진행 현황
 
+> **최신 종합 보고서: [kd-midterm-report.md](kd-midterm-report.md)** (2026-10-29, Qwen3 v4 결과와 실버케어 엣지 모델 제안 포함).
+> 이 문서는 Qwen3 v4 이전 시점의 기록이다.
+
 기준 시각: **2026-10-02 05:30 KST** (처음 작성 10/1 13:20, 조모임 10/1 21:30 공유용) · 브랜치: `feature/kanana-4way-kd`
 
 Qwen2.5, Gemma 3, Kanana 1.5 세 계열에서 같은 한국어 위키 데이터로 Teacher → Student 지식증류(KD)를 4-way
