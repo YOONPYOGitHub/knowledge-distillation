@@ -1,0 +1,43 @@
+# Gemma 3 12B (Teacher) -> 1B (Student) 기준선 평가 — RTX 3090 24GB x 4
+#
+# 평가 전용 설정이다. Gemma 학습 체크포인트가 아직 없으므로 `--step evaluate` 는
+# Teacher 와 Student (Base) 두 모델만 측정하고 KD/FT 는 "체크포인트 없음" 으로 건너뛴다.
+#
+# GPU 배치:
+#   cuda:0 + cuda:1 — Teacher 12B 분할 (bf16 약 24.4GB, 한 장에 올라가지 않음)
+#   cuda:2          — Student 1B
+#   cuda:3          — 미사용 (여유분)
+#
+# 데이터 조건은 Qwen 실험(h100_qwen7b_korean_*)과 동일하게 유지한다.
+# 다만 tokenizer 가 다르므로 PPL 을 Qwen 결과와 직접 비교하면 안 된다.
+
+teacher_model: google/gemma-3-12b-pt
+student_model: google/gemma-3-1b-pt
+
+dataset_name: wikimedia/wikipedia
+dataset_config: 20231101.ko
+dataset_revision: b04c8d1ceb2f5cd4588862100d08de323dccfbaa
+dataset_text_column: text
+dataset_streaming: true
+dataset_max_samples: 1000
+dataset_shuffle_buffer: 10000
+validation_ratio: 0.05
+test_ratio: 0.05
+
+max_seq_length: 256
+# Gemma 는 BOS 를 전제로 학습되어, 없으면 PPL 이 2.5배 부풀어 오른다 (1B 기준 46.6 -> 18.3)
+prepend_bos: true
+batch_size: 2
+seed: 42
+num_workers: 2
+
+device: cuda:2
+teacher_device: cuda:0  # 분할 Teacher 의 입력 진입 장치
+teacher_device_map: auto
+teacher_max_memory:
+  "0": 22GiB
+  "1": 22GiB
+
+bf16: true
+output_dir: results/gemma3
+run_id: gemma3-12b-1b-3090x4-eval

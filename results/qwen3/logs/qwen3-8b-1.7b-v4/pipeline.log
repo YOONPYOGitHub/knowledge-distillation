@@ -1,0 +1,33 @@
+### model download 2026-10-21 05:58:13
+Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 74235.47it/s]
+Qwen/Qwen3-8B-Base -> /root/.cache/huggingface/hub/models--Qwen--Qwen3-8B-Base/snapshots/49e3418fbbbca6ecbdf9608b4d22e5a407081db4
+Fetching 10 files: 100%|██████████| 10/10 [00:00<00:00, 68871.99it/s]
+Qwen/Qwen3-1.7B-Base -> /root/.cache/huggingface/hub/models--Qwen--Qwen3-1.7B-Base/snapshots/ea980cb0a6c2ae4b936e82123acc929f1cec04c1
+############ v4 러너 시작 — 2026-10-21 05:58:14 ############
+==================================================================
+ STEP 1a  Teacher FT (QLoRA nf4, GPU 0,1)  (05:58:14)
+==================================================================
+ STEP 1b  Student SFT (GPU 2,3)  (05:58:14)
+==================================================================
+✅ Teacher FT (12:20:44)
+✅ Student SFT (21:51:13)
+==================================================================
+ STEP 2  KD (Student GPU 0,1 / Teacher GPU 2,3)  (21:51:13)
+==================================================================
+### model download 2026-10-22 03:34:14
+Fetching 14 files: 100%|██████████| 14/14 [00:00<00:00, 94557.58it/s]
+Qwen/Qwen3-8B-Base -> /root/.cache/huggingface/hub/models--Qwen--Qwen3-8B-Base/snapshots/49e3418fbbbca6ecbdf9608b4d22e5a407081db4
+Fetching 10 files: 100%|██████████| 10/10 [00:00<00:00, 67432.54it/s]
+Qwen/Qwen3-1.7B-Base -> /root/.cache/huggingface/hub/models--Qwen--Qwen3-1.7B-Base/snapshots/ea980cb0a6c2ae4b936e82123acc929f1cec04c1
+############ v4 러너 시작 — 2026-10-22 03:34:14 ############
+⏭️  Teacher FT 완료됨
+⏭️  Student SFT 완료됨
+==================================================================
+ STEP 2  KD (Student GPU 0,1 / Teacher GPU 2,3)  (03:34:14)
+==================================================================
+✅ KD (19:40:10)
+==================================================================
+ STEP 3  평가 + 비교 + paired bootstrap  (19:40:10)
+==================================================================
+✅ 평가 / 비교 / bootstrap (19:52:45)
+PIPELINE_DONE  2026-10-22 19:52:45

@@ -1,0 +1,24 @@
+[
+  {
+    "name": "Teacher",
+    "total_params": 12187325040,
+    "size_mb": 24374.65008,
+    "vision_params": 416866032,
+    "text_params": 11770459008,
+    "perplexity": 175.18382056344726,
+    "avg_loss": 5.165835825855766,
+    "tokens_per_sec": 1659.4708690285852,
+    "ms_per_token": 0.602601720020175,
+    "elapsed": 15.42660403251648
+  },
+  {
+    "name": "Student (Base)",
+    "total_params": 999885952,
+    "size_mb": 1999.771904,
+    "perplexity": 44.65663922096172,
+    "avg_loss": 3.7990029910269194,
+    "tokens_per_sec": 7495.548004996279,
+    "ms_per_token": 0.1334125269204378,
+    "elapsed": 3.415360689163208
+  }
+]

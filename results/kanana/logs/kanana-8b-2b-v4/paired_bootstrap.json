@@ -1,0 +1,48 @@
+{
+  "resamples": 10000,
+  "chunks": 820,
+  "tokens": 209100,
+  "perplexity": {
+    "Student (Base)": 8.135027899064818,
+    "Student (FT)": 7.34148387246108,
+    "Student (KD)": 6.928536876620124
+  },
+  "comparisons": [
+    {
+      "observed": -0.4129469958409553,
+      "ci95": [
+        -0.45044110796810205,
+        -0.3772429669775036
+      ],
+      "p_a_better": 1.0,
+      "chunks_a_better": 668,
+      "chunks": 820,
+      "a": "Student (KD)",
+      "b": "Student (FT)"
+    },
+    {
+      "observed": -1.2064910224446939,
+      "ci95": [
+        -1.3735547862863173,
+        -1.0376548437028312
+      ],
+      "p_a_better": 1.0,
+      "chunks_a_better": 476,
+      "chunks": 820,
+      "a": "Student (KD)",
+      "b": "Student (Base)"
+    },
+    {
+      "observed": -0.7935440266037386,
+      "ci95": [
+        -0.959095459928941,
+        -0.617974805435657
+      ],
+      "p_a_better": 1.0,
+      "chunks_a_better": 419,
+      "chunks": 820,
+      "a": "Student (FT)",
+      "b": "Student (Base)"
+    }
+  ]
+}

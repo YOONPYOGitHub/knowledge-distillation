@@ -1,0 +1,12 @@
+# Compatibility stack for VESSL's PyTorch 2.3.1+cu121 image (not Azure's stack).
+# Install into a remote --system-site-packages venv; do not copy macOS .venv.
+torch==2.3.1
+transformers==4.45.2
+tokenizers==0.20.3
+datasets==3.6.0
+accelerate==0.34.2
+peft==0.13.2
+numpy>=1.24,<2
+matplotlib>=3.7,<3.10
+pyyaml>=6.0
+tqdm>=4.65

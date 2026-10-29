@@ -15,6 +15,12 @@ from src.distill import distill
 from src.train_baseline import train_baseline
 from src.evaluate import evaluate_all
 from src.compare import compare
+from src.distributed import (
+    barrier,
+    cleanup_distributed,
+    is_main_process,
+    setup_distributed,
+)
 
 
 STEPS = ["train_teacher", "distill", "baseline", "evaluate", "compare"]
@@ -31,9 +37,12 @@ def run_pipeline(config, steps=None):
         train_teacher(config)
         # teacher_checkpoint 자동 설정 (이후 distill에서 사용)
         if not config.teacher_checkpoint:
-            config.teacher_checkpoint = str(
-                config.checkpoint_dir / "teacher_ft_best.pt"
+            checkpoint_name = (
+                "teacher_ft_best_adapter"
+                if config.teacher_lora_rank
+                else "teacher_ft_best.pt"
             )
+            config.teacher_checkpoint = str(config.checkpoint_dir / checkpoint_name)
 
     if "distill" in steps:
         print("\n" + "=" * 50)
@@ -47,21 +56,26 @@ def run_pipeline(config, steps=None):
         print("=" * 50)
         train_baseline(config)
 
-    if "evaluate" in steps:
+    if "evaluate" in steps and is_main_process():
         print("\n" + "=" * 50)
         print("STEP 4/5: Evaluation")
         print("=" * 50)
         evaluate_all(config)
+    if "evaluate" in steps:
+        barrier()
 
-    if "compare" in steps:
+    if "compare" in steps and is_main_process():
         print("\n" + "=" * 50)
         print("STEP 5/5: Comparison")
         print("=" * 50)
         compare(config)
+    if "compare" in steps:
+        barrier()
 
-    print("\n✅ 파이프라인 완료!")
-    print(f"   결과: {config.log_dir}")
-    print(f"   차트: {config.figure_dir}")
+    if is_main_process():
+        print("\n✅ 파이프라인 완료!")
+        print(f"   결과: {config.log_dir}")
+        print(f"   차트: {config.figure_dir}")
 
 
 def main():
@@ -87,18 +101,33 @@ def main():
         print("📄 Config: local_config() (기본값)")
         config = local_config()
 
-    # 설정 출력
-    print(f"   Teacher:  {config.teacher_model}")
-    print(f"   Student:  {config.student_model}")
-    print(f"   T={config.temperature}, α={config.alpha}, epochs={config.epochs}")
-    print(f"   Teacher FT: epochs={config.teacher_epochs}, lr={config.teacher_learning_rate}")
-    if config.teacher_checkpoint:
-        print(f"   Teacher checkpoint: {config.teacher_checkpoint}")
-    print(f"   seq={config.max_seq_length}, batch={config.batch_size}")
-    print(f"   Device:   {config.device}")
-    print(f"   Run ID:   {config.run_id}")
+    setup_distributed(config)
+    try:
+        if config.training_seed is not None:
+            from transformers import set_seed
 
-    run_pipeline(config, steps=args.step)
+            set_seed(config.training_seed)
+        # 설정 출력
+        if is_main_process():
+            print(f"   Teacher:  {config.teacher_model}")
+            print(f"   Student:  {config.student_model}")
+            print(f"   T={config.temperature}, α={config.alpha}, epochs={config.epochs}")
+            print(
+                f"   Teacher FT: epochs={config.teacher_epochs}, "
+                f"lr={config.teacher_learning_rate}"
+            )
+            if config.teacher_checkpoint:
+                print(f"   Teacher checkpoint: {config.teacher_checkpoint}")
+            print(f"   seq={config.max_seq_length}, batch/GPU={config.batch_size}")
+            print(f"   Device:   {config.device}")
+            print(f"   Teacher device: {config.teacher_device}")
+            if config.global_batch_size:
+                print(f"   Global batch: {config.global_batch_size} (no dropped/duplicated samples)")
+            print(f"   Run ID:   {config.run_id}")
+
+        run_pipeline(config, steps=args.step)
+    finally:
+        cleanup_distributed()
 
 
 if __name__ == "__main__":

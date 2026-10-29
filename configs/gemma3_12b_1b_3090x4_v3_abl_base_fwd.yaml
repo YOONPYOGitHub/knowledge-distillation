@@ -1,0 +1,80 @@
+# v3 요인 분리 ablation — 초기값 Base × forward_kl.
+# 초기값과 divergence 를 모두 바꾼다. 고전적 KD(Base 에서 forward KL)이며 SFT 와 직접 비교한다.
+#
+# 2×2 설계 (나머지 T=2, α=0.5, lr 1e-5, tokenmean, top-K 128 은 v3 와 같다):
+#                 reverse KL          forward KL
+#   FT 초기값     v3 (기존)           abl_ft_fwd
+#   Base 초기값   abl_base_rev        abl_base_fwd
+#
+# Teacher FT 어댑터는 v3 실행의 것을 재사용한다. train_teacher / baseline 은 다시 돌리지 않는다.
+# 실행: scripts/run_gemma3_ablation.sh
+#
+# early stopping: patience 2, min_delta 0. best 선택 규칙(val CE 최저)은 v3 와 같고,
+# v3/full-vocab 의 기존 곡선에 적용해도 같은 best epoch 을 고른다. 이후 epoch 만 생략한다.
+
+teacher_model: google/gemma-3-12b-pt
+student_model: google/gemma-3-1b-pt
+
+# --- 데이터: Qwen v3 와 동일 조건 ---
+dataset_name: wikimedia/wikipedia
+dataset_config: 20231101.ko
+dataset_revision: b04c8d1ceb2f5cd4588862100d08de323dccfbaa
+dataset_text_column: text
+dataset_streaming: true
+dataset_max_samples: 1000
+dataset_shuffle_buffer: 10000
+validation_ratio: 0.05
+test_ratio: 0.05
+max_seq_length: 256
+# Gemma 는 BOS 를 전제로 학습되어, 없으면 12B Teacher 가 1B 보다 나쁘게 측정된다.
+prepend_bos: true
+
+# --- KD: v3 와 동일, divergence 만 ablation 대상 ---
+temperature: 2.0
+alpha: 0.5
+kd_reduction: tokenmean
+kd_divergence: forward_kl
+# Gemma vocab 262,208 은 Qwen 의 1.7배라 KD 손실 버퍼가 크다.
+# top-K 로 목표 분포를 Teacher 상위 128개로 제한한다 (실측 2.15 -> 1.34 GB / batch 1).
+kd_top_k: 128
+
+# --- Teacher fine-tuning (QLoRA) ---
+teacher_epochs: 3
+teacher_learning_rate: 2.0e-5
+teacher_lora_rank: 16
+teacher_lora_alpha: 32
+teacher_lora_dropout: 0.05
+# vision tower 를 제외하고 언어 모델에만 LoRA 를 붙인다. vision 모듈은 텍스트 학습에서
+# gradient 를 받지 않아 DDP 가 unused parameter 로 실패한다.
+teacher_lora_target_modules: "^(?!.*vision).*\\.(q_proj|k_proj|v_proj|o_proj)$"
+teacher_ft_quantization: nf4
+teacher_checkpoint: results/gemma3/checkpoints/gemma3-12b-1b-v3/teacher_ft_best_adapter
+
+# --- KD 단계 Teacher 배치 ---
+teacher_quantization: int8
+teacher_devices: [cuda:2, cuda:3]
+
+# --- Student 학습: Qwen v3 와 동일 ---
+epochs: 8
+batch_size: 1
+global_batch_size: 2
+learning_rate: 1.0e-5
+weight_decay: 0.01
+gradient_clip: 1.0
+optimizer: adafactor
+early_stopping_patience: 2
+early_stopping_min_delta: 0.0
+seed: 42
+training_seed: 42
+num_workers: 2
+# 비워 두면 pretrained Student 에서 KD 를 시작한다.
+distill_student_checkpoint: ""
+
+device: cuda:0
+bf16: true
+gradient_checkpointing: true
+# Gemma 3 는 학습 시 eager attention 을 권장한다.
+attn_implementation: eager
+
+output_dir: results/gemma3
+run_id: gemma3-12b-1b-v3-abl-base-fwd

@@ -1,0 +1,77 @@
+📄 configs/qwen3_8b_1.7b_3090x4_v4.yaml | step=evaluate | run_id=qwen3-8b-1.7b-v4
+   Teacher: Qwen/Qwen3-8B-Base (quant=bf16)
+   Student: Qwen/Qwen3-1.7B-Base
+   kd_top_k=128, T=2.0, α=0.5, forward_kl/tokenmean
+==================================================
+STEP 4/5: Evaluation
+==================================================
+=== 4-Way Model Evaluation ===
+Device: cuda:0
+Map: 100%|██████████| 9000/9000 [00:06<00:00, 1328.63 examples/s]
+Map: 100%|██████████| 9000/9000 [00:06<00:00, 1320.23 examples/s]
+Map: 100%|██████████| 500/500 [00:00<00:00, 1207.78 examples/s]
+Map: 100%|██████████| 500/500 [00:00<00:00, 1192.62 examples/s]
+Map: 100%|██████████| 500/500 [00:00<00:00, 1145.80 examples/s]
+Map: 100%|██████████| 500/500 [00:00<00:00, 1131.69 examples/s]
+Test set: 950 samples
+Loading checkpoint shards: 100%|██████████| 5/5 [00:02<00:00,  2.35it/s]
+Loading checkpoint shards: 100%|██████████| 5/5 [00:02<00:00,  1.92it/s]
+  ✅ Teacher LoRA adapter 로드 → results/qwen3/checkpoints/qwen3-8b-1.7b-v4/teacher_ft_best_adapter
+--- Teacher (FT) 평가 ---
+  파라미터: 8,190,735,360 (16381.5 MB)
+Perplexity: 100%|█████████▉| 947/950 [01:33<00:00, 10.14it/s]
+Perplexity: 100%|█████████▉| 949/950 [01:33<00:00, 10.16it/s]
+  Perplexity: 5.85
+  속도: 2615 tokens/sec (0.38 ms/token)
+--- Student (KD) 평가 ---
+  파라미터: 1,720,574,976 (3441.1 MB)
+Perplexity: 100%|█████████▉| 946/950 [00:30<00:00, 31.01it/s]
+Perplexity: 100%|██████████| 950/950 [00:30<00:00, 31.01it/s]
+  Perplexity: 6.84
+  속도: 8054 tokens/sec (0.12 ms/token)
+--- Student (FT) 평가 ---
+  파라미터: 1,720,574,976 (3441.1 MB)
+Perplexity: 100%|█████████▉| 947/950 [00:30<00:00, 30.86it/s]
+  Perplexity: 7.23
+  속도: 8045 tokens/sec (0.12 ms/token)
+--- Student (Base) 평가 ---
+  파라미터: 1,720,574,976 (3441.1 MB)
+Perplexity: 100%|█████████▉| 948/950 [00:30<00:00, 30.89it/s]
+  Perplexity: 9.97
+  속도: 8012 tokens/sec (0.12 ms/token)
+평가 결과 저장 → results/qwen3/logs/qwen3-8b-1.7b-v4/evaluation_results.json
+✅ 파이프라인 완료!
+   결과: results/qwen3/logs/qwen3-8b-1.7b-v4
+   차트: results/qwen3/figures/qwen3-8b-1.7b-v4
+📄 configs/qwen3_8b_1.7b_3090x4_v4.yaml | step=compare | run_id=qwen3-8b-1.7b-v4
+   Teacher: Qwen/Qwen3-8B-Base (quant=bf16)
+   Student: Qwen/Qwen3-1.7B-Base
+   kd_top_k=128, T=2.0, α=0.5, forward_kl/tokenmean
+==================================================
+STEP 5/5: Comparison
+==================================================
+=== 4-Way Comparison ===
+======================================================================
+4-Way 비교 결과
+======================================================================
+모델                         파라미터        PPL   tokens/s   ms/tok
+----------------------------------------------------------------------
+Teacher (FT)       8,190,735,360       5.85       2615     0.38
+Student (KD)       1,720,574,976       6.84       8054     0.12
+Student (FT)       1,720,574,976       7.23       8045     0.12
+Student (Base)     1,720,574,976       9.97       8012     0.12
+======================================================================
+📊 증류 효과 (Q2): KD PPL 6.84 vs FT PPL 7.23
+   → KD가 FT 대비 PPL 0.38 낮음 (5.3% 개선)
+차트 저장 → results/qwen3/figures/qwen3-8b-1.7b-v4/perplexity_comparison.png
+차트 저장 → results/qwen3/figures/qwen3-8b-1.7b-v4/inference_speed.png
+차트 저장 → results/qwen3/figures/qwen3-8b-1.7b-v4/training_loss.png
+차트 저장 → results/qwen3/figures/qwen3-8b-1.7b-v4/val_loss.png
+서머리 저장 → results/qwen3/logs/qwen3-8b-1.7b-v4/summary.json
+노트 템플릿 생성 → results/qwen3/logs/qwen3-8b-1.7b-v4/notes.md
+--- 자동 진단 ---
+  ✅ KD(6.84) < FT(7.23) — 증류 효과 확인됨
+모든 비교 완료!
+✅ 파이프라인 완료!
+   결과: results/qwen3/logs/qwen3-8b-1.7b-v4
+   차트: results/qwen3/figures/qwen3-8b-1.7b-v4

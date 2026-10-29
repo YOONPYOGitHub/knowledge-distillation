@@ -1,0 +1,42 @@
+# Qwen3 8B Base (Teacher) -> 1.7B Base (Student) 기준선 평가 — RTX 3090 24GB x 4
+#
+# 평가 전용 설정이다. 학습 체크포인트가 없으므로 `--step evaluate` 는
+# Teacher 와 Student (Base) 두 모델만 측정하고 KD/FT 는 "체크포인트 없음" 으로 건너뛴다.
+# 스모크 테스트(scripts/kanana_smoke.py)도 이 설정으로 돌린다.
+#
+# 두 모델 모두 Qwen3ForCausalLM 이고 tokenizer 가 같다 (tokenizer 151,669 / logit 151,936, 패딩 차이).
+# Teacher 8B 는 bf16 약 16GB 로 3090 한 장에 들어가므로 분할하지 않는다.
+#
+# GPU 배치:
+#   cuda:0 — Teacher 8B (bf16)
+#   cuda:1 — Student 1.7B
+#
+# 데이터 조건은 Qwen2.5 / Gemma / Kanana 실험과 동일하게 유지한다.
+# 다만 tokenizer 가 다르므로 PPL 을 다른 계열 결과와 직접 비교하면 안 된다.
+
+teacher_model: Qwen/Qwen3-8B-Base
+student_model: Qwen/Qwen3-1.7B-Base
+
+dataset_name: wikimedia/wikipedia
+dataset_config: 20231101.ko
+dataset_revision: b04c8d1ceb2f5cd4588862100d08de323dccfbaa
+dataset_text_column: text
+dataset_streaming: true
+dataset_max_samples: 1000
+dataset_shuffle_buffer: 10000
+validation_ratio: 0.05
+test_ratio: 0.05
+
+max_seq_length: 256
+# Qwen 계열 tokenizer 에는 BOS 가 없다 (bos_token None). Qwen2.5 실험과 같이 붙이지 않는다.
+prepend_bos: false
+batch_size: 2
+seed: 42
+num_workers: 2
+
+device: cuda:1
+teacher_device: cuda:0
+
+bf16: true
+output_dir: results/qwen3
+run_id: qwen3-8b-1.7b-3090x4-eval

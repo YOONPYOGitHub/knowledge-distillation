@@ -3,6 +3,14 @@
 > 대형 언어 모델(Teacher)의 지식을 소형 모델(Student)로 전이하는 지식 증류를 구현하고,  
 > **4가지 모델의 성능을 비교·분석**하는 실험 프로젝트
 
+## VESSL Remote Explorer 접속
+
+- **Windows 10/11:** [PowerShell 기반 단계별 접속 가이드](docs/vessl-remote-explorer-windows.md)
+- **macOS:** [Terminal 기반 단계별 접속 가이드](docs/vessl-remote-explorer-macos.md)
+- **접속 후 공통:** [RTX 3090 × 4 환경 확인·KD 실행·평가](docs/vessl-3090x4-remote-explorer-guide.md)
+
+계정·조직·워크스페이스·경로는 자신의 환경에 맞춰 사용합니다. 3090×4 구성은 Student DDP 2 ranks와 전용 Teacher GPU 2개를 사용해 유효 배치 2를 유지합니다. 작은 모델 검증 통과와 실제 7B 학습의 속도/품질 검증은 별개입니다.
+
 ---
 
 ## 목차
@@ -515,6 +523,8 @@ YAML에 없는 필드는 `src/config.py`의 기본값이 적용됩니다.
 | 모델 선택 가이드 | [docs/model-selection-guide.md](docs/model-selection-guide.md) | Teacher/Student 조합, GPU별 추천, 토크나이저 호환성 |
 | 모델 설치 가이드 | [docs/model-installation-guide.md](docs/model-installation-guide.md) | 로컬 다운로드, 인증, 양자화, 캐시, 트러블슈팅 |
 | 상세 진행 일정 | [docs/schedule.md](docs/schedule.md) | Phase별 세부 체크리스트, 마일스톤 |
+| **Gemma 3 4-way KD 결과** | [docs/gemma3-4way-topk-kd.md](docs/gemma3-4way-topk-kd.md) | 12B→1B 4-way, top-K vs full-vocab A/B, bootstrap 유의성 판정 |
+| Gemma 3 기준선 평가 | [docs/gemma3-3090x4-eval.md](docs/gemma3-3090x4-eval.md) | 증류 전 PPL/속도, BOS 필수 이유, Teacher 양자화 실측 |
 | KD 아키텍처 | [docs/diagrams/kd-architecture.svg](docs/diagrams/kd-architecture.svg) | 지식 증류 전체 구조 다이어그램 |
 | 4-Way 비교 구조 | [docs/diagrams/4way-comparison.svg](docs/diagrams/4way-comparison.svg) | 실험 비교 설계 다이어그램 |
 | 학습 파이프라인 | [docs/diagrams/training-pipeline.svg](docs/diagrams/training-pipeline.svg) | 단계별 학습 흐름도 |

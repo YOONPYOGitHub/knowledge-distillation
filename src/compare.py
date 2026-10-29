@@ -219,8 +219,8 @@ def generate_summary(results: list, config: KDConfig) -> dict:
             diagnosis.append(
                 f"⚠️ KD({kd_ppl:.2f}) >= FT({ft_ppl:.2f}) — 증류 효과 미확인"
             )
-            next_actions.append("temperature 값 조정 (현재 → +2 시도)")
-            next_actions.append("alpha 값 낮추기 (CE 비율 줄이기)")
+            next_actions.append("temperature grid 탐색 (예: 1, 2, 4)")
+            next_actions.append("alpha 값 높이기 (CE 비율 늘리기)")
 
     # epoch 부족 진단
     if config.epochs <= 1:
@@ -235,7 +235,7 @@ def generate_summary(results: list, config: KDConfig) -> dict:
         next_actions.append("max_seq_length를 512로 올려서 패딩 비율 줄이기")
 
     # 서버 실험 권장
-    if config.device != "cuda":
+    if not config.device.startswith("cuda"):
         next_actions.append("GPU 서버에서 server_config()로 본 실험 수행")
 
     summary = {
@@ -245,6 +245,11 @@ def generate_summary(results: list, config: KDConfig) -> dict:
             "student_model": config.student_model,
             "temperature": config.temperature,
             "alpha": config.alpha,
+            "kd_reduction": config.kd_reduction,
+            "kd_divergence": config.kd_divergence,
+            "distill_student_checkpoint": config.distill_student_checkpoint,
+            "early_stopping_patience": config.early_stopping_patience,
+            "early_stopping_min_delta": config.early_stopping_min_delta,
             "epochs": config.epochs,
             "teacher_epochs": config.teacher_epochs,
             "teacher_learning_rate": config.teacher_learning_rate,

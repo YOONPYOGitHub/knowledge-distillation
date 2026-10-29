@@ -5,15 +5,27 @@ KD Loss = α · CE(Student, Label) + (1-α) · T² · KL(Student ∥ Teacher)
 
 import json
 import time
+from pathlib import Path
 
 import torch
 import torch.nn.functional as F
-from torch.optim import AdamW
 from tqdm import tqdm
+
+from transformers import AutoConfig
 
 from src.config import KDConfig
 from src.dataset import load_tokenizer, create_dataloaders
-from src.models import load_teacher, load_student, model_info
+from src.distributed import (
+    barrier,
+    is_main_process,
+    normalize_batch_loss,
+    reduce_metrics,
+    set_epoch,
+    unwrap_model,
+    wrap_ddp,
+)
+from src.models import create_optimizer, load_teacher, load_student, model_info
+from src.resume import clear_state, load_state, save_state
 
 
 def kd_loss(student_logits, teacher_logits, labels, config: KDConfig):
@@ -26,7 +38,7 @@ def kd_loss(student_logits, teacher_logits, labels, config: KDConfig):
     alpha = config.alpha
 
     # Causal LM label shift: logits[t] → labels[t+1]
-    shift_logits = student_logits[..., :-1, :].contiguous()
+    shift_logits = student_logits[..., :-1, :].float().contiguous()
     shift_teacher = teacher_logits[..., :-1, :].contiguous()
     shift_labels = labels[..., 1:].contiguous()
 
@@ -35,14 +47,46 @@ def kd_loss(student_logits, teacher_logits, labels, config: KDConfig):
         shift_logits.view(-1, shift_logits.size(-1)),
         shift_labels.view(-1),
         ignore_index=-100,
-    )
+        reduction="sum",
+    ) / (shift_labels != -100).sum().clamp_min(1)
 
     # Soft Label Loss: Student vs Teacher (Temperature 적용)
-    teacher_soft = F.softmax(shift_teacher / T, dim=-1)
-    student_log_soft = F.log_softmax(shift_logits / T, dim=-1)
-    kd_loss_value = F.kl_div(
-        student_log_soft, teacher_soft, reduction="batchmean"
-    ) * (T * T)
+    kd_vocab_size = config.kd_vocab_size or min(
+        shift_logits.size(-1), shift_teacher.size(-1)
+    )
+    if kd_vocab_size > min(shift_logits.size(-1), shift_teacher.size(-1)):
+        raise ValueError(
+            f"KD vocabulary size {kd_vocab_size} exceeds model logits: "
+            f"student={shift_logits.size(-1)}, teacher={shift_teacher.size(-1)}"
+        )
+    teacher_kd = shift_teacher[..., :kd_vocab_size]
+    student_kd = shift_logits[..., :kd_vocab_size]
+
+    if config.kd_top_k:
+        # Teacher 상위 K개 토큰만 목표 분포로 삼고 그 안에서 다시 정규화한다.
+        # (batch, seq, vocab) 크기의 fp32 중간 버퍼를 만들지 않는 것이 목적이다.
+        top_k = min(config.kd_top_k, kd_vocab_size)
+        top_index = teacher_kd.topk(top_k, dim=-1).indices
+        teacher_kd = teacher_kd.gather(-1, top_index)
+        student_kd = student_kd.gather(-1, top_index)
+
+    teacher_log_soft = F.log_softmax(teacher_kd.float() / T, dim=-1)
+    student_log_soft = F.log_softmax(student_kd / T, dim=-1)
+    if config.kd_divergence == "reverse_kl":
+        student_soft = student_log_soft.exp()
+        token_kl = (
+            student_soft * (student_log_soft - teacher_log_soft)
+        ).sum(dim=-1)
+    else:
+        teacher_soft = teacher_log_soft.exp()
+        token_kl = F.kl_div(
+            student_log_soft, teacher_soft, reduction="none"
+        ).sum(dim=-1)
+    if config.kd_reduction == "tokenmean":
+        valid_tokens = shift_labels != -100
+        kd_loss_value = token_kl[valid_tokens].sum() / valid_tokens.sum().clamp_min(1) * (T * T)
+    else:
+        kd_loss_value = token_kl.sum() / shift_logits.size(0) * (T * T)
 
     # Total Loss
     total_loss = alpha * ce_loss + (1 - alpha) * kd_loss_value
@@ -58,16 +102,27 @@ def train_one_epoch(teacher, student, dataloader, optimizer, config: KDConfig):
     kd_loss_sum = 0.0
     steps = 0
 
-    progress = tqdm(dataloader, desc="Training", leave=False)
+    progress = tqdm(
+        dataloader,
+        desc="Training",
+        leave=False,
+        disable=not is_main_process(),
+    )
+    teacher_device = next(teacher.parameters()).device
     for batch in progress:
-        input_ids = batch["input_ids"].to(config.device)
-        attention_mask = batch["attention_mask"].to(config.device)
-        labels = batch["labels"].to(config.device)
+        input_ids = batch["input_ids"].to(config.device, non_blocking=True)
+        attention_mask = batch["attention_mask"].to(config.device, non_blocking=True)
+        labels = batch["labels"].to(config.device, non_blocking=True)
+        teacher_input_ids = batch["input_ids"].to(teacher_device, non_blocking=True)
+        teacher_attention_mask = batch["attention_mask"].to(
+            teacher_device, non_blocking=True
+        )
 
-        # Teacher forward (no gradient)
+        # Separate CUDA devices execute these queued forwards concurrently.
         with torch.no_grad():
             teacher_outputs = teacher(
-                input_ids=input_ids, attention_mask=attention_mask
+                input_ids=teacher_input_ids,
+                attention_mask=teacher_attention_mask,
             )
 
         # Student forward
@@ -77,7 +132,13 @@ def train_one_epoch(teacher, student, dataloader, optimizer, config: KDConfig):
 
         # Loss 계산
         loss, ce, kd = kd_loss(
-            student_outputs.logits, teacher_outputs.logits, labels, config
+            student_outputs.logits,
+            teacher_outputs.logits.to(config.device, non_blocking=True),
+            labels,
+            config,
+        )
+        loss, batch_metrics = normalize_batch_loss(
+            loss, {"total_loss": loss.item(), "ce_loss": ce, "kd_loss": kd}, labels, config,
         )
 
         # Backpropagation
@@ -86,20 +147,22 @@ def train_one_epoch(teacher, student, dataloader, optimizer, config: KDConfig):
         torch.nn.utils.clip_grad_norm_(student.parameters(), config.gradient_clip)
         optimizer.step()
 
-        total_loss_sum += loss.item()
-        ce_loss_sum += ce
-        kd_loss_sum += kd
+        total_loss_sum += batch_metrics["total_loss"]
+        ce_loss_sum += batch_metrics["ce_loss"]
+        kd_loss_sum += batch_metrics["kd_loss"]
         steps += 1
 
         progress.set_postfix(
             loss=f"{loss.item():.4f}", ce=f"{ce:.4f}", kd=f"{kd:.4f}"
         )
+        if config.max_train_steps and steps >= config.max_train_steps:
+            break
 
-    return {
+    return reduce_metrics({
         "total_loss": total_loss_sum / steps,
         "ce_loss": ce_loss_sum / steps,
         "kd_loss": kd_loss_sum / steps,
-    }
+    }, config.device)
 
 
 @torch.no_grad()
@@ -109,32 +172,51 @@ def validate(teacher, student, dataloader, config: KDConfig):
     total_loss_sum = 0.0
     ce_loss_sum = 0.0
     steps = 0
+    teacher_device = next(teacher.parameters()).device
 
-    for batch in tqdm(dataloader, desc="Validation", leave=False):
-        input_ids = batch["input_ids"].to(config.device)
-        attention_mask = batch["attention_mask"].to(config.device)
-        labels = batch["labels"].to(config.device)
+    for batch in tqdm(
+        dataloader,
+        desc="Validation",
+        leave=False,
+        disable=not is_main_process(),
+    ):
+        input_ids = batch["input_ids"].to(config.device, non_blocking=True)
+        attention_mask = batch["attention_mask"].to(config.device, non_blocking=True)
+        labels = batch["labels"].to(config.device, non_blocking=True)
+        teacher_input_ids = batch["input_ids"].to(teacher_device, non_blocking=True)
+        teacher_attention_mask = batch["attention_mask"].to(
+            teacher_device, non_blocking=True
+        )
 
         teacher_outputs = teacher(
-            input_ids=input_ids, attention_mask=attention_mask
+            input_ids=teacher_input_ids,
+            attention_mask=teacher_attention_mask,
         )
         student_outputs = student(
             input_ids=input_ids, attention_mask=attention_mask
         )
 
         loss, ce, kd = kd_loss(
-            student_outputs.logits, teacher_outputs.logits, labels, config
+            student_outputs.logits,
+            teacher_outputs.logits.to(config.device, non_blocking=True),
+            labels,
+            config,
+        )
+        _, batch_metrics = normalize_batch_loss(
+            loss, {"total_loss": loss.item(), "ce_loss": ce}, labels, config,
         )
 
-        total_loss_sum += loss.item()
-        ce_loss_sum += ce
+        total_loss_sum += batch_metrics["total_loss"]
+        ce_loss_sum += batch_metrics["ce_loss"]
         steps += 1
+        if config.max_eval_steps and steps >= config.max_eval_steps:
+            break
 
     student.train()
-    return {
+    return reduce_metrics({
         "val_total_loss": total_loss_sum / steps,
         "val_ce_loss": ce_loss_sum / steps,
-    }
+    }, config.device)
 
 
 def distill(config: KDConfig):
@@ -150,31 +232,73 @@ def distill(config: KDConfig):
 
     # 토크나이저 & 데이터
     tokenizer = load_tokenizer(config.student_model)
+    teacher_tokenizer = load_tokenizer(config.teacher_model)
+    if teacher_tokenizer.get_vocab() != tokenizer.get_vocab():
+        raise ValueError(
+            "Teacher and student tokenizers must have identical vocabularies "
+            "for logit-based knowledge distillation"
+        )
+    # KD 는 tokenizer 의 실제 vocabulary 로 제한한다. 다만 모델의 lm_head 가 그보다 작을 수
+    # 있다 (Gemma 3: tokenizer 262,145 vs 1B lm_head 262,144). 두 모델의 출력 폭을 넘지 않게 자른다.
+    teacher_vocab = AutoConfig.from_pretrained(config.teacher_model)
+    teacher_vocab = getattr(teacher_vocab, "text_config", teacher_vocab).vocab_size
+    student_vocab = AutoConfig.from_pretrained(config.student_model)
+    student_vocab = getattr(student_vocab, "text_config", student_vocab).vocab_size
+    config.kd_vocab_size = min(len(tokenizer), teacher_vocab, student_vocab)
+    if config.kd_vocab_size < len(tokenizer) and is_main_process():
+        print(
+            f"  KD vocabulary: {config.kd_vocab_size:,} "
+            f"(tokenizer {len(tokenizer):,}, teacher {teacher_vocab:,}, student {student_vocab:,})"
+        )
     loaders = create_dataloaders(config, tokenizer)
     print(f"Train: {len(loaders['train'].dataset)} samples")
     print(f"Val:   {len(loaders['validation'].dataset)} samples\n")
 
     # 모델 로드
     teacher = load_teacher(config)
-    model_info(teacher, "Teacher")
     student = load_student(config)
-    model_info(student, "Student")
-    print()
+    if config.distill_student_checkpoint:
+        checkpoint_path = Path(config.distill_student_checkpoint)
+        if not checkpoint_path.is_file():
+            raise FileNotFoundError(
+                f"Student initialization checkpoint not found: {checkpoint_path}"
+            )
+        student.load_state_dict(
+            torch.load(checkpoint_path, map_location="cpu", weights_only=True)
+        )
+        print(f"  ✅ Student 초기 checkpoint 로드 → {checkpoint_path}")
+    student = wrap_ddp(student, config.device, fp32_reduce=bool(config.global_batch_size))
+    if is_main_process():
+        model_info(teacher, "Teacher")
+        model_info(student, "Student")
+        print()
 
     # Optimizer
-    optimizer = AdamW(
-        student.parameters(),
-        lr=config.learning_rate,
-        weight_decay=config.weight_decay,
-    )
+    optimizer = create_optimizer(student, config, config.learning_rate)
 
     # 학습 루프
     history = []
     best_val_loss = float("inf")
+    epochs_without_improvement = 0
+    start_epoch = 1
 
-    for epoch in range(1, config.epochs + 1):
+    resumed = load_state(config, "distill", student, optimizer)
+    if resumed:
+        history = resumed["history"]
+        best_val_loss = resumed["best_val_loss"]
+        epochs_without_improvement = resumed["epochs_without_improvement"]
+        start_epoch = resumed["epoch"] + 1
+        if (
+            config.early_stopping_patience
+            and epochs_without_improvement >= config.early_stopping_patience
+        ):
+            start_epoch = config.epochs + 1
+
+    for epoch in range(start_epoch, config.epochs + 1):
+        set_epoch(loaders["train"], epoch)
         start = time.time()
-        print(f"--- Epoch {epoch}/{config.epochs} ---")
+        if is_main_process():
+            print(f"--- Epoch {epoch}/{config.epochs} ---")
 
         train_metrics = train_one_epoch(
             teacher, student, loaders["train"], optimizer, config
@@ -183,32 +307,59 @@ def distill(config: KDConfig):
 
         elapsed = time.time() - start
         metrics = {**train_metrics, **val_metrics, "epoch": epoch, "time": elapsed}
-        history.append(metrics)
+        if is_main_process():
+            history.append(metrics)
 
-        print(
-            f"  Train Loss: {metrics['total_loss']:.4f} "
-            f"(CE: {metrics['ce_loss']:.4f}, KD: {metrics['kd_loss']:.4f})"
+            print(
+                f"  Train Loss: {metrics['total_loss']:.4f} "
+                f"(CE: {metrics['ce_loss']:.4f}, KD: {metrics['kd_loss']:.4f})"
+            )
+            print(
+                f"  Val Loss:   {metrics['val_total_loss']:.4f} "
+                f"(CE: {metrics['val_ce_loss']:.4f})"
+            )
+            print(f"  Time: {elapsed:.1f}s")
+
+        improved = (
+            metrics["val_ce_loss"]
+            < best_val_loss - config.early_stopping_min_delta
         )
-        print(
-            f"  Val Loss:   {metrics['val_total_loss']:.4f} "
-            f"(CE: {metrics['val_ce_loss']:.4f})"
+        if improved:
+            best_val_loss = metrics["val_ce_loss"]
+            epochs_without_improvement = 0
+            if is_main_process():
+                save_path = config.checkpoint_dir / "student_kd_best.pt"
+                torch.save(unwrap_model(student).state_dict(), save_path)
+                print(f"  ✅ Best model saved → {save_path}")
+        else:
+            epochs_without_improvement += 1
+
+        save_state(
+            config, "distill", student, optimizer, epoch,
+            best_val_loss, epochs_without_improvement, history,
         )
-        print(f"  Time: {elapsed:.1f}s")
-
-        # Best model 저장
-        if metrics["val_total_loss"] < best_val_loss:
-            best_val_loss = metrics["val_total_loss"]
-            save_path = config.checkpoint_dir / "student_kd_best.pt"
-            torch.save(student.state_dict(), save_path)
-            print(f"  ✅ Best model saved → {save_path}")
-
-        print()
+        if is_main_process():
+            print()
+        barrier()
+        if (
+            config.early_stopping_patience
+            and epochs_without_improvement >= config.early_stopping_patience
+        ):
+            if is_main_process():
+                print(
+                    "  ⏹ Early stopping: validation CE did not improve "
+                    f"for {epochs_without_improvement} epoch(s)."
+                )
+            break
 
     # 학습 로그 저장
     log_path = config.log_dir / "distill_history.json"
-    with open(log_path, "w") as f:
-        json.dump(history, f, indent=2)
-    print(f"학습 로그 저장 → {log_path}")
+    if is_main_process():
+        with open(log_path, "w") as f:
+            json.dump(history, f, indent=2)
+        print(f"학습 로그 저장 → {log_path}")
+    barrier()
+    clear_state(config, "distill")
 
     return student, history
 

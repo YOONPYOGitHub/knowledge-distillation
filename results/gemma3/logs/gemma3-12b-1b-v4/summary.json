@@ -1,0 +1,43 @@
+{
+  "run_id": "gemma3-12b-1b-v4",
+  "config": {
+    "teacher_model": "google/gemma-3-12b-pt",
+    "student_model": "google/gemma-3-1b-pt",
+    "temperature": 2.0,
+    "alpha": 0.5,
+    "kd_reduction": "tokenmean",
+    "kd_divergence": "forward_kl",
+    "distill_student_checkpoint": "",
+    "early_stopping_patience": 1,
+    "early_stopping_min_delta": 0.005,
+    "epochs": 4,
+    "teacher_epochs": 3,
+    "teacher_learning_rate": 2e-05,
+    "teacher_checkpoint": "results/gemma3/checkpoints/gemma3-12b-1b-v4/teacher_ft_best_adapter",
+    "batch_size": 1,
+    "max_seq_length": 256,
+    "device": "cuda:0"
+  },
+  "results": {
+    "Teacher (FT)": {
+      "ppl": 5.418436043570004,
+      "tokens_per_sec": 1444.136415852479
+    },
+    "Student (KD)": {
+      "ppl": 7.866165402857159,
+      "tokens_per_sec": 4558.641296751955
+    },
+    "Student (FT)": {
+      "ppl": 8.36256403610492,
+      "tokens_per_sec": 4524.40875060814
+    },
+    "Student (Base)": {
+      "ppl": 12.25332723721379,
+      "tokens_per_sec": 4522.804476041485
+    }
+  },
+  "diagnosis": [
+    "✅ KD(7.87) < FT(8.36) — 증류 효과 확인됨"
+  ],
+  "next_actions": []
+}

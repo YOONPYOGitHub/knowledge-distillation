@@ -9,9 +9,24 @@ uv.lock
 
 # 실험 결과 - 체크포인트만 제외 (대용량 모델 파일)
 results/checkpoints/
+results/imported/
+results/vessl/checkpoints/
+results/gemma3/checkpoints/
+results/kanana/checkpoints/
+results/qwen3/checkpoints/
+results/logs/vessl-auto-extend-*.log
 
 # Hugging Face 캐시
 .cache/
 # UI 정성 평가 수집 결과 (로컬에만)
 results/qualitative/
 infra/main.json
+
+# Gemma 3 평가용 별도 venv (transformers >= 4.50)
+.venv-gemma/
+
+# 비밀정보 — 토큰/키는 절대 커밋하지 않는다 (HF 토큰은 ~/.cache/huggingface/token 또는 환경변수)
+.env
+.env.*
+!.env.example
+*.token

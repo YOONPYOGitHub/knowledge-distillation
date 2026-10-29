@@ -8,12 +8,21 @@ import time
 
 import torch
 import torch.nn.functional as F
-from torch.optim import AdamW
 from tqdm import tqdm
 
 from src.config import KDConfig
 from src.dataset import load_tokenizer, create_dataloaders
-from src.models import load_student, model_info
+from src.distributed import (
+    barrier,
+    is_main_process,
+    normalize_batch_loss,
+    reduce_metrics,
+    set_epoch,
+    unwrap_model,
+    wrap_ddp,
+)
+from src.models import create_optimizer, load_student, model_info
+from src.resume import clear_state, load_state, save_state
 
 
 def train_one_epoch(student, dataloader, optimizer, config: KDConfig):
@@ -22,7 +31,7 @@ def train_one_epoch(student, dataloader, optimizer, config: KDConfig):
     loss_sum = 0.0
     steps = 0
 
-    progress = tqdm(dataloader, desc="Training", leave=False)
+    progress = tqdm(dataloader, desc="Training", leave=False, disable=not is_main_process())
     for batch in progress:
         input_ids = batch["input_ids"].to(config.device)
         attention_mask = batch["attention_mask"].to(config.device)
@@ -31,24 +40,28 @@ def train_one_epoch(student, dataloader, optimizer, config: KDConfig):
         outputs = student(input_ids=input_ids, attention_mask=attention_mask)
 
         # Causal LM label shift: logits[t] → labels[t+1]
-        shift_logits = outputs.logits[..., :-1, :].contiguous()
+        shift_logits = outputs.logits[..., :-1, :].float().contiguous()
         shift_labels = labels[..., 1:].contiguous()
         loss = F.cross_entropy(
             shift_logits.view(-1, shift_logits.size(-1)),
             shift_labels.view(-1),
             ignore_index=-100,
-        )
+            reduction="sum",
+        ) / (shift_labels != -100).sum().clamp_min(1)
+        loss, batch_metrics = normalize_batch_loss(loss, {"ce_loss": loss.item()}, labels, config)
 
         optimizer.zero_grad()
         loss.backward()
         torch.nn.utils.clip_grad_norm_(student.parameters(), config.gradient_clip)
         optimizer.step()
 
-        loss_sum += loss.item()
+        loss_sum += batch_metrics["ce_loss"]
         steps += 1
+        if config.max_train_steps and steps >= config.max_train_steps:
+            break
         progress.set_postfix(loss=f"{loss.item():.4f}")
 
-    return {"ce_loss": loss_sum / steps}
+    return reduce_metrics({"ce_loss": loss_sum / steps}, config.device)
 
 
 @torch.no_grad()
@@ -58,7 +71,7 @@ def validate(student, dataloader, config: KDConfig):
     loss_sum = 0.0
     steps = 0
 
-    for batch in tqdm(dataloader, desc="Validation", leave=False):
+    for batch in tqdm(dataloader, desc="Validation", leave=False, disable=not is_main_process()):
         input_ids = batch["input_ids"].to(config.device)
         attention_mask = batch["attention_mask"].to(config.device)
         labels = batch["labels"].to(config.device)
@@ -66,19 +79,23 @@ def validate(student, dataloader, config: KDConfig):
         outputs = student(input_ids=input_ids, attention_mask=attention_mask)
 
         # Causal LM label shift
-        shift_logits = outputs.logits[..., :-1, :].contiguous()
+        shift_logits = outputs.logits[..., :-1, :].float().contiguous()
         shift_labels = labels[..., 1:].contiguous()
         loss = F.cross_entropy(
             shift_logits.view(-1, shift_logits.size(-1)),
             shift_labels.view(-1),
             ignore_index=-100,
-        )
+            reduction="sum",
+        ) / (shift_labels != -100).sum().clamp_min(1)
+        _, batch_metrics = normalize_batch_loss(loss, {"ce_loss": loss.item()}, labels, config)
 
-        loss_sum += loss.item()
+        loss_sum += batch_metrics["ce_loss"]
         steps += 1
+        if config.max_eval_steps and steps >= config.max_eval_steps:
+            break
 
     student.train()
-    return {"val_ce_loss": loss_sum / steps}
+    return reduce_metrics({"val_ce_loss": loss_sum / steps}, config.device)
 
 
 def train_baseline(config: KDConfig):
@@ -100,52 +117,93 @@ def train_baseline(config: KDConfig):
 
     # 모델 로드
     student = load_student(config)
-    model_info(student, "Student (FT)")
-    print()
+    student = wrap_ddp(student, config.device, fp32_reduce=bool(config.global_batch_size))
+    if is_main_process():
+        model_info(student, "Student (FT)")
+        print()
 
     # Optimizer (distill.py와 동일)
-    optimizer = AdamW(
-        student.parameters(),
-        lr=config.learning_rate,
-        weight_decay=config.weight_decay,
-    )
+    optimizer = create_optimizer(student, config, config.learning_rate)
 
     # 학습 루프
     history = []
     best_val_loss = float("inf")
+    epochs_without_improvement = 0
+    start_epoch = 1
 
-    for epoch in range(1, config.epochs + 1):
+    resumed = load_state(config, "baseline", student, optimizer)
+    if resumed:
+        history = resumed["history"]
+        best_val_loss = resumed["best_val_loss"]
+        epochs_without_improvement = resumed["epochs_without_improvement"]
+        start_epoch = resumed["epoch"] + 1
+        if (
+            config.early_stopping_patience
+            and epochs_without_improvement >= config.early_stopping_patience
+        ):
+            start_epoch = config.epochs + 1
+
+    for epoch in range(start_epoch, config.epochs + 1):
+        set_epoch(loaders["train"], epoch)
         start = time.time()
-        print(f"--- Epoch {epoch}/{config.epochs} ---")
+        if is_main_process():
+            print(f"--- Epoch {epoch}/{config.epochs} ---")
 
         train_metrics = train_one_epoch(student, loaders["train"], optimizer, config)
         val_metrics = validate(student, loaders["validation"], config)
 
         elapsed = time.time() - start
         metrics = {**train_metrics, **val_metrics, "epoch": epoch, "time": elapsed}
-        history.append(metrics)
+        if is_main_process():
+            history.append(metrics)
 
-        print(f"  Train CE Loss: {metrics['ce_loss']:.4f}")
-        print(f"  Val CE Loss:   {metrics['val_ce_loss']:.4f}")
-        print(f"  Time: {elapsed:.1f}s")
+            print(f"  Train CE Loss: {metrics['ce_loss']:.4f}")
+            print(f"  Val CE Loss:   {metrics['val_ce_loss']:.4f}")
+            print(f"  Time: {elapsed:.1f}s")
 
-        # Best model 저장
-        if metrics["val_ce_loss"] < best_val_loss:
+        improved = (
+            metrics["val_ce_loss"]
+            < best_val_loss - config.early_stopping_min_delta
+        )
+        if improved:
             best_val_loss = metrics["val_ce_loss"]
-            save_path = config.checkpoint_dir / "student_ft_best.pt"
-            torch.save(student.state_dict(), save_path)
-            print(f"  ✅ Best model saved → {save_path}")
+            epochs_without_improvement = 0
+            if is_main_process():
+                save_path = config.checkpoint_dir / "student_ft_best.pt"
+                torch.save(unwrap_model(student).state_dict(), save_path)
+                print(f"  ✅ Best model saved → {save_path}")
+        else:
+            epochs_without_improvement += 1
 
-        print()
+        save_state(
+            config, "baseline", student, optimizer, epoch,
+            best_val_loss, epochs_without_improvement, history,
+        )
+        if is_main_process():
+            print()
+        barrier()
+        if (
+            config.early_stopping_patience
+            and epochs_without_improvement >= config.early_stopping_patience
+        ):
+            if is_main_process():
+                print(
+                    "  ⏹ Early stopping: validation CE did not improve "
+                    f"for {epochs_without_improvement} epoch(s)."
+                )
+            break
 
     # 학습 로그 저장
     log_path = config.log_dir / "baseline_history.json"
-    with open(log_path, "w") as f:
-        json.dump(history, f, indent=2)
-    print(f"학습 로그 저장 → {log_path}")
+    if is_main_process():
+        with open(log_path, "w") as f:
+            json.dump(history, f, indent=2)
+        print(f"학습 로그 저장 → {log_path}")
+    barrier()
+    clear_state(config, "baseline")
 
     return student, history
- 
+
 
 if __name__ == "__main__":
     from src.config import local_config

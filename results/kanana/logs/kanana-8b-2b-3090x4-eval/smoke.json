@@ -1,0 +1,71 @@
+{
+  "tokenizer": {
+    "same_vocab": true,
+    "tokenizer_len": 128256,
+    "teacher_vocab_size": 128256,
+    "student_vocab_size": 128256,
+    "bos_token": "<|begin_of_text|>",
+    "bos_token_id": 128000,
+    "adds_bos_per_document": true
+  },
+  "bos": {
+    "True": {
+      "student": {
+        "ppl": 9.3589,
+        "bits_per_byte": 0.9075,
+        "tokens": 31365,
+        "bytes": 111509
+      },
+      "teacher": {
+        "ppl": 7.7292,
+        "bits_per_byte": 0.8299,
+        "tokens": 31365,
+        "bytes": 111509
+      }
+    },
+    "False": {
+      "student": {
+        "ppl": 8.7457,
+        "bits_per_byte": 0.8798,
+        "tokens": 31365,
+        "bytes": 111534
+      },
+      "teacher": {
+        "ppl": 7.0262,
+        "bits_per_byte": 0.791,
+        "tokens": 31365,
+        "bytes": 111534
+      }
+    }
+  },
+  "quantization": {
+    "bf16": {
+      "device": "cuda:0",
+      "weights_gb": 14.96,
+      "load_s": 2.7,
+      "peak_gb": 15.58
+    },
+    "int8": {
+      "device": "cuda:2",
+      "weights_gb": 8.46,
+      "peak_gb": 9.24,
+      "load_s": 12.2,
+      "ppl": 7.7724,
+      "bits_per_byte": 0.8321,
+      "tokens": 31365,
+      "bytes": 111509,
+      "kl_T2_nats": 0.005725,
+      "top1_agree": 0.941
+    }
+  },
+  "student_weights_gb": 3.93,
+  "kd_step": {
+    "top_k": 128,
+    "loss": 1.7057,
+    "ce": 2.5298,
+    "kd": 0.8817,
+    "student_peak_gb": 11.41,
+    "teacher_peak_gb": 15.06,
+    "finite": true
+  }
+}

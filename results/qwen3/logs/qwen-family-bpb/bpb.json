@@ -1,0 +1,66 @@
+{
+  "config": "configs/qwen3_8b_1.7b_3090x4_v4.yaml",
+  "models": {
+    "Qwen3-1.7B Base": {
+      "model_id": "Qwen/Qwen3-1.7B-Base",
+      "adapter": null,
+      "ppl": 9.9679,
+      "bits_per_byte": 1.1508,
+      "tokens": 242250,
+      "bytes": 698305,
+      "chunks": 950,
+      "params": 1720574976,
+      "seconds": 22.2
+    },
+    "Qwen3-8B Base": {
+      "model_id": "Qwen/Qwen3-8B-Base",
+      "adapter": null,
+      "ppl": 6.9901,
+      "bits_per_byte": 0.9732,
+      "tokens": 242250,
+      "bytes": 698305,
+      "chunks": 950,
+      "params": 8190735360,
+      "seconds": 72.5
+    },
+    "Qwen3-8B Teacher FT": {
+      "model_id": "Qwen/Qwen3-8B-Base",
+      "adapter": "results/qwen3/checkpoints/qwen3-8b-1.7b-v4/teacher_ft_best_adapter",
+      "ppl": 5.8479,
+      "bits_per_byte": 0.8839,
+      "tokens": 242250,
+      "bytes": 698305,
+      "chunks": 950,
+      "params": 8190735360,
+      "seconds": 79.6
+    },
+    "Qwen2.5-1.5B Base": {
+      "model_id": "Qwen/Qwen2.5-1.5B",
+      "adapter": null,
+      "ppl": 10.6604,
+      "bits_per_byte": 1.1844,
+      "tokens": 242250,
+      "bytes": 698305,
+      "chunks": 950,
+      "params": 1543714304,
+      "seconds": 250.8
+    },
+    "Qwen2.5-7B Base": {
+      "model_id": "Qwen/Qwen2.5-7B",
+      "adapter": null,
+      "ppl": 7.7307,
+      "bits_per_byte": 1.0236,
+      "tokens": 242250,
+      "bytes": 698305,
+      "chunks": 950,
+      "params": 7615616512,
+      "seconds": 1199.4
+    }
+  },
+  "same_test_tokens_as_Qwen/Qwen3-1.7B-Base": {
+    "Qwen/Qwen3-1.7B-Base": true,
+    "Qwen/Qwen3-8B-Base": true,
+    "Qwen/Qwen2.5-1.5B": true,
+    "Qwen/Qwen2.5-7B": true
+  }
+}

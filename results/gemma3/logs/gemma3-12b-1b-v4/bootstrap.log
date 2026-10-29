@@ -1,0 +1,11 @@
+Test set: 832 chunks
+  Student (Base)             PPL 12.2518
+  Student (FT)               PPL 8.3621
+  Student (KD)               PPL 7.8658
+paired bootstrap (10,000회, chunk 832개 복원추출)
+A                         B                          PPL(A)-PPL(B)                95% CI   P(A<B)  chunk A<B
+Student (KD)              Student (FT)                     -0.4964    [-0.5349, -0.4592]    1.000   724/832
+Student (KD)              Student (Base)                   -4.3861    [-4.7565, -4.0275]    1.000   735/832
+Student (FT)              Student (Base)                   -3.8897    [-4.2447, -3.5385]    1.000   670/832
+저장 → results/gemma3/logs/gemma3-12b-1b-v4/paired_bootstrap.json
+CI 가 0 을 포함하면 두 모델의 PPL 차이는 test chunk 구성에 따른 흔들림과 구분되지 않는다.

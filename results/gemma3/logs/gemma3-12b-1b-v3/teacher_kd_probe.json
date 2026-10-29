@@ -1,0 +1,13 @@
+{
+  "config": "configs/gemma3_12b_1b_3090x4_v3.yaml",
+  "chunks": 119,
+  "tokens": 30345,
+  "temperature": 2.0,
+  "top_k": 128,
+  "ppl_bf16_ft": 6.883193930281135,
+  "ppl_int8_ft": 6.9243500794908295,
+  "kl_T_bf16_to_int8": 0.012112307972797238,
+  "top1_agree": 0.9363321799307959,
+  "topk_overlap": 0.9335073735376503,
+  "elapsed_s": 67.6
+}

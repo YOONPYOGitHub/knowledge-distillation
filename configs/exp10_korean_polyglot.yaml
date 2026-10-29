@@ -1,0 +1,30 @@
+# 참가자 B: Korean-specialized Polyglot-Ko family
+# 실행: python main.py configs/exp10_korean_polyglot.yaml --step distill
+
+teacher_model: EleutherAI/polyglot-ko-3.8b
+student_model: EleutherAI/polyglot-ko-1.3b
+
+dataset_name: wikimedia/wikipedia
+dataset_config: 20231101.ko
+dataset_revision: b04c8d1ceb2f5cd4588862100d08de323dccfbaa
+dataset_text_column: text
+dataset_streaming: true
+dataset_max_samples: 1000
+dataset_shuffle_buffer: 10000
+validation_ratio: 0.05
+test_ratio: 0.05
+
+max_seq_length: 128
+temperature: 2.0
+alpha: 0.3
+epochs: 1
+batch_size: 1
+learning_rate: 2.0e-5
+seed: 42
+num_workers: 2
+
+device: cuda
+bf16: true
+optimizer: adafactor
+gradient_checkpointing: true
+output_dir: /tmp/kd-results/polyglot

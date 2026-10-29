@@ -11,7 +11,7 @@ from transformers import AutoModelForCausalLM
 
 from src.config import KDConfig
 from src.dataset import load_tokenizer, create_dataloaders
-from src.models import load_student, load_teacher, model_info
+from src.models import load_teacher, model_dtype_kwargs
 
 
 @torch.no_grad()
@@ -48,11 +48,35 @@ def evaluate_perplexity(model, dataloader, device):
     return {"perplexity": perplexity, "avg_loss": avg_loss}
 
 
+def sync_target_devices(model, device) -> list[torch.device]:
+    """동기화해야 할 CUDA 장치 — 입력 장치 + 모델이 올라간 모든 장치.
+
+    분할 로드된 Teacher는 shard 가 모두 끝나야 한 스텝이 끝난 것이므로
+    입력 장치 한 곳만 동기화하면 속도가 실제보다 빠르게 측정된다.
+    """
+    devices = set()
+    if isinstance(device, str) and device.startswith("cuda"):
+        devices.add(torch.device(device))
+    elif isinstance(device, torch.device) and device.type == "cuda":
+        devices.add(device)
+
+    try:
+        for parameter in model.parameters():
+            parameter_device = parameter.device
+            if getattr(parameter_device, "type", None) == "cuda":
+                devices.add(parameter_device)
+    except TypeError:  # parameters() 를 흉내내지 않는 테스트 더블
+        pass
+
+    return sorted(devices, key=lambda d: d.index or 0)
+
+
 @torch.no_grad()
 def evaluate_speed(model, dataloader, device, num_batches=50):
     """추론 속도 측정: tokens/sec, ms/token"""
     model.eval()
     total_tokens = 0
+    sync_devices = sync_target_devices(model, device)
 
     # warmup
     batch = next(iter(dataloader))
@@ -60,8 +84,8 @@ def evaluate_speed(model, dataloader, device, num_batches=50):
     attention_mask = batch["attention_mask"].to(device)
     model(input_ids=input_ids, attention_mask=attention_mask)
 
-    if device == "cuda":
-        torch.cuda.synchronize()
+    for sync_device in sync_devices:
+        torch.cuda.synchronize(sync_device)
 
     start = time.time()
     for i, batch in enumerate(dataloader):
@@ -72,8 +96,8 @@ def evaluate_speed(model, dataloader, device, num_batches=50):
         model(input_ids=input_ids, attention_mask=attention_mask)
         total_tokens += attention_mask.sum().item()
 
-    if device == "cuda":
-        torch.cuda.synchronize()
+    for sync_device in sync_devices:
+        torch.cuda.synchronize(sync_device)
 
     elapsed = time.time() - start
     tokens_per_sec = total_tokens / elapsed
@@ -90,7 +114,18 @@ def get_model_size(model):
     """모델 파라미터 수 및 메모리"""
     total_params = sum(p.numel() for p in model.parameters())
     size_mb = sum(p.numel() * p.element_size() for p in model.parameters()) / 1e6
-    return {"total_params": total_params, "size_mb": size_mb}
+    info = {"total_params": total_params, "size_mb": size_mb}
+
+    # Gemma 3 12B 같은 멀티모달 Teacher는 텍스트 평가에 쓰이지 않는 vision tower를 포함한다.
+    vision_tower = getattr(model, "vision_tower", None) or getattr(
+        getattr(model, "model", None), "vision_tower", None
+    )
+    if vision_tower is not None:
+        vision_params = sum(p.numel() for p in vision_tower.parameters())
+        info["vision_params"] = vision_params
+        info["text_params"] = total_params - vision_params
+
+    return info
 
 
 def evaluate_model(model, name, dataloader, device):
@@ -122,24 +157,29 @@ def evaluate_all(config: KDConfig):
     config.ensure_dirs()
 
     tokenizer = load_tokenizer(config.student_model)
-    loaders = create_dataloaders(config, tokenizer)
+    # Only rank zero evaluates; never enter distributed dataset barriers or shard test data.
+    loaders = create_dataloaders(config, tokenizer, distributed=False)
     test_loader = loaders["test"]
     print(f"Test set: {len(test_loader.dataset)} samples\n")
 
     results = []
+    model_kwargs = model_dtype_kwargs(config)
 
     # 1. Teacher (FT checkpoint가 있으면 Teacher (FT)로 표시)
     teacher = load_teacher(config)
     teacher_name = "Teacher (FT)" if config.teacher_checkpoint else "Teacher"
-    results.append(evaluate_model(teacher, teacher_name, test_loader, config.device))
+    teacher_device = str(next(teacher.parameters()).device)
+    results.append(evaluate_model(teacher, teacher_name, test_loader, teacher_device))
     del teacher
-    if config.device == "cuda":
+    if config.device.startswith("cuda"):
         torch.cuda.empty_cache()
 
     # 2. Student (KD) — 증류 학습된 모델
     kd_path = config.checkpoint_dir / "student_kd_best.pt"
     if kd_path.exists():
-        student_kd = AutoModelForCausalLM.from_pretrained(config.student_model)
+        student_kd = AutoModelForCausalLM.from_pretrained(
+            config.student_model, **model_kwargs
+        )
         student_kd.load_state_dict(torch.load(kd_path, map_location="cpu", weights_only=True))
         student_kd.to(config.device)
         student_kd.eval()
@@ -151,7 +191,9 @@ def evaluate_all(config: KDConfig):
     # 3. Student (FT) — Fine-tuning만 한 모델
     ft_path = config.checkpoint_dir / "student_ft_best.pt"
     if ft_path.exists():
-        student_ft = AutoModelForCausalLM.from_pretrained(config.student_model)
+        student_ft = AutoModelForCausalLM.from_pretrained(
+            config.student_model, **model_kwargs
+        )
         student_ft.load_state_dict(torch.load(ft_path, map_location="cpu", weights_only=True))
         student_ft.to(config.device)
         student_ft.eval()
@@ -161,7 +203,9 @@ def evaluate_all(config: KDConfig):
         print(f"\n⚠️ Student (FT) 체크포인트 없음: {ft_path}")
 
     # 4. Student (Base) — 추가 학습 없는 원본
-    student_base = AutoModelForCausalLM.from_pretrained(config.student_model)
+    student_base = AutoModelForCausalLM.from_pretrained(
+        config.student_model, **model_kwargs
+    )
     student_base.to(config.device)
     student_base.eval()
     results.append(evaluate_model(student_base, "Student (Base)", test_loader, config.device))

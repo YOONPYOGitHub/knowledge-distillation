@@ -1,0 +1,123 @@
+{
+  "resamples": 10000,
+  "chunks": 119,
+  "tokens": 30345,
+  "perplexity": {
+    "Student (Base)": 14.002301378496394,
+    "Student (FT)": 11.654139381325558,
+    "KD FT+rev (v3)": 11.642448903636016,
+    "KD FT+fwd": 11.662688364997576,
+    "KD Base+rev": 11.512597209563904,
+    "KD Base+fwd": 11.45977453406328
+  },
+  "comparisons": [
+    {
+      "observed": -0.02023946136156063,
+      "ci95": [
+        -0.07416824885649356,
+        0.03337109427478999
+      ],
+      "p_a_better": 0.7763,
+      "chunks_a_better": 70,
+      "chunks": 119,
+      "a": "KD FT+rev (v3)",
+      "b": "KD FT+fwd"
+    },
+    {
+      "observed": 0.05282267550062336,
+      "ci95": [
+        -0.013571024396880781,
+        0.12291113190341003
+      ],
+      "p_a_better": 0.0625,
+      "chunks_a_better": 61,
+      "chunks": 119,
+      "a": "KD Base+rev",
+      "b": "KD Base+fwd"
+    },
+    {
+      "observed": 0.12985169407211217,
+      "ci95": [
+        0.03280926154951023,
+        0.22422267418163871
+      ],
+      "p_a_better": 0.0037,
+      "chunks_a_better": 40,
+      "chunks": 119,
+      "a": "KD FT+rev (v3)",
+      "b": "KD Base+rev"
+    },
+    {
+      "observed": 0.20291383093429616,
+      "ci95": [
+        0.1281840717813904,
+        0.27819501627385607
+      ],
+      "p_a_better": 0.0,
+      "chunks_a_better": 24,
+      "chunks": 119,
+      "a": "KD FT+fwd",
+      "b": "KD Base+fwd"
+    },
+    {
+      "observed": -0.14154217176165496,
+      "ci95": [
+        -0.2625913663396796,
+        -0.02733135232129378
+      ],
+      "p_a_better": 0.9933,
+      "chunks_a_better": 67,
+      "chunks": 119,
+      "a": "KD Base+rev",
+      "b": "Student (FT)"
+    },
+    {
+      "observed": -0.19436484726227832,
+      "ci95": [
+        -0.3200329856054633,
+        -0.08035087169103275
+      ],
+      "p_a_better": 0.9996,
+      "chunks_a_better": 69,
+      "chunks": 119,
+      "a": "KD Base+fwd",
+      "b": "Student (FT)"
+    },
+    {
+      "observed": -0.011690477689542789,
+      "ci95": [
+        -0.15130125009848258,
+        0.12026268637156323
+      ],
+      "p_a_better": 0.5574,
+      "chunks_a_better": 49,
+      "chunks": 119,
+      "a": "KD FT+rev (v3)",
+      "b": "Student (FT)"
+    },
+    {
+      "observed": 0.00854898367201784,
+      "ci95": [
+        -0.14167025311097087,
+        0.15092921004744966
+      ],
+      "p_a_better": 0.4447,
+      "chunks_a_better": 52,
+      "chunks": 119,
+      "a": "KD FT+fwd",
+      "b": "Student (FT)"
+    },
+    {
+      "observed": -2.348161997170836,
+      "ci95": [
+        -3.1472182123129118,
+        -1.619392675778477
+      ],
+      "p_a_better": 1.0,
+      "chunks_a_better": 76,
+      "chunks": 119,
+      "a": "Student (FT)",
+      "b": "Student (Base)"
+    }
+  ]
+}

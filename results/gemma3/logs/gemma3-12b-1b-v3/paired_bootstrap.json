@@ -1,0 +1,61 @@
+{
+  "resamples": 10000,
+  "chunks": 119,
+  "tokens": 30345,
+  "perplexity": {
+    "Student (Base)": 14.002301378496394,
+    "Student (FT)": 11.654139381325558,
+    "Student (KD, top-K 128)": 11.642448903636016,
+    "Student (KD, full-vocab)": 11.697889231684917
+  },
+  "comparisons": [
+    {
+      "observed": -0.011690477689542789,
+      "ci95": [
+        -0.14785002029577593,
+        0.11814728732931132
+      ],
+      "p_a_better": 0.5531,
+      "chunks_a_better": 49,
+      "chunks": 119,
+      "a": "Student (KD, top-K 128)",
+      "b": "Student (FT)"
+    },
+    {
+      "observed": 0.04374985035935808,
+      "ci95": [
+        -0.05673373002182135,
+        0.14390423441946007
+      ],
+      "p_a_better": 0.2022,
+      "chunks_a_better": 54,
+      "chunks": 119,
+      "a": "Student (KD, full-vocab)",
+      "b": "Student (FT)"
+    },
+    {
+      "observed": -0.055440328048900867,
+      "ci95": [
+        -0.15570729257924582,
+        0.0394618976590806
+      ],
+      "p_a_better": 0.8684,
+      "chunks_a_better": 58,
+      "chunks": 119,
+      "a": "Student (KD, top-K 128)",
+      "b": "Student (KD, full-vocab)"
+    },
+    {
+      "observed": -2.348161997170836,
+      "ci95": [
+        -3.1444536630181474,
+        -1.6152047299372627
+      ],
+      "p_a_better": 1.0,
+      "chunks_a_better": 76,
+      "chunks": 119,
+      "a": "Student (FT)",
+      "b": "Student (Base)"
+    }
+  ]
+}

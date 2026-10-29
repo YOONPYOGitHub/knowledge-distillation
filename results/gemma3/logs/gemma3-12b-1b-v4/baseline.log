@@ -1,0 +1,46 @@
+W0926 18:38:18.041000 139948979929088 torch/distributed/run.py:757]
+W0926 18:38:18.041000 139948979929088 torch/distributed/run.py:757] *****************************************
+W0926 18:38:18.041000 139948979929088 torch/distributed/run.py:757] Setting OMP_NUM_THREADS environment variable for each process to be 1 in default, to avoid your system being overloaded, please further tune the variable for optimal performance in your application as needed.
+W0926 18:38:18.041000 139948979929088 torch/distributed/run.py:757] *****************************************
+📄 configs/gemma3_12b_1b_3090x4_v4.yaml | step=baseline | run_id=gemma3-12b-1b-v4
+   Teacher: google/gemma-3-12b-pt (quant=int8)
+   Student: google/gemma-3-1b-pt
+   kd_top_k=128, T=2.0, α=0.5, forward_kl/tokenmean
+==================================================
+STEP 3/5: Baseline Fine-tuning
+==================================================
+=== Baseline Fine-tuning (CE only) ===
+Device: cuda:0
+Student: google/gemma-3-1b-pt
+lr=1e-05
+Epochs: 4, Batch: 1, SeqLen: 256
+==================================================
+STEP 3/5: Baseline Fine-tuning
+==================================================
+=== Baseline Fine-tuning (CE only) ===
+Device: cuda:1
+Student: google/gemma-3-1b-pt
+lr=1e-05
+Epochs: 4, Batch: 1, SeqLen: 256
+Train: 12256 samples
+Val:   773 samples
+Train: 12256 samples
+Val:   773 samples
+[Student (FT)]
+  파라미터: 999,885,952 (학습 가능: 999,885,952)
+  메모리: 1999.8 MB
+  디바이스: cuda:0
+--- Epoch 1/4 ---
+  Train CE Loss: 2.2170
+  Val CE Loss:   2.2428
+  Time: 8668.4s
+  ✅ Best model saved → results/gemma3/checkpoints/gemma3-12b-1b-v4/student_ft_best.pt
+--- Epoch 2/4 ---
+  Train CE Loss: 1.7798
+  Val CE Loss:   2.2942
+  Time: 8679.4s
+  ⏹ Early stopping: validation CE did not improve for 1 epoch(s).
+학습 로그 저장 → results/gemma3/logs/gemma3-12b-1b-v4/baseline_history.json
+✅ 파이프라인 완료!
+   결과: results/gemma3/logs/gemma3-12b-1b-v4
+   차트: results/gemma3/figures/gemma3-12b-1b-v4
