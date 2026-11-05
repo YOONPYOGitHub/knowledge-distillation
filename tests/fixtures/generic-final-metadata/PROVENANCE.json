@@ -1,0 +1,133 @@
+{
+  "version": 1,
+  "purpose": "Authentic metadata-only generic final-contract regression fixtures, not model outputs or payload readiness evidence.",
+  "canonical_node_encoding": "UTF-8 json.dumps(sort_keys=True, separators=(comma, colon), ensure_ascii=False, allow_nan=False), no trailing newline",
+  "scope": "Only listed nodes copied from saved original metadata. No corpus, heldout, QA text, weights, credentials, cloud access or referenced payload reads. Projected files are not original archive bytes. Historical source paths are provenance identifiers only.",
+  "files": [
+    {
+      "path": "round2-originals-transfer/originals.json",
+      "source_path": "results/research/campaign/common-corpus-v1/round2-originals-transfer/originals.json",
+      "source_bytes": 707732,
+      "source_sha256": "110333f971198abd1a719d016de10c2a6b1719a5b3dc8d753602e36358bcad4a",
+      "kind": "metadata projection; not original file",
+      "nodes": [
+        {
+          "pointer": "/plan.json/provenance",
+          "canonical_sha256": "71365785dcad8968ed6b2a2b53d737a84c6844b15653ebcf9709f84a0409adb5"
+        },
+        {
+          "pointer": "/trials~1ce-2~1result.json/checkpoint_contract",
+          "canonical_sha256": "684e1447d09954658ec3ab6746a783d99231415a9e71f762a123fe8aa8c36196"
+        },
+        {
+          "pointer": "/trials~1kd-1~1result.json/checkpoint_contract",
+          "canonical_sha256": "53e75f45484dec1648d66fc4a0fa87129d63e3413334be825ba39b5d701add1e"
+        }
+      ],
+      "bytes": 96227,
+      "sha256": "c52520df0b68f5538527d858a53fdd9d049edd89ad384283026f9511bcbd8311"
+    },
+    {
+      "path": "seed43-originals-transfer/originals.json",
+      "source_path": "results/research/campaign/common-corpus-v1/seed43-originals-transfer/originals.json",
+      "source_bytes": 175627,
+      "source_sha256": "e8aff0f772f7a09707fed8c5a03a83e39b183d364874adee5e7761a46b30c456",
+      "kind": "metadata projection; not original file",
+      "nodes": [
+        {
+          "pointer": "/trials~1ce-2~1result.json/checkpoint_contract",
+          "canonical_sha256": "1367b46d8411073375d949cdf4d54e2b77adbc0d8d208b612a66ab908e205b6a"
+        },
+        {
+          "pointer": "/trials~1kd-1~1result.json/checkpoint_contract",
+          "canonical_sha256": "eab54e26269c19f651b4d1717f83b7cbe120297381c5799260f807660865ee7e"
+        }
+      ],
+      "bytes": 95521,
+      "sha256": "06f9db92e1dfcd91275a7f0704e9998259d8b5031ef4f126337c2269d2d88115"
+    },
+    {
+      "path": "seed44-originals-transfer/originals.json",
+      "source_path": "results/research/campaign/common-corpus-v1/seed44-originals-transfer/originals.json",
+      "source_bytes": 175635,
+      "source_sha256": "816b88bd9d5ab0e0d85025049be15e665c964d2c280733a15b7966b7f3222fd3",
+      "kind": "metadata projection; not original file",
+      "nodes": [
+        {
+          "pointer": "/trials~1ce-2~1result.json/checkpoint_contract",
+          "canonical_sha256": "6d974a0f7ce5d651740930aea4b208c08cd5744f85dd4f2ad13f591fb206a9c7"
+        },
+        {
+          "pointer": "/trials~1kd-1~1result.json/checkpoint_contract",
+          "canonical_sha256": "21376506335ea633911c6299feced0a904e07fa871782930ced437a6b8f83b95"
+        }
+      ],
+      "bytes": 95521,
+      "sha256": "b989705c8278a61cddc6a2a1524bc98504ae5c64e727bc5434fcd75ec31b906f"
+    },
+    {
+      "path": "final-teacher-identity-20261026.json",
+      "source_path": "results/research/campaign/common-corpus-v1/final-teacher-identity-20261026.json",
+      "source_bytes": 1978,
+      "source_sha256": "1211671f68f4be8277b2a5b082d8af1971e438b9f991d31dc26addcb703a0ff7",
+      "kind": "metadata projection; not original file",
+      "nodes": [
+        {
+          "pointer": "/identity",
+          "canonical_sha256": "48801ca41f51841edcd7e5bca063171993be43e36e361b14fea507813f2eae9e"
+        },
+        {
+          "pointer": "/settings",
+          "canonical_sha256": "662563ad66186d2b8f592afbf50331060633f0c1fd842313a8073a66ac34e4ae"
+        }
+      ],
+      "bytes": 990,
+      "sha256": "071f296e6983dadd37aac7ce3f8d60fe6e3eded7b3a9d76188e8a88186015158"
+    },
+    {
+      "path": "final-cohort-auth-20261026T1205.json",
+      "source_path": "results/research/campaign/common-corpus-v1/final-cohort-auth-20261026T1205.json",
+      "source_bytes": 2452,
+      "source_sha256": "10f575b865bfa1061e19bb2984ede186407798b3b04f5afa7f195733a447f463",
+      "kind": "metadata projection; not original file",
+      "nodes": [
+        {
+          "pointer": "/cohort",
+          "canonical_sha256": "099b5d9e5610f00c8ff91a533840777929ab097574226e5f49c96dc95bb2cb14"
+        }
+      ],
+      "bytes": 897,
+      "sha256": "136216e9cbbb741bf2d409f82977e597034067465b170d93187f753a2e1d2a52"
+    },
+    {
+      "path": "final-teacher-original-manifest-20261026.json",
+      "source_path": "results/research/campaign/common-corpus-v1/final-teacher-original-manifest-20261026.json",
+      "source_bytes": 39586,
+      "source_sha256": "6752bdae5dbafb5c3b0c4f7eb30182de3ad60a03e3c739addbd5303173ca32fd",
+      "kind": "byte-identical metadata copy",
+      "nodes": [
+        {
+          "pointer": "",
+          "source_bytes_sha256": "6752bdae5dbafb5c3b0c4f7eb30182de3ad60a03e3c739addbd5303173ca32fd"
+        }
+      ],
+      "bytes": 39586,
+      "sha256": "6752bdae5dbafb5c3b0c4f7eb30182de3ad60a03e3c739addbd5303173ca32fd"
+    },
+    {
+      "path": "GENERIC_CPT_EXPOSURE_ADJUDICATION.md",
+      "source_path": "docs/research-campaign/GENERIC_CPT_EXPOSURE_ADJUDICATION.md",
+      "source_bytes": 3653,
+      "source_sha256": "1f2a6d352a26359febb6aad90b85e93a0d5e5a58fa5819b4bccf881821ea5379",
+      "kind": "byte-identical metadata copy",
+      "nodes": [
+        {
+          "pointer": "",
+          "source_bytes_sha256": "1f2a6d352a26359febb6aad90b85e93a0d5e5a58fa5819b4bccf881821ea5379"
+        }
+      ],
+      "bytes": 3653,
+      "sha256": "1f2a6d352a26359febb6aad90b85e93a0d5e5a58fa5819b4bccf881821ea5379"
+    }
+  ]
+}

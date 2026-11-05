@@ -1,0 +1,600 @@
+{
+  "counts": {
+    "pairs": 9,
+    "results": 24,
+    "selected_metadata": 21
+  },
+  "files": [
+    {
+      "bytes": 5167,
+      "path": "docs/published/generic-kd-v1/EVIDENCE.md",
+      "sha256": "230c57f8db725df8dc7a540d998b0d05afb8d3b0cbb14cc1a619c6722e834abf"
+    },
+    {
+      "bytes": 3836,
+      "path": "docs/published/generic-kd-v1/README.md",
+      "sha256": "b62ca0af0274c5221a8cbecf2d98dedcf0f0ad648f3745c501c92a73e0984f37"
+    },
+    {
+      "bytes": 13624,
+      "path": "docs/published/generic-kd-v1/REPORT.md",
+      "sha256": "a290957b5e4101b26996f0687eadd671ae888754ffbe7a2e0afb652db5d96e54"
+    },
+    {
+      "bytes": 2790,
+      "path": "results/published/generic-kd-v1/README.md",
+      "sha256": "082572b0726dbc302761bb35bda789320c5b09583ad5af4ce4e79e96673a4b4d"
+    },
+    {
+      "bytes": 23704,
+      "path": "results/published/generic-kd-v1/cohort-manifest.json",
+      "sha256": "53e4e887ec898c2cce985a8027f0dec33360761ba16f705a3c95d244887f904a"
+    },
+    {
+      "bytes": 200,
+      "path": "results/published/generic-kd-v1/final/gemma4--ce-seed42.json",
+      "sha256": "c530dd6fed541be27b518d2854ec561317628b9fe9afa97e3bdf498bf90bdc21"
+    },
+    {
+      "bytes": 201,
+      "path": "results/published/generic-kd-v1/final/gemma4--ce-seed43.json",
+      "sha256": "5b70b61cc0f42ae19888f3253ae7c801d94d3cf4bc418e9697970fe1bc70f4d6"
+    },
+    {
+      "bytes": 201,
+      "path": "results/published/generic-kd-v1/final/gemma4--ce-seed44.json",
+      "sha256": "b13e175d4d24737517e6c6b76ec4e5e1d3fa6db216ed5e7986a63806b7a7ea9a"
+    },
+    {
+      "bytes": 201,
+      "path": "results/published/generic-kd-v1/final/gemma4--kd-seed42.json",
+      "sha256": "f5b7f0273d2bad8256f25b74818a967e111922f0ba3371fe3c34fdb01d2b9d9e"
+    },
+    {
+      "bytes": 200,
+      "path": "results/published/generic-kd-v1/final/gemma4--kd-seed43.json",
+      "sha256": "18a611e55725aa71f2af62af1e63987960b2bd0ea048f2fb96cfafbd13c81fe1"
+    },
+    {
+      "bytes": 201,
+      "path": "results/published/generic-kd-v1/final/gemma4--kd-seed44.json",
+      "sha256": "7b59e5e222504368b5df89b4e31d20c5629abd615b7e68b74e06eb9b902aa0ab"
+    },
+    {
+      "bytes": 209,
+      "path": "results/published/generic-kd-v1/final/gemma4--pretrained-student.json",
+      "sha256": "26afdd9a4963cf230e46bb7e1fe245bd1118484daf391708e5c6acfc558bfbee"
+    },
+    {
+      "bytes": 199,
+      "path": "results/published/generic-kd-v1/final/gemma4--teacher.json",
+      "sha256": "6a2ee95f915f71d24f1dc0e79286ca8b42ce68f817b428e0d1236c1122f62c84"
+    },
+    {
+      "bytes": 201,
+      "path": "results/published/generic-kd-v1/final/lfm25--ce-seed42.json",
+      "sha256": "421ed9fbecbfe2f01bc34db1334352996b2b252e2badfa9534a7c8d3f6c4aa5f"
+    },
+    {
+      "bytes": 201,
+      "path": "results/published/generic-kd-v1/final/lfm25--ce-seed43.json",
+      "sha256": "d9fda52af98ae9b8bf40d915e4d9e772f9f41177eb2722c343f5646e6f1892f2"
+    },
+    {
+      "bytes": 200,
+      "path": "results/published/generic-kd-v1/final/lfm25--ce-seed44.json",
+      "sha256": "58cd1d7126e74c409e2b1df771218576333e895d7fa440280f3f24a0977879e8"
+    },
+    {
+      "bytes": 200,
+      "path": "results/published/generic-kd-v1/final/lfm25--kd-seed42.json",
+      "sha256": "bc448b65790d76376ccc32675a1d8c77db2ec7f4447e4e2cccdfb4f57f1edf07"
+    },
+    {
+      "bytes": 201,
+      "path": "results/published/generic-kd-v1/final/lfm25--kd-seed43.json",
+      "sha256": "a765707da112b2f35f56bb1fda2b1466c844644db5b86e4a398054b72dea7fa6"
+    },
+    {
+      "bytes": 201,
+      "path": "results/published/generic-kd-v1/final/lfm25--kd-seed44.json",
+      "sha256": "c9236041902038c672921d00473c13fa7abfaf384a6e2b2847a2b6e60836aab0"
+    },
+    {
+      "bytes": 210,
+      "path": "results/published/generic-kd-v1/final/lfm25--pretrained-student.json",
+      "sha256": "29aa2302c900400ee7303312aedba9fe94b9e7bde64db454d3521e4d0622fd3c"
+    },
+    {
+      "bytes": 198,
+      "path": "results/published/generic-kd-v1/final/lfm25--teacher.json",
+      "sha256": "09dd04ea940e4e7226cd9c9d0e9cb047ef0d4943b1b63fe9181f107146553aac"
+    },
+    {
+      "bytes": 201,
+      "path": "results/published/generic-kd-v1/final/qwen35--ce-seed42.json",
+      "sha256": "c3e0f29a896c1ae705e7e3c42109d1880424774caecfd8c103a09c99e5727b39"
+    },
+    {
+      "bytes": 201,
+      "path": "results/published/generic-kd-v1/final/qwen35--ce-seed43.json",
+      "sha256": "58aeb2323fdaf0b843143dbebf2be5bfd7a72bbbab8a6c69501cbbe168fe39c2"
+    },
+    {
+      "bytes": 200,
+      "path": "results/published/generic-kd-v1/final/qwen35--ce-seed44.json",
+      "sha256": "4a65a6659181e6a1588c0a792a80ebed0910f8bbea65ac70af962ff82e0f5291"
+    },
+    {
+      "bytes": 201,
+      "path": "results/published/generic-kd-v1/final/qwen35--kd-seed42.json",
+      "sha256": "9a0d3b2714e7e5e78b4df96d2090231157b9361d695d954ddfffba0965e6a6c3"
+    },
+    {
+      "bytes": 201,
+      "path": "results/published/generic-kd-v1/final/qwen35--kd-seed43.json",
+      "sha256": "a700ec24d3cd5e9689f8c66601484dd9a66b505e639eed41cb945025d19de2fd"
+    },
+    {
+      "bytes": 201,
+      "path": "results/published/generic-kd-v1/final/qwen35--kd-seed44.json",
+      "sha256": "5c2944dfb39efb3f36bfb12b848fdf91fcc79da5464df2ebe0ca7ec7b448cea3"
+    },
+    {
+      "bytes": 210,
+      "path": "results/published/generic-kd-v1/final/qwen35--pretrained-student.json",
+      "sha256": "cde3ec578af9b8e2442a91722ab968722b68c38ad5b4e6df18760e81768f4309"
+    },
+    {
+      "bytes": 199,
+      "path": "results/published/generic-kd-v1/final/qwen35--teacher.json",
+      "sha256": "298503fdc9fb422914a8b95e4d47a0bb9c23e0773266b91806e81bc03ae5af94"
+    },
+    {
+      "bytes": 940,
+      "path": "results/published/generic-kd-v1/paired_effects.csv",
+      "sha256": "899942f136ad7bb0c8a54372f66dedd93c0edc20e0320eaf381c6d32532a3a88"
+    },
+    {
+      "bytes": 9004,
+      "path": "results/published/generic-kd-v1/results.csv",
+      "sha256": "8d622bf38203da8fe478ac1dc15852a07740097f8686258dd24a1eda28c9a7bb"
+    },
+    {
+      "bytes": 711,
+      "path": "results/published/generic-kd-v1/run-census.json",
+      "sha256": "8392a2b5b6bd967c4a2d57164fd2a2be1bcc4d70390881479fbdb1de8d5959ea"
+    },
+    {
+      "bytes": 50367,
+      "path": "results/published/generic-kd-v1/selected-metadata.json",
+      "sha256": "2d9c3285adee1425dfe3f11a47771a1c196c506d05b1d6acc12d751967897aea"
+    },
+    {
+      "bytes": 6643,
+      "path": "results/published/generic-kd-v1/test_verify_results.py",
+      "sha256": "3765b75380812e216965517a4e9960d8a8236c58c14a09272e6e04bb22612be9"
+    },
+    {
+      "bytes": 11475,
+      "path": "results/published/generic-kd-v1/verify_results.py",
+      "sha256": "ec033aa0ac2b3433a59cb3fe98520ebde93717d7e3e1f4c7111a8ca207af1fd2"
+    }
+  ],
+  "manifest_excludes": [
+    "results/published/generic-kd-v1/manifest.json"
+  ],
+  "path_policy": "Published paths are repository-relative; results.csv published_path is relative to results bundle. All source paths are provenance strings only; verifier never follows them.",
+  "provenance": [
+    {
+      "published_path": "results/published/generic-kd-v1/final/qwen35--ce-seed42.json",
+      "published_sha256": "c3e0f29a896c1ae705e7e3c42109d1880424774caecfd8c103a09c99e5727b39",
+      "source_path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/final-exact-ce-seed42.json",
+      "source_sha256": "c3e0f29a896c1ae705e7e3c42109d1880424774caecfd8c103a09c99e5727b39",
+      "transformation": "byte-identical"
+    },
+    {
+      "published_path": "results/published/generic-kd-v1/final/qwen35--ce-seed43.json",
+      "published_sha256": "58aeb2323fdaf0b843143dbebf2be5bfd7a72bbbab8a6c69501cbbe168fe39c2",
+      "source_path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/final-exact-ce-seed43.json",
+      "source_sha256": "58aeb2323fdaf0b843143dbebf2be5bfd7a72bbbab8a6c69501cbbe168fe39c2",
+      "transformation": "byte-identical"
+    },
+    {
+      "published_path": "results/published/generic-kd-v1/final/qwen35--ce-seed44.json",
+      "published_sha256": "4a65a6659181e6a1588c0a792a80ebed0910f8bbea65ac70af962ff82e0f5291",
+      "source_path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/final-exact-ce-seed44.json",
+      "source_sha256": "4a65a6659181e6a1588c0a792a80ebed0910f8bbea65ac70af962ff82e0f5291",
+      "transformation": "byte-identical"
+    },
+    {
+      "published_path": "results/published/generic-kd-v1/final/qwen35--kd-seed42.json",
+      "published_sha256": "9a0d3b2714e7e5e78b4df96d2090231157b9361d695d954ddfffba0965e6a6c3",
+      "source_path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/final-exact-kd-seed42.json",
+      "source_sha256": "9a0d3b2714e7e5e78b4df96d2090231157b9361d695d954ddfffba0965e6a6c3",
+      "transformation": "byte-identical"
+    },
+    {
+      "published_path": "results/published/generic-kd-v1/final/qwen35--kd-seed43.json",
+      "published_sha256": "a700ec24d3cd5e9689f8c66601484dd9a66b505e639eed41cb945025d19de2fd",
+      "source_path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/final-exact-kd-seed43.json",
+      "source_sha256": "a700ec24d3cd5e9689f8c66601484dd9a66b505e639eed41cb945025d19de2fd",
+      "transformation": "byte-identical"
+    },
+    {
+      "published_path": "results/published/generic-kd-v1/final/qwen35--kd-seed44.json",
+      "published_sha256": "5c2944dfb39efb3f36bfb12b848fdf91fcc79da5464df2ebe0ca7ec7b448cea3",
+      "source_path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/final-exact-kd-seed44.json",
+      "source_sha256": "5c2944dfb39efb3f36bfb12b848fdf91fcc79da5464df2ebe0ca7ec7b448cea3",
+      "transformation": "byte-identical"
+    },
+    {
+      "published_path": "results/published/generic-kd-v1/final/qwen35--pretrained-student.json",
+      "published_sha256": "cde3ec578af9b8e2442a91722ab968722b68c38ad5b4e6df18760e81768f4309",
+      "source_path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/final-exact-pretrained-student.json",
+      "source_sha256": "cde3ec578af9b8e2442a91722ab968722b68c38ad5b4e6df18760e81768f4309",
+      "transformation": "byte-identical"
+    },
+    {
+      "published_path": "results/published/generic-kd-v1/final/qwen35--teacher.json",
+      "published_sha256": "298503fdc9fb422914a8b95e4d47a0bb9c23e0773266b91806e81bc03ae5af94",
+      "source_path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/final-exact-teacher.json",
+      "source_sha256": "298503fdc9fb422914a8b95e4d47a0bb9c23e0773266b91806e81bc03ae5af94",
+      "transformation": "byte-identical"
+    },
+    {
+      "published_path": "results/published/generic-kd-v1/final/gemma4--ce-seed42.json",
+      "published_sha256": "c530dd6fed541be27b518d2854ec561317628b9fe9afa97e3bdf498bf90bdc21",
+      "source_path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/gemma-final-exact-ce-seed42.json",
+      "source_sha256": "c530dd6fed541be27b518d2854ec561317628b9fe9afa97e3bdf498bf90bdc21",
+      "transformation": "byte-identical"
+    },
+    {
+      "published_path": "results/published/generic-kd-v1/final/gemma4--ce-seed43.json",
+      "published_sha256": "5b70b61cc0f42ae19888f3253ae7c801d94d3cf4bc418e9697970fe1bc70f4d6",
+      "source_path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/gemma-final-exact-ce-seed43.json",
+      "source_sha256": "5b70b61cc0f42ae19888f3253ae7c801d94d3cf4bc418e9697970fe1bc70f4d6",
+      "transformation": "byte-identical"
+    },
+    {
+      "published_path": "results/published/generic-kd-v1/final/gemma4--ce-seed44.json",
+      "published_sha256": "b13e175d4d24737517e6c6b76ec4e5e1d3fa6db216ed5e7986a63806b7a7ea9a",
+      "source_path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/gemma-final-exact-ce-seed44.json",
+      "source_sha256": "b13e175d4d24737517e6c6b76ec4e5e1d3fa6db216ed5e7986a63806b7a7ea9a",
+      "transformation": "byte-identical"
+    },
+    {
+      "published_path": "results/published/generic-kd-v1/final/gemma4--kd-seed42.json",
+      "published_sha256": "f5b7f0273d2bad8256f25b74818a967e111922f0ba3371fe3c34fdb01d2b9d9e",
+      "source_path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/gemma-final-exact-kd-seed42.json",
+      "source_sha256": "f5b7f0273d2bad8256f25b74818a967e111922f0ba3371fe3c34fdb01d2b9d9e",
+      "transformation": "byte-identical"
+    },
+    {
+      "published_path": "results/published/generic-kd-v1/final/gemma4--kd-seed43.json",
+      "published_sha256": "18a611e55725aa71f2af62af1e63987960b2bd0ea048f2fb96cfafbd13c81fe1",
+      "source_path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/gemma-final-exact-kd-seed43.json",
+      "source_sha256": "18a611e55725aa71f2af62af1e63987960b2bd0ea048f2fb96cfafbd13c81fe1",
+      "transformation": "byte-identical"
+    },
+    {
+      "published_path": "results/published/generic-kd-v1/final/gemma4--kd-seed44.json",
+      "published_sha256": "7b59e5e222504368b5df89b4e31d20c5629abd615b7e68b74e06eb9b902aa0ab",
+      "source_path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/gemma-final-exact-kd-seed44.json",
+      "source_sha256": "7b59e5e222504368b5df89b4e31d20c5629abd615b7e68b74e06eb9b902aa0ab",
+      "transformation": "byte-identical"
+    },
+    {
+      "published_path": "results/published/generic-kd-v1/final/gemma4--pretrained-student.json",
+      "published_sha256": "26afdd9a4963cf230e46bb7e1fe245bd1118484daf391708e5c6acfc558bfbee",
+      "source_path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/gemma-final-exact-pretrained-student.json",
+      "source_sha256": "26afdd9a4963cf230e46bb7e1fe245bd1118484daf391708e5c6acfc558bfbee",
+      "transformation": "byte-identical"
+    },
+    {
+      "published_path": "results/published/generic-kd-v1/final/gemma4--teacher.json",
+      "published_sha256": "6a2ee95f915f71d24f1dc0e79286ca8b42ce68f817b428e0d1236c1122f62c84",
+      "source_path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/gemma-final-exact-teacher.json",
+      "source_sha256": "6a2ee95f915f71d24f1dc0e79286ca8b42ce68f817b428e0d1236c1122f62c84",
+      "transformation": "byte-identical"
+    },
+    {
+      "published_path": "results/published/generic-kd-v1/final/lfm25--ce-seed42.json",
+      "published_sha256": "421ed9fbecbfe2f01bc34db1334352996b2b252e2badfa9534a7c8d3f6c4aa5f",
+      "source_path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/liquid-final-exact-ce-seed42.json",
+      "source_sha256": "421ed9fbecbfe2f01bc34db1334352996b2b252e2badfa9534a7c8d3f6c4aa5f",
+      "transformation": "byte-identical"
+    },
+    {
+      "published_path": "results/published/generic-kd-v1/final/lfm25--ce-seed43.json",
+      "published_sha256": "d9fda52af98ae9b8bf40d915e4d9e772f9f41177eb2722c343f5646e6f1892f2",
+      "source_path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/liquid-final-exact-ce-seed43.json",
+      "source_sha256": "d9fda52af98ae9b8bf40d915e4d9e772f9f41177eb2722c343f5646e6f1892f2",
+      "transformation": "byte-identical"
+    },
+    {
+      "published_path": "results/published/generic-kd-v1/final/lfm25--ce-seed44.json",
+      "published_sha256": "58cd1d7126e74c409e2b1df771218576333e895d7fa440280f3f24a0977879e8",
+      "source_path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/liquid-final-exact-ce-seed44.json",
+      "source_sha256": "58cd1d7126e74c409e2b1df771218576333e895d7fa440280f3f24a0977879e8",
+      "transformation": "byte-identical"
+    },
+    {
+      "published_path": "results/published/generic-kd-v1/final/lfm25--kd-seed42.json",
+      "published_sha256": "bc448b65790d76376ccc32675a1d8c77db2ec7f4447e4e2cccdfb4f57f1edf07",
+      "source_path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/liquid-final-exact-kd-seed42.json",
+      "source_sha256": "bc448b65790d76376ccc32675a1d8c77db2ec7f4447e4e2cccdfb4f57f1edf07",
+      "transformation": "byte-identical"
+    },
+    {
+      "published_path": "results/published/generic-kd-v1/final/lfm25--kd-seed43.json",
+      "published_sha256": "a765707da112b2f35f56bb1fda2b1466c844644db5b86e4a398054b72dea7fa6",
+      "source_path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/liquid-final-exact-kd-seed43.json",
+      "source_sha256": "a765707da112b2f35f56bb1fda2b1466c844644db5b86e4a398054b72dea7fa6",
+      "transformation": "byte-identical"
+    },
+    {
+      "published_path": "results/published/generic-kd-v1/final/lfm25--kd-seed44.json",
+      "published_sha256": "c9236041902038c672921d00473c13fa7abfaf384a6e2b2847a2b6e60836aab0",
+      "source_path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/liquid-final-exact-kd-seed44.json",
+      "source_sha256": "c9236041902038c672921d00473c13fa7abfaf384a6e2b2847a2b6e60836aab0",
+      "transformation": "byte-identical"
+    },
+    {
+      "published_path": "results/published/generic-kd-v1/final/lfm25--pretrained-student.json",
+      "published_sha256": "29aa2302c900400ee7303312aedba9fe94b9e7bde64db454d3521e4d0622fd3c",
+      "source_path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/liquid-final-exact-pretrained-student.json",
+      "source_sha256": "29aa2302c900400ee7303312aedba9fe94b9e7bde64db454d3521e4d0622fd3c",
+      "transformation": "byte-identical"
+    },
+    {
+      "published_path": "results/published/generic-kd-v1/final/lfm25--teacher.json",
+      "published_sha256": "09dd04ea940e4e7226cd9c9d0e9cb047ef0d4943b1b63fe9181f107146553aac",
+      "source_path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/liquid-final-exact-teacher.json",
+      "source_sha256": "09dd04ea940e4e7226cd9c9d0e9cb047ef0d4943b1b63fe9181f107146553aac",
+      "transformation": "byte-identical"
+    },
+    {
+      "published_path": "results/published/generic-kd-v1/cohort-manifest.json",
+      "published_sha256": "53e4e887ec898c2cce985a8027f0dec33360761ba16f705a3c95d244887f904a",
+      "source_path": "results/research/campaign/common-corpus-v1/final-raw-manifest-transfer/original-raw-manifest.json",
+      "source_sha256": "53e4e887ec898c2cce985a8027f0dec33360761ba16f705a3c95d244887f904a",
+      "transformation": "byte-identical metadata only; referenced corpus leaves NOT opened"
+    },
+    {
+      "published_path": "docs/published/generic-kd-v1/REPORT.md",
+      "published_sha256": "a290957b5e4101b26996f0687eadd671ae888754ffbe7a2e0afb652db5d96e54",
+      "source_path": "docs/research-campaign/reports/basic-integrated-v1/REPORT.md",
+      "source_sha256": "e9c17e82e4f9ad843881dbd394e997dad14f8fc23f49c1ec7021e92e384e3f30",
+      "transformation": "publication header prepended; original report body byte-identical"
+    },
+    {
+      "published_path": "results/published/generic-kd-v1/results.csv",
+      "published_sha256": "8d622bf38203da8fe478ac1dc15852a07740097f8686258dd24a1eda28c9a7bb",
+      "source_paths": [
+        "docs/research-campaign/reports/basic-integrated-v1/results.csv"
+      ],
+      "source_sha256s": [
+        "b2ff4641967e0e59f1234c576e69e69c1eae22fc3a55628977f3e7e32676db3f"
+      ],
+      "transformation": "same scientific columns; appended portable published_path; normalized CSV line endings"
+    },
+    {
+      "published_path": "results/published/generic-kd-v1/paired_effects.csv",
+      "published_sha256": "899942f136ad7bb0c8a54372f66dedd93c0edc20e0320eaf381c6d32532a3a88",
+      "source_paths": [
+        "docs/research-campaign/reports/basic-integrated-v1/paired_effects.csv"
+      ],
+      "source_sha256s": [
+        "899942f136ad7bb0c8a54372f66dedd93c0edc20e0320eaf381c6d32532a3a88"
+      ],
+      "transformation": "byte-identical"
+    },
+    {
+      "published_path": "results/published/generic-kd-v1/selected-metadata.json",
+      "published_sha256": "2d9c3285adee1425dfe3f11a47771a1c196c506d05b1d6acc12d751967897aea",
+      "source_paths": [
+        "docs/research-campaign/reports/basic-integrated-v1/selected-checkpoint-links.csv",
+        "docs/research-campaign/reports/basic-integrated-v1/selected-contract-scalars-20261031T1112.json",
+        "docs/research-campaign/reports/basic-integrated-v1/selected-details-20261031T1129.json"
+      ],
+      "source_sha256s": [
+        "a5e6a9b2b0879e96d7edc34e73ec440357fb7ff5b4c3897332ab9f7ea0a9abcb",
+        "67c9775eb66e1b0726b0bd0d8a1eb13718a91e77f8b28d59e4dc79c72ef81198",
+        "4bc9f5ef4a783869ef2578fb57341b1bb43b1a0c68984b80ebd0ded5c9a54bc7"
+      ],
+      "transformation": "allowlisted path-free joined metadata projection; original VM paths intentionally omitted"
+    },
+    {
+      "published_path": "results/published/generic-kd-v1/run-census.json",
+      "published_sha256": "8392a2b5b6bd967c4a2d57164fd2a2be1bcc4d70390881479fbdb1de8d5959ea",
+      "source_paths": [
+        "docs/research-campaign/reports/basic-integrated-v1/runs.csv"
+      ],
+      "source_sha256s": [
+        "bef5dc70b5036afc22d6b5644e535d91eaa806cb86f9a65c10476802a8d1f232"
+      ],
+      "transformation": "count/classification metadata projection; no row-level operational paths"
+    }
+  ],
+  "scope": "public portable generic KD aggregate-only results; local retained-byte verification, NOT fresh cloud/checkpoint authentication",
+  "source_inventory": [
+    {
+      "bytes": 8283,
+      "path": "docs/research-campaign/reports/basic-integrated-v1/EVIDENCE.md",
+      "sha256": "a0d2e9651e7d4c1e495f97c294b33d0ea0d9688a915be33ff9de43b1acfcf128"
+    },
+    {
+      "bytes": 13164,
+      "path": "docs/research-campaign/reports/basic-integrated-v1/REPORT.md",
+      "sha256": "e9c17e82e4f9ad843881dbd394e997dad14f8fc23f49c1ec7021e92e384e3f30"
+    },
+    {
+      "bytes": 6739,
+      "path": "docs/research-campaign/reports/basic-integrated-v1/aggregation-verification.json",
+      "sha256": "4f8e54394ebb4b98da0c67034b1a1638d1743c381da5260c78de3bf3537e2854"
+    },
+    {
+      "bytes": 11927,
+      "path": "docs/research-campaign/reports/basic-integrated-v1/manifest.json",
+      "sha256": "76a2c6b83c049e5ff35ac8e35d4e3deffa3229421eb7f633f4082b35626ba0f3"
+    },
+    {
+      "bytes": 940,
+      "path": "docs/research-campaign/reports/basic-integrated-v1/paired_effects.csv",
+      "sha256": "899942f136ad7bb0c8a54372f66dedd93c0edc20e0320eaf381c6d32532a3a88"
+    },
+    {
+      "bytes": 8305,
+      "path": "docs/research-campaign/reports/basic-integrated-v1/results.csv",
+      "sha256": "b2ff4641967e0e59f1234c576e69e69c1eae22fc3a55628977f3e7e32676db3f"
+    },
+    {
+      "bytes": 68716,
+      "path": "docs/research-campaign/reports/basic-integrated-v1/runs.csv",
+      "sha256": "bef5dc70b5036afc22d6b5644e535d91eaa806cb86f9a65c10476802a8d1f232"
+    },
+    {
+      "bytes": 22592,
+      "path": "docs/research-campaign/reports/basic-integrated-v1/selected-checkpoint-links.csv",
+      "sha256": "a5e6a9b2b0879e96d7edc34e73ec440357fb7ff5b4c3897332ab9f7ea0a9abcb"
+    },
+    {
+      "bytes": 25165,
+      "path": "docs/research-campaign/reports/basic-integrated-v1/selected-contract-scalars-20261031T1112.json",
+      "sha256": "67c9775eb66e1b0726b0bd0d8a1eb13718a91e77f8b28d59e4dc79c72ef81198"
+    },
+    {
+      "bytes": 13804,
+      "path": "docs/research-campaign/reports/basic-integrated-v1/selected-details-20261031T1129.json",
+      "sha256": "4bc9f5ef4a783869ef2578fb57341b1bb43b1a0c68984b80ebd0ded5c9a54bc7"
+    },
+    {
+      "bytes": 201,
+      "path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/final-exact-ce-seed42.json",
+      "sha256": "c3e0f29a896c1ae705e7e3c42109d1880424774caecfd8c103a09c99e5727b39"
+    },
+    {
+      "bytes": 201,
+      "path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/final-exact-ce-seed43.json",
+      "sha256": "58aeb2323fdaf0b843143dbebf2be5bfd7a72bbbab8a6c69501cbbe168fe39c2"
+    },
+    {
+      "bytes": 200,
+      "path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/final-exact-ce-seed44.json",
+      "sha256": "4a65a6659181e6a1588c0a792a80ebed0910f8bbea65ac70af962ff82e0f5291"
+    },
+    {
+      "bytes": 201,
+      "path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/final-exact-kd-seed42.json",
+      "sha256": "9a0d3b2714e7e5e78b4df96d2090231157b9361d695d954ddfffba0965e6a6c3"
+    },
+    {
+      "bytes": 201,
+      "path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/final-exact-kd-seed43.json",
+      "sha256": "a700ec24d3cd5e9689f8c66601484dd9a66b505e639eed41cb945025d19de2fd"
+    },
+    {
+      "bytes": 201,
+      "path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/final-exact-kd-seed44.json",
+      "sha256": "5c2944dfb39efb3f36bfb12b848fdf91fcc79da5464df2ebe0ca7ec7b448cea3"
+    },
+    {
+      "bytes": 210,
+      "path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/final-exact-pretrained-student.json",
+      "sha256": "cde3ec578af9b8e2442a91722ab968722b68c38ad5b4e6df18760e81768f4309"
+    },
+    {
+      "bytes": 199,
+      "path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/final-exact-teacher.json",
+      "sha256": "298503fdc9fb422914a8b95e4d47a0bb9c23e0773266b91806e81bc03ae5af94"
+    },
+    {
+      "bytes": 200,
+      "path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/gemma-final-exact-ce-seed42.json",
+      "sha256": "c530dd6fed541be27b518d2854ec561317628b9fe9afa97e3bdf498bf90bdc21"
+    },
+    {
+      "bytes": 201,
+      "path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/gemma-final-exact-ce-seed43.json",
+      "sha256": "5b70b61cc0f42ae19888f3253ae7c801d94d3cf4bc418e9697970fe1bc70f4d6"
+    },
+    {
+      "bytes": 201,
+      "path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/gemma-final-exact-ce-seed44.json",
+      "sha256": "b13e175d4d24737517e6c6b76ec4e5e1d3fa6db216ed5e7986a63806b7a7ea9a"
+    },
+    {
+      "bytes": 201,
+      "path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/gemma-final-exact-kd-seed42.json",
+      "sha256": "f5b7f0273d2bad8256f25b74818a967e111922f0ba3371fe3c34fdb01d2b9d9e"
+    },
+    {
+      "bytes": 200,
+      "path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/gemma-final-exact-kd-seed43.json",
+      "sha256": "18a611e55725aa71f2af62af1e63987960b2bd0ea048f2fb96cfafbd13c81fe1"
+    },
+    {
+      "bytes": 201,
+      "path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/gemma-final-exact-kd-seed44.json",
+      "sha256": "7b59e5e222504368b5df89b4e31d20c5629abd615b7e68b74e06eb9b902aa0ab"
+    },
+    {
+      "bytes": 209,
+      "path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/gemma-final-exact-pretrained-student.json",
+      "sha256": "26afdd9a4963cf230e46bb7e1fe245bd1118484daf391708e5c6acfc558bfbee"
+    },
+    {
+      "bytes": 199,
+      "path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/gemma-final-exact-teacher.json",
+      "sha256": "6a2ee95f915f71d24f1dc0e79286ca8b42ce68f817b428e0d1236c1122f62c84"
+    },
+    {
+      "bytes": 201,
+      "path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/liquid-final-exact-ce-seed42.json",
+      "sha256": "421ed9fbecbfe2f01bc34db1334352996b2b252e2badfa9534a7c8d3f6c4aa5f"
+    },
+    {
+      "bytes": 201,
+      "path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/liquid-final-exact-ce-seed43.json",
+      "sha256": "d9fda52af98ae9b8bf40d915e4d9e772f9f41177eb2722c343f5646e6f1892f2"
+    },
+    {
+      "bytes": 200,
+      "path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/liquid-final-exact-ce-seed44.json",
+      "sha256": "58cd1d7126e74c409e2b1df771218576333e895d7fa440280f3f24a0977879e8"
+    },
+    {
+      "bytes": 200,
+      "path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/liquid-final-exact-kd-seed42.json",
+      "sha256": "bc448b65790d76376ccc32675a1d8c77db2ec7f4447e4e2cccdfb4f57f1edf07"
+    },
+    {
+      "bytes": 201,
+      "path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/liquid-final-exact-kd-seed43.json",
+      "sha256": "a765707da112b2f35f56bb1fda2b1466c844644db5b86e4a398054b72dea7fa6"
+    },
+    {
+      "bytes": 201,
+      "path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/liquid-final-exact-kd-seed44.json",
+      "sha256": "c9236041902038c672921d00473c13fa7abfaf384a6e2b2847a2b6e60836aab0"
+    },
+    {
+      "bytes": 210,
+      "path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/liquid-final-exact-pretrained-student.json",
+      "sha256": "29aa2302c900400ee7303312aedba9fe94b9e7bde64db454d3521e4d0622fd3c"
+    },
+    {
+      "bytes": 198,
+      "path": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/liquid-final-exact-teacher.json",
+      "sha256": "09dd04ea940e4e7226cd9c9d0e9cb047ef0d4943b1b63fe9181f107146553aac"
+    },
+    {
+      "bytes": 23704,
+      "path": "results/research/campaign/common-corpus-v1/final-raw-manifest-transfer/original-raw-manifest.json",
+      "sha256": "53e4e887ec898c2cce985a8027f0dec33360761ba16f705a3c95d244887f904a"
+    }
+  ],
+  "source_pin_policy": "Retained report-manifest entries matched byte/SHA for used source report/CSV/projection files; original24 SHA matched retained results.csv; canonical cohort matched known SHA. Source manifest is not independently signed.",
+  "version": 1
+}

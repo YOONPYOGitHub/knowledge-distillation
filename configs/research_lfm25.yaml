@@ -1,0 +1,33 @@
+family: lfm25
+mode: gpu_smoke_not_effectiveness_study
+teacher:
+  id: LiquidAI/LFM2.5-24B-A2B
+  revision: 3fcfdbfa1a1b6d8166846a6323e69f1e1254440d
+student:
+  id: LiquidAI/LFM2.5-2.6B
+  revision: 654f9463ce32b05d0429d76fe1f580b27d4c1ac0
+adapter:
+  rank: 8
+  alpha: 16
+  dropout: 0.05
+model:
+  dtype: bfloat16
+  attention: sdpa
+data:
+  max_documents: 200
+  seq_length: 512
+training:
+  seed: 42
+  device: cuda
+  batch_size: 1
+  max_steps: 20
+  epochs: 100
+  validation_interval: 5
+  patience: 3
+  min_delta: 0.0001
+  checkpoint_interval_steps: 5
+  teacher_learning_rate: 0.00002
+  student_learning_rate: 0.0001
+  alpha: 0.5
+  temperature: 2.0
+  divergence: forward_kl

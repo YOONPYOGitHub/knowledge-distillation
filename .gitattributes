@@ -1,0 +1,6 @@
+# Preserve authenticated publication/fixture bytes on every checkout platform.
+docs/published/generic-kd-v1/** -text
+results/published/generic-kd-v1/** -text
+tests/fixtures/generic-final-metadata/** -text
+# The original paired-effects CSV intentionally retains its CRLF bytes.
+results/published/generic-kd-v1/paired_effects.csv whitespace=cr-at-eol

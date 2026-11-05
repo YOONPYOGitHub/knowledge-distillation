@@ -1,0 +1,33 @@
+family: gemma4
+mode: gpu_smoke_not_effectiveness_study
+teacher:
+  id: google/gemma-4-12B-it
+  revision: 707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7
+student:
+  id: google/gemma-4-E2B-it
+  revision: 3e22461f65e89153144f8adb70e3b8c2cc9845a7
+adapter:
+  rank: 8
+  alpha: 16
+  dropout: 0.05
+model:
+  dtype: bfloat16
+  attention: sdpa
+data:
+  max_documents: 200
+  seq_length: 512
+training:
+  seed: 42
+  device: cuda
+  batch_size: 1
+  max_steps: 20
+  epochs: 100
+  validation_interval: 5
+  patience: 3
+  min_delta: 0.0001
+  checkpoint_interval_steps: 5
+  teacher_learning_rate: 0.00002
+  student_learning_rate: 0.0001
+  alpha: 0.5
+  temperature: 2.0
+  divergence: forward_kl

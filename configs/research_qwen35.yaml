@@ -1,0 +1,33 @@
+family: qwen35
+mode: gpu_smoke_not_effectiveness_study
+teacher:
+  id: Qwen/Qwen3.5-9B
+  revision: c202236235762e1c871ad0ccb60c8ee5ba337b9a
+student:
+  id: Qwen/Qwen3.5-4B
+  revision: 851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a
+adapter:
+  rank: 8
+  alpha: 16
+  dropout: 0.05
+model:
+  dtype: bfloat16
+  attention: sdpa
+data:
+  max_documents: 200
+  seq_length: 512
+training:
+  seed: 42
+  device: cuda
+  batch_size: 1
+  max_steps: 20
+  epochs: 100
+  validation_interval: 5
+  patience: 3
+  min_delta: 0.0001
+  checkpoint_interval_steps: 5
+  teacher_learning_rate: 0.00002
+  student_learning_rate: 0.0001
+  alpha: 0.5
+  temperature: 2.0
+  divergence: forward_kl

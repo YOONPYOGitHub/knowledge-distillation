@@ -1,0 +1,1344 @@
+{
+  "scheduler": "not established by retained projection",
+  "scope": "path-free projection; hashes identify historical metadata, not downloadable checkpoint payloads or fresh remote authentication",
+  "selections": [
+    {
+      "checkpoint_complete_sha256": "c969d63b23d46cd62619fe11da8deed0a179ce3c541a4c02f055a3e2f2c224b0",
+      "checkpoint_manifest_sha256": "4fdf0466c63a85c5443a7c02e8ccd7509274414717fe6d406835ece69dbba54b",
+      "cohort_identity_sha256": "099b5d9e5610f00c8ff91a533840777929ab097574226e5f49c96dc95bb2cb14",
+      "contract_sha256": "684e1447d09954658ec3ab6746a783d99231415a9e71f762a123fe8aa8c36196",
+      "family": "qwen35",
+      "identity_scalars": {
+        "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4",
+        "initialization": "direct_pretrained_with_paired_seeded_lora",
+        "learning_rate": 8e-05,
+        "optimizer": "AdamW",
+        "plan_hash": "5aaf6c0ddc070c3ae0155f6dbdc464db1bcf9c0de2dd71f57caa3e3e61681b3d",
+        "stage": "ce",
+        "trial_id": "ce-2",
+        "weight_decay": 0.01
+      },
+      "model_id": "Qwen/Qwen3.5-4B",
+      "model_key": "ce-seed42",
+      "model_revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 8e-05,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "prepared_data_sha256": "4bc72b16dd819aca93987be1967539c3dd26bf097290853ff8ece31d9f61e702",
+      "provenance_sha256": "71365785dcad8968ed6b2a2b53d737a84c6844b15653ebcf9709f84a0409adb5",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 1.0,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 248077
+      }
+    },
+    {
+      "checkpoint_complete_sha256": "18657aafa0883c15e25313ac23d023741287bfb6d01ade40b87f9450cfa17f48",
+      "checkpoint_manifest_sha256": "67071b032523a77ca49382a677e3cb485591458806ee47e4491a346700d78602",
+      "cohort_identity_sha256": "099b5d9e5610f00c8ff91a533840777929ab097574226e5f49c96dc95bb2cb14",
+      "contract_sha256": "1367b46d8411073375d949cdf4d54e2b77adbc0d8d208b612a66ab908e205b6a",
+      "family": "qwen35",
+      "identity_scalars": {
+        "initial_adapter_sha256": "5b8968282e2d782b71e13df5e66f996e7bb471cdeceab2c658e864f6cd04f224",
+        "initialization": "direct_pretrained_with_paired_seeded_lora",
+        "learning_rate": 8e-05,
+        "optimizer": "AdamW",
+        "plan_hash": "c2d0ccbf8d4affb187619fd2ca8d3c58b780c6a3b9500a0bdaeecfcadbd2ee42",
+        "stage": "ce",
+        "trial_id": "ce-2",
+        "weight_decay": 0.01
+      },
+      "model_id": "Qwen/Qwen3.5-4B",
+      "model_key": "ce-seed43",
+      "model_revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 8e-05,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "prepared_data_sha256": "4bc72b16dd819aca93987be1967539c3dd26bf097290853ff8ece31d9f61e702",
+      "provenance_sha256": "71365785dcad8968ed6b2a2b53d737a84c6844b15653ebcf9709f84a0409adb5",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 1.0,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 43,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 248077
+      }
+    },
+    {
+      "checkpoint_complete_sha256": "067bc4092197fb9091dc0076c7ad40bd5d1fe2775844bd50bf541aec2be5b5db",
+      "checkpoint_manifest_sha256": "370ce5d2385b86ade20df2e298bb1bf0385330b2695c09d310abb39c747bbb89",
+      "cohort_identity_sha256": "099b5d9e5610f00c8ff91a533840777929ab097574226e5f49c96dc95bb2cb14",
+      "contract_sha256": "6d974a0f7ce5d651740930aea4b208c08cd5744f85dd4f2ad13f591fb206a9c7",
+      "family": "qwen35",
+      "identity_scalars": {
+        "initial_adapter_sha256": "c6a861f945fbb59a30746b68b042a10d5a9447c568a1e07d1c9d992ef36fbd0c",
+        "initialization": "direct_pretrained_with_paired_seeded_lora",
+        "learning_rate": 8e-05,
+        "optimizer": "AdamW",
+        "plan_hash": "fcac95ae82494d5bf522884e6ab879beb549e558633bc95282f9c8ee3b403732",
+        "stage": "ce",
+        "trial_id": "ce-2",
+        "weight_decay": 0.01
+      },
+      "model_id": "Qwen/Qwen3.5-4B",
+      "model_key": "ce-seed44",
+      "model_revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 8e-05,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "prepared_data_sha256": "4bc72b16dd819aca93987be1967539c3dd26bf097290853ff8ece31d9f61e702",
+      "provenance_sha256": "71365785dcad8968ed6b2a2b53d737a84c6844b15653ebcf9709f84a0409adb5",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 1.0,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 44,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 248077
+      }
+    },
+    {
+      "checkpoint_complete_sha256": "84e5a9230082ec3165097e7372f5a661a67b74fb1ae9abe0df0e9f28734244e6",
+      "checkpoint_manifest_sha256": "2e55fdd9ed675d5a0fe9bd0234263a41d87d7c45b595ea52e2e25f4149b87c9d",
+      "cohort_identity_sha256": "099b5d9e5610f00c8ff91a533840777929ab097574226e5f49c96dc95bb2cb14",
+      "contract_sha256": "53e75f45484dec1648d66fc4a0fa87129d63e3413334be825ba39b5d701add1e",
+      "family": "qwen35",
+      "identity_scalars": {
+        "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4",
+        "initialization": "direct_pretrained_with_paired_seeded_lora",
+        "kd_support": "renormalized_verified_tokenizer_ids; excludes_unassigned_head_padding; CE_uses_full_head",
+        "learning_rate": 8e-05,
+        "optimizer": "AdamW",
+        "plan_hash": "5aaf6c0ddc070c3ae0155f6dbdc464db1bcf9c0de2dd71f57caa3e3e61681b3d",
+        "stage": "kd",
+        "trial_id": "kd-1",
+        "weight_decay": 0.01
+      },
+      "model_id": "Qwen/Qwen3.5-4B",
+      "model_key": "kd-seed42",
+      "model_revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 8e-05,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "prepared_data_sha256": "4bc72b16dd819aca93987be1967539c3dd26bf097290853ff8ece31d9f61e702",
+      "provenance_sha256": "71365785dcad8968ed6b2a2b53d737a84c6844b15653ebcf9709f84a0409adb5",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 0.7,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 248077
+      }
+    },
+    {
+      "checkpoint_complete_sha256": "57e74e585ccbab2776e1b5c857fcffc8aba6759714006ca40735a8686f006ee8",
+      "checkpoint_manifest_sha256": "c6dc17417f0a1f3ee356402ac79326b012404573d2ff352fcb63ae2f406c8ade",
+      "cohort_identity_sha256": "099b5d9e5610f00c8ff91a533840777929ab097574226e5f49c96dc95bb2cb14",
+      "contract_sha256": "eab54e26269c19f651b4d1717f83b7cbe120297381c5799260f807660865ee7e",
+      "family": "qwen35",
+      "identity_scalars": {
+        "initial_adapter_sha256": "5b8968282e2d782b71e13df5e66f996e7bb471cdeceab2c658e864f6cd04f224",
+        "initialization": "direct_pretrained_with_paired_seeded_lora",
+        "kd_support": "renormalized_verified_tokenizer_ids; excludes_unassigned_head_padding; CE_uses_full_head",
+        "learning_rate": 8e-05,
+        "optimizer": "AdamW",
+        "plan_hash": "c2d0ccbf8d4affb187619fd2ca8d3c58b780c6a3b9500a0bdaeecfcadbd2ee42",
+        "stage": "kd",
+        "trial_id": "kd-1",
+        "weight_decay": 0.01
+      },
+      "model_id": "Qwen/Qwen3.5-4B",
+      "model_key": "kd-seed43",
+      "model_revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 8e-05,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "prepared_data_sha256": "4bc72b16dd819aca93987be1967539c3dd26bf097290853ff8ece31d9f61e702",
+      "provenance_sha256": "71365785dcad8968ed6b2a2b53d737a84c6844b15653ebcf9709f84a0409adb5",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 0.7,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 43,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 248077
+      }
+    },
+    {
+      "checkpoint_complete_sha256": "4da4ede8f2380b713b051039bf524effe46d3d2f664f33ab3aa8cd937f6f8da1",
+      "checkpoint_manifest_sha256": "86a3d57d4e079051ad8a4af625e7ee1d37e7f6d2f95a857529562cf7b3d97567",
+      "cohort_identity_sha256": "099b5d9e5610f00c8ff91a533840777929ab097574226e5f49c96dc95bb2cb14",
+      "contract_sha256": "21376506335ea633911c6299feced0a904e07fa871782930ced437a6b8f83b95",
+      "family": "qwen35",
+      "identity_scalars": {
+        "initial_adapter_sha256": "c6a861f945fbb59a30746b68b042a10d5a9447c568a1e07d1c9d992ef36fbd0c",
+        "initialization": "direct_pretrained_with_paired_seeded_lora",
+        "kd_support": "renormalized_verified_tokenizer_ids; excludes_unassigned_head_padding; CE_uses_full_head",
+        "learning_rate": 8e-05,
+        "optimizer": "AdamW",
+        "plan_hash": "fcac95ae82494d5bf522884e6ab879beb549e558633bc95282f9c8ee3b403732",
+        "stage": "kd",
+        "trial_id": "kd-1",
+        "weight_decay": 0.01
+      },
+      "model_id": "Qwen/Qwen3.5-4B",
+      "model_key": "kd-seed44",
+      "model_revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 8e-05,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "prepared_data_sha256": "4bc72b16dd819aca93987be1967539c3dd26bf097290853ff8ece31d9f61e702",
+      "provenance_sha256": "71365785dcad8968ed6b2a2b53d737a84c6844b15653ebcf9709f84a0409adb5",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 0.7,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 44,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 248077
+      }
+    },
+    {
+      "checkpoint_complete_sha256": "9b8c24d05020b39de110ac84c5295ed842c845cba7539880389a67f75ea1d6f3",
+      "checkpoint_manifest_sha256": "6752bdae5dbafb5c3b0c4f7eb30182de3ad60a03e3c739addbd5303173ca32fd",
+      "cohort_identity_sha256": "099b5d9e5610f00c8ff91a533840777929ab097574226e5f49c96dc95bb2cb14",
+      "contract_sha256": "742c1c0e7285f4ef881f3ac429b75cf3858b761311a9be1f345dc68fee30d014",
+      "family": "qwen35",
+      "identity_scalars": {
+        "data_fingerprint": "a97b49f1a05b6e858355422c4a420eb36263e3ebe64fbe2b4252561389ce81c9",
+        "initialization": "direct_pretrained_with_paired_seeded_lora",
+        "learning_rate": 2e-05,
+        "optimizer": "AdamW",
+        "stage": "teacher",
+        "tokenizer_hash": "2cd3ac0c793798cff5407baa351716a285b53d924f100a85f9e3a820b45b0119",
+        "weight_decay": 0.01
+      },
+      "model_id": "Qwen/Qwen3.5-9B",
+      "model_key": "teacher",
+      "model_revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+      "numerical_policy_at_identity": null,
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 2e-05,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "prepared_data_sha256": "4bc72b16dd819aca93987be1967539c3dd26bf097290853ff8ece31d9f61e702",
+      "provenance_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 1.0,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "temperature": 2.0,
+        "validation_interval": 200,
+        "vocab_size": 248077
+      }
+    },
+    {
+      "checkpoint_complete_sha256": "db18517483c4cec42b566ca84bdbec5759927169006bfe17497c28d5aadc8ab5",
+      "checkpoint_manifest_sha256": "481ee7a8f52daa545e741853afcd9ce4a383edd5a8a92b78321723edda134ebc",
+      "cohort_identity_sha256": "b115f22f3f9c09008a9a16a4a3dc26d3077e255fc0a6a8dfcfd736e95abfc736",
+      "contract_sha256": "7a3a35a261b9bfac18949986fef6d59864d2181d5ef494e04956fe96f91e9c97",
+      "family": "gemma4",
+      "identity_scalars": {
+        "initial_adapter_sha256": "9a1d1ee98db9726f76fc6fce4c34fde86fdb561282734f7357b554ab2381bd0a",
+        "initialization": "direct_pretrained_with_paired_seeded_lora",
+        "learning_rate": 0.00015,
+        "optimizer": "AdamW",
+        "plan_hash": "da41d21181cac1e9a1fe99d936ef495c16a559a123ae64b8801c4d97c5f84c21",
+        "stage": "ce",
+        "trial_id": "ce-1",
+        "weight_decay": 0.01
+      },
+      "model_id": "google/gemma-4-E2B-it",
+      "model_key": "ce-seed42",
+      "model_revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7",
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 0.00015,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "prepared_data_sha256": "b11965bb21730e4172800e49b1e60bf525be5f2aad379efb50e2c5c1b38efe80",
+      "provenance_sha256": "844f1e4b1bc84a77ba77066c10374923f3b59f4930131435ed7ef05d8cf08911",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 1.0,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 262144
+      }
+    },
+    {
+      "checkpoint_complete_sha256": "5f45cb102ecbb3a901703d007f0d344f6595a18768b02f2ec73c8f564ca56bc7",
+      "checkpoint_manifest_sha256": "a371c51c7536be8034e68fe1fcb43d3f3f0eb7ad2828a4013cb949ebeadeba4c",
+      "cohort_identity_sha256": "b115f22f3f9c09008a9a16a4a3dc26d3077e255fc0a6a8dfcfd736e95abfc736",
+      "contract_sha256": "501f5274f4ad3bb30571c61897108aba629bd95556b94076b0954d1ba8fda0c0",
+      "family": "gemma4",
+      "identity_scalars": {
+        "initial_adapter_sha256": "a1ffbcc0d482e4d879237fc49b672f297548dcf6de001c199af4f46ce65f2897",
+        "initialization": "direct_pretrained_with_paired_seeded_lora",
+        "learning_rate": 0.00015,
+        "optimizer": "AdamW",
+        "plan_hash": "1be1e10a364e94984956259d03846aede5d6097c394fa6549e09eaafa25bfa80",
+        "stage": "ce",
+        "trial_id": "ce-1",
+        "weight_decay": 0.01
+      },
+      "model_id": "google/gemma-4-E2B-it",
+      "model_key": "ce-seed43",
+      "model_revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7",
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 0.00015,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "prepared_data_sha256": "b11965bb21730e4172800e49b1e60bf525be5f2aad379efb50e2c5c1b38efe80",
+      "provenance_sha256": "844f1e4b1bc84a77ba77066c10374923f3b59f4930131435ed7ef05d8cf08911",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 1.0,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 43,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 262144
+      }
+    },
+    {
+      "checkpoint_complete_sha256": "bb89a26b0b58c80cf0f2d39467331a69bdea1f1cefadd90d72914168f7c75912",
+      "checkpoint_manifest_sha256": "b4a80b28a13cb78de4da223196361c4bfa003e39f120e5530b925933d2e9d5b4",
+      "cohort_identity_sha256": "b115f22f3f9c09008a9a16a4a3dc26d3077e255fc0a6a8dfcfd736e95abfc736",
+      "contract_sha256": "7d1b2fc90b42354a4c3a53ce3fe37e6cc94fa6deb90202ab1e8ef278b36fb62b",
+      "family": "gemma4",
+      "identity_scalars": {
+        "initial_adapter_sha256": "4be8369a60841c3311acd751198ed3173bd37d9049179960557ffbc6e4c421fb",
+        "initialization": "direct_pretrained_with_paired_seeded_lora",
+        "learning_rate": 0.00015,
+        "optimizer": "AdamW",
+        "plan_hash": "9e38aeb68b56eb87ecafcdf74e900dc7b9197aef302fa796007b8d707ca4b450",
+        "stage": "ce",
+        "trial_id": "ce-1",
+        "weight_decay": 0.01
+      },
+      "model_id": "google/gemma-4-E2B-it",
+      "model_key": "ce-seed44",
+      "model_revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7",
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 0.00015,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "prepared_data_sha256": "b11965bb21730e4172800e49b1e60bf525be5f2aad379efb50e2c5c1b38efe80",
+      "provenance_sha256": "844f1e4b1bc84a77ba77066c10374923f3b59f4930131435ed7ef05d8cf08911",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 1.0,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 44,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 262144
+      }
+    },
+    {
+      "checkpoint_complete_sha256": "2c30d9f5ee390924dc049340555a504d9a88c97a07f8089d8329cda3455f59de",
+      "checkpoint_manifest_sha256": "d6a5783421b44c67bd31f06a7d5b81b9e32a611d45bc1469b78a013adbd3ffbe",
+      "cohort_identity_sha256": "b115f22f3f9c09008a9a16a4a3dc26d3077e255fc0a6a8dfcfd736e95abfc736",
+      "contract_sha256": "05b53cfd38f4893819c1d1f78a543a720a8c9d53032445bfc4b93feec49e7708",
+      "family": "gemma4",
+      "identity_scalars": {
+        "initial_adapter_sha256": "9a1d1ee98db9726f76fc6fce4c34fde86fdb561282734f7357b554ab2381bd0a",
+        "initialization": "direct_pretrained_with_paired_seeded_lora",
+        "kd_support": "renormalized_verified_tokenizer_ids; excludes_unassigned_head_padding; CE_uses_full_head",
+        "learning_rate": 0.00015,
+        "optimizer": "AdamW",
+        "plan_hash": "da41d21181cac1e9a1fe99d936ef495c16a559a123ae64b8801c4d97c5f84c21",
+        "stage": "kd",
+        "trial_id": "kd-1",
+        "weight_decay": 0.01
+      },
+      "model_id": "google/gemma-4-E2B-it",
+      "model_key": "kd-seed42",
+      "model_revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7",
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 0.00015,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "prepared_data_sha256": "b11965bb21730e4172800e49b1e60bf525be5f2aad379efb50e2c5c1b38efe80",
+      "provenance_sha256": "844f1e4b1bc84a77ba77066c10374923f3b59f4930131435ed7ef05d8cf08911",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 0.7,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 262144
+      }
+    },
+    {
+      "checkpoint_complete_sha256": "1fa7a4ef038facf16104bd21945722639b39d8386243ac4ad88cdeb50ee04764",
+      "checkpoint_manifest_sha256": "bad4f3f158ef9e453bee4ce0ca3f0a6afc26f0d667a8415d7d440f9055b30c99",
+      "cohort_identity_sha256": "b115f22f3f9c09008a9a16a4a3dc26d3077e255fc0a6a8dfcfd736e95abfc736",
+      "contract_sha256": "2e9e81008e3b4701c51a5d84e44d28e0407ada2dc38fb10a8036dcfe409d2eb7",
+      "family": "gemma4",
+      "identity_scalars": {
+        "initial_adapter_sha256": "a1ffbcc0d482e4d879237fc49b672f297548dcf6de001c199af4f46ce65f2897",
+        "initialization": "direct_pretrained_with_paired_seeded_lora",
+        "kd_support": "renormalized_verified_tokenizer_ids; excludes_unassigned_head_padding; CE_uses_full_head",
+        "learning_rate": 0.00015,
+        "optimizer": "AdamW",
+        "plan_hash": "1be1e10a364e94984956259d03846aede5d6097c394fa6549e09eaafa25bfa80",
+        "stage": "kd",
+        "trial_id": "kd-1",
+        "weight_decay": 0.01
+      },
+      "model_id": "google/gemma-4-E2B-it",
+      "model_key": "kd-seed43",
+      "model_revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7",
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 0.00015,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "prepared_data_sha256": "b11965bb21730e4172800e49b1e60bf525be5f2aad379efb50e2c5c1b38efe80",
+      "provenance_sha256": "844f1e4b1bc84a77ba77066c10374923f3b59f4930131435ed7ef05d8cf08911",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 0.7,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 43,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 262144
+      }
+    },
+    {
+      "checkpoint_complete_sha256": "114ee3fb3337ba5483ef282e03c746a33a1470bb52faa31786e2573e362a9085",
+      "checkpoint_manifest_sha256": "fb9fa3c2e1da9cae1d4219c76a92f56dd2ef1f049765bda1bddf25c6e078faab",
+      "cohort_identity_sha256": "b115f22f3f9c09008a9a16a4a3dc26d3077e255fc0a6a8dfcfd736e95abfc736",
+      "contract_sha256": "56a332f79b5ed25eaf7115137d8718c7e1b8edac313823edf70b4c32bac1aad0",
+      "family": "gemma4",
+      "identity_scalars": {
+        "initial_adapter_sha256": "4be8369a60841c3311acd751198ed3173bd37d9049179960557ffbc6e4c421fb",
+        "initialization": "direct_pretrained_with_paired_seeded_lora",
+        "kd_support": "renormalized_verified_tokenizer_ids; excludes_unassigned_head_padding; CE_uses_full_head",
+        "learning_rate": 0.00015,
+        "optimizer": "AdamW",
+        "plan_hash": "9e38aeb68b56eb87ecafcdf74e900dc7b9197aef302fa796007b8d707ca4b450",
+        "stage": "kd",
+        "trial_id": "kd-1",
+        "weight_decay": 0.01
+      },
+      "model_id": "google/gemma-4-E2B-it",
+      "model_key": "kd-seed44",
+      "model_revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7",
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 0.00015,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "prepared_data_sha256": "b11965bb21730e4172800e49b1e60bf525be5f2aad379efb50e2c5c1b38efe80",
+      "provenance_sha256": "844f1e4b1bc84a77ba77066c10374923f3b59f4930131435ed7ef05d8cf08911",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 0.7,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 44,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 262144
+      }
+    },
+    {
+      "checkpoint_complete_sha256": "77f7dea21fa2f44673f7dc59376afe81f3f0d5df2fa522ce82af121304f9750d",
+      "checkpoint_manifest_sha256": "b149055d264bbc58e25116308ed4ce582ad2fdb4bd96769a25829d343d50aa5c",
+      "cohort_identity_sha256": "b115f22f3f9c09008a9a16a4a3dc26d3077e255fc0a6a8dfcfd736e95abfc736",
+      "contract_sha256": "ed569fc1ced368665ec018c34e774ab25513bef3cfded180e01de0c1924e2d0d",
+      "family": "gemma4",
+      "identity_scalars": {
+        "data_fingerprint": "5134437af5cc6380ec29a6b10b4d0e624ffa6cd4ec11a78cf0d3e5e7d36eb916",
+        "initialization": "direct_pretrained_with_paired_seeded_lora",
+        "learning_rate": 2e-05,
+        "optimizer": "AdamW",
+        "stage": "teacher",
+        "tokenizer_hash": "d1c894c423a0b70b39a00a0fd40a606c09641e1d8afdf7216d09db8f32652df1",
+        "weight_decay": 0.01
+      },
+      "model_id": "google/gemma-4-12B-it",
+      "model_key": "teacher",
+      "model_revision": "707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7",
+      "numerical_policy_at_identity": null,
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 2e-05,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "prepared_data_sha256": "b11965bb21730e4172800e49b1e60bf525be5f2aad379efb50e2c5c1b38efe80",
+      "provenance_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 1.0,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "temperature": 2.0,
+        "validation_interval": 200,
+        "vocab_size": 262144
+      }
+    },
+    {
+      "checkpoint_complete_sha256": "7889a292157ff7e22da0582992bcc3ccaa0fb1ab05f591f82147b14190fe2b91",
+      "checkpoint_manifest_sha256": "b9ea31ed6c3793544b8c9d1c9a612b3f62148578bcade07f16a290482e4b0a02",
+      "cohort_identity_sha256": "5d97d3db1752219d22b38c2d7f7ae37396ec1bf22407e257312c606f45110824",
+      "contract_sha256": "a9bdabc06bac5539d5af7166e15f54ea99cbecdffe68ba50467a81414ef84658",
+      "family": "lfm25",
+      "identity_scalars": {
+        "initial_adapter_sha256": "eca3825bc968e54e44f606baa3c5a908271157cb6e6ee4275c42406a8eb932fc",
+        "initialization": "direct_pretrained_with_paired_seeded_lora",
+        "learning_rate": 0.000125,
+        "optimizer": "AdamW",
+        "plan_hash": "3f71fbb445040bb97010bfb18fba1a44eb6afaf88bb5668b92856cd2d8bdcedd",
+        "stage": "ce",
+        "trial_id": "ce-2",
+        "weight_decay": 0.01
+      },
+      "model_id": "LiquidAI/LFM2.5-2.6B",
+      "model_key": "ce-seed42",
+      "model_revision": "654f9463ce32b05d0429d76fe1f580b27d4c1ac0",
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 0.000125,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "prepared_data_sha256": "1f7387c5096c005af6b7ca623538130861d4551e20e3dfb90f0bae36c55112a3",
+      "provenance_sha256": "7879631d79e2edbe5f975a915936fd5348dd1d3dc21b3b8d9c58216a830563cf",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 1.0,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 125017
+      }
+    },
+    {
+      "checkpoint_complete_sha256": "0fa4e0199d0df971041efcd39297cdd96e10c54bed4451783ef8f76d8afdf6fe",
+      "checkpoint_manifest_sha256": "fb00a1d24739a9bb27b1b5ddd648f76592b689d345d3287831f8063bffa9bc69",
+      "cohort_identity_sha256": "5d97d3db1752219d22b38c2d7f7ae37396ec1bf22407e257312c606f45110824",
+      "contract_sha256": "cfc50e3540dde95b8cc0235abfaaef2e8ba7194a333510ef34aa3cfb4ec63ff8",
+      "family": "lfm25",
+      "identity_scalars": {
+        "initial_adapter_sha256": "011c2ce18d461623a0989ace7e679db23617304854751c000d3c7538d6d0cfe7",
+        "initialization": "direct_pretrained_with_paired_seeded_lora",
+        "learning_rate": 0.000125,
+        "optimizer": "AdamW",
+        "plan_hash": "d95cf68e8bda3175de283accff1d3459de482a75343f68e504058914a04c4216",
+        "stage": "ce",
+        "trial_id": "ce-2",
+        "weight_decay": 0.01
+      },
+      "model_id": "LiquidAI/LFM2.5-2.6B",
+      "model_key": "ce-seed43",
+      "model_revision": "654f9463ce32b05d0429d76fe1f580b27d4c1ac0",
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 0.000125,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "prepared_data_sha256": "1f7387c5096c005af6b7ca623538130861d4551e20e3dfb90f0bae36c55112a3",
+      "provenance_sha256": "7879631d79e2edbe5f975a915936fd5348dd1d3dc21b3b8d9c58216a830563cf",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 1.0,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 43,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 125017
+      }
+    },
+    {
+      "checkpoint_complete_sha256": "56e4e7ac3b9279dff69b7be59dc6fd870d67ede27b79a44b25e8d686b4d10d58",
+      "checkpoint_manifest_sha256": "cfd5db5c979688e80749a093c8b8f76e3827ac65944ee6063169ab3f82759fb6",
+      "cohort_identity_sha256": "5d97d3db1752219d22b38c2d7f7ae37396ec1bf22407e257312c606f45110824",
+      "contract_sha256": "1c5f51e7c672c44f1c3cb8624cd6249621ffa634dc24f34bde69d720f9da1b0d",
+      "family": "lfm25",
+      "identity_scalars": {
+        "initial_adapter_sha256": "45fd5ec74a093bf51d571ef3d75292f12c5478a11dd18f3829d576ac97b3217e",
+        "initialization": "direct_pretrained_with_paired_seeded_lora",
+        "learning_rate": 0.000125,
+        "optimizer": "AdamW",
+        "plan_hash": "137a203f9dad52bc407d4da8bae2e4f9bacd05913c3f3663d65fabf2a73476a7",
+        "stage": "ce",
+        "trial_id": "ce-2",
+        "weight_decay": 0.01
+      },
+      "model_id": "LiquidAI/LFM2.5-2.6B",
+      "model_key": "ce-seed44",
+      "model_revision": "654f9463ce32b05d0429d76fe1f580b27d4c1ac0",
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 0.000125,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "prepared_data_sha256": "1f7387c5096c005af6b7ca623538130861d4551e20e3dfb90f0bae36c55112a3",
+      "provenance_sha256": "7879631d79e2edbe5f975a915936fd5348dd1d3dc21b3b8d9c58216a830563cf",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 1.0,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 44,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 125017
+      }
+    },
+    {
+      "checkpoint_complete_sha256": "f127d2e583dfd9ca9085ae52b52047c6197762be23ea646b80d9546383e7a63c",
+      "checkpoint_manifest_sha256": "2892fafda1e5e47a8a91caa9f73fef630aa7193d40e11e298d1c6cb313371620",
+      "cohort_identity_sha256": "5d97d3db1752219d22b38c2d7f7ae37396ec1bf22407e257312c606f45110824",
+      "contract_sha256": "f413d4e021d9902e3bb122460767bd0fc1e0d35893291e7c09ddc41f9115bf24",
+      "family": "lfm25",
+      "identity_scalars": {
+        "initial_adapter_sha256": "eca3825bc968e54e44f606baa3c5a908271157cb6e6ee4275c42406a8eb932fc",
+        "initialization": "direct_pretrained_with_paired_seeded_lora",
+        "kd_support": "renormalized_verified_tokenizer_ids; excludes_unassigned_head_padding; CE_uses_full_head",
+        "learning_rate": 0.000125,
+        "optimizer": "AdamW",
+        "plan_hash": "3f71fbb445040bb97010bfb18fba1a44eb6afaf88bb5668b92856cd2d8bdcedd",
+        "stage": "kd",
+        "trial_id": "kd-2",
+        "weight_decay": 0.01
+      },
+      "model_id": "LiquidAI/LFM2.5-2.6B",
+      "model_key": "kd-seed42",
+      "model_revision": "654f9463ce32b05d0429d76fe1f580b27d4c1ac0",
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 0.000125,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "prepared_data_sha256": "1f7387c5096c005af6b7ca623538130861d4551e20e3dfb90f0bae36c55112a3",
+      "provenance_sha256": "7879631d79e2edbe5f975a915936fd5348dd1d3dc21b3b8d9c58216a830563cf",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 0.9,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 125017
+      }
+    },
+    {
+      "checkpoint_complete_sha256": "88c98729727d527ff73511d6f8a7cba68338c73d7b1ed96448577919b831547e",
+      "checkpoint_manifest_sha256": "0f2b10e1e685620189d6d142940b9a937fa1bc780a8ca7f10edc4ad324d1f4fd",
+      "cohort_identity_sha256": "5d97d3db1752219d22b38c2d7f7ae37396ec1bf22407e257312c606f45110824",
+      "contract_sha256": "289e9b96639e815d33065001b4a55ae19bde50725979cf07d193104246f7a000",
+      "family": "lfm25",
+      "identity_scalars": {
+        "initial_adapter_sha256": "011c2ce18d461623a0989ace7e679db23617304854751c000d3c7538d6d0cfe7",
+        "initialization": "direct_pretrained_with_paired_seeded_lora",
+        "kd_support": "renormalized_verified_tokenizer_ids; excludes_unassigned_head_padding; CE_uses_full_head",
+        "learning_rate": 0.000125,
+        "optimizer": "AdamW",
+        "plan_hash": "d95cf68e8bda3175de283accff1d3459de482a75343f68e504058914a04c4216",
+        "stage": "kd",
+        "trial_id": "kd-2",
+        "weight_decay": 0.01
+      },
+      "model_id": "LiquidAI/LFM2.5-2.6B",
+      "model_key": "kd-seed43",
+      "model_revision": "654f9463ce32b05d0429d76fe1f580b27d4c1ac0",
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 0.000125,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "prepared_data_sha256": "1f7387c5096c005af6b7ca623538130861d4551e20e3dfb90f0bae36c55112a3",
+      "provenance_sha256": "7879631d79e2edbe5f975a915936fd5348dd1d3dc21b3b8d9c58216a830563cf",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 0.9,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 43,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 125017
+      }
+    },
+    {
+      "checkpoint_complete_sha256": "d55dd0b5c1526bc415af9cc665805609a8242a8f242adea3bb99a497603f49b0",
+      "checkpoint_manifest_sha256": "a2c6ddb5ad4eadb83d151c8d9efb3f95e2cdc141c361333614350506ad01dfcb",
+      "cohort_identity_sha256": "5d97d3db1752219d22b38c2d7f7ae37396ec1bf22407e257312c606f45110824",
+      "contract_sha256": "6d338e87deb6466db9b4fa8aa9f9410df6856f9a5fd1060f177509f49a0457a1",
+      "family": "lfm25",
+      "identity_scalars": {
+        "initial_adapter_sha256": "45fd5ec74a093bf51d571ef3d75292f12c5478a11dd18f3829d576ac97b3217e",
+        "initialization": "direct_pretrained_with_paired_seeded_lora",
+        "kd_support": "renormalized_verified_tokenizer_ids; excludes_unassigned_head_padding; CE_uses_full_head",
+        "learning_rate": 0.000125,
+        "optimizer": "AdamW",
+        "plan_hash": "137a203f9dad52bc407d4da8bae2e4f9bacd05913c3f3663d65fabf2a73476a7",
+        "stage": "kd",
+        "trial_id": "kd-2",
+        "weight_decay": 0.01
+      },
+      "model_id": "LiquidAI/LFM2.5-2.6B",
+      "model_key": "kd-seed44",
+      "model_revision": "654f9463ce32b05d0429d76fe1f580b27d4c1ac0",
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 0.000125,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "prepared_data_sha256": "1f7387c5096c005af6b7ca623538130861d4551e20e3dfb90f0bae36c55112a3",
+      "provenance_sha256": "7879631d79e2edbe5f975a915936fd5348dd1d3dc21b3b8d9c58216a830563cf",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 0.9,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 44,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 125017
+      }
+    },
+    {
+      "checkpoint_complete_sha256": "16e30d3439e360b75966dd87e7700d1c3c8e88449bab55fa5e970319fb4754e3",
+      "checkpoint_manifest_sha256": "bef139399652d510b3330776a8cb91fc1fe933193719ac45bd10522d0910bf29",
+      "cohort_identity_sha256": "5d97d3db1752219d22b38c2d7f7ae37396ec1bf22407e257312c606f45110824",
+      "contract_sha256": "2605351dd8377edd48be32e480108a93d19aa5b800b9aca42a733493fcdeddbf",
+      "family": "lfm25",
+      "identity_scalars": {
+        "data_fingerprint": "10e803a51b38bb6cbd7149a0e94ac3e3725c577e4f6c83685ab33aade0b740f0",
+        "initialization": "direct_pretrained_with_paired_seeded_lora",
+        "learning_rate": 2e-05,
+        "optimizer": "AdamW",
+        "stage": "teacher",
+        "tokenizer_hash": "ad7c3fc333701640a80f266b3a0c38ba6e37eba623fc1590522a736f790f0db8",
+        "weight_decay": 0.01
+      },
+      "model_id": "LiquidAI/LFM2.5-24B-A2B",
+      "model_key": "teacher",
+      "model_revision": "3fcfdbfa1a1b6d8166846a6323e69f1e1254440d",
+      "numerical_policy_at_identity": null,
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 2e-05,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "prepared_data_sha256": "1f7387c5096c005af6b7ca623538130861d4551e20e3dfb90f0bae36c55112a3",
+      "provenance_sha256": "74234e98afe7498fb5daf1f36ac2d78acc339464f950703b8c019892f982b90b",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 1.0,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "temperature": 2.0,
+        "validation_interval": 200,
+        "vocab_size": 125017
+      }
+    }
+  ],
+  "source_projection_files": [
+    "docs/research-campaign/reports/basic-integrated-v1/selected-checkpoint-links.csv",
+    "docs/research-campaign/reports/basic-integrated-v1/selected-contract-scalars-20261031T1112.json",
+    "docs/research-campaign/reports/basic-integrated-v1/selected-details-20261031T1129.json"
+  ],
+  "teacher_numerical_policy_null": "field missing at this identity location; not proof of absent numerical policy"
+}

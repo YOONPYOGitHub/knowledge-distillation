@@ -1,0 +1,39 @@
+{
+  "identity": {
+    "adapter": {
+      "alpha": 16,
+      "dropout": 0.05,
+      "rank": 8
+    },
+    "data_fingerprint": "a97b49f1a05b6e858355422c4a420eb36263e3ebe64fbe2b4252561389ce81c9",
+    "initialization": "direct_pretrained_with_paired_seeded_lora",
+    "learning_rate": 2e-05,
+    "model": {
+      "id": "Qwen/Qwen3.5-9B",
+      "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a"
+    },
+    "model_loading": {
+      "attention": "sdpa",
+      "dtype": "bfloat16"
+    },
+    "optimizer": "AdamW",
+    "stage": "teacher",
+    "tokenizer_hash": "2cd3ac0c793798cff5407baa351716a285b53d924f100a85f9e3a820b45b0119",
+    "weight_decay": 0.01
+  },
+  "settings": {
+    "alpha": 1.0,
+    "batch_size": 1,
+    "checkpoint_interval_steps": 100,
+    "device": "cuda",
+    "divergence": "forward_kl",
+    "epochs": 100,
+    "max_steps": 3000,
+    "min_delta": 0.0001,
+    "patience": 3,
+    "seed": 42,
+    "temperature": 2.0,
+    "validation_interval": 200,
+    "vocab_size": 248077
+  }
+}

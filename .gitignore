@@ -24,3 +24,12 @@ results/logs/h100-tuning-*/data/
 # UI 정성 평가 수집 결과 (로컬에만)
 results/qualitative/
 infra/main.json
+
+# Isolated research environments, credentials and generated model payloads
+.venv-research/
+.env
+.env.*
+*.safetensors
+*.pt
+results/**/raw/
+results/**/checkpoints/

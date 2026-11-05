@@ -1,0 +1,30 @@
+{
+  "version": 1,
+  "sources": [
+    {
+      "source": "docs/research-campaign/reports/basic-integrated-v1/REPORT.md",
+      "bytes": 13164,
+      "sha256": "e9c17e82e4f9ad843881dbd394e997dad14f8fc23f49c1ec7021e92e384e3f30",
+      "scope": "report/metadata only; no corpus or model payload"
+    },
+    {
+      "source": "external-taskqa-workspace/parallel/report_draft/REPORT_DRAFT.md",
+      "bytes": 27906,
+      "sha256": "bc2e7e8457b195c5d36092137ba07d3aa90ba058f36591d3a33ac9441e75fe43",
+      "scope": "report/metadata only; no corpus or model payload"
+    },
+    {
+      "source": "external-taskqa-workspace/phase2e/recovery_followup_20261105T2201/HANDOFF.md",
+      "bytes": 2691,
+      "sha256": "66295f89f637d21884032d9112b10813b1edb77ad3b600374ab33224d940f647",
+      "scope": "report/metadata only; no corpus or model payload"
+    },
+    {
+      "source": "external-taskqa-workspace/SERVICE_CONTINUATION_AUTHORIZATION.md",
+      "bytes": 6149,
+      "sha256": "55bdf62f23930147363dba9acbf2bc3142230fcec9e16eb8bc4b7899063c6c67",
+      "scope": "report/metadata only; no corpus or model payload"
+    }
+  ],
+  "external_workspace_included": false
+}

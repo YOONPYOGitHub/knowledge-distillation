@@ -1,0 +1,32 @@
+{
+  "official_dataset": "klue/klue:mrc:train",
+  "revision": "349481ec73fff722f88e0453ca05c77a447d967c",
+  "official_train_rows": 17554,
+  "accepted": 1000,
+  "counts": {
+    "train": 794,
+    "dev": 124,
+    "sealed_test": 82
+  },
+  "source_counts": {
+    "hankyung": 619,
+    "acrofan": 165,
+    "wikipedia": 216
+  },
+  "rights": {
+    "dataset": "CC-BY-SA-4.0",
+    "sources": "Wikipedia CC-BY-SA-3.0 original; Hankyung/Acrofan contracted KLUE-MRC ML-purpose release",
+    "scope": "private machine-learning QA research",
+    "general_news_reuse_commercialization_deployment": "held for separate rights review",
+    "notice": "SOURCE_RIGHTS.md"
+  },
+  "limitations": [
+    "Exact-offset-all-alternatives rejection removed 1332 rows and whole invalid-containing clusters removed 2839 rows: selection bias; no silent offset repair",
+    "Source+normalized-title is document proxy; original URL/revision/date/contributor are unavailable, attribution sufficiency unresolved for public redistribution",
+    "Global lexical Jaccard 5char threshold 0.85 catches declared near duplicates, not semantic paraphrases or unknown article relationships",
+    "No protected old-corpus or official heldout overlap scan; public train may already be in model pretraining",
+    "No human semantic gold/answerability review, medical safety or real model quality verification",
+    "Actual Teacher-vs-Student evaluator and scores are not implemented/executed in Phase1"
+  ],
+  "notice": "Metadata projection only; frozen raw/QA gold/model outputs and actual cohort reconstruction package are not redistributed. Historical Phase1 limitation text is preserved, not current live execution status."
+}

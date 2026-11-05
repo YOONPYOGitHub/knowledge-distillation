@@ -1,0 +1,10 @@
+# Isolated environment for the 2026 generic research helpers.
+# Do not install into the legacy 4-way environment governed by pyproject.toml.
+# CUDA wheels/builds and the full original VM environment are separate concerns.
+torch==2.11.0
+transformers==5.20.2
+peft==0.21.2
+accelerate==1.15.0
+datasets==3.6.0
+PyYAML==6.0.3
+pytest==9.2.0

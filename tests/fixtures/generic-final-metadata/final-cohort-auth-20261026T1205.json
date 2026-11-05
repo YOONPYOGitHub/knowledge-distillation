@@ -1,0 +1,22 @@
+{
+  "cohort": {
+    "data": {
+      "train": "0290f6b52c07d2cb8e7b21825511654a597ae90e3686b3ed9d0997f09821b824",
+      "validation": "df4192436ea5be2c120f0706b00123861362bed589348931e06b50a2bf9f7946"
+    },
+    "provenance": {
+      "base_config_hash": "5ab07ca5dced80419d9df6d35f75c41e4e61ae6c3b11b031f65c884c3793543b",
+      "prepared_fingerprint": "a97b49f1a05b6e858355422c4a420eb36263e3ebe64fbe2b4252561389ce81c9",
+      "raw_manifest_hash": "53e4e887ec898c2cce985a8027f0dec33360761ba16f705a3c95d244887f904a",
+      "teacher": {
+        "best_step": 3000,
+        "contract_hash": "742c1c0e7285f4ef881f3ac429b75cf3858b761311a9be1f345dc68fee30d014",
+        "manifest_sha256": "6752bdae5dbafb5c3b0c4f7eb30182de3ad60a03e3c739addbd5303173ca32fd",
+        "model": {
+          "id": "Qwen/Qwen3.5-9B",
+          "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a"
+        }
+      }
+    }
+  }
+}

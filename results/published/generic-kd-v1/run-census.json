@@ -1,0 +1,27 @@
+{
+  "classification_counts": {
+    "common_student": 60,
+    "formal_teacher": 3,
+    "historical_diagnostic": 10,
+    "historical_pilot": 16
+  },
+  "formal_common_student_by_family_method": {
+    "gemma4": {
+      "ce": 10,
+      "kd": 10
+    },
+    "lfm25": {
+      "ce": 10,
+      "kd": 10
+    },
+    "qwen35": {
+      "ce": 10,
+      "kd": 10
+    }
+  },
+  "resumes_counted_separately": false,
+  "scope": "Reported positive-step execution census, NOT all historical executions and NOT independent seeds",
+  "selection_seed42_reused": true,
+  "source_path": "docs/research-campaign/reports/basic-integrated-v1/runs.csv",
+  "source_sha256": "bef5dc70b5036afc22d6b5644e535d91eaa806cb86f9a65c10476802a8d1f232"
+}

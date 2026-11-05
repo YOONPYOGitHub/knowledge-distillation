@@ -3,23 +3,39 @@
 > 대형 언어 모델(Teacher)의 지식을 소형 모델(Student)로 전이하는 지식 증류를 구현하고,  
 > **4가지 모델의 성능을 비교·분석**하는 실험 프로젝트
 
-## H100 튜닝 결과 및 개발 재개
+## 2026년 한국어 KD 연구 결과 및 재실험 안내
 
-이 브랜치는 **`feature/azure-h100-kd-tuning`**입니다. VESSL 3090×4 구현은 별도 `feature/vessl-3090x4-h100-parity` 브랜치에 있습니다.
+이 브랜치는 **`feature/azure-h100-kd-tuning`**입니다. 아래 공개 자료는 **완료된 일반 평문 연구**와 **진행 중인 문답 연구**를 구분합니다.
+
+- **[4-way 브랜치 개발자를 위한 재실험 가이드](docs/FOUR_WAY_REPRODUCTION_GUIDE.md)** — 공통 데이터, 평가 기준, 학습/선택/seed 통제, 코드·환경 및 협업 체크리스트
+- **[Qwen3.5·Gemma4·Liquid 3계열 기본 연구 최종보고](docs/published/generic-kd-v1/README.md)** — 동일 Student의 CE-only 대 KD, 고정 설정의 Student seed42/43/44 비교
+- **[공개 결과 JSON·CSV와 검증 방법](results/published/generic-kd-v1/README.md)** — 집계 수치 재계산용 결과물. 가중치나 원문 test는 포함하지 않음
+- **[문헌 기반 후속 QA 연구 중간보고](docs/published/taskqa-status-20261105.md)** — 완료된 QA 개발평가·출력순서 대조와 아직 미완료인 Teacher 적응/A·B·C 비교 구분
+- **[공개 범위·출처·검증 기록](docs/published/PUBLICATION.md)**
+
+기본 연구에서는 Qwen의 KD가 세 Student seed에서 소폭 개선했고 Gemma·Liquid는 결과가 혼재했습니다. 이는 KD의 보편적 우위, 서로 다른 모델의 한국어 품질 순위, 의료안전이나 실버케어 서비스 효능의 입증이 아닙니다. 과거 pilot와 다른 데이터 cohort의 점수를 섞지 않습니다.
+
+**환경 주의:** 아래 기존 4-way 설명과 `pyproject.toml`은 Transformers 4 계열 환경을 사용합니다. 2026 연구 helper는 별도 [requirements/research-2026.txt](requirements/research-2026.txt) 환경을 사용하며, 기존 환경을 덮어쓰지 않습니다. `configs/research_*.yaml`은 20-step smoke 설정으로 최종 실험의 frozen plan이 아닙니다. helper 공개는 과거 VM의 모든 immutable capsule·가중치·코퍼스가 재배포되었다는 뜻이 아닙니다.
+
+## 과거 H100 소형 모델 튜닝 결과 및 개발 재개
+
+VESSL 3090×4 구현은 별도 `feature/vessl-3090x4-h100-parity` 브랜치에 있습니다.
 
 - [실험 결과·다른 머신에서 이어 작업하는 방법](docs/h100-kd-tuning-plan.md)
 - [최종 보고서](results/logs/h100-tuning-20260920/report.md) · [평가 JSON](results/logs/h100-tuning-20260920/test_results.json) · [후보별 CSV](results/logs/h100-tuning-20260920/parameter_search.csv)
 - [PPL 비교](results/figures/h100-tuning-20260920/perplexity_comparison.png) · [검증 곡선](results/figures/h100-tuning-20260920/val_loss.png)
 
-**2026-10-14 재개 상태:** 새 Azure 구독의 Korea Central H100 Spot 사용 요청은 사용자 제출 완료, 승인 대기다. 새 VM은 아직 생성하지 않았다. [새 구독·다른 랩탑 인수인계](docs/h100-kd-tuning-plan.md#현재-재개-상태-2026-10-14)를 먼저 읽는다.
+**과거 운영 메모(2026-10-22):** A100 Spot 준비 직후에는 본 학습 전 상태였지만, 이후 진행한 3계열 기본 연구의 완료 결과는 위 최종보고를 따른다. [10월 14일 H100 승인 대기 기록](docs/h100-kd-tuning-plan.md#현재-재개-상태-2026-10-14) 역시 과거 상태다. 비공개 서버 운영 자료는 이번 공개 패키지에 포함하지 않는다.
 
-실제 제품 목표는 **보급형 스마트폰에서 로컬로 동작하는 한국어 실버·의료 지원 LLM**이다. [모바일 모델 선정 조사 보고서](docs/mobile-silvercare-llm-selection-20260920.md)의 Qwen3.5·LFM·Gemma 후보는 후속 검증 계획이며, 이 브랜치에서 학습·모바일 배포를 완료한 모델이 아니다.
+실제 제품 목표는 **보급형 스마트폰에서 로컬로 동작하는 한국어 실버·의료 지원 LLM**이다. [모바일 모델 선정 조사 보고서](docs/mobile-silvercare-llm-selection-20260920.md)는 초기 조사이며, 이후 기본 학습·평가 결과와 현재 QA 연구 상태는 위 공개 보고를 따른다. **모바일 배포·의료안전 검증은 아직 완료하지 않았다.**
 
 2026-09-20 실험 완료: **LR=1e-5, alpha=0.7, T=2**, 선택 checkpoint는 1 epoch / 765 step, test PPL **11.3531**. 같은 평가기의 기존 KD v3는 11.6836입니다. 단일 seed·소규모 한국어 Wikipedia 결과이며 일반 성능 향상을 보장하지 않습니다. 코드·로그·그림은 Git에 포함되지만 모델 가중치·데이터 캐시·인증 정보는 포함되지 않습니다.
 
 ---
 
 ## 목차
+
+아래 1–13절은 초기 GPT-2/distilgpt2 중심의 4-way 설계·교육용 설명을 보존한 것입니다. 예상 성능 순서는 가설이지 보장된 실험 결과가 아닙니다. 현재 대형 모델 조합·데이터·완료 성능·한계는 상단의 2026 연구 보고와 재실험 가이드를 따릅니다.
 
 1. [프로젝트 개요](#1-프로젝트-개요)
 2. [배경 지식: 지식 증류란?](#2-배경-지식-지식-증류란)
