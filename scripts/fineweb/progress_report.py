@@ -16,6 +16,26 @@ SKIP_DIRS = ('checkpoints', 'raw', 'logs')
 sys.stdout.reconfigure(encoding='utf-8')
 
 
+DIRECTIONS = (
+    ('실행 중인 학습', '마지막 단계의 로그를 확인하고, 끊긴 단계를 체크포인트에서 재개합니다.'),
+    ('미완료 상태로 멈춤', '원인을 확인한 뒤 --resume으로 마지막 체크포인트에서 재개합니다.'),
+    ('오류 기록', '로그에서 원인을 찾아 고치고 검증한 뒤 재개합니다. 공간 부족 외 오류는 자동 재개되지 않습니다.'),
+    ('비정상 종료', '로그에서 원인을 찾아 고치고 검증한 뒤 재개합니다.'),
+    ('1시간 가까이 진행 없음', '프로세스와 GPU 상태를 확인하고, 멈췄다면 종료 후 체크포인트에서 재개합니다.'),
+    ('디스크 사용률', '완료된 trial의 중간 체크포인트 정리가 도는지 확인하고, 불필요한 파일을 정리합니다.'),
+    ('공유 볼륨 여유', '학습은 공간이 나면 자동 재개됩니다. 계속되면 GPU 센터에 볼륨 정리를 요청합니다.'),
+    ('워크스페이스 정지', '웹 콘솔에서 재시작한 뒤 새 SSH 정보로 보고와 학습을 재개합니다.'),
+    ('GitHub push 실패', 'git_milestones.log를 확인합니다. 10분마다 다시 시도합니다.'),
+)
+
+
+def direction(warning):
+    for prefix, text in DIRECTIONS:
+        if warning.startswith(prefix):
+            return text
+    return '원인을 확인해 고칩니다.'
+
+
 def load(path, default=None):
     try:
         with open(path, encoding='utf-8') as f:
@@ -92,7 +112,8 @@ def main():
     busy = sum(1 for g in gpu_rows if int(g[3]) > 0 or int(g[1]) > 200)
     procs = [p for p in sh('ps -eo etimes,cmd').splitlines()
              if re.search(r'scripts/(run_research|tune_research)\.py', p)]
-    if not procs:
+    preparing = bool(sh('pgrep -f download_verify.py'))
+    if not procs and not preparing:
         warnings.append('실행 중인 학습 프로세스가 없습니다.')
 
     rows, plans = [], []
@@ -125,7 +146,7 @@ def main():
             if r['step'] == old['step'] and elapsed > 3000:
                 warnings.append(f'1시간 가까이 진행 없음: {r["key"]} step {r["step"]}')
         active.append(r)
-        if not procs:
+        if not procs and not preparing:
             warnings.append(f'미완료 상태로 멈춤, 재개 필요: {r["key"]} step {r["step"]}')
 
     usage = shutil.disk_usage('/root')
@@ -148,10 +169,14 @@ def main():
         warnings.append(f'공유 볼륨 여유 약 {vfs.f_ffree * 512 / 1e9:.1f}GB: 쓰기 실패가 날 수 있습니다.')
     warnings = list(dict.fromkeys(warnings))
     lines = [f'[KD {now:%m/%d %H:%M}] GPU {busy}/{len(gpu_rows)} 사용, 진행 중 {len(active)}개, '
-             f'완료 {len(done)}개, 경고 {len(warnings)}개', '']
+             f'완료 {len(done)}개, 경고 {len(warnings)}개',
+             (f'문제: {warnings[0]} / 해결 방향: {direction(warnings[0])}' if warnings else '특이사항 없음'),
+             '']
     if left is not None:
         lines.append(f'워크스페이스 예상 정지까지: 약 {left:.1f}시간')
     lines.append(f'디스크: {pct:.0f}% 사용 ({usage.free / 1e9:.0f}GB 남음)')
+    if preparing:
+        lines.append('모델 다운로드·검증 중: 끝나면 Teacher가 자동으로 시작됩니다.')
     lines += ['', 'GPU'] + [f'  {g[0]}번: 메모리 {g[1]}/{g[2]} MiB, 사용률 {g[3]}%' for g in gpu_rows]
     lines += ['', '진행 중']
     for r in active:
@@ -168,7 +193,11 @@ def main():
     lines += ['', '완료']
     lines += [f'  {r["key"]}: validation PPL {r["best"]:.3f} (step {r["best_step"]})'
               if r['best'] else f'  {r["key"]}' for r in done] or ['  없음']
-    lines += ['', '경고'] + ([f'  {w}' for w in warnings] or ['  없음'])
+    lines += ['', '문제와 해결 방향']
+    for w in warnings:
+        lines += [f'  현재 상황: {w}', f'  해결 방향: {direction(w)}']
+    if not warnings:
+        lines.append('  없음')
     history = [line for group in groups() for line in log_lines(group, 'interruptions.txt')]
     if history:
         lines += ['', '재개 완료된 중단 기록'] + [f'  {line}' for line in history]

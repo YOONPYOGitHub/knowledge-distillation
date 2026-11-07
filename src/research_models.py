@@ -44,6 +44,10 @@ def load_model(spec, *, device='cuda', dtype='bfloat16', attention='sdpa'):
     validate_revision(spec['revision'])
     config = t.AutoConfig.from_pretrained(spec['id'], revision=spec['revision'], trust_remote_code=False)
     name, text, mapping = text_loader_spec(config)
+    if tuple(int(x) for x in t.__version__.split('.')[:2]) < (4, 52):
+        # Older Transformers strips the language_model prefix itself. Renaming first
+        # makes it skip every tensor, so the mapping only applies from 4.52 on.
+        mapping = None
     cls = getattr(t, name, None)
     if cls is None:
         raise RuntimeError(f'{name} unavailable; install compatible Transformers 5')
