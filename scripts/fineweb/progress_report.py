@@ -37,6 +37,14 @@ def log_files(group, suffix):
     return [f'{d}/{f}' for f in sorted(os.listdir(d)) if f.endswith(suffix)] if os.path.isdir(d) else []
 
 
+def log_lines(group, name):
+    try:
+        with open(f'{R}/{group}/logs/{name}', errors='replace') as f:
+            return f.read().splitlines()
+    except OSError:
+        return []
+
+
 def stage_rows(group):
     """Every directory holding latest.json is one training stage (Teacher or trial)."""
     root, rows = f'{R}/{group}', []
@@ -135,6 +143,12 @@ def main():
 
     if os.path.exists(f'{R}/.git_push_failed'):
         warnings.append('GitHub push 실패: git_milestones.log를 확인하세요.')
+    vfs = os.statvfs('/root')
+    if vfs.f_ffree < 10000000:
+        warnings.append(f'공유 볼륨 여유 약 {vfs.f_ffree * 512 / 1e9:.1f}GB: 쓰기 실패가 날 수 있습니다.')
+    for group in groups():
+        for line in log_lines(group, 'interruptions.txt')[-1:]:
+            warnings.append(f'중단 후 재개 기록: {line}')
     warnings = list(dict.fromkeys(warnings))
     lines = [f'[KD {now:%m/%d %H:%M}] GPU {busy}/{len(gpu_rows)} 사용, 진행 중 {len(active)}개, '
              f'완료 {len(done)}개, 경고 {len(warnings)}개', '']
