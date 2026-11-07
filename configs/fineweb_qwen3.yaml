@@ -1,0 +1,35 @@
+# qwen3: 동료 generic-kd-v1 과 같은 FineWeb2 문서 묶음(train 6814 / validation 851 / test 851)과 같은 학습 조건.
+# 첫 prepare 부터 --exposure-exclusion-file 로 동료 manifest 의 제외 목록을 준다.
+family: qwen3
+mode: fineweb_4way_same_cohort
+teacher:
+  id: Qwen/Qwen3-8B
+  revision: b968826d9c46dd6066d109eabc6255188de91218
+student:
+  id: Qwen/Qwen3-1.7B
+  revision: 70d244cc86ccca08cf5af4e1e306ecf908b1ad5e
+adapter:
+  rank: 8
+  alpha: 16
+  dropout: 0.05
+model:
+  dtype: bfloat16
+  attention: sdpa
+data:
+  max_documents: 10000
+  seq_length: 512
+training:
+  seed: 42
+  device: cuda
+  batch_size: 1
+  max_steps: 3000
+  epochs: 100
+  validation_interval: 200
+  patience: 3
+  min_delta: 0.0001
+  checkpoint_interval_steps: 100
+  teacher_learning_rate: 0.00002
+  student_learning_rate: 0.00008
+  alpha: 0.7
+  temperature: 1.0
+  divergence: forward_kl
