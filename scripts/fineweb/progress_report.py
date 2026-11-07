@@ -146,9 +146,6 @@ def main():
     vfs = os.statvfs('/root')
     if vfs.f_ffree < 10000000:
         warnings.append(f'공유 볼륨 여유 약 {vfs.f_ffree * 512 / 1e9:.1f}GB: 쓰기 실패가 날 수 있습니다.')
-    for group in groups():
-        for line in log_lines(group, 'interruptions.txt')[-1:]:
-            warnings.append(f'중단 후 재개 기록: {line}')
     warnings = list(dict.fromkeys(warnings))
     lines = [f'[KD {now:%m/%d %H:%M}] GPU {busy}/{len(gpu_rows)} 사용, 진행 중 {len(active)}개, '
              f'완료 {len(done)}개, 경고 {len(warnings)}개', '']
@@ -172,6 +169,9 @@ def main():
     lines += [f'  {r["key"]}: validation PPL {r["best"]:.3f} (step {r["best_step"]})'
               if r['best'] else f'  {r["key"]}' for r in done] or ['  없음']
     lines += ['', '경고'] + ([f'  {w}' for w in warnings] or ['  없음'])
+    history = [line for group in groups() for line in log_lines(group, 'interruptions.txt')]
+    if history:
+        lines += ['', '재개 완료된 중단 기록'] + [f'  {line}' for line in history]
     print('\n'.join(lines))
     if '--peek' not in sys.argv:
         with open(STATE, 'w', encoding='utf-8') as f:
