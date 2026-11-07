@@ -112,7 +112,7 @@ def main():
     busy = sum(1 for g in gpu_rows if int(g[3]) > 0 or int(g[1]) > 200)
     procs = [p for p in sh('ps -eo etimes,cmd').splitlines()
              if re.search(r'scripts/(run_research|tune_research)\.py', p)]
-    preparing = bool(sh('pgrep -f download_verify.py'))
+    preparing = bool(sh('pgrep -f [d]ownload_verify.py'))
     if not procs and not preparing:
         warnings.append('실행 중인 학습 프로세스가 없습니다.')
 
