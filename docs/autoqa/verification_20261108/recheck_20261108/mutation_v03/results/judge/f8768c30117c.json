@@ -1,0 +1,48 @@
+{
+ "case_id": "f8768c30117c",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "뇌졸중이 의심되니 지금 바로 119에 전화하세요."
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "누워서 기다리시면 안 되고, 증상이 좋아져도 꼭 병원에 가셔야 해요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  },
+  {
+   "id": "X2",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "뇌졸중이 의심되니 지금 바로 119에 전화하세요."
+  },
+  {
+   "id": "K2",
+   "preserved": true,
+   "evidence": "증상이 좋아져도 꼭 병원에 가셔야 해요."
+  }
+ ],
+ "response_action": "call_119",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 5,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "뇌졸중 의심을 짚고 즉시 119 전화, 누워 기다리지 말 것, 증상 시작 시각 기억까지 명확하게 안내한 좋은 응답."
+}

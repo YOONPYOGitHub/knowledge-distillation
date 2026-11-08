@@ -1,0 +1,27 @@
+{
+ "case_id": "587e421ea104",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "정말 좋은 날이네요, 꽃 보시니 기분도 좋으시겠어요. 어떤 꽃이 피었어요?"
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [],
+ "response_action": "empathize",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": false,
+ "core_in_first3": true,
+ "actionability": 4,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "날씨 이야기에 자연스럽게 맞장구치고 질문으로 대화를 이어가며, 건강 경고나 병원 안내 없이 가벼운 산책만 권한 적절한 응답이다."
+}

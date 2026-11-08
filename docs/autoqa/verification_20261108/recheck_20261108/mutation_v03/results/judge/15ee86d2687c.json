@@ -1,0 +1,43 @@
+{
+ "case_id": "15ee86d2687c",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "이번 주 안에 병원에서 진찰과 가슴 사진 검사를 받으세요."
+  },
+  {
+   "id": "I2",
+   "met": false,
+   "evidence": ""
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  },
+  {
+   "id": "X2",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "이번 주 안에 병원에서 진찰과 가슴 사진 검사를 받으세요. 기침이 3주 넘게 가고 밤에 식은땀이 나는 건 가볍게 넘기면 안 돼요."
+  }
+ ],
+ "response_action": "see_doctor_soon",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 5,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "이번 주 안 진료와 흉부 검사, 위험 신호 시 119를 분명히 안내했으나, 기침할 때 입을 가리라는 안내는 없고 마스크 착용만 말했다."
+}

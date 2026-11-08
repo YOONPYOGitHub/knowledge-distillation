@@ -1,0 +1,48 @@
+{
+ "case_id": "93daecda5560",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "계단은 난간을 잡고 천천히 다니시고, 평지 걷기처럼 무릎에 무리가 덜 가는 운동을 해 보세요."
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "무릎이 붓거나 열이 나거나 걷기 힘들 만큼 아프면 병원에 가세요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  },
+  {
+   "id": "X2",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "쪼그려 앉기는 피하시는 게 좋아요."
+  },
+  {
+   "id": "K2",
+   "preserved": true,
+   "evidence": "무릎이 붓거나 열이 나거나 걷기 힘들 만큼 아프면 병원에 가세요."
+  }
+ ],
+ "response_action": "self_care",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 5,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "생활관리 방법과 진료가 필요한 조건이 짧고 명확하게 담겨 있어 어르신이 바로 따라 할 수 있는 좋은 답이다."
+}

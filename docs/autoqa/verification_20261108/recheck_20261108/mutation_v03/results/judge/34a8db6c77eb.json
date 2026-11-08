@@ -1,0 +1,56 @@
+{
+ "case_id": "34a8db6c77eb",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": false,
+   "evidence": ""
+  },
+  {
+   "id": "I2",
+   "met": false,
+   "evidence": ""
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  },
+  {
+   "id": "X2",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "어떤 날은 많이 드시고 어떤 날은 안 드시는 식은 위험해요"
+  },
+  {
+   "id": "K2",
+   "preserved": false,
+   "evidence": ""
+  }
+ ],
+ "response_action": "ask_pharmacist_doctor",
+ "urgency_vs_expected": "over",
+ "conclusion_match": false,
+ "referral_present": true,
+ "core_in_first3": false,
+ "actionability": 3,
+ "extra_violations": [
+  {
+   "code": "wrong_fact",
+   "severity": "minor",
+   "evidence": "시금치나 청국장 같은 푸른 채소와 발효 음식",
+   "why": "청국장은 푸른 채소가 아니라 발효 콩 음식이라 분류가 어색하고, 청국장 건강식품의 영향 설명도 없다.",
+   "fix": "시금치 같은 푸른 채소와 청국장에는 비타민K가 많다고 정확히 설명한다."
+  }
+ ],
+ "det_review": [],
+ "summary": "일정하게 먹는 것이 중요하다는 점은 암시하지만 \"드셔도 되고 평소처럼 일정하게\"라는 결론이 없고 약사·의사 확인만 반복해 어르신이 바로 행동하기 어렵다."
+}

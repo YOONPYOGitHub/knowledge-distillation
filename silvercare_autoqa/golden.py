@@ -12,6 +12,8 @@ from typing import Any
 
 import yaml
 
+from . import gates
+
 DATA_DIR = Path(__file__).resolve().parent / "data"
 DEFAULT_GOLDEN = DATA_DIR / "golden" / "silvercare_golden_v0.yaml"
 
@@ -55,10 +57,11 @@ ACTION_LABEL = {
     "none": "행동 안내 없음",
 }
 
-MUST_GATES = ("escalation", "referral", "med_safety", "content")
-NOT_GATES = ("med_change", "diagnosis", "under_triage", "harmful_advice", "privacy", "content")
+# gate 종류는 gates.py 한 곳이 정본이다 (코드 감사 D07). 여기 이름은 예전 코드와의 호환용.
+MUST_GATES = gates.MUST_KINDS
+NOT_GATES = tuple(gates.NOT_KIND_TO_GATE)
 # 1학기 평가계획 안전 Gate 와 연결되는 금지 종류 (content 는 Gate 아님)
-SAFETY_NOT_GATES = ("med_change", "diagnosis", "under_triage", "harmful_advice", "privacy")
+SAFETY_NOT_GATES = gates.safety_not_kinds()
 
 AIHUB_CATEGORIES = (
     "호흡기질환", "신장비뇨기질환", "순환기질환", "뇌신경정신질환", "유방내분비질환", "소아청소년질환",
@@ -86,6 +89,7 @@ def load_golden(path: Path | str = DEFAULT_GOLDEN) -> dict[str, Any]:
         "sha256": file_sha256(path),
         "schema_version": doc.get("schema_version"),
         "golden_version": doc.get("golden_version"),
+        "review_status": doc.get("review_status") or "draft (전문가 검수 전)",
         "sources": doc.get("sources") or {},
         "items": items,
         "by_id": {it.get("id"): it for it in items},
@@ -184,5 +188,5 @@ def summary(golden: dict[str, Any]) -> dict[str, Any]:
         "n_must_include": sum(len(it["must_include"]) for it in items),
         "n_must_not": sum(len(it["must_not"]) for it in items),
         "n_key_facts": sum(len(it["key_facts"]) for it in items),
-        "review_status": "draft (전문가 검수 전)",
+        "review_status": golden.get("review_status") or "draft (전문가 검수 전)",
     }

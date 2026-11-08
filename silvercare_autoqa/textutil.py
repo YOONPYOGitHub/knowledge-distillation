@@ -51,6 +51,11 @@ def _norm(s: str) -> str:
     return re.sub(r"[\s\"'“”‘’`.,!?。·…~\-()\[\]{}<>:;]+", "", s)
 
 
+def norm_len(s: str) -> int:
+    """공백·문장부호를 뺀 글자 수 (근거 인용 길이 검사용)."""
+    return len(_norm(s or ""))
+
+
 def grounded(evidence: str, response: str) -> bool:
     """근거 인용이 응답 원문에 실제로 있는지. 공백·문장부호는 무시한다.
     '…' 또는 '...' 로 이어 붙인 인용은 조각마다 확인한다."""

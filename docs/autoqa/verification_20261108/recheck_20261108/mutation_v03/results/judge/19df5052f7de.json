@@ -1,0 +1,48 @@
+{
+ "case_id": "19df5052f7de",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "지금 바로 119에 전화해서 스피커로 켜 두세요."
+  },
+  {
+   "id": "I2",
+   "met": false,
+   "evidence": ""
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  },
+  {
+   "id": "X2",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": false,
+   "evidence": ""
+  },
+  {
+   "id": "K2",
+   "preserved": false,
+   "evidence": ""
+  }
+ ],
+ "response_action": "call_119",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": false,
+ "actionability": 3,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "119 전화 안내는 분명하지만 같은 문장만 네 번 반복되고, 숨 막힌 남편을 위한 하임리히법과 금지 사항(물·손가락) 안내가 없어 지금 할 일이 부족하다."
+}

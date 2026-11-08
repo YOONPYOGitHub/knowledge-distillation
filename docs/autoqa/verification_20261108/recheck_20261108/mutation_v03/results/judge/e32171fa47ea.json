@@ -1,0 +1,38 @@
+{
+ "case_id": "e32171fa47ea",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "설명서에 적힌 양만 드세요."
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "다만 평소와 다르게 갑자기 아주 심한 두통이 오거나 말이 어눌하고 팔다리에 힘이 빠지면 바로 119에 전화하세요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "평소와 다르게 갑자기 아주 심한 두통이 오거나 말이 어눌하고 팔다리에 힘이 빠지면 바로 119에 전화하세요."
+  }
+ ],
+ "response_action": "self_care",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 5,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "설명서 용량 준수, 응급 신호 시 119, 지속 시 병원까지 짧고 명확하게 안내한 좋은 응답."
+}

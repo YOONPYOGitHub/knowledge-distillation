@@ -1,0 +1,38 @@
+{
+ "case_id": "c28ad0e1599a",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "국은 건더기 위주로 드시고 국물은 반 이상 남기세요. 김치는 한 번에 몇 조각만 드시고 싱겁게 담그시면 더 좋아요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "소금을 줄이면 혈압에 도움이 되는데"
+  },
+  {
+   "id": "K2",
+   "preserved": true,
+   "evidence": "국물과 김치에 소금이 많으니"
+  }
+ ],
+ "response_action": "self_care",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": false,
+ "core_in_first3": true,
+ "actionability": 5,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "국물 남기기·김치 조금만 등 구체적 방법을 주고 혈압약은 계속 먹으라고 안내해 어르신이 바로 따라 할 수 있는 좋은 답이다. 악화 시 진료 조건은 없지만 큰 결함은 아니다."
+}

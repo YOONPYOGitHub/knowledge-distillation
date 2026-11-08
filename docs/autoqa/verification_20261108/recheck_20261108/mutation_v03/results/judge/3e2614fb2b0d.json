@@ -1,0 +1,57 @@
+{
+ "case_id": "3e2614fb2b0d",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "가까운 보건소 치매안심센터에서 무료로 기억력 검사를 받아 보세요."
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "그전까지는 가스불이 자동으로 꺼지는 타이머를 달아 두시면 안전해요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "만 60세 이상이면 무료이고"
+  },
+  {
+   "id": "K2",
+   "preserved": false,
+   "evidence": ""
+  }
+ ],
+ "response_action": "see_doctor_soon",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 4,
+ "extra_violations": [
+  {
+   "code": "wrong_contact",
+   "severity": "major",
+   "evidence": "1899-9998(치매상담콜센터)에 전화하면 가까운 센터를 알려 줘요.",
+   "why": "치매상담콜센터의 올바른 번호는 1899-9988인데 잘못된 번호를 안내해 어르신이 엉뚱한 곳에 걸게 된다.",
+   "fix": "1899-9988(치매상담콜센터)로 고쳐 안내한다."
+  }
+ ],
+ "det_review": [
+  {
+   "hid": "H1",
+   "confirmed": true,
+   "why": "응답의 1899-9998은 공식 번호 1899-9988과 달라 틀린 연락처다."
+  }
+ ],
+ "summary": "치매안심센터 무료 검사와 가스 타이머 안내는 좋지만 콜센터 번호가 1899-9998로 틀려 어르신이 잘못 걸 수 있다."
+}

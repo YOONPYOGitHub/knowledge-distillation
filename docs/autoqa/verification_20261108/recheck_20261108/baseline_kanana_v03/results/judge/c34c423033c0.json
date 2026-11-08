@@ -1,0 +1,48 @@
+{
+ "case_id": "c34c423033c0",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": false,
+   "evidence": ""
+  },
+  {
+   "id": "I2",
+   "met": false,
+   "evidence": ""
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  },
+  {
+   "id": "X2",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": false,
+   "evidence": ""
+  },
+  {
+   "id": "K2",
+   "preserved": false,
+   "evidence": ""
+  }
+ ],
+ "response_action": "self_care",
+ "urgency_vs_expected": "match",
+ "conclusion_match": false,
+ "referral_present": false,
+ "core_in_first3": false,
+ "actionability": 2,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "공감과 \"천천히 걸으시고, 필요하다면 휴식을 취하세요\" 정도의 막연한 말뿐이고, 구체적인 무릎 관리법과 진료 조건이 없어 도움이 약하다."
+}

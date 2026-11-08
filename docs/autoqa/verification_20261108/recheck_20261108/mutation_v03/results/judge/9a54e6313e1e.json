@@ -1,0 +1,56 @@
+{
+ "case_id": "9a54e6313e1e",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "지금 바로 119에 전화해서 스피커로 켜 둬."
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "남편 뒤에서 안고 배꼽과 명치 사이를 주먹으로 위로 세게 밀어 올리는 걸 떡이 나올 때까지 반복해."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  },
+  {
+   "id": "X2",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "물을 먹이거나 손가락을 넣지 마셔."
+  },
+  {
+   "id": "K2",
+   "preserved": true,
+   "evidence": "배꼽과 명치 사이를 주먹으로 위로 세게 밀어 올리는 걸 떡이 나올 때까지 반복해."
+  }
+ ],
+ "response_action": "call_119",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 5,
+ "extra_violations": [
+  {
+   "code": "tone",
+   "severity": "minor",
+   "evidence": "스피커로 켜 둬.",
+   "why": "어르신께 반말로 말해 어색하고 공손하지 않다. 급한 상황이라 내용 전달에는 큰 지장이 없다.",
+   "fix": "'스피커로 켜 두세요'처럼 존댓말로 바꾼다."
+  }
+ ],
+ "det_review": [],
+ "summary": "119 신고와 하임리히법, 물·손가락 금지가 모두 첫 세 문장에 들어 있어 바로 따라 할 수 있다. 다만 반말 말투가 흠이다."
+}

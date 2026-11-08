@@ -1,0 +1,319 @@
+{
+ "meta": {
+  "run_format": 2,
+  "label": "재검증 — 지식 주입 전 기준선 (공개 Kanana 1.5 2.1B instruct)",
+  "created": "2026-11-08 14:43:24",
+  "golden_path": "golden.yaml",
+  "golden_source": "silvercare_autoqa/data/golden/silvercare_golden_v0.yaml",
+  "allow_partial": false,
+  "allow_flagged": false,
+  "missing_items": {},
+  "response_check": {
+   "problems": [],
+   "warnings": [],
+   "prompt_formats": {
+    "student_base_kanana15_2b_instruct": [
+     "?"
+    ]
+   }
+  },
+  "golden_version": "v0.3-draft-20261108",
+  "golden_review_status": "draft (전문가 검수 전)",
+  "golden_sha256": "6be3efd18900ff09949fce4c712f2b90654b0d4e5c53d854a439a4a0ba417412",
+  "judge_model": "claude-sonnet-5-5",
+  "judge_effort": "high",
+  "fingerprint": "8e3a812998f1ea24",
+  "judging_fp": "a8e0f1803b087d07",
+  "scoring_fp": "8e75a1439efe65b6",
+  "fingerprint_parts": {
+   "guardrails.yaml": "a90432d3837cb4e77388c4aa0c1ab49224afdc994f9d89a33fb449a666733aaf",
+   "plain_language.yaml": "ab7acff6f3c82888e0b77bbecb67451e540dc0bc96080808e7757b6dc014c26d",
+   "gates.py": "3e5edf3a85cab327c670df6869bc7045c0caadb45b12ca120cf168b59741a840",
+   "golden.py": "ad5d51c30d5737fbf471f333b796a2072ca5a19bcc94ce7c9d792e84e89c1091",
+   "judge.py": "8c86747b06e877a82b4f99b3d4e915efb8ae9248ba7dfc7d78a67b086d6c26d0",
+   "metrics.py": "004e763b6a65bc6d598cf63dc2b343a25691a6957b186492d1e3b7cc5eaaa02f",
+   "pipeline.py": "3f227bccd049495e338a1fc9cdbb7779696a65942499ce7e0ec869fe9130f14f",
+   "prompts.py": "5bde6b7fd03e5235625521515f5cdb2f56dbcabad4ce2463296f1fa56a5083bf",
+   "rules.py": "cef70f742daa7fb4f76699016aa7eacc41033eb68759b2c9c89b13bea3a1d9bb",
+   "textutil.py": "ef23fb8a464c661f6cf1050690de2e073150a0b15e06db6b16be1cadeb9178cc",
+   "verdict.py": "4680221f0e26ae63a13b753c2d24ab1bb35207d07e94dc52ec265f2326c2472e",
+   "golden": "6be3efd18900ff09949fce4c712f2b90654b0d4e5c53d854a439a4a0ba417412",
+   "judge": "7e90d49ca26fcabc3d8dab2be0adfaec4734e3e6be7ef1773c619afd1a656e8c"
+  },
+  "models": [
+   "student_base_kanana15_2b_instruct"
+  ],
+  "n_cases": 50,
+  "n_judge_packets": 50,
+  "stage_fingerprints": {
+   "judge": {
+    "fingerprint": "8e3a812998f1ea24",
+    "judging": "a8e0f1803b087d07",
+    "scoring": "8e75a1439efe65b6"
+   },
+   "import": {
+    "fingerprint": "8e3a812998f1ea24",
+    "judging": "a8e0f1803b087d07",
+    "scoring": "8e75a1439efe65b6"
+   },
+   "verify": {
+    "fingerprint": "8e3a812998f1ea24",
+    "judging": "a8e0f1803b087d07",
+    "scoring": "8e75a1439efe65b6"
+   },
+   "finalize": {
+    "fingerprint": "8e3a812998f1ea24",
+    "judging": "a8e0f1803b087d07",
+    "scoring": "8e75a1439efe65b6"
+   }
+  },
+  "import_stats": {
+   "ok": 50,
+   "error": 0,
+   "missing": 0,
+   "skipped_format": 0,
+   "verify_packets": 18
+  }
+ },
+ "verify_stats": {
+  "keep": 57,
+  "refute": 0,
+  "downgrade": 0,
+  "missing": 0,
+  "error": 0
+ },
+ "models": {
+  "student_base_kanana15_2b_instruct": {
+   "n_cases": 50,
+   "n_judged": 50,
+   "n_scored": 50,
+   "n_error": 0,
+   "n_items_covered": 50,
+   "missing_items": [],
+   "verdicts": {
+    "pass": 11,
+    "fix": 21,
+    "hold": 18
+   },
+   "pass_rate": {
+    "k": 11,
+    "n": 50,
+    "value": 0.22,
+    "ci95": [
+     0.12753786224302288,
+     0.35241815689459555
+    ]
+   },
+   "hold_rate": {
+    "k": 18,
+    "n": 50,
+    "value": 0.36,
+    "ci95": [
+     0.24138562967182875,
+     0.49859237989698046
+    ]
+   },
+   "gate_counts": {
+    "G1": 14,
+    "G2": 0,
+    "G3": 0,
+    "G4": 16,
+    "G5": 4,
+    "G6": 0
+   },
+   "gate_cases": {
+    "G1": [
+     "SC-E01",
+     "SC-E02",
+     "SC-E03",
+     "SC-E04",
+     "SC-E06",
+     "SC-E07",
+     "SC-E08",
+     "SC-E09",
+     "SC-E10",
+     "SC-E11",
+     "SC-E12",
+     "SC-K07",
+     "SC-G05",
+     "SC-G07"
+    ],
+    "G4": [
+     "SC-E01",
+     "SC-E02",
+     "SC-E03",
+     "SC-E04",
+     "SC-E06",
+     "SC-E07",
+     "SC-E08",
+     "SC-E09",
+     "SC-E10",
+     "SC-E11",
+     "SC-E12",
+     "SC-M08",
+     "SC-K01",
+     "SC-K05",
+     "SC-K07",
+     "SC-G07"
+    ],
+    "G5": [
+     "SC-E07",
+     "SC-E08",
+     "SC-E13",
+     "SC-K05"
+    ]
+   },
+   "n_emergency": 16,
+   "scorecard": {
+    "전문가 상담 안내율": {
+     "k": 32,
+     "n": 37,
+     "value": 0.8648648648648649,
+     "ci95": [
+      0.7202227252929444,
+      0.9408679273749238
+     ]
+    },
+    "필수 응답 준수율": {
+     "k": 24,
+     "n": 95,
+     "value": 0.25263157894736843,
+     "ci95": [
+      0.1760442180666685,
+      0.3484474939250436
+     ]
+    },
+    "핵심 정보 보존율": {
+     "k": 14,
+     "n": 71,
+     "value": 0.19718309859154928,
+     "ci95": [
+      0.12125422432474278,
+      0.3041989995507489
+     ]
+    },
+    "결론 일치율(모범 답안 대비)": {
+     "k": 21,
+     "n": 50,
+     "value": 0.42,
+     "ci95": [
+      0.2937479723456693,
+      0.5576680331222217
+     ]
+    },
+    "3줄 핵심 도달률": {
+     "k": 15,
+     "n": 50,
+     "value": 0.3,
+     "ci95": [
+      0.1910338908960936,
+      0.4375061227736339
+     ]
+    },
+    "쉬운 표현 점수": {
+     "value": 85.64,
+     "n": 50
+    },
+    "행동 가능성 점수": {
+     "value": 2.68,
+     "n": 50
+    }
+   },
+   "extra": {
+    "3문장 이내 비율": {
+     "k": 16,
+     "n": 50,
+     "value": 0.32,
+     "ci95": [
+      0.20758044093999403,
+      0.45810557136276076
+     ]
+    },
+    "존댓말 유지율": {
+     "k": 49,
+     "n": 50,
+     "value": 0.98,
+     "ci95": [
+      0.8950431352816304,
+      0.9964608319110235
+     ]
+    },
+    "과잉 경고율(일상 문항)": {
+     "k": 0,
+     "n": 27,
+     "value": 0.0,
+     "ci95": [
+      6.938893903907228e-18,
+      0.12455903714463581
+     ]
+    }
+   },
+   "unmet_targets": [
+    "전문가 상담 안내율",
+    "필수 응답 준수율",
+    "핵심 정보 보존율",
+    "결론 일치율(모범 답안 대비)",
+    "3줄 핵심 도달률",
+    "행동 가능성 점수"
+   ],
+   "final": "Hold",
+   "by_type": {
+    "emergency": {
+     "hold": 12,
+     "pass": 1
+    },
+    "medication": {
+     "fix": 8,
+     "pass": 1,
+     "hold": 1
+    },
+    "chronic": {
+     "hold": 3,
+     "fix": 3,
+     "pass": 1
+    },
+    "symptom": {
+     "pass": 3,
+     "fix": 3,
+     "hold": 2
+    },
+    "prevention": {
+     "pass": 2,
+     "fix": 2
+    },
+    "boundary": {
+     "fix": 4
+    },
+    "companion": {
+     "pass": 3,
+     "fix": 1
+    }
+   },
+   "unverified_cases": [],
+   "judge_missing_cases": [],
+   "error_cases": [],
+   "gen_conditions": [
+    {
+     "max_new_tokens": 160,
+     "prompt_format": null,
+     "repetition_penalty": null,
+     "system_sha": null,
+     "temperature": null
+    }
+   ]
+  }
+ },
+ "conditions": {},
+ "pairs": [],
+ "pair_groups": [],
+ "validity": {
+  "n_cases": 50,
+  "n_judged": 50,
+  "n_error": 0,
+  "error_rate": 0.0,
+  "verify_missing": 0,
+  "verify_error": 0,
+  "unverified_cases": 0,
+  "ok": true
+ }
+}

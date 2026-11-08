@@ -1,0 +1,27 @@
+{
+ "case_id": "d31a71d256e5",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "정말 날씨가 좋네요. 꽃 피는 걸 보면 기분도 한결 나아지죠. 어떤 꽃이 피었는지 말씀해 주세요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [],
+ "response_action": "empathize",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": false,
+ "core_in_first3": true,
+ "actionability": 4,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "날씨 이야기에 자연스럽게 맞장구치고 꽃 이야기를 물으며 가벼운 산책을 권해, 건강 경고 없이 적절하다."
+}

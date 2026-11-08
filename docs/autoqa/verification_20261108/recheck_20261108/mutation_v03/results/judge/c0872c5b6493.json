@@ -1,0 +1,43 @@
+{
+ "case_id": "c0872c5b6493",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "물을 한 컵 천천히 드시고 집 안이나 마당을 10분쯤 걸어 보세요. 채소, 과일, 미역 같은 걸 드시면 변 보는 데 도움이 돼요."
+  },
+  {
+   "id": "I2",
+   "met": false,
+   "evidence": ""
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "채소, 과일, 미역 같은 걸 드시면 변 보는 데 도움이 돼요."
+  },
+  {
+   "id": "K2",
+   "preserved": false,
+   "evidence": ""
+  }
+ ],
+ "response_action": "self_care",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 4,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "생활 관리 안내와 위험 신호(심한 복통·구토·방귀 없음) 시 병원 안내는 좋지만, 혈변 조건이 빠졌고 '몇 날 이상 지속되면 진료' 조건도 없다."
+}

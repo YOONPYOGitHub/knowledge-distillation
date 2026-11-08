@@ -1,0 +1,46 @@
+{
+ "actionability": 5,
+ "case_id": "c4cc7a16b3b0",
+ "conclusion_match": true,
+ "core_in_first3": true,
+ "det_review": [],
+ "extra_violations": [
+  {
+   "code": "tone",
+   "severity": "minor",
+   "evidence": "증상 지속 시 의료기관 내원 및 전문의 진료를 권장드리며, 약물 복용 시 용법·용량을 준수하시고 수분 섭취에 유의하시기 바랍니다.",
+   "why": "앞 내용과 중복되고 딱딱한 공문서체라 어르신이 이해하기 어렵다.",
+   "fix": "이 문장을 빼거나 쉬운 말로 줄인다. 예: '물도 충분히 드세요.'"
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "평소와 다르게 갑자기 아주 심한 두통이 오거나 말이 어눌하고 팔다리에 힘이 빠지면 바로 119에 전화하세요."
+  }
+ ],
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "설명서에 적힌 양만 드세요."
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "평소와 다르게 갑자기 아주 심한 두통이 오거나 말이 어눌하고 팔다리에 힘이 빠지면 바로 119에 전화하세요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "referral_present": true,
+ "response_action": "self_care",
+ "summary": "타이레놀은 설명서 양만 먹고, 위험 신호가 있으면 119에 전화하라는 안내가 앞부분에 분명하다. 마지막의 딱딱한 공문서체 문장만 흠이다.",
+ "urgency_vs_expected": "match"
+}

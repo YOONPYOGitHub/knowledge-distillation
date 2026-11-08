@@ -1,0 +1,41 @@
+{
+ "actionability": 5,
+ "case_id": "bc85aaad7fbd",
+ "conclusion_match": true,
+ "core_in_first3": true,
+ "det_review": [],
+ "extra_violations": [
+  {
+   "code": "tone",
+   "severity": "minor",
+   "evidence": "증상 지속 시 의료기관 내원 및 전문의 진료를 권장드리며, 약물 복용 시 용법·용량을 준수하시고 수분 섭취에 유의하시기 바랍니다.",
+   "why": "어르신에게 어려운 행정·공문체 문장이고, 앞 내용과 무관한 일반 문구(수분 섭취 등)가 덧붙어 있다.",
+   "fix": "마지막 문장을 빼거나 \"잠이 계속 안 오시면 약사나 의사와 상의하세요\"처럼 쉬운 말로 정리한다."
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "술과 수면제가 함께 들어가면 숨이 약해지거나 밤에 넘어질 위험이 커져요."
+  }
+ ],
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "술 드신 날은 수면제를 같이 드시면 안 돼요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "referral_present": true,
+ "response_action": "ask_pharmacist_doctor",
+ "summary": "술 드신 날 수면제를 같이 먹지 말라는 결론과 이유가 앞부분에 분명하다. 다만 끝의 공문체 문장은 어르신에게 어렵고 군더더기다.",
+ "urgency_vs_expected": "match"
+}

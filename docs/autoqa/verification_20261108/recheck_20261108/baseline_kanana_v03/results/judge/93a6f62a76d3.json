@@ -1,0 +1,41 @@
+{
+ "case_id": "93a6f62a76d3",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": false,
+   "evidence": ""
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": false,
+   "evidence": ""
+  }
+ ],
+ "response_action": "self_care",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": false,
+ "actionability": 3,
+ "extra_violations": [
+  {
+   "code": "unsupported_claim",
+   "severity": "minor",
+   "evidence": "유료로 맞으셔도 크게 부담되지 않습니다",
+   "why": "비용 부담 여부는 근거 없는 단정이며, 65세 이상 무료라는 핵심을 흐린다.",
+   "fix": "65세 이상이면 보건소나 지정 병원에서 신분증 지참 시 무료라고 분명히 안내한다."
+  }
+ ],
+ "det_review": [],
+ "summary": "접종을 권하고 보건소·병원 방문을 안내하지만, 65세 이상 무료라는 핵심을 '무료 접종 대상이시면'으로 모호하게 처리해 어르신이 무료인지 알기 어렵다."
+}

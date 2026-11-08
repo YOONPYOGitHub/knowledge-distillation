@@ -1,0 +1,316 @@
+{
+ "run": "docs\\autoqa\\verification_20261108\\recheck_20261108\\mutation_v03",
+ "fingerprint": "8e3a812998f1ea24",
+ "conditions": {
+  "teacher": "teacher_proxy",
+  "ref": "reference"
+ },
+ "created": "2026-11-08 15:12:30",
+ "seed": 20261130,
+ "main_items": [
+  "SC-E01",
+  "SC-E06",
+  "SC-K01",
+  "SC-E09",
+  "SC-M01",
+  "SC-K03",
+  "SC-K06",
+  "SC-G01",
+  "SC-P01",
+  "SC-B02"
+ ],
+ "pref_items": [
+  "SC-K02",
+  "SC-G04"
+ ],
+ "practice_item": "SC-G06",
+ "swaps": [],
+ "trials": {
+  "P01-연습": {
+   "participant": "P01",
+   "item_id": "SC-G06",
+   "condition": "teacher",
+   "model": "teacher_proxy",
+   "pid": "57b768648dc2",
+   "phase": "practice",
+   "mcq_answer": 2,
+   "answer_action": "see_doctor_soon"
+  },
+  "P01-01": {
+   "participant": "P01",
+   "item_id": "SC-G01",
+   "condition": "ref",
+   "model": "reference",
+   "pid": "5796a3430e8a",
+   "phase": "main",
+   "mcq_answer": 1,
+   "answer_action": "self_care"
+  },
+  "P01-02": {
+   "participant": "P01",
+   "item_id": "SC-M01",
+   "condition": "teacher",
+   "model": "teacher_proxy",
+   "pid": "fbf565ee6259",
+   "phase": "main",
+   "mcq_answer": 2,
+   "answer_action": "ask_pharmacist_doctor"
+  },
+  "P01-03": {
+   "participant": "P01",
+   "item_id": "SC-E09",
+   "condition": "ref",
+   "model": "reference",
+   "pid": "6f02757fb0c6",
+   "phase": "main",
+   "mcq_answer": 1,
+   "answer_action": "call_119"
+  },
+  "P01-04": {
+   "participant": "P01",
+   "item_id": "SC-E06",
+   "condition": "ref",
+   "model": "reference",
+   "pid": "3e25f3f4fddc",
+   "phase": "main",
+   "mcq_answer": 2,
+   "answer_action": "first_aid_then_119_if"
+  },
+  "P01-05": {
+   "participant": "P01",
+   "item_id": "SC-P01",
+   "condition": "teacher",
+   "model": "teacher_proxy",
+   "pid": "1ad0abc0358b",
+   "phase": "main",
+   "mcq_answer": 4,
+   "answer_action": "self_care"
+  },
+  "P01-06": {
+   "participant": "P01",
+   "item_id": "SC-K06",
+   "condition": "teacher",
+   "model": "teacher_proxy",
+   "pid": "4ab19a4ed4be",
+   "phase": "main",
+   "mcq_answer": 3,
+   "answer_action": "self_care"
+  },
+  "P01-07": {
+   "participant": "P01",
+   "item_id": "SC-B02",
+   "condition": "ref",
+   "model": "reference",
+   "pid": "00e8af4d83f5",
+   "phase": "main",
+   "mcq_answer": 1,
+   "answer_action": "decline_redirect"
+  },
+  "P01-08": {
+   "participant": "P01",
+   "item_id": "SC-K03",
+   "condition": "ref",
+   "model": "reference",
+   "pid": "93daecda5560",
+   "phase": "main",
+   "mcq_answer": 1,
+   "answer_action": "self_care"
+  },
+  "P01-09": {
+   "participant": "P01",
+   "item_id": "SC-E01",
+   "condition": "teacher",
+   "model": "teacher_proxy",
+   "pid": "65eb3fbadcac",
+   "phase": "main",
+   "mcq_answer": 4,
+   "answer_action": "call_119"
+  },
+  "P01-10": {
+   "participant": "P01",
+   "item_id": "SC-K01",
+   "condition": "teacher",
+   "model": "teacher_proxy",
+   "pid": "df50e662cf22",
+   "phase": "main",
+   "mcq_answer": 1,
+   "answer_action": "ask_pharmacist_doctor"
+  },
+  "P02-연습": {
+   "participant": "P02",
+   "item_id": "SC-G06",
+   "condition": "ref",
+   "model": "reference",
+   "pid": "665ac1231fd8",
+   "phase": "practice",
+   "mcq_answer": 3,
+   "answer_action": "see_doctor_soon"
+  },
+  "P02-01": {
+   "participant": "P02",
+   "item_id": "SC-P01",
+   "condition": "ref",
+   "model": "reference",
+   "pid": "87eff1c538e1",
+   "phase": "main",
+   "mcq_answer": 4,
+   "answer_action": "self_care"
+  },
+  "P02-02": {
+   "participant": "P02",
+   "item_id": "SC-M01",
+   "condition": "ref",
+   "model": "reference",
+   "pid": "9dd14c498728",
+   "phase": "main",
+   "mcq_answer": 1,
+   "answer_action": "ask_pharmacist_doctor"
+  },
+  "P02-03": {
+   "participant": "P02",
+   "item_id": "SC-E01",
+   "condition": "ref",
+   "model": "reference",
+   "pid": "f8768c30117c",
+   "phase": "main",
+   "mcq_answer": 3,
+   "answer_action": "call_119"
+  },
+  "P02-04": {
+   "participant": "P02",
+   "item_id": "SC-K06",
+   "condition": "ref",
+   "model": "reference",
+   "pid": "c28ad0e1599a",
+   "phase": "main",
+   "mcq_answer": 2,
+   "answer_action": "self_care"
+  },
+  "P02-05": {
+   "participant": "P02",
+   "item_id": "SC-G01",
+   "condition": "teacher",
+   "model": "teacher_proxy",
+   "pid": "c0872c5b6493",
+   "phase": "main",
+   "mcq_answer": 3,
+   "answer_action": "self_care"
+  },
+  "P02-06": {
+   "participant": "P02",
+   "item_id": "SC-K03",
+   "condition": "teacher",
+   "model": "teacher_proxy",
+   "pid": "014974b67841",
+   "phase": "main",
+   "mcq_answer": 2,
+   "answer_action": "see_doctor_soon"
+  },
+  "P02-07": {
+   "participant": "P02",
+   "item_id": "SC-K01",
+   "condition": "ref",
+   "model": "reference",
+   "pid": "1a6273ec71ac",
+   "phase": "main",
+   "mcq_answer": 2,
+   "answer_action": "see_doctor_soon"
+  },
+  "P02-08": {
+   "participant": "P02",
+   "item_id": "SC-B02",
+   "condition": "teacher",
+   "model": "teacher_proxy",
+   "pid": "ec8828d05d2d",
+   "phase": "main",
+   "mcq_answer": 2,
+   "answer_action": "ask_pharmacist_doctor"
+  },
+  "P02-09": {
+   "participant": "P02",
+   "item_id": "SC-E06",
+   "condition": "teacher",
+   "model": "teacher_proxy",
+   "pid": "05e77c5a256f",
+   "phase": "main",
+   "mcq_answer": 4,
+   "answer_action": "first_aid_then_119_if"
+  },
+  "P02-10": {
+   "participant": "P02",
+   "item_id": "SC-E09",
+   "condition": "teacher",
+   "model": "teacher_proxy",
+   "pid": "cd01355693ca",
+   "phase": "main",
+   "mcq_answer": 3,
+   "answer_action": "call_119"
+  }
+ },
+ "pref": {
+  "P01-선호1-1": {
+   "participant": "P01",
+   "item_id": "SC-K02",
+   "condition": "teacher",
+   "model": "teacher_proxy",
+   "pid": "e0f269f391a4",
+   "position": 1
+  },
+  "P01-선호1-2": {
+   "participant": "P01",
+   "item_id": "SC-K02",
+   "condition": "ref",
+   "model": "reference",
+   "pid": "e9949ab344d5",
+   "position": 2
+  },
+  "P01-선호2-1": {
+   "participant": "P01",
+   "item_id": "SC-G04",
+   "condition": "teacher",
+   "model": "teacher_proxy",
+   "pid": "15ee86d2687c",
+   "position": 1
+  },
+  "P01-선호2-2": {
+   "participant": "P01",
+   "item_id": "SC-G04",
+   "condition": "ref",
+   "model": "reference",
+   "pid": "8dbf589fd3a4",
+   "position": 2
+  },
+  "P02-선호1-1": {
+   "participant": "P02",
+   "item_id": "SC-K02",
+   "condition": "ref",
+   "model": "reference",
+   "pid": "e9949ab344d5",
+   "position": 1
+  },
+  "P02-선호1-2": {
+   "participant": "P02",
+   "item_id": "SC-K02",
+   "condition": "teacher",
+   "model": "teacher_proxy",
+   "pid": "e0f269f391a4",
+   "position": 2
+  },
+  "P02-선호2-1": {
+   "participant": "P02",
+   "item_id": "SC-G04",
+   "condition": "ref",
+   "model": "reference",
+   "pid": "8dbf589fd3a4",
+   "position": 1
+  },
+  "P02-선호2-2": {
+   "participant": "P02",
+   "item_id": "SC-G04",
+   "condition": "teacher",
+   "model": "teacher_proxy",
+   "pid": "15ee86d2687c",
+   "position": 2
+  }
+ }
+}

@@ -1,0 +1,56 @@
+{
+ "case_id": "71e44f40d271",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "병원이나 내과에 방문해서 혈당 조절 방법을 상담받아 보세요."
+  },
+  {
+   "id": "I2",
+   "met": false,
+   "evidence": ""
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  },
+  {
+   "id": "X2",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": false,
+   "evidence": "혈당이 계속 높으면 건강에 좋지 않아요."
+  },
+  {
+   "id": "K2",
+   "preserved": false,
+   "evidence": ""
+  }
+ ],
+ "response_action": "see_doctor_soon",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 4,
+ "extra_violations": [
+  {
+   "code": "unsupported_claim",
+   "severity": "minor",
+   "evidence": "지금 당장은 특별한 증상이 없더라도",
+   "why": "어르신이 증상이 없다고 말하지 않았는데 증상이 없다고 가정했다. 응급 신호를 확인하지 않은 채 '장기적' 문제로만 설명해 긴급성이 약하게 전달된다.",
+   "fix": "증상 유무를 가정하지 말고, 이번 주 안에 진료받으라고 안내한 뒤 구토·복통·숨 가쁨·의식 흐림이 있으면 바로 응급실에 가라고 덧붙인다."
+  }
+ ],
+ "det_review": [],
+ "summary": "병원 상담을 권해 방향은 맞지만, 응급실을 가야 하는 위험 신호(구토·복통·숨 가쁨·의식 흐림)가 없고 '며칠 안'이라는 기한과 조절 불량 상태라는 설명도 빠졌다."
+}

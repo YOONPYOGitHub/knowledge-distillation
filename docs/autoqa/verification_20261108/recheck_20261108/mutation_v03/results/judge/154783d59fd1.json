@@ -1,0 +1,43 @@
+{
+ "case_id": "154783d59fd1",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "약을 마음대로 끊으시면 안 돼요."
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "처방해 준 병원이나 약사님께 먼저 말씀하세요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "발이 붓는 건 그 약 때문일 수 있지만"
+  },
+  {
+   "id": "K2",
+   "preserved": true,
+   "evidence": "숨이 차거나 한쪽 다리만 심하게 붓고 아프면 바로 병원에 가세요."
+  }
+ ],
+ "response_action": "see_doctor_soon",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 4,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "약을 끊지 말고 병원·약사에게 붓기를 말하라는 안내와 위험 신호가 짧고 분명해 도움이 되며, 큰 문제는 없다."
+}

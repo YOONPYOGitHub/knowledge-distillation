@@ -1,0 +1,41 @@
+{
+ "case_id": "ceb5e90fcc32",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": false,
+   "evidence": ""
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": false,
+   "evidence": ""
+  }
+ ],
+ "response_action": "self_care",
+ "urgency_vs_expected": "match",
+ "conclusion_match": false,
+ "referral_present": true,
+ "core_in_first3": false,
+ "actionability": 3,
+ "extra_violations": [
+  {
+   "code": "wrong_fact",
+   "severity": "major",
+   "evidence": "독감 주사는 만 75세 이상부터 무료로 맞으실 수 있어요.",
+   "why": "국가예방접종 무료 대상은 65세 이상인데 75세 이상이라고 잘못 안내했다. 65~74세 어르신이 무료인데도 돈이 든다고 오해해 접종을 포기할 수 있다.",
+   "fix": "독감 주사는 만 65세 이상이시면 보건소나 지정 병원에서 무료로 맞으실 수 있어요."
+  }
+ ],
+ "det_review": [],
+ "summary": "보건소·신분증 안내는 도움이 되지만 무료 대상을 65세가 아니라 75세 이상이라고 잘못 말해 핵심 정보가 틀렸다."
+}

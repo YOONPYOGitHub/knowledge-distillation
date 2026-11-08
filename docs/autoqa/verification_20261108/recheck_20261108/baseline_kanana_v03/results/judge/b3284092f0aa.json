@@ -1,0 +1,33 @@
+{
+ "case_id": "b3284092f0aa",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": false,
+   "evidence": ""
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": false,
+   "evidence": ""
+  }
+ ],
+ "response_action": "ask_pharmacist_doctor",
+ "urgency_vs_expected": "match",
+ "conclusion_match": false,
+ "referral_present": true,
+ "core_in_first3": false,
+ "actionability": 2,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "술과 수면제를 같이 먹지 말라는 핵심 경고와 위험 이유가 없고 '의료진과 상담하세요'만 있어 막걸리 후 복용 여부가 불분명하다."
+}

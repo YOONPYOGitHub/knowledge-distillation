@@ -1,0 +1,37 @@
+{
+ "case_id": "90b99dd360b7",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "외롭고 힘드시겠어요."
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "오늘 하루 중에 잠깐이라도 전화나 영상통화로 가까운 친구나 가족과 연결해 보세요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  },
+  {
+   "id": "X2",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [],
+ "response_action": "empathize",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": false,
+ "core_in_first3": true,
+ "actionability": 4,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "외로움에 공감하고 전화·영상통화를 가볍게 권해 적절하나, 대화를 이어 갈 질문이 없고 다소 일방적이다."
+}

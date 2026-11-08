@@ -30,3 +30,8 @@ infra/main.json
 .env.*
 !.env.example
 *.token
+
+# autoqa 오염 검사 결과 — 학습 데이터(AI Hub 원문 등) 위치가 담기므로 로컬에만 (원문은 --show-text 때만 들어감)
+contamination*.json
+# autoqa 채점기 실행 폴더 (채점 규칙 사본만 들어감)
+**/packets/_cli_cwd/

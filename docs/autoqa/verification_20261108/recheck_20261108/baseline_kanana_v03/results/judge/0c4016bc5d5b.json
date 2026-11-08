@@ -1,0 +1,43 @@
+{
+ "case_id": "0c4016bc5d5b",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "오늘은 물을 충분히 드시고, 가볍게 산책해 보세요."
+  },
+  {
+   "id": "I2",
+   "met": false,
+   "evidence": ""
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "오늘은 물을 충분히 드시고, 가볍게 산책해 보세요."
+  },
+  {
+   "id": "K2",
+   "preserved": false,
+   "evidence": ""
+  }
+ ],
+ "response_action": "self_care",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 4,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "물·산책 같은 생활 방법은 분명하지만, 피가 섞이거나 배가 몹시 아프면 병원에 가라는 구체적 위험 신호 조건이 빠져 있다."
+}

@@ -1,0 +1,43 @@
+{
+ "case_id": "b0a8995d9054",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "지금 바로 119에 전화하세요."
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "설탕물을 먹이면 기도로 넘어가 숨이 막힐 수 있어 먹이지 마세요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "불러도 대답을 잘 못 하시면 정신이 흐려진 위험한 상태라서"
+  },
+  {
+   "id": "K2",
+   "preserved": true,
+   "evidence": "설탕물을 먹이면 기도로 넘어가 숨이 막힐 수 있어 먹이지 마세요."
+  }
+ ],
+ "response_action": "call_119",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 5,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "첫 문장에서 119 전화를 안내하고 설탕물을 먹이지 말라는 이유와 옆으로 눕히는 방법까지 알려 줘서 어르신이 바로 따라 할 수 있는 좋은 답이다."
+}

@@ -1,0 +1,53 @@
+{
+ "case_id": "df50e662cf22",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "약은 그대로 드시고 약사님이나 의사 선생님께 물어보세요"
+  },
+  {
+   "id": "I2",
+   "met": false,
+   "evidence": ""
+  },
+  {
+   "id": "I3",
+   "met": true,
+   "evidence": "갑자기 심하게 아프거나 말이 꼬이고 팔다리에 힘이 빠지면 바로 119에 전화하세요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  },
+  {
+   "id": "X2",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": false,
+   "evidence": ""
+  },
+  {
+   "id": "K2",
+   "preserved": true,
+   "evidence": "갑자기 심하게 아프거나 말이 꼬이고 팔다리에 힘이 빠지면 바로 119에 전화하세요."
+  }
+ ],
+ "response_action": "ask_pharmacist_doctor",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 4,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "약 유지, 혈압 측정, 상담, 119 기준이 모두 분명하지만 혈압을 기록해 병원에 말하라는 안내와 \"새 약이면 띵할 수 있다\"는 설명이 빠졌다."
+}

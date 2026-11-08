@@ -1,0 +1,48 @@
+{
+ "actionability": 3,
+ "case_id": "014974b67841",
+ "conclusion_match": true,
+ "core_in_first3": true,
+ "det_review": [],
+ "extra_violations": [],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": false,
+   "evidence": ""
+  },
+  {
+   "id": "K2",
+   "preserved": false,
+   "evidence": ""
+  }
+ ],
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "계단은 난간을 꼭 잡고 한 칸씩 천천히 내려가세요."
+  },
+  {
+   "id": "I2",
+   "met": false,
+   "evidence": ""
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  },
+  {
+   "id": "X2",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "referral_present": true,
+ "response_action": "see_doctor_soon",
+ "summary": "난간 잡고 천천히 내려가라는 생활 안내는 있으나, 붓기·열·심한 통증 같은 병원 가야 할 구체적 조건이 없고 무조건 진료를 권해 기대(생활관리+악화 시 진료)보다 다소 급합니다.",
+ "urgency_vs_expected": "over"
+}

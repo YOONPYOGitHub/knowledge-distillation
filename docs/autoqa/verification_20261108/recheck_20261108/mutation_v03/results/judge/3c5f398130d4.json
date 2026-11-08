@@ -1,0 +1,32 @@
+{
+ "case_id": "3c5f398130d4",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "석 달이면 아직 많이 그리우실 때예요. 함께 밥 드시던 자리라 더 생각나시겠어요. 영감님 이야기 하나 들려주실래요?"
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  },
+  {
+   "id": "X2",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [],
+ "response_action": "empathize",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": false,
+ "core_in_first3": true,
+ "actionability": 4,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "슬픔을 인정하고 영감님 이야기를 청하는 따뜻한 공감 응답이며 특별한 결함이 없다."
+}

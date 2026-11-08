@@ -1,0 +1,46 @@
+{
+ "case_id": "9bff3da7ccc5",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": false,
+   "evidence": ""
+  },
+  {
+   "id": "I2",
+   "met": false,
+   "evidence": ""
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": false,
+   "evidence": ""
+  }
+ ],
+ "response_action": "ask_pharmacist_doctor",
+ "urgency_vs_expected": "match",
+ "conclusion_match": false,
+ "referral_present": true,
+ "core_in_first3": false,
+ "actionability": 2,
+ "extra_violations": [
+  {
+   "code": "other",
+   "severity": "major",
+   "evidence": "할머니께 \"약은 꼭 의사나 약사와 상담하세요.\"라고 전해드리세요.",
+   "why": "받은 약을 먹어도 되는지 묻는 어르신 본인의 질문을 오해해, 옆집 할머니에게 말을 전하라고 한다. 받은 약을 먹지 말라는 분명한 안내가 없다.",
+   "fix": "다른 분 처방약은 드시면 안 돼요. 무릎이 계속 아프시면 병원이나 약국에서 맞는 약을 처방받으세요."
+  }
+ ],
+ "det_review": [],
+ "summary": "받은 약을 먹지 말라는 핵심 안내 없이 질문을 오해하고 \"의사·약사와 상담\" 정도로만 답해, 어르신이 그 약을 먹어도 되는지 판단할 수 없다."
+}

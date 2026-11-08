@@ -1,0 +1,48 @@
+{
+ "case_id": "27df39e4053c",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "한낮에는 나가지 마시고 아침 일찍이나 해가 진 뒤에 가세요."
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "물병을 챙겨 자주 드시고, 중간에 그늘에서 쉬세요."
+  },
+  {
+   "id": "I3",
+   "met": false,
+   "evidence": ""
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "한낮에는 나가지 마시고 아침 일찍이나 해가 진 뒤에 가세요."
+  },
+  {
+   "id": "K2",
+   "preserved": false,
+   "evidence": ""
+  }
+ ],
+ "response_action": "first_aid_then_119_if",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 4,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "한낮 회피·물·그늘 안내는 명확하나, 정신이 흐려지면 119라는 구체 조건 대신 \"심하면 119\"로 모호하게 말해 I3와 K2가 미충족이다."
+}

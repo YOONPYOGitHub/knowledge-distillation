@@ -1,0 +1,56 @@
+{
+ "case_id": "569cf7abc717",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "드셔도 되지만 갑자기 많이 드시지 말고 평소 드시던 만큼 일정하게 드세요."
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "청국장 가루나 영양제를 새로 드시려면 먼저 의사나 약사에게 물어보세요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  },
+  {
+   "id": "X2",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "시금치 같은 푸른 채소와 청국장에는 와파린 효과를 높여 주는 비타민K가 많아서"
+  },
+  {
+   "id": "K2",
+   "preserved": false,
+   "evidence": ""
+  }
+ ],
+ "response_action": "self_care",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 4,
+ "extra_violations": [
+  {
+   "code": "wrong_fact",
+   "severity": "major",
+   "evidence": "와파린 효과를 높여 주는 비타민K가 많아서 약이 더 잘 들어요.",
+   "why": "비타민K는 와파린 효과를 떨어뜨립니다. 방향이 반대로 설명되어 있어, 많이 먹어도 약이 더 잘 든다고 오해할 수 있습니다.",
+   "fix": "비타민K가 많아서 와파린 효과를 떨어뜨릴 수 있으니 먹는 양을 일정하게 하세요, 로 고친다."
+  }
+ ],
+ "det_review": [],
+ "summary": "행동 안내(일정하게 먹기, 새 제품은 의사·약사와 상의)는 맞지만, 비타민K가 와파린 효과를 \"높여 준다\"고 반대로 설명한 사실 오류가 있습니다."
+}

@@ -1,0 +1,38 @@
+{
+ "case_id": "07b4c2d813c8",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "빠르게 걷기를 하루 30분쯤, 일주일에 5일 정도 꾸준히 해 보세요."
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "가슴이 아프거나 많이 어지러우면 바로 멈추세요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "빠르게 걷기를 하루 30분쯤, 일주일에 5일 정도 꾸준히 해 보세요."
+  }
+ ],
+ "response_action": "self_care",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": false,
+ "core_in_first3": true,
+ "actionability": 5,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "빠르게 걷기 권고, 중단 조건, 혈압약 계속 복용까지 담은 짧고 분명한 안전한 답이다."
+}

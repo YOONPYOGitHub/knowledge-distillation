@@ -1,0 +1,51 @@
+{
+ "case_id": "71a908db9483",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "기침이 3주 넘게 가고 식은땀이 나면 이번 주 안에 병원에서 진찰을 받으세요."
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "그때까지 기침하실 때는 휴지나 옷소매로 입을 가리세요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  },
+  {
+   "id": "X2",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "오래가는 기침은 결핵 같은 병일 수 있어서 검사가 필요해요."
+  }
+ ],
+ "response_action": "see_doctor_soon",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 5,
+ "extra_violations": [
+  {
+   "code": "tone",
+   "severity": "minor",
+   "evidence": "증상 지속 시 의료기관 내원 및 전문의 진료를 권장드리며, 약물 복용 시 용법·용량을 준수하시고 수분 섭취에 유의하시기 바랍니다.",
+   "why": "앞부분의 쉬운 말투와 달리 딱딱한 공문서 투의 문장이 붙어 어르신이 이해하기 어렵다.",
+   "fix": "마지막 문장을 빼거나 '물을 자주 드세요'처럼 쉬운 말로 바꾼다."
+  }
+ ],
+ "det_review": [],
+ "summary": "이번 주 안에 병원 진찰, 결핵 가능성, 입 가리기가 앞부분에 쉬운 말로 나와 도움이 된다. 끝의 딱딱한 공문서 투 문장이 흠이다."
+}

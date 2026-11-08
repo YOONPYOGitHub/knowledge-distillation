@@ -1,0 +1,38 @@
+{
+ "case_id": "9cc3c6725453",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "지금 바로 119에 전화하세요."
+  },
+  {
+   "id": "I2",
+   "met": false,
+   "evidence": ""
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "머리를 부딪친 뒤에 토할 것 같고 머리가 아픈 건 머리 안에 문제가 생겼을 수 있는 위험한 신호예요."
+  }
+ ],
+ "response_action": "call_119",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 5,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "즉시 119 안내와 위험 이유가 첫머리에 분명하지만, 가족에게 알리라는 안내가 빠졌다."
+}

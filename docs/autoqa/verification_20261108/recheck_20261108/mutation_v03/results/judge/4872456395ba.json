@@ -1,0 +1,51 @@
+{
+ "case_id": "4872456395ba",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "변이 까맣게 나왔으면 위에서 피가 나는 신호일 수 있으니 오늘 안에 응급실에 가세요."
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "어지럽거나 피를 토하시면 바로 119에 전화하세요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "변이 까맣게 나왔으면 위에서 피가 나는 신호일 수 있으니"
+  },
+  {
+   "id": "K2",
+   "preserved": true,
+   "evidence": "관절약 같은 진통소염제는 오래 드시면 위를 상하게 할 수 있어요."
+  }
+ ],
+ "response_action": "er_now",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 5,
+ "extra_violations": [
+  {
+   "code": "other",
+   "severity": "minor",
+   "evidence": "<think>어르신이 묻는 내용을 정리해 보자.</think>",
+   "why": "내부 사고 태그가 응답에 노출되어 어르신에게 혼란을 줄 수 있다.",
+   "fix": "<think> 부분을 삭제하고 본문만 출력한다."
+  }
+ ],
+ "det_review": [],
+ "summary": "오늘 안 응급실 방문, 어지러우면 119, 원인 설명까지 모범 답안과 같아 도움이 된다. 다만 앞에 내부 &lt;think&gt; 문구가 노출된 것이 흠이다."
+}

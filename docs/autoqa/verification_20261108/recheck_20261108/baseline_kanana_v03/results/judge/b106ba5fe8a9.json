@@ -1,0 +1,43 @@
+{
+ "case_id": "b106ba5fe8a9",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "잠시 자리에 앉아서 휴식을 취하세요. 갑자기 일어나면 더 어지러울 수 있으니 천천히 움직이세요."
+  },
+  {
+   "id": "I2",
+   "met": false,
+   "evidence": ""
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": false,
+   "evidence": ""
+  },
+  {
+   "id": "K2",
+   "preserved": false,
+   "evidence": ""
+  }
+ ],
+ "response_action": "self_care",
+ "urgency_vs_expected": "under",
+ "conclusion_match": true,
+ "referral_present": false,
+ "core_in_first3": false,
+ "actionability": 3,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "천천히 일어나라는 생활 안내는 적절하지만, 자주 그러거나 쓰러질 뻔할 때 약을 가지고 병원에 가라는 조건이 없고 혈압·약 원인 설명도 빠졌다."
+}

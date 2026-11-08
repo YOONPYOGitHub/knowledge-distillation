@@ -1,0 +1,43 @@
+{
+ "case_id": "3c31fb309470",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "이건 암일 수도 있고 아닐 수도 있습니다. 정확히 알기 위해서는 피부과 진료를 받아보셔야 해요."
+  },
+  {
+   "id": "I2",
+   "met": false,
+   "evidence": ""
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  },
+  {
+   "id": "X2",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "등에 생긴 점이 커졌다고 하셨는데, 이건 암일 수도 있고 아닐 수도 있습니다. 정확히 알기 위해서는 피부과 진료를 받아보셔야 해요."
+  }
+ ],
+ "response_action": "see_doctor_soon",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 4,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "진단 단정 없이 피부과 진료를 분명히 권하지만, 1~2주 안이라는 시기를 말하지 않아 '언제까지'가 빠졌다."
+}

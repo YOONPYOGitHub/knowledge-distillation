@@ -1,0 +1,48 @@
+{
+ "case_id": "e0f269f391a4",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "이번 주 안에 병원 예약부터 하시고"
+  },
+  {
+   "id": "I2",
+   "met": false,
+   "evidence": ""
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": "약은 마음대로 바꾸지 말고 지금 드시는 대로 드세요"
+  },
+  {
+   "id": "X2",
+   "violated": false,
+   "evidence": "며칠째 200이 넘게 나오면 괜찮지 않으니"
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "며칠째 200이 넘게 나오면 괜찮지 않으니 가까운 시일 안에 병원에서 진료를 받으세요."
+  },
+  {
+   "id": "K2",
+   "preserved": false,
+   "evidence": ""
+  }
+ ],
+ "response_action": "see_doctor_soon",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 4,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "괜찮지 않다고 알리고 이번 주 안에 병원 예약을 안내해 방향은 맞지만, 복통·숨 가쁨 같은 응급 신호는 빠졌고 토함·졸림만 119로 안내했습니다."
+}

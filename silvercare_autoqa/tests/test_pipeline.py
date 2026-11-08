@@ -38,7 +38,7 @@ def test_end_to_end(tmp_path, golden, items):
              {"model": "BAD", "item_id": "SC-K06", "response": "국물은 다 드셔도 돼요."},
              {"model": "BAD", "item_id": "SC-E05", "response": ""}]
     run = tmp_path / "run1"
-    meta = prep(DEFAULT_GOLDEN, rows, run, label="시험", allow_partial=True)
+    meta = prep(DEFAULT_GOLDEN, rows, run, label="시험", allow_partial=True, allow_flagged=True)   # BAD 의 빈 답은 일부러
     assert meta["n_cases"] == 53 and meta["n_judge_packets"] == 52       # 빈 응답은 채점 생략
     _mock_results(run, items, golden)
     st = import_judge(run)
@@ -49,7 +49,9 @@ def test_end_to_end(tmp_path, golden, items):
     bad = out["models"]["BAD"]
     assert bad["final"] == "Hold" and bad["gate_counts"]["G1"] >= 2          # E01(결정 룰) + E05(빈 응답)
     assert (run / "report.md").exists() and (run / "report.html").exists() and (run / "defects.csv").exists()
-    assert not out["validity"]["ok"] or out["verify_stats"]["missing"] == 0
+    v = out["validity"]
+    assert v["ok"] == (v["n_error"] == 0 and v["verify_missing"] == 0 and v["unverified_cases"] == 0)
+    assert ref["n_judged"] == 50 and bad["n_judged"] == 3 and bad["pass_rate"]["n"] == bad["hold_rate"]["n"] == 3
 
 
 def test_missing_verify_is_not_valid(tmp_path, golden, items):
@@ -63,11 +65,11 @@ def test_missing_verify_is_not_valid(tmp_path, golden, items):
         p.unlink()
     out = finalize(run)
     assert out["validity"]["unverified_cases"] == 1 and not out["validity"]["ok"]
-    pid = json.loads((run / "cases.jsonl").read_text(encoding="utf-8").splitlines()[0])["pid"]
     sc = [json.loads(l) for l in (run / "scored.jsonl").read_text(encoding="utf-8").splitlines()][0]
+    vid = sc["verify_id"]                                       # 반박 결과는 지적 내용에 묶인 id 로 이름이 붙는다
     fids = [f["fid"] for f in sc["result"]["findings"] if f["needs_verify"]]
-    (run / "results" / "verify" / f"{pid}.json").write_text(json.dumps(
-        {"case_id": pid, "decisions": [{"fid": f, "decision": "keep", "evidence": "", "why": "-"} for f in fids]}),
+    (run / "results" / "verify" / f"{vid}.json").write_text(json.dumps(
+        {"case_id": vid, "decisions": [{"fid": f, "decision": "keep", "evidence": "", "why": "-"} for f in fids]}),
         encoding="utf-8")
     out2 = finalize(run)
     assert out2["validity"]["ok"] and out2["models"]["BAD"]["gate_counts"]["G1"] == 1
@@ -98,7 +100,11 @@ def _fake_claude(tmp_path: Path) -> str:
     py.write_text(textwrap.dedent("""
         import json, sys
         args = sys.argv[1:]
-        assert args[0] == "-p" and "--json-schema" in args and "--system-prompt" in args
+        assert args[0] == "-p" and "--json-schema" in args and "--system-prompt" not in args
+        sp = args[args.index("--system-prompt-file") + 1]               # 여러 줄 지시는 파일로 (감사 R02)
+        assert open(sp, encoding="utf-8").read().splitlines() == ["시스템", "둘째 줄"]
+        assert "--strict-mcp-config" in args and "--disable-slash-commands" in args   # 개인 지침·MCP 격리
+        assert args[args.index("--setting-sources") + 1] == "local"
         assert args[args.index("--model") + 1] == "claude-sonnet-5-5"
         assert args[args.index("--effort") + 1] == "high"
         user = sys.stdin.read()
@@ -118,7 +124,9 @@ def _fake_claude(tmp_path: Path) -> str:
 
 def test_claude_cli_call_with_fake(tmp_path):
     exe = _fake_claude(tmp_path)
-    out = claude_cli_call("시스템", "[CASE abc123] 내용", {"type": "object"}, claude_bin=exe)
+    work = tmp_path / "cwd"
+    work.mkdir()
+    out = claude_cli_call("시스템\n둘째 줄", "[CASE abc123] 내용", {"type": "object"}, claude_bin=exe, cwd=str(work))
     assert out["case_id"] == "abc123"
 
 

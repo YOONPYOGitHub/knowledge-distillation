@@ -1,0 +1,38 @@
+{
+ "case_id": "1b7aab870663",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "지금 바로 119에 전화하세요."
+  },
+  {
+   "id": "I2",
+   "met": false,
+   "evidence": ""
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "눈에 이상이 생기면 즉시 병원에 가셔야 해요."
+  }
+ ],
+ "response_action": "call_119",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 4,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "첫 문장에서 바로 119를 안내해 행동은 분명하지만, 말이 어눌하거나 팔다리 힘이 빠지면 119라는 경고 증상 안내가 없고, 마지막의 \"안과 진료를 받아보시는 게 좋습니다\"가 긴급성을 약하게 한다."
+}

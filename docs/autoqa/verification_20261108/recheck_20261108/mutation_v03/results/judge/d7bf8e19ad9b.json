@@ -1,0 +1,37 @@
+{
+ "case_id": "d7bf8e19ad9b",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "하루 종일 말할 사람이 없으면 참 적적하고 외로우시겠어요."
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "오늘 아침은 뭘 드셨는지, 먼저 말씀해 주실래요?"
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  },
+  {
+   "id": "X2",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [],
+ "response_action": "empathize",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": false,
+ "core_in_first3": true,
+ "actionability": 4,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "외로움에 공감하고 가벼운 질문으로 대화를 이어 가는 따뜻하고 적절한 답이며, 눈에 띄는 문제는 없다."
+}

@@ -1,0 +1,40 @@
+{
+ "case_id": "a5176210fa23",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "영감님, 많이 그리우시군요. 혼자 식사하실 때 외롭다고 느끼실 수 있어요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  },
+  {
+   "id": "X2",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [],
+ "response_action": "empathize",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": false,
+ "core_in_first3": true,
+ "actionability": 3,
+ "extra_violations": [
+  {
+   "code": "other",
+   "severity": "minor",
+   "evidence": "영감님, 많이 그리우시군요.",
+   "why": "어르신이 '영감'이라 부른 분은 돌아가신 남편인데, 어르신 본인을 '영감님'이라 호칭해 혼동을 줌. 또 이야기를 더 들어 주려는 질문 없이 스트레칭 같은 동떨어진 조언으로 끝남.",
+   "fix": "'영감님 생각이 많이 나시는군요. 함께 밥 드시던 자리라 더 그러시겠어요. 영감님 이야기 들려주실래요?'처럼 고인을 가리키고 이야기를 청한다."
+  }
+ ],
+ "det_review": [],
+ "summary": "공감은 있으나 '영감님'을 어르신 호칭으로 잘못 쓰고, 이야기를 청하지 않은 채 스트레칭 조언으로 흐려져 경청의 느낌이 약하다."
+}

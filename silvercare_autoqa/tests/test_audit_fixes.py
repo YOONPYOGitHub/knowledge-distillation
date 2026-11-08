@@ -47,7 +47,7 @@ def test_a02_tier2_safety_not_on_emergency_is_hold(items):
 
 def test_a03_partial_model_refused_and_incomplete(tmp_path, golden, items):
     rows = reference_rows(golden)[:7]          # 응급 문항이 거의 없는 7문항만
-    with pytest.raises(ValueError, match="빠진 모델"):
+    with pytest.raises(ValueError, match="문항 43개 빠짐"):
         prep(DEFAULT_GOLDEN, rows, tmp_path / "r")
     assert not (tmp_path / "r" / "cases.jsonl").exists()
     cases = [{"item_id": r["item_id"], "det": det_checks(items[r["item_id"]], r["response"]).to_dict(),
@@ -97,11 +97,14 @@ def test_a05_run_folder_portable(tmp_path, golden, monkeypatch):
     monkeypatch.chdir(tmp_path)
     rows = reference_rows(golden)
     meta = prep(DEFAULT_GOLDEN, rows, "run_x")
-    assert meta["golden_path"].endswith("silvercare_golden_v0.yaml")
+    assert meta["golden_path"] == "golden.yaml" and meta["golden_source"].endswith("silvercare_golden_v0.yaml")
+    assert (tmp_path / "run_x" / "golden.yaml").exists()                 # 회차 폴더에 골든셋 사본 (감사 R19)
     bad = json.loads((tmp_path / "run_x" / "meta.json").read_text(encoding="utf-8"))
-    bad["golden_path"] = "/다른/PC/경로/silvercare_golden_v0.yaml"      # 옮긴 PC 에서는 없는 경로
+    bad["golden_source"] = "/다른/PC/경로/silvercare_golden_v0.yaml"    # 옮긴 PC 에서는 없는 경로
     (tmp_path / "run_x" / "meta.json").write_text(json.dumps(bad, ensure_ascii=False), encoding="utf-8")
-    import_judge("run_x")                                               # 해시가 같은 기본 골든셋으로 찾아 들어감
+    import_judge("run_x")                                               # 회차 폴더 안의 사본으로 연다
+    (tmp_path / "run_x" / "golden.yaml").unlink()
+    import_judge("run_x")                                               # 사본도 없으면 해시가 같은 기본 골든셋
 
 
 def test_a06_contamination_zero_lines_not_ok(tmp_path):
@@ -124,9 +127,10 @@ def test_a07_refute_needs_evidence_and_g1_no_downgrade():
     assert validate_verify(bad_refute, "c", ["F1"], resp, {"F1": "G2"})
     fake = {"case_id": "c", "decisions": [{"fid": "F1", "decision": "refute", "evidence": "지금 바로 119에 전화하세요", "why": "-"}]}
     assert validate_verify(fake, "c", ["F1"], resp, {"F1": "G1"})       # 응답에 없는 문장 인용
-    down = {"case_id": "c", "decisions": [{"fid": "F1", "decision": "downgrade", "evidence": "좀 누워서", "why": "-"}]}
+    down = {"case_id": "c", "decisions": [{"fid": "F1", "decision": "downgrade", "evidence": "좀 누워서 쉬어 보세요", "why": "-"}]}
     assert validate_verify(down, "c", ["F1"], resp, {"F1": "G1"})       # 응급 놓침은 낮출 수 없음
-    assert validate_verify(down, "c", ["F1"], resp, {"F1": "G4"}) == []
+    assert validate_verify(down, "c", ["F1"], resp, {"F1": "G4"}) == []   # 응급이 아닌 문항의 G4 는 근거 있으면 낮춤 가능
+    assert validate_verify(down, "c", ["F1"], resp, {"F1": "G4"}, ["F1"])  # 응급 문항의 안전 지적은 낮출 수 없음 (D04)
     ok = {"case_id": "c", "decisions": [{"fid": "F1", "decision": "refute", "evidence": "좀 누워서 쉬어 보세요", "why": "-"}]}
     assert validate_verify(ok, "c", ["F1"], resp, {"F1": "G2"}) == []
     assert validate_verify({"case_id": "c", "decisions": ["문자열"]}, "c", ["F1"], resp, {})   # TypeError 없이 오류로

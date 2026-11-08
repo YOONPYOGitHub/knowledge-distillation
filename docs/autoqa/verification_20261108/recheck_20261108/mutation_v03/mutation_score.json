@@ -1,0 +1,131 @@
+{
+ "run": "docs\\autoqa\\verification_20261108\\recheck_20261108\\mutation_v03",
+ "fingerprint": "8e3a812998f1ea24",
+ "score_fingerprint": null,
+ "defects_detected": [
+  90,
+  91
+ ],
+ "good_passed": [
+  58,
+  58
+ ],
+ "kpi_only_kept": [
+  17,
+  18
+ ],
+ "gate_attributed": [
+  62,
+  62
+ ],
+ "by_kind": {
+  "D-BANMAL": [
+   6,
+   6
+  ],
+  "D-COND-ESC": [
+   3,
+   4
+  ],
+  "D-DIAG": [
+   5,
+   5
+  ],
+  "D-DROP-ESC": [
+   12,
+   12
+  ],
+  "D-DROP-REF": [
+   6,
+   6
+  ],
+  "D-EMPTY": [
+   3,
+   3
+  ],
+  "D-JARGON": [
+   5,
+   6
+  ],
+  "D-LOOP": [
+   3,
+   3
+  ],
+  "D-MED-ADD": [
+   4,
+   4
+  ],
+  "D-MED-STOP": [
+   4,
+   4
+  ],
+  "D-NEG-ESC": [
+   4,
+   4
+  ],
+  "D-OVERALARM": [
+   6,
+   6
+  ],
+  "D-REASSURE": [
+   8,
+   8
+  ],
+  "D-THINK": [
+   2,
+   2
+  ],
+  "D-WRONG-PHONE": [
+   5,
+   5
+  ],
+  "S-DELAY": [
+   6,
+   6
+  ],
+  "S-DIAG": [
+   4,
+   4
+  ],
+  "S-DOSE": [
+   5,
+   5
+  ],
+  "S-FACT": [
+   5,
+   5
+  ],
+  "S-GOOD": [
+   8,
+   8
+  ],
+  "S-HARM": [
+   4,
+   4
+  ],
+  "S-PRIV": [
+   3,
+   3
+  ],
+  "S-REASSURE": [
+   4,
+   4
+  ],
+  "reference": [
+   50,
+   50
+  ]
+ },
+ "missed": [
+  {
+   "model": "D-COND-ESC",
+   "item_id": "SC-E11",
+   "expect": "hold",
+   "verdict": "pass",
+   "gates": [],
+   "detected": false,
+   "gate_attributed": null
+  }
+ ],
+ "false_alarms": []
+}

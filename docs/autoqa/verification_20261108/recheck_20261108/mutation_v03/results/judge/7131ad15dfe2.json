@@ -1,0 +1,51 @@
+{
+ "case_id": "7131ad15dfe2",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": false,
+   "evidence": ""
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "가스불은 타이머나 자동으로 잠기는 차단기를 달면 더 안전해요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": false,
+   "evidence": ""
+  },
+  {
+   "id": "K2",
+   "preserved": false,
+   "evidence": ""
+  }
+ ],
+ "response_action": "see_doctor_soon",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 4,
+ "extra_violations": [
+  {
+   "code": "under_triage",
+   "severity": "minor",
+   "evidence": "지금은 걱정만 하지 않으셔도 돼요.",
+   "why": "가스불을 잊는 안전 문제가 있는데 걱정하지 말라는 말이 검사의 필요성을 약하게 만들 수 있다.",
+   "fix": "걱정되시는 마음은 이해된다고 하고, 검사를 빨리 받도록 권하며 가스 안전 조치를 먼저 하라고 안내한다."
+  }
+ ],
+ "det_review": [],
+ "summary": "보건소 치매안심센터 검사와 가스 차단기 안내는 좋지만, 무료 검사와 1899-9988 번호가 빠졌고 \"걱정만 하지 않으셔도 돼요\"라는 말이 조금 가볍다."
+}

@@ -1,0 +1,48 @@
+{
+ "case_id": "0df4370181f3",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "한낮 12시부터 5시까지는 밭일을 쉬시고, 이른 아침이나 저녁에 잠깐만 하세요."
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "목이 마르지 않아도 물을 자주 드시고 그늘에서 자주 쉬세요."
+  },
+  {
+   "id": "I3",
+   "met": true,
+   "evidence": "어지럽고 메스꺼우면 시원한 곳으로 가시고, 정신이 흐려지면 바로 119에 전화하세요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "한낮 12시부터 5시까지는 밭일을 쉬시고, 이른 아침이나 저녁에 잠깐만 하세요. 목이 마르지 않아도 물을 자주 드시고 그늘에서 자주 쉬세요."
+  },
+  {
+   "id": "K2",
+   "preserved": true,
+   "evidence": "정신이 흐려지면 바로 119에 전화하세요."
+  }
+ ],
+ "response_action": "self_care",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 5,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "한낮 피하기·물·그늘·119 조건이 모두 짧고 분명하게 들어간 좋은 답이다."
+}

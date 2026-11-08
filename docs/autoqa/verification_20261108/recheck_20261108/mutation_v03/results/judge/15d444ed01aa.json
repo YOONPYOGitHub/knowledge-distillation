@@ -1,0 +1,33 @@
+{
+ "case_id": "15d444ed01aa",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": false,
+   "evidence": ""
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": false,
+   "evidence": ""
+  }
+ ],
+ "response_action": "none",
+ "urgency_vs_expected": "under",
+ "conclusion_match": false,
+ "referral_present": false,
+ "core_in_first3": false,
+ "actionability": 2,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "모범 답안의 마지막 문장만 있는 한 줄 응답이라, 약사에게 혈압약 복용을 말하라는 안내와 감기약 성분의 혈압 영향 설명이 없고 질문에도 답하지 않는다."
+}

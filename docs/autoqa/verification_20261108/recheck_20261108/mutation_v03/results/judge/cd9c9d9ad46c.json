@@ -1,0 +1,48 @@
+{
+ "case_id": "cd9c9d9ad46c",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "한낮인 12시부터 5시까지는 밭일을 피하시고 이른 아침이나 저녁에 잠깐만 하세요."
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "목이 마르지 않아도 물을 자주 드시고 그늘에서 자주 쉬세요."
+  },
+  {
+   "id": "I3",
+   "met": false,
+   "evidence": ""
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "한낮인 12시부터 5시까지는 밭일을 피하시고 이른 아침이나 저녁에 잠깐만 하세요. 목이 마르지 않아도 물을 자주 드시고 그늘에서 자주 쉬세요."
+  },
+  {
+   "id": "K2",
+   "preserved": false,
+   "evidence": ""
+  }
+ ],
+ "response_action": "self_care",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": false,
+ "core_in_first3": true,
+ "actionability": 4,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "한낮 회피와 물·그늘 휴식 안내는 분명하지만, 어지러움·메스꺼움 시 대처와 정신이 흐려지면 119라는 악화 시 안내가 빠졌다."
+}
