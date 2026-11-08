@@ -29,12 +29,27 @@ def raw_prompt(item: dict, system: str = APP_SYSTEM, template: str = RAW_TEMPLAT
     return template.format(system=system, context=ctx, utterance=item["utterance"])
 
 
+ANSWER_MARK = "돌봄 AI:"
+
+
 def _clean(text: str) -> str:
     """생성 모델이 다음 차례까지 이어 쓴 꼬리를 자른다 (base 모델 대비)."""
     for stop in ("\n어르신:", "\n사용자:", "\nUser:", "<|im_end|>", "<end_of_turn>"):
         if stop in text:
             text = text.split(stop)[0]
     return text.strip()
+
+
+def strip_prompt(text: str, prompt: str) -> str:
+    """팀 UI 백엔드는 prompt 까지 붙인 전체 텍스트를 돌려준다(generator.py 의 decode(output_ids[0])).
+    prompt 를 떼고 답만 남긴다. tokenizer 가 공백을 바꿔 앞부분이 안 맞으면 마지막 답 표식 뒤를 쓴다.
+    이걸 안 하면 응답 대신 시스템 프롬프트(119 안내 포함)를 채점하게 된다."""
+    if text.startswith(prompt):
+        return text[len(prompt):]
+    k = text.rfind(ANSWER_MARK)
+    if k != -1:
+        return text[k + len(ANSWER_MARK):]
+    return text
 
 
 def kd_ui(items: Iterable[dict], base_url: str, run_id: str, model_ids: list[str], *, max_new_tokens: int = 160,
@@ -47,13 +62,19 @@ def kd_ui(items: Iterable[dict], base_url: str, run_id: str, model_ids: list[str
               "repetition_penalty": 1.1, "do_sample": temperature > 0, "seed": 42}
     for i in range(0, len(items), chunk):
         part = items[i:i + chunk]
-        body = {"run_id": run_id, "model_ids": model_ids, "prompts": [raw_prompt(it) for it in part], "params": params}
+        prompts = [raw_prompt(it) for it in part]
+        body = {"run_id": run_id, "model_ids": model_ids, "prompts": prompts, "params": params}
         r = requests.post(base_url.rstrip("/") + "/generate/batch", json=body, timeout=timeout)
         r.raise_for_status()
         data = r.json()
-        for it, res in zip(part, data["items"]):
+        if len(data["items"]) != len(part):
+            # 백엔드는 빈 prompt 를 버리므로 개수가 달라지면 문항 대응이 어긋난다 → 멈춘다
+            raise RuntimeError(f"응답 개수 불일치: 보낸 {len(part)} · 받은 {len(data['items'])}")
+        for it, p, res in zip(part, prompts, data["items"]):
+            if res.get("prompt") not in (None, p):
+                raise RuntimeError(f"{it['id']}: 응답이 다른 prompt 에 대한 것")
             for mid, o in res["outputs"].items():
-                rows.append({"model": mid, "item_id": it["id"], "response": _clean(o.get("text") or ""),
+                rows.append({"model": mid, "item_id": it["id"], "response": _clean(strip_prompt(o.get("text") or "", p)),
                              "meta": {"source": "kd-ui", "run_id": run_id, "num_tokens": o.get("num_tokens"),
                                       "elapsed_ms": o.get("elapsed_ms"), "error": o.get("error"), "params": params}})
     return rows
