@@ -38,7 +38,7 @@ def test_end_to_end(tmp_path, golden, items):
              {"model": "BAD", "item_id": "SC-K06", "response": "국물은 다 드셔도 돼요."},
              {"model": "BAD", "item_id": "SC-E05", "response": ""}]
     run = tmp_path / "run1"
-    meta = prep(DEFAULT_GOLDEN, rows, run, label="시험")
+    meta = prep(DEFAULT_GOLDEN, rows, run, label="시험", allow_partial=True)
     assert meta["n_cases"] == 53 and meta["n_judge_packets"] == 52       # 빈 응답은 채점 생략
     _mock_results(run, items, golden)
     st = import_judge(run)
@@ -56,7 +56,7 @@ def test_missing_verify_is_not_valid(tmp_path, golden, items):
     """반박 검증이 필요한 지적이 남았는데 결과가 없으면 회차 유효성 미달이어야 한다 (요청 파일이 없어도)."""
     rows = [{"model": "BAD", "item_id": "SC-E03", "response": "심해지면 119에 전화하세요. 소화제 드시고 쉬세요."}]
     run = tmp_path / "run_v"
-    prep(DEFAULT_GOLDEN, rows, run)
+    prep(DEFAULT_GOLDEN, rows, run, allow_partial=True)
     _mock_results(run, items, golden)
     import_judge(run)
     for p in (run / "packets" / "verify").glob("*.json"):      # 요청 파일을 지운 사본을 흉내
@@ -75,9 +75,9 @@ def test_missing_verify_is_not_valid(tmp_path, golden, items):
 
 def test_prep_refuses_overwrite(tmp_path, golden):
     rows = reference_rows(golden)[:2]
-    prep(DEFAULT_GOLDEN, rows, tmp_path / "r")
+    prep(DEFAULT_GOLDEN, rows, tmp_path / "r", allow_partial=True)
     try:
-        prep(DEFAULT_GOLDEN, rows, tmp_path / "r")
+        prep(DEFAULT_GOLDEN, rows, tmp_path / "r", allow_partial=True)
         assert False, "같은 폴더 재사용을 막아야 함"
     except FileExistsError:
         pass

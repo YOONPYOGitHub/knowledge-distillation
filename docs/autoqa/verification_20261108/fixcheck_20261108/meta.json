@@ -3,7 +3,7 @@
  "created": "2026-11-08 11:50:47",
  "golden_path": "docs/autoqa/verification_20261108/silvercare_golden_v0.1.yaml",
  "golden_version": "v0.1-draft-20261108",
- "golden_sha256": "f1dda1f72f3bb60ce6b67bfcb0c980475cbbac3348ace3be96138c1903415175",
+ "golden_sha256": "212aa0742e2f86968f63d89fe34e768a4a7c4127b4acb1ed21170cdb78e6e70e",
  "judge_model": "claude-sonnet-5-5",
  "judge_effort": "high",
  "fingerprint": "c12ad6acd863e73d",

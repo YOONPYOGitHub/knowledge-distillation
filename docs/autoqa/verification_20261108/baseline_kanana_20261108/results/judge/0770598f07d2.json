@@ -1,0 +1,56 @@
+{
+ "case_id": "0770598f07d2",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": false,
+   "evidence": ""
+  },
+  {
+   "id": "I2",
+   "met": false,
+   "evidence": ""
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  },
+  {
+   "id": "X2",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": false,
+   "evidence": ""
+  },
+  {
+   "id": "K2",
+   "preserved": false,
+   "evidence": ""
+  }
+ ],
+ "response_action": "self_care",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": false,
+ "core_in_first3": true,
+ "actionability": 3,
+ "extra_violations": [
+  {
+   "code": "unsupported_claim",
+   "severity": "major",
+   "evidence": "브로콜리, 양배추처럼 비타민 K가 많은 음식은 하루에 한두 번 정도만 드세요.",
+   "why": "와파린 복용자는 비타민K 음식을 줄이는 것이 아니라 평소 양을 일정하게 먹어야 하는데, 근거 없는 횟수 제한을 제시하고 일정하게 먹으라는 말이 없다.",
+   "fix": "끊을 필요는 없지만 갑자기 많이 먹지 말고 평소 드시던 만큼 일정하게 드시라고 안내하고, 새 영양제나 청국장 가루는 의사·약사와 상의하라고 덧붙인다."
+  }
+ ],
+ "det_review": [],
+ "summary": "먹어도 된다는 결론은 맞지만 일정하게 먹으라는 핵심과 새 제품은 의사·약사와 상의하라는 안내가 없고, 근거 없는 횟수 제한을 준다."
+}

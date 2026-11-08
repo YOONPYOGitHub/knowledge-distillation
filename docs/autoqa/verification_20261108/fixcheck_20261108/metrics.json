@@ -4,7 +4,7 @@
   "created": "2026-11-08 11:50:47",
   "golden_path": "docs/autoqa/verification_20261108/silvercare_golden_v0.1.yaml",
   "golden_version": "v0.1-draft-20261108",
-  "golden_sha256": "f1dda1f72f3bb60ce6b67bfcb0c980475cbbac3348ace3be96138c1903415175",
+  "golden_sha256": "212aa0742e2f86968f63d89fe34e768a4a7c4127b4acb1ed21170cdb78e6e70e",
   "judge_model": "claude-sonnet-5-5",
   "judge_effort": "high",
   "fingerprint": "c12ad6acd863e73d",
@@ -46,6 +46,51 @@
    "n_cases": 8,
    "n_scored": 8,
    "n_error": 0,
+   "n_items_covered": 8,
+   "missing_items": [
+    "SC-B02",
+    "SC-B03",
+    "SC-B04",
+    "SC-C01",
+    "SC-C02",
+    "SC-C03",
+    "SC-C04",
+    "SC-E01",
+    "SC-E03",
+    "SC-E07",
+    "SC-E08",
+    "SC-E09",
+    "SC-E11",
+    "SC-E12",
+    "SC-G01",
+    "SC-G02",
+    "SC-G03",
+    "SC-G04",
+    "SC-G05",
+    "SC-G06",
+    "SC-G08",
+    "SC-K01",
+    "SC-K02",
+    "SC-K03",
+    "SC-K04",
+    "SC-K05",
+    "SC-K06",
+    "SC-K07",
+    "SC-M01",
+    "SC-M02",
+    "SC-M03",
+    "SC-M04",
+    "SC-M05",
+    "SC-M06",
+    "SC-M07",
+    "SC-M08",
+    "SC-M09",
+    "SC-M10",
+    "SC-P01",
+    "SC-P02",
+    "SC-P03",
+    "SC-P04"
+   ],
    "verdicts": {
     "pass": 0,
     "fix": 1,
@@ -184,12 +229,58 @@
     }
    },
    "unverified_cases": [],
+   "judge_missing_cases": [],
    "error_cases": []
   },
   "reference": {
    "n_cases": 8,
    "n_scored": 8,
    "n_error": 0,
+   "n_items_covered": 8,
+   "missing_items": [
+    "SC-B02",
+    "SC-B03",
+    "SC-B04",
+    "SC-C01",
+    "SC-C02",
+    "SC-C03",
+    "SC-C04",
+    "SC-E01",
+    "SC-E03",
+    "SC-E07",
+    "SC-E08",
+    "SC-E09",
+    "SC-E11",
+    "SC-E12",
+    "SC-G01",
+    "SC-G02",
+    "SC-G03",
+    "SC-G04",
+    "SC-G05",
+    "SC-G06",
+    "SC-G08",
+    "SC-K01",
+    "SC-K02",
+    "SC-K03",
+    "SC-K04",
+    "SC-K05",
+    "SC-K06",
+    "SC-K07",
+    "SC-M01",
+    "SC-M02",
+    "SC-M03",
+    "SC-M04",
+    "SC-M05",
+    "SC-M06",
+    "SC-M07",
+    "SC-M08",
+    "SC-M09",
+    "SC-M10",
+    "SC-P01",
+    "SC-P02",
+    "SC-P03",
+    "SC-P04"
+   ],
    "verdicts": {
     "pass": 8,
     "fix": 0,
@@ -307,7 +398,7 @@
    "unmet_targets": [
     "핵심 정보 보존율"
    ],
-   "final": "Fix",
+   "final": "Incomplete",
    "by_type": {
     "emergency": {
      "pass": 6
@@ -320,12 +411,58 @@
     }
    },
    "unverified_cases": [],
+   "judge_missing_cases": [],
    "error_cases": []
   },
   "teacher_proxy": {
    "n_cases": 8,
    "n_scored": 8,
    "n_error": 0,
+   "n_items_covered": 8,
+   "missing_items": [
+    "SC-B02",
+    "SC-B03",
+    "SC-B04",
+    "SC-C01",
+    "SC-C02",
+    "SC-C03",
+    "SC-C04",
+    "SC-E01",
+    "SC-E03",
+    "SC-E07",
+    "SC-E08",
+    "SC-E09",
+    "SC-E11",
+    "SC-E12",
+    "SC-G01",
+    "SC-G02",
+    "SC-G03",
+    "SC-G04",
+    "SC-G05",
+    "SC-G06",
+    "SC-G08",
+    "SC-K01",
+    "SC-K02",
+    "SC-K03",
+    "SC-K04",
+    "SC-K05",
+    "SC-K06",
+    "SC-K07",
+    "SC-M01",
+    "SC-M02",
+    "SC-M03",
+    "SC-M04",
+    "SC-M05",
+    "SC-M06",
+    "SC-M07",
+    "SC-M08",
+    "SC-M09",
+    "SC-M10",
+    "SC-P01",
+    "SC-P02",
+    "SC-P03",
+    "SC-P04"
+   ],
    "verdicts": {
     "pass": 8,
     "fix": 0,
@@ -443,7 +580,7 @@
    "unmet_targets": [
     "핵심 정보 보존율"
    ],
-   "final": "Fix",
+   "final": "Incomplete",
    "by_type": {
     "emergency": {
      "pass": 6
@@ -456,7 +593,71 @@
     }
    },
    "unverified_cases": [],
+   "judge_missing_cases": [],
    "error_cases": []
+  }
+ },
+ "teacher": "teacher_proxy",
+ "teacher_compare": {
+  "D-REASSURE": {
+   "결론 일치율(Teacher 대비)": {
+    "k": 8,
+    "n": 8,
+    "value": 1.0,
+    "ci95": [
+     0.6755843804891231,
+     1.0
+    ]
+   },
+   "안전 판단 보존율(Teacher 대비)": {
+    "k": 8,
+    "n": 8,
+    "value": 1.0,
+    "ci95": [
+     0.6755843804891231,
+     1.0
+    ]
+   },
+   "핵심 정보 보존율(Teacher 대비)": {
+    "k": 7,
+    "n": 7,
+    "value": 1.0,
+    "ci95": [
+     0.6456611570247934,
+     1.0
+    ]
+   },
+   "불일치": []
+  },
+  "reference": {
+   "결론 일치율(Teacher 대비)": {
+    "k": 8,
+    "n": 8,
+    "value": 1.0,
+    "ci95": [
+     0.6755843804891231,
+     1.0
+    ]
+   },
+   "안전 판단 보존율(Teacher 대비)": {
+    "k": 8,
+    "n": 8,
+    "value": 1.0,
+    "ci95": [
+     0.6755843804891231,
+     1.0
+    ]
+   },
+   "핵심 정보 보존율(Teacher 대비)": {
+    "k": 7,
+    "n": 7,
+    "value": 1.0,
+    "ci95": [
+     0.6456611570247934,
+     1.0
+    ]
+   },
+   "불일치": []
   }
  },
  "pairs": [],

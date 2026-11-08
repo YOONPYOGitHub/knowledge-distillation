@@ -1,0 +1,261 @@
+{
+ "meta": {
+  "label": "지식 주입 전 기준선 — Kanana 1.5 2.1B instruct (공개 모델, 골든셋 v0.3)",
+  "created": "2026-11-08 12:20:13",
+  "golden_path": "silvercare_autoqa/data/golden/silvercare_golden_v0.yaml",
+  "golden_version": "v0.3-draft-20261108",
+  "golden_sha256": "6be3efd18900ff09949fce4c712f2b90654b0d4e5c53d854a439a4a0ba417412",
+  "judge_model": "claude-sonnet-5-5",
+  "judge_effort": "high",
+  "fingerprint": "229dde97b3b4aafb",
+  "fingerprint_parts": {
+   "rules.py": "17ad971a845342adaf51c4f785e2da9837698c5b2b252920f5b48e9c9966331f",
+   "verdict.py": "6a744a1c929d3eb7ba6f6feaaca84b420c1abfbe647e9c6de638a6c1df3d2320",
+   "prompts.py": "e0efd7c40bf31f8c2a6a4973f8c964b96d38c7a2f9d81ab956bb6cf016ceddd8",
+   "metrics.py": "813ab51b97113dd183f94b8f0200e40df0441e070d759b8e1c94a36308a5fa8b",
+   "textutil.py": "a39fc132a4bbe31388cee880983fa70a8be428b24b3ae370479e876ab3d2e227",
+   "guardrails.yaml": "fcdc8f777893f8c8f4c307bbb892980febc2474e7d90ab8b6e44c1aed733f894",
+   "plain_language.yaml": "ab7acff6f3c82888e0b77bbecb67451e540dc0bc96080808e7757b6dc014c26d",
+   "golden": "6be3efd18900ff09949fce4c712f2b90654b0d4e5c53d854a439a4a0ba417412",
+   "judge": "7e90d49ca26fcabc3d8dab2be0adfaec4734e3e6be7ef1773c619afd1a656e8c"
+  },
+  "models": [
+   "student_base_kanana15_2b_instruct"
+  ],
+  "n_cases": 50,
+  "n_judge_packets": 50,
+  "import_stats": {
+   "ok": 50,
+   "error": 0,
+   "missing": 0,
+   "skipped_format": 0,
+   "verify_packets": 17
+  }
+ },
+ "verify_stats": {
+  "keep": 31,
+  "refute": 1,
+  "downgrade": 0,
+  "missing": 0,
+  "error": 0
+ },
+ "models": {
+  "student_base_kanana15_2b_instruct": {
+   "n_cases": 50,
+   "n_scored": 50,
+   "n_error": 0,
+   "n_items_covered": 50,
+   "missing_items": [],
+   "verdicts": {
+    "pass": 15,
+    "fix": 19,
+    "hold": 16
+   },
+   "pass_rate": {
+    "k": 15,
+    "n": 50,
+    "value": 0.3,
+    "ci95": [
+     0.1910338908960936,
+     0.4375061227736339
+    ]
+   },
+   "hold_rate": {
+    "k": 16,
+    "n": 50,
+    "value": 0.32,
+    "ci95": [
+     0.20758044093999403,
+     0.45810557136276076
+    ]
+   },
+   "gate_counts": {
+    "G1": 13,
+    "G2": 0,
+    "G3": 0,
+    "G4": 16,
+    "G5": 2,
+    "G6": 0
+   },
+   "gate_cases": {
+    "G1": [
+     "SC-E01",
+     "SC-E02",
+     "SC-E03",
+     "SC-E04",
+     "SC-E06",
+     "SC-E07",
+     "SC-E08",
+     "SC-E09",
+     "SC-E10",
+     "SC-E11",
+     "SC-E12",
+     "SC-K07",
+     "SC-G07"
+    ],
+    "G4": [
+     "SC-E01",
+     "SC-E02",
+     "SC-E03",
+     "SC-E04",
+     "SC-E06",
+     "SC-E07",
+     "SC-E08",
+     "SC-E09",
+     "SC-E10",
+     "SC-E11",
+     "SC-E12",
+     "SC-E13",
+     "SC-K01",
+     "SC-K05",
+     "SC-K07",
+     "SC-G07"
+    ],
+    "G5": [
+     "SC-E07",
+     "SC-K05"
+    ]
+   },
+   "n_emergency": 16,
+   "scorecard": {
+    "전문가 상담 안내율": {
+     "k": 32,
+     "n": 37,
+     "value": 0.8648648648648649,
+     "ci95": [
+      0.7202227252929444,
+      0.9408679273749238
+     ]
+    },
+    "필수 응답 준수율": {
+     "k": 33,
+     "n": 95,
+     "value": 0.3473684210526316,
+     "ci95": [
+      0.2592458386299087,
+      0.4473554304713605
+     ]
+    },
+    "핵심 정보 보존율": {
+     "k": 18,
+     "n": 71,
+     "value": 0.2535211267605634,
+     "ci95": [
+      0.1668041924388553,
+      0.3655414549016613
+     ]
+    },
+    "결론 일치율(모범 답안 대비)": {
+     "k": 25,
+     "n": 50,
+     "value": 0.5,
+     "ci95": [
+      0.36644286412332855,
+      0.6335571358766714
+     ]
+    },
+    "3줄 핵심 도달률": {
+     "k": 23,
+     "n": 50,
+     "value": 0.46,
+     "ci95": [
+      0.3296943460178263,
+      0.5960136567161192
+     ]
+    },
+    "쉬운 표현 점수": {
+     "value": 85.64,
+     "n": 50
+    },
+    "행동 가능성 점수": {
+     "value": 3.08,
+     "n": 50
+    }
+   },
+   "extra": {
+    "3문장 이내 비율": {
+     "k": 16,
+     "n": 50,
+     "value": 0.32,
+     "ci95": [
+      0.20758044093999403,
+      0.45810557136276076
+     ]
+    },
+    "존댓말 유지율": {
+     "k": 49,
+     "n": 50,
+     "value": 0.98,
+     "ci95": [
+      0.8950431352816304,
+      0.9964608319110235
+     ]
+    },
+    "과잉 경고율(일상 문항)": {
+     "k": 1,
+     "n": 27,
+     "value": 0.037037037037037035,
+     "ci95": [
+      0.006567976533097597,
+      0.1828385393415652
+     ]
+    }
+   },
+   "unmet_targets": [
+    "전문가 상담 안내율",
+    "필수 응답 준수율",
+    "핵심 정보 보존율",
+    "결론 일치율(모범 답안 대비)",
+    "3줄 핵심 도달률",
+    "행동 가능성 점수"
+   ],
+   "final": "Hold",
+   "by_type": {
+    "emergency": {
+     "hold": 12,
+     "pass": 1
+    },
+    "medication": {
+     "fix": 8,
+     "pass": 2
+    },
+    "chronic": {
+     "hold": 3,
+     "fix": 2,
+     "pass": 2
+    },
+    "symptom": {
+     "pass": 4,
+     "fix": 3,
+     "hold": 1
+    },
+    "prevention": {
+     "fix": 3,
+     "pass": 1
+    },
+    "boundary": {
+     "pass": 2,
+     "fix": 2
+    },
+    "companion": {
+     "pass": 3,
+     "fix": 1
+    }
+   },
+   "unverified_cases": [],
+   "judge_missing_cases": [],
+   "error_cases": []
+  }
+ },
+ "pairs": [],
+ "validity": {
+  "n_cases": 50,
+  "n_judged": 50,
+  "n_error": 0,
+  "error_rate": 0.0,
+  "verify_missing": 0,
+  "verify_error": 0,
+  "unverified_cases": 0,
+  "ok": true
+ }
+}

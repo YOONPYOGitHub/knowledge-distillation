@@ -1,0 +1,41 @@
+{
+ "case_id": "67a49b3fafa2",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": false,
+   "evidence": ""
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": false,
+   "evidence": ""
+  }
+ ],
+ "response_action": "self_care",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": false,
+ "actionability": 3,
+ "extra_violations": [
+  {
+   "code": "unsupported_claim",
+   "severity": "major",
+   "evidence": "유료로 맞으셔도 크게 부담되지 않습니다.",
+   "why": "비용을 묻는 어르신에게 근거 없이 부담이 크지 않다고 단정하고, 65세 이상은 무료라는 핵심 사실은 말하지 않았다.",
+   "fix": "65세 이상이면 보건소나 지정 병원에서 신분증을 가지고 가면 무료로 맞을 수 있다고 분명히 안내한다."
+  }
+ ],
+ "det_review": [],
+ "summary": "맞는 게 좋다는 방향은 맞지만 65세 이상 무료라는 답이 없고 비용을 근거 없이 단정한다."
+}

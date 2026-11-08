@@ -1,0 +1,4 @@
+# autoqa 파일은 줄바꿈을 LF 로 고정 (Windows 에서 받은 .sh 가 bash 에서 깨지는 것과 해시 차이를 막음)
+silvercare_autoqa/** text eol=lf
+docs/autoqa/**/*.md text eol=lf
+scripts/autoqa_4way.sh text eol=lf

@@ -1,0 +1,38 @@
+{
+ "case_id": "bf1282db8730",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "국물은 되도록 적게 드시고, 나트륨이 적은 채소나 과일을 함께 드시면 도움이 됩니다."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "오늘 저녁은 나트륨 줄인 음식으로 드셔보세요."
+  },
+  {
+   "id": "K2",
+   "preserved": true,
+   "evidence": "혈압이 높으시면 국과 김치는 조금 덜 드시는 게 좋아요."
+  }
+ ],
+ "response_action": "self_care",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": false,
+ "core_in_first3": true,
+ "actionability": 4,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "국물을 적게 먹고 싱겁게 조리하라는 구체적 방법이 있어 도움이 된다. 혈압약은 계속 먹으라는 말은 없지만 끊으라고도 하지 않았다."
+}

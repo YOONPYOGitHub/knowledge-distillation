@@ -1,0 +1,38 @@
+{
+ "case_id": "4c9e7b394bfb",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "매일 30분 정도 빠르게 걷기, 조깅, 자전거 타기, 수영 등 유산소 운동을 해보세요."
+  },
+  {
+   "id": "I2",
+   "met": false,
+   "evidence": ""
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "혈압을 낮추려면 가벼운 유산소 운동과 근력 운동을 꾸준히 하는 게 좋아요."
+  }
+ ],
+ "response_action": "self_care",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": false,
+ "core_in_first3": true,
+ "actionability": 4,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "꾸준한 걷기 운동을 구체적으로 알려 도움이 되지만 가슴 통증·어지러움이 있으면 멈추라는 안내가 없다."
+}

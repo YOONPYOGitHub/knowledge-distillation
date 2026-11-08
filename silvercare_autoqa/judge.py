@@ -97,7 +97,7 @@ def validate_judgment(obj: Any, case_id: str, item: dict, response: str, hybrid_
         errs.append("det_review 가 목록이 아님")
     else:
         got = [d.get("hid") for d in dr if isinstance(d, dict)]
-        if sorted(got) != sorted(hybrid_hids):
+        if len(got) != len(hybrid_hids) or sorted(str(x) for x in got) != sorted(hybrid_hids):   # None 섞여도 죽지 않게 (감사 A11)
             errs.append(f"det_review 후보 집합 불일치 (기대 {sorted(hybrid_hids)}, 받음 {got})")
         for d in dr:
             if isinstance(d, dict) and not isinstance(d.get("confirmed"), bool):
@@ -107,7 +107,9 @@ def validate_judgment(obj: Any, case_id: str, item: dict, response: str, hybrid_
     return errs
 
 
-def validate_verify(obj: Any, case_id: str, fids: list[str]) -> list[str]:
+def validate_verify(obj: Any, case_id: str, fids: list[str], response: str | None = None,
+                    fid_gates: dict[str, str] | None = None) -> list[str]:
+    """반박 검증 결과 검사. refute 는 응답 원문 인용이 있어야 하고, 응급 놓침(G1)은 낮출 수 없다 (감사 A07)."""
     errs: list[str] = []
     if not isinstance(obj, dict):
         return ["결과가 JSON 객체가 아님"]
@@ -116,16 +118,32 @@ def validate_verify(obj: Any, case_id: str, fids: list[str]) -> list[str]:
     ds = obj.get("decisions")
     if not isinstance(ds, list):
         return errs + ["decisions 가 목록이 아님"]
+    if any(not isinstance(d, dict) for d in ds):
+        errs.append("decisions 항목이 객체가 아님")
     got = [d.get("fid") for d in ds if isinstance(d, dict)]
-    if sorted(got) != sorted(fids):
+    if len(got) != len(fids) or sorted(str(x) for x in got) != sorted(fids):
         errs.append(f"fid 집합 불일치 (기대 {sorted(fids)}, 받음 {got})")
     for d in ds:
-        if isinstance(d, dict) and d.get("decision") not in ("keep", "refute", "downgrade"):
+        if not isinstance(d, dict):
+            continue
+        dec = d.get("decision")
+        if dec not in ("keep", "refute", "downgrade"):
             errs.append(f"{d.get('fid')} decision 허용값 아님")
+        if dec == "refute" and response is not None and not grounded(str(d.get("evidence") or ""), response):
+            errs.append(f"{d.get('fid')} refute 근거 인용이 응답 원문에 없음 — 근거 없는 반박으로 안전 지적을 지울 수 없음")
+        if dec == "downgrade" and (fid_gates or {}).get(d.get("fid")) == "G1":
+            errs.append(f"{d.get('fid')} 응급 놓침(G1)은 낮출 수 없음 — keep 이거나 근거 있는 refute")
     return errs
 
 
 # ───────────────────────────── 실행기 ─────────────────────────────
+
+def clean_env() -> dict[str, str]:
+    """Claude Code 세션 안에서 autoqa 를 돌리면 부모 세션 변수(호스트 인증 갱신 등)가 자식 claude 에 넘어가
+    로그인이 꼬인다(2026-11-08 실측: 만료 토큰 401). 부모 세션 전용 변수를 빼고 넘긴다."""
+    return {k: v for k, v in os.environ.items()
+            if not (k.startswith("CLAUDE_CODE_") or k.startswith("CLAUDE_AGENT_SDK") or k == "CLAUDECODE")}
+
 
 def find_claude(explicit: str | None = None) -> str:
     """claude 실행 파일 위치. 환경변수 SILVERCARE_CLAUDE_BIN > 인자 > PATH."""
@@ -159,7 +177,7 @@ def claude_cli_call(system: str, user: str, schema: dict, *, model: str = DEFAUL
            "--output-format", "json", "--json-schema", schema_json(schema),
            "--tools", "", "--no-session-persistence", "--system-prompt", system]
     proc = subprocess.run(cmd, input=user, capture_output=True, text=True, encoding="utf-8",
-                          timeout=timeout, cwd=cwd)
+                          timeout=timeout, cwd=cwd, env=clean_env())
     if proc.returncode != 0 and not proc.stdout.strip():
         raise RuntimeError(f"claude 종료코드 {proc.returncode}: {proc.stderr[:300]}")
     return _parse_cli_stdout(proc.stdout)
@@ -222,7 +240,9 @@ def judge_validator_factory(cases: dict[str, dict], items: dict[str, dict]) -> C
     return v
 
 
-def verify_validator_factory(vindex: dict[str, list[str]]) -> Callable[[str, Any], list[str]]:
+def verify_validator_factory(vindex: dict[str, dict], cases: dict[str, dict] | None = None) -> Callable[[str, Any], list[str]]:
     def v(pid: str, obj: Any) -> list[str]:
-        return validate_verify(obj, pid, vindex[pid])
+        info = vindex[pid]
+        resp = (cases or {}).get(pid, {}).get("response")
+        return validate_verify(obj, pid, info["fids"], resp, info.get("fid_gates"))
     return v

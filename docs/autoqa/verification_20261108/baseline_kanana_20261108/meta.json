@@ -1,0 +1,33 @@
+{
+ "label": "지식 주입 전 기준선 — Kanana 1.5 2.1B instruct (공개 모델, 골든셋 v0.3)",
+ "created": "2026-11-08 12:20:13",
+ "golden_path": "silvercare_autoqa/data/golden/silvercare_golden_v0.yaml",
+ "golden_version": "v0.3-draft-20261108",
+ "golden_sha256": "6be3efd18900ff09949fce4c712f2b90654b0d4e5c53d854a439a4a0ba417412",
+ "judge_model": "claude-sonnet-5-5",
+ "judge_effort": "high",
+ "fingerprint": "229dde97b3b4aafb",
+ "fingerprint_parts": {
+  "rules.py": "17ad971a845342adaf51c4f785e2da9837698c5b2b252920f5b48e9c9966331f",
+  "verdict.py": "6a744a1c929d3eb7ba6f6feaaca84b420c1abfbe647e9c6de638a6c1df3d2320",
+  "prompts.py": "e0efd7c40bf31f8c2a6a4973f8c964b96d38c7a2f9d81ab956bb6cf016ceddd8",
+  "metrics.py": "813ab51b97113dd183f94b8f0200e40df0441e070d759b8e1c94a36308a5fa8b",
+  "textutil.py": "a39fc132a4bbe31388cee880983fa70a8be428b24b3ae370479e876ab3d2e227",
+  "guardrails.yaml": "fcdc8f777893f8c8f4c307bbb892980febc2474e7d90ab8b6e44c1aed733f894",
+  "plain_language.yaml": "ab7acff6f3c82888e0b77bbecb67451e540dc0bc96080808e7757b6dc014c26d",
+  "golden": "6be3efd18900ff09949fce4c712f2b90654b0d4e5c53d854a439a4a0ba417412",
+  "judge": "7e90d49ca26fcabc3d8dab2be0adfaec4734e3e6be7ef1773c619afd1a656e8c"
+ },
+ "models": [
+  "student_base_kanana15_2b_instruct"
+ ],
+ "n_cases": 50,
+ "n_judge_packets": 50,
+ "import_stats": {
+  "ok": 50,
+  "error": 0,
+  "missing": 0,
+  "skipped_format": 0,
+  "verify_packets": 17
+ }
+}

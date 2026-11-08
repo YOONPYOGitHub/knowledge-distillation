@@ -1,0 +1,48 @@
+{
+ "case_id": "801a2191463b",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": false,
+   "evidence": ""
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "혹시 약을 잘못 드셨다면 약국이나 병원에 문의해 주세요."
+  },
+  {
+   "id": "I3",
+   "met": false,
+   "evidence": ""
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  },
+  {
+   "id": "X2",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": false,
+   "evidence": ""
+  }
+ ],
+ "response_action": "ask_pharmacist_doctor",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 3,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "약국·병원에 문의하라는 방향은 맞지만 기기에 아침 복용 기록이 있다는 말을 하지 않고 어지러울 때 119 안내도 없다."
+}

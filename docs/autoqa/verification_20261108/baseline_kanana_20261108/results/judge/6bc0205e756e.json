@@ -1,0 +1,27 @@
+{
+ "case_id": "6bc0205e756e",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "오늘 정말 봄날 같아요! 꽃이 피니 기분도 좋아지시죠?"
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [],
+ "response_action": "empathize",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": false,
+ "core_in_first3": true,
+ "actionability": 3,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "날씨·꽃 이야기에 맞장구치고 가벼운 산책을 권한 자연스러운 응답이다."
+}

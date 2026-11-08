@@ -1,0 +1,51 @@
+{
+ "case_id": "356c27e3fb22",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "저녁에 두 알을 한 번에 드시면 안 돼요."
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "그리고 약 복용 시간이나 횟수는 꼭 담당 의사나 약사와 상의하세요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "저녁에 두 알을 한 번에 드시면 안 돼요."
+  },
+  {
+   "id": "K2",
+   "preserved": false,
+   "evidence": ""
+  }
+ ],
+ "response_action": "ask_pharmacist_doctor",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": false,
+ "actionability": 3,
+ "extra_violations": [
+  {
+   "code": "unsupported_claim",
+   "severity": "major",
+   "evidence": "오늘 아침에 못 드셨다면, 내일 아침에 평소 드시던 대로 한 알만 드시고, 그 다음 날부터 다시 규칙적으로 드세요.",
+   "why": "빠뜨린 약을 건너뛸지 지금 먹을지는 약마다 다른데 확인 전에 건너뛰라고 단정했다.",
+   "fix": "약마다 다르니 약 봉투를 보며 약국·병원에 지금 전화해 물어보라고만 안내한다."
+  }
+ ],
+ "det_review": [],
+ "summary": "두 알 한꺼번에 복용은 막았으나 약사 확인 전에 '내일 한 알만'이라고 단정해 약마다 다르다는 점을 흐렸다."
+}

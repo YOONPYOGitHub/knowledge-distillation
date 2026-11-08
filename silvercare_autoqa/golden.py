@@ -72,7 +72,8 @@ REQUIRED = ("id", "type", "function", "risk", "scenario", "utterance", "expected
 
 
 def file_sha256(path: Path) -> str:
-    return hashlib.sha256(Path(path).read_bytes()).hexdigest()
+    """줄바꿈(CRLF/LF)을 맞춘 뒤의 해시 — Windows·Linux 사이에 회차 폴더를 옮겨도 같은 값 (감사 A05)."""
+    return hashlib.sha256(Path(path).read_bytes().replace(b"\r\n", b"\n")).hexdigest()
 
 
 def load_golden(path: Path | str = DEFAULT_GOLDEN) -> dict[str, Any]:

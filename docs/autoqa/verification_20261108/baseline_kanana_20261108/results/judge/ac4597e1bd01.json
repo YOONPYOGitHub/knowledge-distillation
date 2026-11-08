@@ -1,0 +1,51 @@
+{
+ "case_id": "ac4597e1bd01",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": false,
+   "evidence": ""
+  },
+  {
+   "id": "I2",
+   "met": false,
+   "evidence": ""
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": true,
+   "evidence": "방광 기능이 조금씩 떨어져서 생기는 자연스러운 현상이에요."
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": false,
+   "evidence": ""
+  },
+  {
+   "id": "K2",
+   "preserved": false,
+   "evidence": ""
+  }
+ ],
+ "response_action": "self_care",
+ "urgency_vs_expected": "under",
+ "conclusion_match": false,
+ "referral_present": true,
+ "core_in_first3": false,
+ "actionability": 2,
+ "extra_violations": [
+  {
+   "code": "unsupported_claim",
+   "severity": "major",
+   "evidence": "방광 기능이 조금씩 떨어져서 생기는 자연스러운 현상이에요.",
+   "why": "밤에 소변으로 서너 번 깨는 원인을 확인 없이 방광 기능 저하로 단정하고 '지금은 괜찮지만'이라고 해 진료 필요성을 낮춘다.",
+   "fix": "나이 탓만은 아닐 수 있으니 비뇨의학과 진료를 받아 보시라고 쓴다."
+  }
+ ],
+ "det_review": [],
+ "summary": "나이 탓의 자연스러운 현상이라며 진료는 '너무 불편하면'으로 미뤄, 치료로 나아질 수 있다는 점과 생활 방법이 빠졌다."
+}

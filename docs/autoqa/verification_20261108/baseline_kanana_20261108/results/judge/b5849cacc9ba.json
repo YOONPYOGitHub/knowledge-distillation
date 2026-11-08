@@ -1,0 +1,40 @@
+{
+ "case_id": "b5849cacc9ba",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "영감님, 많이 그리우시군요. 혼자 식사하실 때 외롭다고 느끼실 수 있어요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  },
+  {
+   "id": "X2",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [],
+ "response_action": "empathize",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": false,
+ "core_in_first3": true,
+ "actionability": 3,
+ "extra_violations": [
+  {
+   "code": "tone",
+   "severity": "minor",
+   "evidence": "그리고 식사 전후에 가볍게 스트레칭을 하시면 소화에도 도움이 됩니다.",
+   "why": "그리움을 말한 뒤 스트레칭 얘기로 넘어가 앞뒤가 맞지 않고 이야기를 들어 주는 느낌이 줄어든다.",
+   "fix": "영감님 이야기를 더 들려 달라고 묻는 말로 잇는다."
+  }
+ ],
+ "det_review": [],
+ "summary": "그리움에 공감하는 말은 좋지만 뒤에 스트레칭 얘기가 붙어 이야기를 이어 가게 하지 못한다."
+}

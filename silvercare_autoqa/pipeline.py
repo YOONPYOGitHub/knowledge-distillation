@@ -49,8 +49,28 @@ def load_responses(path: str | Path) -> list[dict]:
     return rows
 
 
+def _portable_path(p: str | Path) -> str:
+    """회차 폴더를 다른 PC 로 옮겨도 찾을 수 있게, 작업 폴더 안이면 상대 경로로 남긴다 (감사 A05)."""
+    p = Path(p).resolve()
+    try:
+        return p.relative_to(Path.cwd().resolve()).as_posix()
+    except ValueError:
+        return p.as_posix()
+
+
+def _resolve_golden(meta: dict) -> Path:
+    from .golden import DEFAULT_GOLDEN
+    for cand in (Path(meta["golden_path"]), Path.cwd() / meta["golden_path"], DEFAULT_GOLDEN):
+        if cand.exists():
+            from .golden import file_sha256
+            raw = hashlib.sha256(cand.read_bytes()).hexdigest()     # 줄바꿈을 맞추기 전에 만든 회차와도 호환
+            if meta["golden_sha256"] in (file_sha256(cand), raw):
+                return cand
+    raise RuntimeError(f"골든셋을 찾지 못했거나 prep 이후 바뀜 (경로 {meta['golden_path']}) — 같은 골든셋으로 다시 prep 해야 함")
+
+
 def prep(golden_path: str | Path, responses: list[dict], run_dir: str | Path, *, judge_model: str = DEFAULT_MODEL,
-         judge_effort: str = DEFAULT_EFFORT, label: str = "") -> dict:
+         judge_effort: str = DEFAULT_EFFORT, label: str = "", allow_partial: bool = False) -> dict:
     run = Path(run_dir)
     if (run / "cases.jsonl").exists():
         raise FileExistsError(f"{run} 에 이미 회차가 있음 — 새 폴더를 쓰거나 finalize 만 다시 돌린다")
@@ -60,6 +80,15 @@ def prep(golden_path: str | Path, responses: list[dict], run_dir: str | Path, *,
         raise ValueError("골든셋 검증 실패:\n" + "\n".join(errs[:20]))
     fp = fp_mod.compute(golden_path, judge_model, judge_effort)
     items = golden["by_id"]
+    # 문항이 빠진 모델은 응급 문항이 빠져도 Pass 가 나올 수 있다 → 파일을 쓰기 전에 거부 (감사 A03)
+    partial = {}
+    for m in sorted({r["model"] for r in responses}):
+        miss = sorted(set(items) - {r["item_id"] for r in responses if r["model"] == m})
+        if miss:
+            partial[m] = miss
+    if partial and not allow_partial:
+        raise ValueError("골든셋 문항이 빠진 모델: " + "; ".join(f"{m} {len(v)}개 빠짐(예: {v[:3]})" for m, v in partial.items())
+                         + " — 전체 문항 응답을 넣거나, 변이 시험처럼 일부러 일부만 넣을 때는 --allow-partial")
     (run / "packets" / "judge").mkdir(parents=True, exist_ok=True)
     (run / "results" / "judge").mkdir(parents=True, exist_ok=True)
     (run / "packets" / "judge" / "JUDGE_SYSTEM.txt").write_text(JUDGE_SYSTEM, encoding="utf-8")
@@ -84,9 +113,10 @@ def prep(golden_path: str | Path, responses: list[dict], run_dir: str | Path, *,
                   "user": build_judge_user(pid, item, r["response"], hyb, golden["sources"]), "schema": schema}
             (run / "packets" / "judge" / f"{pid}.json").write_text(json.dumps(pk, ensure_ascii=False, indent=1),
                                                                     encoding="utf-8")
-    _jl_write(run / "cases.jsonl", cases)
     models = sorted({c["model"] for c in cases})
-    meta = {"label": label, "created": time.strftime("%Y-%m-%d %H:%M:%S"), "golden_path": str(golden_path),
+    _jl_write(run / "cases.jsonl", cases)
+    meta = {"label": label, "created": time.strftime("%Y-%m-%d %H:%M:%S"), "golden_path": _portable_path(golden_path),
+            "allow_partial": allow_partial, "missing_items": partial,
             "golden_version": golden["golden_version"], "golden_sha256": golden["sha256"],
             "judge_model": judge_model, "judge_effort": judge_effort, "fingerprint": fp["fingerprint"],
             "fingerprint_parts": fp["parts"], "models": models, "n_cases": len(cases),
@@ -97,9 +127,7 @@ def prep(golden_path: str | Path, responses: list[dict], run_dir: str | Path, *,
 
 def _load(run: Path) -> tuple[dict, list[dict], dict, dict]:
     meta = json.loads((run / "meta.json").read_text(encoding="utf-8"))
-    golden = load_golden(meta["golden_path"])
-    if golden["sha256"] != meta["golden_sha256"]:
-        raise RuntimeError("골든셋이 prep 이후 바뀜 — 같은 기준으로 다시 prep 해야 함")
+    golden = load_golden(_resolve_golden(meta))
     cases = _jl_read(run / "cases.jsonl")
     return meta, cases, golden, golden["by_id"]
 
@@ -142,7 +170,7 @@ def import_judge(run_dir: str | Path) -> dict:
         if need:
             pk = {"packet_id": c["pid"], "kind": "verify", "system_file": "VERIFY_SYSTEM.txt",
                   "user": build_verify_user(c["pid"], items[c["item_id"]], c["response"], need), "schema": vschema,
-                  "fids": [f["fid"] for f in need]}
+                  "fids": [f["fid"] for f in need], "fid_gates": {f["fid"]: f["gate"] for f in need}}
             (vdir / f"{c['pid']}.json").write_text(json.dumps(pk, ensure_ascii=False, indent=1), encoding="utf-8")
             stats["verify_packets"] += 1
     _jl_write(run / "cases.jsonl", cases)
@@ -159,14 +187,15 @@ def finalize(run_dir: str | Path, *, teacher: str | None = None, pairs: list[tup
         decisions = None
         # 반박 검증이 필요한 지적은 요청 파일이 아니라 판정식에서 다시 계산한다
         # (요청 파일이 없는 사본에서 검증 누락이 '검증 불필요'로 보이던 빈틈을 막음)
-        need = [f["fid"] for f in build_findings(items[c["item_id"]], c["det"], c.get("judgment"))
-                if f["needs_verify"]] if c.get("judgment") else []
+        need_f = [f for f in build_findings(items[c["item_id"]], c["det"], c.get("judgment"))
+                  if f["needs_verify"]] if c.get("judgment") else []
+        need = [f["fid"] for f in need_f]
         if need:
             fids = need
             vr = run / "results" / "verify" / f"{c['pid']}.json"
             if vr.exists():
                 obj = json.loads(vr.read_text(encoding="utf-8"))
-                verr = validate_verify(obj, c["pid"], fids)
+                verr = validate_verify(obj, c["pid"], fids, c["response"], {f["fid"]: f["gate"] for f in need_f})
                 if verr:
                     vstats["error"] += 1
                     c["verify_errors"] = verr
@@ -194,7 +223,7 @@ def finalize(run_dir: str | Path, *, teacher: str | None = None, pairs: list[tup
                     if a in by_model and b in by_model]
     # 회차 유효성 — 채점이 덜 됐거나 검증이 빠졌으면 수치를 공유하지 않는다
     n_judged = sum(1 for c in cases if c["judged"])
-    n_err = sum(1 for c in cases if c["result"]["verdict"] == "error")
+    n_err = sum(1 for c in cases if c["result"]["verdict"] == "error" or c["result"].get("judge_missing"))
     n_unv = sum(1 for c in cases if c["result"].get("unverified"))
     out["validity"] = {
         "n_cases": len(cases), "n_judged": n_judged, "n_error": n_err,
@@ -224,7 +253,8 @@ def cli_judge(run_dir: str | Path, *, workers: int = 3, model: str | None = None
                                     model=model, effort=effort, workers=workers, claude_bin=claude_bin)
     vindex = {}
     for p in (run / "packets" / "verify").glob("*.json"):
-        vindex[p.stem] = json.loads(p.read_text(encoding="utf-8"))["fids"]
+        pk = json.loads(p.read_text(encoding="utf-8"))
+        vindex[p.stem] = {"fids": pk["fids"], "fid_gates": pk.get("fid_gates") or {}}
     return run_packets_with_cli(run / "packets" / "verify", run / "results" / "verify",
-                                verify_validator_factory(vindex), model=model, effort=effort, workers=workers,
+                                verify_validator_factory(vindex, {c["pid"]: c for c in cases}), model=model, effort=effort, workers=workers,
                                 claude_bin=claude_bin)

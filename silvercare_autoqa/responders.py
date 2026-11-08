@@ -60,6 +60,7 @@ def kd_ui(items: Iterable[dict], base_url: str, run_id: str, model_ids: list[str
     rows = []
     params = {"max_new_tokens": max_new_tokens, "temperature": temperature, "top_p": 1.0, "top_k": 0,
               "repetition_penalty": 1.1, "do_sample": temperature > 0, "seed": 42}
+    gen_errors: list[str] = []
     for i in range(0, len(items), chunk):
         part = items[i:i + chunk]
         prompts = [raw_prompt(it) for it in part]
@@ -74,9 +75,15 @@ def kd_ui(items: Iterable[dict], base_url: str, run_id: str, model_ids: list[str
             if res.get("prompt") not in (None, p):
                 raise RuntimeError(f"{it['id']}: 응답이 다른 prompt 에 대한 것")
             for mid, o in res["outputs"].items():
+                if o.get("error"):
+                    gen_errors.append(f"{it['id']}/{mid}: {str(o['error'])[:80]}")
+                    continue
                 rows.append({"model": mid, "item_id": it["id"], "response": _clean(strip_prompt(o.get("text") or "", p)),
                              "meta": {"source": "kd-ui", "run_id": run_id, "num_tokens": o.get("num_tokens"),
-                                      "elapsed_ms": o.get("elapsed_ms"), "error": o.get("error"), "params": params}})
+                                      "elapsed_ms": o.get("elapsed_ms"), "params": params}})
+    if gen_errors:
+        # 모델 미적재·메모리 부족 같은 서버 문제를 '빈 답'으로 채점하면 응급 놓침이 대량으로 생긴다 → 멈춘다 (감사 A04)
+        raise RuntimeError(f"백엔드 생성 오류 {len(gen_errors)}건 — 모델 적재·메모리를 확인하고 다시 실행: " + "; ".join(gen_errors[:5]))
     return rows
 
 
@@ -93,7 +100,9 @@ def openai_compat(items: Iterable[dict], base_url: str, model: str, label: str, 
         r = requests.post(base_url.rstrip("/") + "/v1/chat/completions", json=body, timeout=timeout,
                           headers={"Authorization": f"Bearer {api_key}"})
         r.raise_for_status()
-        text = r.json()["choices"][0]["message"]["content"]
+        text = r.json()["choices"][0]["message"].get("content")
+        if text is None:
+            raise RuntimeError(f"{it['id']}: 서버가 content 없이 답함 (도구 호출·거절 형식?) — 빈 답으로 채점하지 않음")
         rows.append({"model": label, "item_id": it["id"], "response": _clean(text),
                      "meta": {"source": "openai", "model": model, "elapsed_ms": (time.time() - t0) * 1000}})
     return rows
@@ -109,12 +118,67 @@ def claude_teacher(items: Iterable[dict], label: str = "teacher_claude", *, mode
     for it in items:
         cmd = [find_claude(claude_bin), "-p", "--model", model, "--effort", effort, "--output-format", "json",
                "--tools", "", "--no-session-persistence", "--system-prompt", APP_SYSTEM]
-        proc = subprocess.run(cmd, input=user_turn(it), capture_output=True, text=True, encoding="utf-8", timeout=600)
+        from .judge import clean_env
+        proc = subprocess.run(cmd, input=user_turn(it), capture_output=True, text=True, encoding="utf-8", timeout=600,
+                              env=clean_env())
         data = json.loads(proc.stdout)
         if data.get("is_error"):
             raise RuntimeError(str(data.get("result"))[:200])
         rows.append({"model": label, "item_id": it["id"], "response": (data.get("result") or "").strip(),
                      "meta": {"source": "claude-cli", "model": model, "effort": effort}})
+    return rows
+
+
+def hf_local(items: Iterable[dict], model_path: str, label: str, *, revision: str | None = None, chat: str = "auto",
+             max_new_tokens: int = 160, dtype: str = "bfloat16", device: str = "cuda",
+             repetition_penalty: float = 1.1, log=print) -> list[dict]:
+    """Hugging Face 형식 모델(팀 체크포인트 폴더 또는 공개 모델 id)을 직접 불러 답을 만든다.
+
+    - chat="auto": tokenizer 에 chat template 이 있으면 쓰고(instruct·대화형 Student), 없으면 raw prompt(base 모델).
+      팀 UI 백엔드는 chat template 을 쓰지 않으므로, 대화형 Student 는 이 경로로 받는 것이 맞다.
+    - 탐욕 디코딩(do_sample=False) · 새로 만든 토큰만 디코드 · 추론(thinking) 모드는 끈다.
+    """
+    import time as _t
+
+    import torch
+    from transformers import AutoModelForCausalLM, AutoTokenizer
+
+    items = list(items)
+    tok = AutoTokenizer.from_pretrained(model_path, revision=revision)
+    model = AutoModelForCausalLM.from_pretrained(model_path, revision=revision, torch_dtype=getattr(torch, dtype),
+                                                 device_map=device)
+    model.eval()
+    use_chat = chat == "on" or (chat == "auto" and bool(getattr(tok, "chat_template", None)))
+    rows = []
+    for k, it in enumerate(items, 1):
+        if use_chat:
+            msgs = [{"role": "system", "content": APP_SYSTEM}, {"role": "user", "content": user_turn(it)}]
+            try:
+                ids = tok.apply_chat_template(msgs, add_generation_prompt=True, return_tensors="pt", enable_thinking=False)
+            except Exception:  # noqa: BLE001 — system 역할이나 enable_thinking 을 모르는 template
+                try:
+                    ids = tok.apply_chat_template(msgs, add_generation_prompt=True, return_tensors="pt")
+                except Exception:  # noqa: BLE001
+                    merged = [{"role": "user", "content": APP_SYSTEM + "\n\n" + user_turn(it)}]
+                    ids = tok.apply_chat_template(merged, add_generation_prompt=True, return_tensors="pt")
+            prompt_used = "chat_template"
+        else:
+            ids = tok(raw_prompt(it), return_tensors="pt").input_ids
+            prompt_used = "raw"
+        ids = ids.to(model.device)
+        t0 = _t.time()
+        with torch.no_grad():
+            out = model.generate(ids, attention_mask=torch.ones_like(ids), max_new_tokens=max_new_tokens, do_sample=False,
+                                 repetition_penalty=repetition_penalty,
+                                 pad_token_id=tok.pad_token_id if tok.pad_token_id is not None else tok.eos_token_id)
+        new = out[0][ids.shape[1]:]
+        text = _clean(tok.decode(new, skip_special_tokens=True))
+        rows.append({"model": label, "item_id": it["id"], "response": text,
+                     "meta": {"source": "hf-local", "model_path": model_path, "revision": revision, "prompt": prompt_used,
+                              "max_new_tokens": max_new_tokens, "num_new_tokens": int(new.numel()),
+                              "elapsed_ms": round((_t.time() - t0) * 1000, 1), "hit_max_tokens": int(new.numel()) >= max_new_tokens}})
+        if k % 10 == 0 or k == len(items):
+            log(f"  생성 {k}/{len(items)}")
     return rows
 
 

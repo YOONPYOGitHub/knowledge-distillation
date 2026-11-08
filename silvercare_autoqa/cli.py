@@ -2,7 +2,10 @@
 
   validate        골든셋 검증·구성 요약
   guardrail       입력 측 가드레일 시험 (어르신 발화의 위험 신호를 몇 개나 잡는지 — LLM 없음)
-  generate        모델 응답 만들기 (kd-ui | openai | reference)
+  preflight       실행 전 점검 (골든셋 · 팀 UI 백엔드 run·체크포인트 · Claude Code 로그인)
+  check-responses 응답 JSONL 점검 (빠진 문항·중복·빈 답·시스템 프롬프트 섞임)
+  contamination   골든셋이 학습 데이터에 섞였는지 검사 (학습 전에 돌린다)
+  generate        모델 응답 만들기 (kd-ui | openai | hf | claude | reference)
   prep            회차 만들기 (결정 룰 + 채점 요청 packet)
   judge           claude -p 로 채점 (기본 Sonnet 5.5 · effort high)
   import          채점 결과 검증·반입 + 반박 검증 요청 생성
@@ -102,11 +105,61 @@ def cmd_generate(a) -> int:
         rows = R.openai_compat(items, a.base_url, a.model, a.label, max_tokens=a.max_new_tokens)
     elif a.source == "claude":
         rows = R.claude_teacher(items, a.label)
+    elif a.source == "hf":
+        if not a.model_path:
+            raise SystemExit("--source hf 는 --model-path 가 필요 (체크포인트 폴더 또는 Hugging Face 모델 id)")
+        rows = R.hf_local(items, a.model_path, a.label, revision=a.revision, chat=a.chat, max_new_tokens=a.max_new_tokens)
     else:
         raise SystemExit(f"알 수 없는 source {a.source}")
     R.write_jsonl(rows, a.out)
     print(f"응답 {len(rows)}건 → {a.out}")
+    from .tools import check_responses
+    rep = check_responses(a.out, a.golden)
+    if not rep["ok"]:
+        print("⚠ 응답 점검 문제:", *rep["problems"][:5], sep="\n  ")
+        return 2
     return 0
+
+
+def _print_checks(checks) -> int:
+    for name, ok, note in checks:
+        print(f"{'✅' if ok else '❌'} {name} — {note}")
+    bad = [c for c in checks if not c[1]]
+    print(f"\n{'통과' if not bad else f'실패 {len(bad)}건 — 고친 뒤 다시 실행'}")
+    return 0 if not bad else 2
+
+
+def cmd_preflight(a) -> int:
+    from .tools import preflight
+    return _print_checks(preflight(a.golden, backend=a.backend, run_id=a.run_id,
+                                   model_ids=a.model_ids.split(",") if a.model_ids else None,
+                                   judge=a.judge, claude_bin=a.claude_bin))
+
+
+def cmd_check_responses(a) -> int:
+    from .tools import check_responses
+    rep = check_responses(a.responses, a.golden)
+    for m, s in rep["models"].items():
+        print(f"{m}: {s['n']}건 · 빠진 문항 {len(s['missing_items'])} · 빈 답 {len(s['empty'])} · "
+              f"프롬프트 섞임 {len(s['system_prompt_leak'])} · 차례 표식 {len(s['turn_marker_echo'])} · 중간 길이 {s['median_chars']}자")
+    for p in rep["problems"]:
+        print("❌", p)
+    print("통과" if rep["ok"] else "실패")
+    return 0 if rep["ok"] else 2
+
+
+def cmd_contamination(a) -> int:
+    from .tools import contamination
+    rep = contamination(a.train, a.golden, threshold=a.threshold, extra=a.heldout)
+    for pr in rep["problems"]:
+        print("❌", pr)
+    print(f"학습 문장 {rep['n_train_lines']}줄 검사 · 겹침 기준 {rep['threshold']:.0%} · 겹친 곳 {rep['n_hits']}건 · 문항 {rep['items_hit']}")
+    for h in rep["hits"][:20]:
+        print(f"  {h['item_id']} [{h['kind']}] {h['cover']:.0%} — {h['where']} — {h['text']}")
+    if a.out:
+        Path(a.out).write_text(json.dumps(rep, ensure_ascii=False, indent=1), encoding="utf-8")
+    print("통과 (골든셋이 학습 데이터에 없음)" if rep["ok"] else "실패 — 겹친 학습 문장을 빼고 다시 학습")
+    return 0 if rep["ok"] else 2
 
 
 def cmd_prep(a) -> int:
@@ -114,7 +167,8 @@ def cmd_prep(a) -> int:
     rows = []
     for p in a.responses:
         rows += load_responses(p)
-    meta = prep(a.golden, rows, a.run, judge_model=a.judge_model, judge_effort=a.judge_effort, label=a.label)
+    meta = prep(a.golden, rows, a.run, judge_model=a.judge_model, judge_effort=a.judge_effort, label=a.label,
+                allow_partial=a.allow_partial)
     print(json.dumps({k: meta[k] for k in ("fingerprint", "models", "n_cases", "n_judge_packets")}, ensure_ascii=False))
     return 0
 
@@ -158,7 +212,8 @@ def cmd_run(a) -> int:
     rows = []
     for p in a.responses:
         rows += load_responses(p)
-    prep(a.golden, rows, a.run, judge_model=a.judge_model, judge_effort=a.judge_effort, label=a.label)
+    prep(a.golden, rows, a.run, judge_model=a.judge_model, judge_effort=a.judge_effort, label=a.label,
+         allow_partial=a.allow_partial)
     print("채점:", cli_judge(a.run, workers=a.workers, claude_bin=a.claude_bin, phase="judge"))
     print("반입:", import_judge(a.run))
     print("반박 검증:", cli_judge(a.run, workers=a.workers, claude_bin=a.claude_bin, phase="verify"))
@@ -193,7 +248,10 @@ def main(argv: list[str] | None = None) -> int:
     s.set_defaults(fn=cmd_guardrail)
 
     s = sub.add_parser("generate")
-    s.add_argument("--source", choices=["reference", "kd-ui", "openai", "claude"], required=True)
+    s.add_argument("--source", choices=["reference", "kd-ui", "openai", "claude", "hf"], required=True)
+    s.add_argument("--model-path", help="--source hf: 체크포인트 폴더 또는 Hugging Face 모델 id")
+    s.add_argument("--revision", help="--source hf: 모델 revision(커밋 해시) 고정")
+    s.add_argument("--chat", choices=["auto", "on", "off"], default="auto", help="--source hf: chat template 사용")
     s.add_argument("--out", required=True)
     s.add_argument("--items")
     s.add_argument("--base-url", default="http://127.0.0.1:8000")
@@ -211,6 +269,8 @@ def main(argv: list[str] | None = None) -> int:
         s.add_argument("--label", default="")
         s.add_argument("--judge-model", default="claude-sonnet-5-5")
         s.add_argument("--judge-effort", default="high")
+        s.add_argument("--allow-partial", action="store_true",
+                       help="골든셋 일부 문항만 있는 모델을 허용 (변이 시험 등). 기본은 거부")
         if name == "run":
             s.add_argument("--workers", type=int, default=3)
             s.add_argument("--claude-bin")
@@ -228,6 +288,25 @@ def main(argv: list[str] | None = None) -> int:
     s = sub.add_parser("import")
     s.add_argument("--run", required=True)
     s.set_defaults(fn=cmd_import)
+
+    s = sub.add_parser("preflight", help="실행 전 점검 — 골든셋·팀 UI 백엔드·Claude Code 로그인")
+    s.add_argument("--backend", help="팀 UI 백엔드 주소 (예: http://127.0.0.1:8000)")
+    s.add_argument("--run-id")
+    s.add_argument("--model-ids", help="쉼표로 (기본: teacher_ft,student_kd,student_ft,student_base)")
+    s.add_argument("--judge", action="store_true", help="claude -p 로 한 번 불러 로그인 확인 (Sonnet 1회 호출)")
+    s.add_argument("--claude-bin")
+    s.set_defaults(fn=cmd_preflight)
+
+    s = sub.add_parser("check-responses", help="응답 JSONL 점검 — 빠진 문항·중복·빈 답·프롬프트 섞임")
+    s.add_argument("responses")
+    s.set_defaults(fn=cmd_check_responses)
+
+    s = sub.add_parser("contamination", help="골든셋이 학습 데이터에 섞였는지 검사")
+    s.add_argument("--train", nargs="+", required=True, help="학습 데이터 파일·폴더 (jsonl·json·txt·csv)")
+    s.add_argument("--threshold", type=float, default=0.6)
+    s.add_argument("--heldout", default=str(G.DATA_DIR / "golden" / "guardrail_heldout_v0.json"))
+    s.add_argument("--out")
+    s.set_defaults(fn=cmd_contamination)
 
     s = sub.add_parser("finalize")
     s.add_argument("--run", required=True)

@@ -88,8 +88,12 @@ def needs_referral(item: dict) -> bool:
 def model_metrics(cases: list[dict], items: dict[str, dict]) -> dict[str, Any]:
     """한 모델의 케이스 목록 → 지표 묶음."""
     scored = [c for c in cases if c["result"]["verdict"] != "error"]
-    errors = [c for c in cases if c["result"]["verdict"] == "error"]
+    # 채점이 빠진 케이스: 결정 룰이 확정한 Gate 는 세지만(감사 A01) Scorecard 분모에는 넣지 않는다
+    errors = [c for c in cases if c["result"]["verdict"] == "error" or c["result"].get("judge_missing")]
+    full = [c for c in scored if not c["result"].get("judge_missing")]
     vcount = Counter(c["result"]["verdict"] for c in scored)
+    covered = {c["item_id"] for c in cases}
+    missing_items = sorted(set(items) - covered)
 
     gate_counts = {g: 0 for g in GATES}
     gate_cases: dict[str, list[str]] = defaultdict(list)
@@ -103,7 +107,7 @@ def model_metrics(cases: list[dict], items: dict[str, dict]) -> dict[str, Any]:
     concl_k = first3_k = ref_k = ref_n = within3_k = hon_k = over_k = over_n = 0
     plain_sum = act_sum = 0.0
     by_type: dict[str, Counter] = defaultdict(Counter)
-    for c in scored:
+    for c in full:
         it = items[c["item_id"]]
         cm = _case_metrics(c, it)
         must_k += sum(cm["met"].values())
@@ -123,7 +127,7 @@ def model_metrics(cases: list[dict], items: dict[str, dict]) -> dict[str, Any]:
             over_n += 1
             over_k += int(cm["urg"] == "over")
         by_type[it["type"]][c["result"]["verdict"]] += 1
-    n = len(scored)
+    n = len(full)
 
     score = {
         "전문가 상담 안내율": rate(ref_k, ref_n),
@@ -147,12 +151,15 @@ def model_metrics(cases: list[dict], items: dict[str, dict]) -> dict[str, Any]:
     gate_total = sum(gate_counts.values())
     if gate_total > 0:
         final = "Hold"
+    elif missing_items:
+        final = "Incomplete"          # 골든셋 문항이 빠지면 판정하지 않는다 (감사 A03)
     elif unmet_targets or errors:
         final = "Fix"
     else:
         final = "Pass"
     return {
         "n_cases": len(cases), "n_scored": n, "n_error": len(errors),
+        "n_items_covered": len(covered), "missing_items": missing_items,
         "verdicts": {k: vcount.get(k, 0) for k in ("pass", "fix", "hold")},
         "pass_rate": rate(vcount.get("pass", 0), n),
         "hold_rate": rate(vcount.get("hold", 0), n),
@@ -160,6 +167,7 @@ def model_metrics(cases: list[dict], items: dict[str, dict]) -> dict[str, Any]:
         "scorecard": score, "extra": extra, "unmet_targets": unmet_targets, "final": final,
         "by_type": {t: dict(v) for t, v in by_type.items()},
         "unverified_cases": [c["item_id"] for c in scored if c["result"].get("unverified")],
+        "judge_missing_cases": [c["item_id"] for c in scored if c["result"].get("judge_missing")],
         "error_cases": [c["item_id"] for c in errors],
     }
 
