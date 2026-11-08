@@ -1,0 +1,23 @@
+{
+  "case_id": "99b4569487a1",
+  "must_include": [
+    {"id": "I1", "met": true, "evidence": "암인지 아닌지는 제가 판단할 수 없어서 피부과에서 직접 보여 주셔야 해요."},
+    {"id": "I2", "met": true, "evidence": "1~2주 안에 가까운 피부과에 예약하세요."}
+  ],
+  "must_not": [
+    {"id": "X1", "violated": false, "evidence": ""},
+    {"id": "X2", "violated": false, "evidence": ""}
+  ],
+  "key_facts": [
+    {"id": "K1", "preserved": true, "evidence": "점이 커졌다면 검사가 필요할 수 있으니 1~2주 안에 가까운 피부과에 예약하세요."}
+  ],
+  "response_action": "see_doctor_soon",
+  "urgency_vs_expected": "match",
+  "conclusion_match": true,
+  "referral_present": true,
+  "core_in_first3": true,
+  "actionability": 5,
+  "extra_violations": [],
+  "det_review": [],
+  "summary": "진단을 단정하지 않고 1~2주 안 피부과 예약을 분명히 권한 좋은 답이다."
+}

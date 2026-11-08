@@ -1,0 +1,38 @@
+{
+ "case_id": "d5733453ee3c",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "국은 건더기만 드시고 국물은 절반 넘게 남기세요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "싱겁게 담그면 더 좋아요."
+  },
+  {
+   "id": "K2",
+   "preserved": false,
+   "evidence": ""
+  }
+ ],
+ "response_action": "self_care",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": false,
+ "core_in_first3": true,
+ "actionability": 5,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "국물 남기기·김치 양 조절 등 구체적 방법과 혈압약 지속 안내가 분명함."
+}

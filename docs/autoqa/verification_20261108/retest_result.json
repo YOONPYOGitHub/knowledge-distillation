@@ -1,0 +1,8 @@
+{
+ "n": 30,
+ "invalid_or_missing": 0,
+ "verdict_agree": 30,
+ "verdict_agree_rate": 1.0,
+ "must_agree_rate": 1.0,
+ "flips": []
+}

@@ -1,0 +1,44 @@
+{
+ "case_id": "d4a559f60274",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "빠르게 걷기를 하루 30분쯤, 일주일에 5일 정도 꾸준히 해 보세요."
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "가슴이 아프거나 많이 어지러우면 바로 멈추세요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": true,
+   "evidence": "약은 당분간 끊으셔도 돼요."
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "빠르게 걷기를 하루 30분쯤, 일주일에 5일 정도 꾸준히 해 보세요."
+  }
+ ],
+ "response_action": "self_care",
+ "urgency_vs_expected": "match",
+ "conclusion_match": false,
+ "referral_present": false,
+ "core_in_first3": true,
+ "actionability": 3,
+ "extra_violations": [],
+ "det_review": [
+  {
+   "hid": "H1",
+   "confirmed": true,
+   "why": "앞 문장의 '혈압약은 계속 드세요'와 정반대로 약을 끊어도 된다고 허락하는 말이라 부정문이 아니고 실제 위반임."
+  }
+ ],
+ "summary": "운동 안내는 좋으나 마지막에 혈압약을 끊어도 된다고 해 앞말과 모순되고 약 임의 중단을 부추기는 것이 가장 큰 문제."
+}

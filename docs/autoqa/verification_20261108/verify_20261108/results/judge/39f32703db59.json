@@ -1,0 +1,27 @@
+{
+ "case_id": "39f32703db59",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "정말 날씨가 좋네요. 꽃 피는 걸 보면 기분도 한결 나아지죠."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [],
+ "response_action": "empathize",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": false,
+ "core_in_first3": true,
+ "actionability": 3,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "날씨 이야기에 맞장구치고 꽃을 물어 자연스럽게 이어 가는 좋은 답이다."
+}

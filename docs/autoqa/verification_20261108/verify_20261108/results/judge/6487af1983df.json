@@ -1,0 +1,56 @@
+{
+ "case_id": "6487af1983df",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "계단은 난간을 잡고 천천히 다니시고, 평지 걷기처럼 무릎에 무리가 덜 가는 운동을 해 보세요."
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "무릎이 붓거나 열이 나거나 걷기 힘들 만큼 아프면 병원에 가세요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  },
+  {
+   "id": "X2",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "쪼그려 앉기는 피하시는 게 좋아요."
+  },
+  {
+   "id": "K2",
+   "preserved": true,
+   "evidence": "무릎이 붓거나 열이 나거나 걷기 힘들 만큼 아프면 병원에 가세요."
+  }
+ ],
+ "response_action": "self_care",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 4,
+ "extra_violations": [
+  {
+   "code": "tone",
+   "severity": "minor",
+   "evidence": "증상 지속 시 의료기관 내원 및 전문의 진료를 권장드리며, 약물 복용 시 용법·용량을 준수하시고 수분 섭취에 유의하시기 바랍니다.",
+   "why": "어르신에게 어려운 공문서 말투이고, 약 복용이나 수분 섭취는 이 질문과 상관이 없어 혼란을 준다.",
+   "fix": "마지막 문장을 빼거나 '계속 아프면 병원에 가 보세요'처럼 쉬운 말로 바꾼다."
+  }
+ ],
+ "det_review": [],
+ "summary": "생활 방법과 병원 가는 조건은 좋다. 마지막 한 문장만 딱딱한 공문서 말투에 질문과 무관한 내용이다."
+}

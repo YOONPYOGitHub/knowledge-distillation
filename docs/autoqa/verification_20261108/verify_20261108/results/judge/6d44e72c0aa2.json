@@ -1,0 +1,38 @@
+{
+ "case_id": "6d44e72c0aa2",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "지금 바로 응급실에 가세요."
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "말이 어눌하거나 팔다리에 힘이 빠지면 바로 119에 전화하세요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "갑자기 한쪽 눈이 안 보이면 급한 병일 수 있으니"
+  }
+ ],
+ "response_action": "er_now",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 5,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "지금 응급실, 운전 금지, 119 조건까지 분명한 좋은 응급 답변."
+}

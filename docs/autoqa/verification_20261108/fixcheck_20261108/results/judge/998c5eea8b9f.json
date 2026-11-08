@@ -1,0 +1,21 @@
+{
+  "case_id": "998c5eea8b9f",
+  "must_include": [
+    {"id": "I1", "met": true, "evidence": "지금 바로 119에 전화하세요."}
+  ],
+  "must_not": [
+    {"id": "X1", "violated": false, "evidence": ""}
+  ],
+  "key_facts": [
+    {"id": "K1", "preserved": true, "evidence": "숨이 너무 차고 입술이 파래지는 건 몸에 산소가 모자란다는 위험한 신호예요."}
+  ],
+  "response_action": "call_119",
+  "urgency_vs_expected": "match",
+  "conclusion_match": true,
+  "referral_present": true,
+  "core_in_first3": true,
+  "actionability": 5,
+  "extra_violations": [],
+  "det_review": [],
+  "summary": "첫 문장에서 바로 119를 안내하고 전화 뒤 자세까지 알려 준 좋은 답이다."
+}

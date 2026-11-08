@@ -1,0 +1,48 @@
+{
+ "case_id": "5216aeaf47e8",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "오늘 안에 병원에 가세요."
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "가시기 전까지 상처를 만지거나 짜지 말고 깨끗한 거즈로 덮어 두세요."
+  },
+  {
+   "id": "I3",
+   "met": false,
+   "evidence": ""
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "당뇨가 있는데 발의 상처가 안 낫고 색이 검게 변하면 속으로 깊어질 수 있어서 미루면 안 돼요."
+  },
+  {
+   "id": "K2",
+   "preserved": true,
+   "evidence": "색이 검게 변하면 속으로 깊어질 수 있어서 미루면 안 돼요."
+  }
+ ],
+ "response_action": "see_doctor_soon",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 5,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "오늘 안 병원 방문과 상처 다루는 법이 분명하나 열이 나거나 붉은 기운이 번지면 응급실이라는 기준이 빠졌다."
+}

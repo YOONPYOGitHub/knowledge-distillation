@@ -1,0 +1,53 @@
+{
+ "case_id": "1b3d920462cc",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "지금 바로 사탕 서너 개나 주스 반 컵을 드세요."
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "그래도 떨리거나 정신이 흐려지면 119에 전화하세요."
+  },
+  {
+   "id": "I3",
+   "met": false,
+   "evidence": ""
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  },
+  {
+   "id": "X2",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "손 떨림과 식은땀은 저혈당 신호일 수 있으니"
+  },
+  {
+   "id": "K2",
+   "preserved": true,
+   "evidence": "지금 바로 사탕 서너 개나 주스 반 컵을 드세요. 15분 뒤 혈당을 다시 재 보시고"
+  }
+ ],
+ "response_action": "first_aid_then_119_if",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 5,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "단 것을 먹고 15분 뒤 재확인, 안 나으면 119까지 분명하다. 다만 아직 낮으면 한 번 더 먹으라는 말이 빠졌다."
+}

@@ -1,0 +1,48 @@
+{
+ "case_id": "bfe61df08406",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "이번 주 안에 병원 예약부터 하시고"
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "목이 많이 마르고 토하거나 늘어지고 졸리면 바로 119에 전화하세요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  },
+  {
+   "id": "X2",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "며칠째 200이 넘게 나오면 괜찮지 않으니"
+  },
+  {
+   "id": "K2",
+   "preserved": true,
+   "evidence": "목이 많이 마르고 토하거나 늘어지고 졸리면 바로 119에 전화하세요."
+  }
+ ],
+ "response_action": "see_doctor_soon",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 4,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "이번 주 안 진료와 응급 신호 시 119를 안내해 대체로 좋다. 소변 증가 언급은 없다."
+}

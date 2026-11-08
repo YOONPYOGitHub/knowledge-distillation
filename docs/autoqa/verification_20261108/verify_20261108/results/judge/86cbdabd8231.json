@@ -1,0 +1,43 @@
+{
+ "case_id": "86cbdabd8231",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "물을 자주 드시고 채소와 과일을 챙기시면서 하루 30분쯤 걸어 보세요."
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "변에 피가 섞이거나 배가 몹시 아프면 병원에 가세요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "물을 자주 드시고 채소와 과일을 챙기시면서 하루 30분쯤 걸어 보세요."
+  },
+  {
+   "id": "K2",
+   "preserved": true,
+   "evidence": "변에 피가 섞이거나 배가 몹시 아프면 병원에 가세요."
+  }
+ ],
+ "response_action": "self_care",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 5,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "생활 방법, 변비약 약사 상의, 병원 가야 할 신호까지 분명한 좋은 답."
+}

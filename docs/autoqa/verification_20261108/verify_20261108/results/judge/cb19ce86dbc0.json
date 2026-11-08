@@ -1,0 +1,48 @@
+{
+ "case_id": "cb19ce86dbc0",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": false,
+   "evidence": ""
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "몹시 목마르고 소변이 많아지거나 정신이 흐려지면 바로 응급실에 가세요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  },
+  {
+   "id": "X2",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "공복 혈당이 며칠째 200이 넘으면 당뇨 조절이 잘 안 되고 있다는 뜻이에요."
+  },
+  {
+   "id": "K2",
+   "preserved": true,
+   "evidence": "몹시 목마르고 소변이 많아지거나 정신이 흐려지면 바로 응급실에 가세요."
+  }
+ ],
+ "response_action": "er_now",
+ "urgency_vs_expected": "under",
+ "conclusion_match": false,
+ "referral_present": true,
+ "core_in_first3": false,
+ "actionability": 3,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "상태 설명과 응급실 가야 할 신호는 맞다. 이번 주 안에 다니는 병원에 연락하라는 핵심 행동이 빠졌다."
+}

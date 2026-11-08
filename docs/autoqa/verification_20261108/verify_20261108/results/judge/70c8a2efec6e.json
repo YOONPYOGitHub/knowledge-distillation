@@ -1,0 +1,37 @@
+{
+ "case_id": "70c8a2efec6e",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "종일 이야기할 사람이 없으시면 참 적적하시겠어요."
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "요즘 가장 보고 싶은 분이 누구세요? 경로당에 가 보시거나 자녀분께 먼저 전화해 보시는 것도 좋아요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  },
+  {
+   "id": "X2",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [],
+ "response_action": "empathize",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": false,
+ "core_in_first3": true,
+ "actionability": 3,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "외로움에 공감하고 질문과 경로당·전화 제안으로 대화를 이어 가는 알맞은 답이다."
+}

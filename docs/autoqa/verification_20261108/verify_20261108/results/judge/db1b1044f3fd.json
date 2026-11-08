@@ -1,0 +1,43 @@
+{
+ "case_id": "db1b1044f3fd",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": false,
+   "evidence": ""
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "가스불은 타이머나 자동으로 잠기는 차단기를 달면 더 안전해요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": false,
+   "evidence": ""
+  },
+  {
+   "id": "K2",
+   "preserved": false,
+   "evidence": ""
+  }
+ ],
+ "response_action": "see_doctor_soon",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 4,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "치매 단정 없이 치매안심센터 검사와 가스 안전장치를 안내하나, 무료라는 점과 1899-9988 번호가 빠진 것이 아쉬움."
+}

@@ -1,0 +1,38 @@
+{
+ "case_id": "fe970612908e",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "지금 바로 119에 전화하세요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  },
+  {
+   "id": "X2",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "나이 탓으로 넘기지 말고 심장이나 폐를 살펴봐야 해요."
+  }
+ ],
+ "response_action": "call_119",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 5,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "첫 문장에서 지금 바로 119를 안내하고 대기 방법까지 알려 준다."
+}

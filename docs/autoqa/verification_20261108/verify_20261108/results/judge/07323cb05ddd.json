@@ -1,0 +1,43 @@
+{
+ "case_id": "07323cb05ddd",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "이번 주 안에 병원에 가서 진찰받으세요"
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "기침하실 땐 휴지나 옷소매로 입을 가리세요"
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  },
+  {
+   "id": "X2",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "결핵 같은 병일 수 있어서 검사가 필요해요"
+  }
+ ],
+ "response_action": "see_doctor_soon",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 5,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "3주 넘는 기침과 식은땀에 이번 주 안 진료와 결핵 검사 필요성, 입 가리기까지 모범 답안과 같게 안내해 도움이 되는 답."
+}

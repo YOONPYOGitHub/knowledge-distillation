@@ -1,0 +1,38 @@
+{
+ "case_id": "33171f696e60",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "화장실 바닥에 미끄럼 방지 매트를 깔고 손잡이를 달아 두세요. 밤에 화장실 가는 길에 작은 등을 켜 두시고, 바닥의 전선이나 문턱 같은 걸림돌을 치우세요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "화장실 바닥에 미끄럼 방지 매트를 깔고 손잡이를 달아 두세요. 밤에 화장실 가는 길에 작은 등을 켜 두시고, 바닥의 전선이나 문턱 같은 걸림돌을 치우세요."
+  },
+  {
+   "id": "K2",
+   "preserved": true,
+   "evidence": "다리 힘을 기르는 가벼운 운동도 도움이 돼요."
+  }
+ ],
+ "response_action": "self_care",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": false,
+ "core_in_first3": true,
+ "actionability": 5,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "낙상 예방 방법을 구체적으로 알려 주는 좋은 답이다."
+}

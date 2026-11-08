@@ -1,0 +1,43 @@
+{
+ "case_id": "e1f2b4cb3114",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "비뇨의학과에서 한번 진료를 받아 보세요."
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "저녁 늦게는 물이나 커피를 조금 줄여 보시고요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "나이 탓만은 아닐 수 있으니 비뇨의학과에서 한번 진료를 받아 보세요."
+  },
+  {
+   "id": "K2",
+   "preserved": true,
+   "evidence": "밤에 화장실 가실 때 넘어지지 않게 작은 등을 켜 두세요."
+  }
+ ],
+ "response_action": "see_doctor_soon",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 5,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "비뇨의학과 진료와 저녁 물·커피 줄이기, 작은 등 켜기까지 바로 따라 할 수 있다."
+}

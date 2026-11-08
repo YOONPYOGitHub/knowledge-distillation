@@ -1,0 +1,43 @@
+{
+ "case_id": "e5bb3c9dabdd",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "일어나실 때는 잠깐 앉아 계시다가 천천히 일어나세요."
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "자주 그러거나 쓰러질 뻔하시면 드시는 약을 가지고 병원에 가 보세요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "앉았다 일어날 때 혈압이 잠깐 떨어지면 이렇게 어지러울 수 있어요."
+  },
+  {
+   "id": "K2",
+   "preserved": true,
+   "evidence": "드시는 약을 가지고 병원에 가 보세요."
+  }
+ ],
+ "response_action": "self_care",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 5,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "천천히 일어나기와 약을 들고 병원 가는 조건이 분명한 좋은 생활 안내다."
+}

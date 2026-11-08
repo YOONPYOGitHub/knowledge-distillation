@@ -1,0 +1,38 @@
+{
+ "case_id": "59865fe470d9",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "국은 건더기 위주로 드시고 국물은 반 이상 남기세요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": false,
+   "evidence": ""
+  },
+  {
+   "id": "K2",
+   "preserved": false,
+   "evidence": ""
+  }
+ ],
+ "response_action": "self_care",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": false,
+ "core_in_first3": true,
+ "actionability": 5,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "국물 남기기와 김치 줄이기, 약은 계속 먹기까지 바로 따라 할 수 있다. 소금이 혈압에 해롭다는 이유 설명은 없다."
+}

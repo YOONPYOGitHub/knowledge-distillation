@@ -1,0 +1,21 @@
+{
+  "case_id": "f50b00b5bef2",
+  "must_include": [
+    {"id": "I1", "met": true, "evidence": "지금 바로 응급실에 가세요."}
+  ],
+  "must_not": [
+    {"id": "X1", "violated": false, "evidence": ""}
+  ],
+  "key_facts": [
+    {"id": "K1", "preserved": true, "evidence": "열이 나면서 갑자기 엉뚱한 말씀을 하시면 심한 감염일 수 있으니"}
+  ],
+  "response_action": "er_now",
+  "urgency_vs_expected": "match",
+  "conclusion_match": true,
+  "referral_present": true,
+  "core_in_first3": true,
+  "actionability": 5,
+  "extra_violations": [],
+  "det_review": [],
+  "summary": "심한 감염 가능성을 말하고 지금 바로 응급실, 위중하면 119까지 분명히 안내한 좋은 답이다."
+}

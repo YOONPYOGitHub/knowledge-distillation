@@ -1,0 +1,48 @@
+{
+ "case_id": "9845309611ca",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "계단은 난간을 잡고 천천히 다니시고, 평지 걷기처럼 무릎에 무리가 덜 가는 운동을 해 보세요."
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "무릎이 붓거나 열이 나거나 걷기 힘들 만큼 아프면 병원에 가세요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  },
+  {
+   "id": "X2",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "쪼그려 앉기는 피하시는 게 좋아요."
+  },
+  {
+   "id": "K2",
+   "preserved": true,
+   "evidence": "무릎이 붓거나 열이 나거나 걷기 힘들 만큼 아프면 병원에 가세요."
+  }
+ ],
+ "response_action": "self_care",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 4,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "생활 요령과 병원에 가야 할 조건이 쉬운 말로 정확하게 들어 있다."
+}

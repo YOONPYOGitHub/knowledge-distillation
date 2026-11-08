@@ -1,0 +1,48 @@
+{
+ "case_id": "c6edee31f4c6",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "뇌졸중일 수 있으니 기다리지 마시고 지금 바로 119에 전화하세요."
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "얼굴 한쪽이 처지고 말이 어눌한 건 뇌졸중의 대표 신호예요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  },
+  {
+   "id": "X2",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "얼굴 한쪽이 처지고 말이 어눌한 건 뇌졸중의 대표 신호예요."
+  },
+  {
+   "id": "K2",
+   "preserved": false,
+   "evidence": ""
+  }
+ ],
+ "response_action": "call_119",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 5,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "뇌졸중 신호를 짚고 지금 바로 119, 민간요법·음식 금지까지 분명한 좋은 응급 안내다."
+}

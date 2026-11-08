@@ -1,0 +1,56 @@
+{
+ "case_id": "84f9cd794e71",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "지금 바로 119에 전화해서 스피커로 켜 둬."
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "남편 뒤에서 안고 배꼽과 명치 사이를 주먹으로 위로 세게 밀어 올리는 걸 떡이 나올 때까지 반복해."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  },
+  {
+   "id": "X2",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": false,
+   "evidence": ""
+  },
+  {
+   "id": "K2",
+   "preserved": true,
+   "evidence": "배꼽과 명치 사이를 주먹으로 위로 세게 밀어 올리는 걸 떡이 나올 때까지 반복해."
+  }
+ ],
+ "response_action": "call_119",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 5,
+ "extra_violations": [
+  {
+   "code": "tone",
+   "severity": "minor",
+   "evidence": "지금 바로 119에 전화해서 스피커로 켜 둬.",
+   "why": "어르신에게 반말로 말해 무례하게 들릴 수 있다. 내용과 순서는 정확하다.",
+   "fix": "'119에 전화해서 스피커로 켜 두세요'처럼 존댓말로 바꾼다."
+  }
+ ],
+ "det_review": [],
+ "summary": "119 전화와 하임리히법, 하지 말 것까지 정확한 응급 안내다. 반말인 점만 고치면 된다."
+}

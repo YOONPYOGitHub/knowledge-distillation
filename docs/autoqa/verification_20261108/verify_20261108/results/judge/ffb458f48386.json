@@ -1,0 +1,33 @@
+{
+ "case_id": "ffb458f48386",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": false,
+   "evidence": ""
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": false,
+   "evidence": ""
+  }
+ ],
+ "response_action": "none",
+ "urgency_vs_expected": "match",
+ "conclusion_match": false,
+ "referral_present": false,
+ "core_in_first3": false,
+ "actionability": 2,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "종합감기약을 먹어도 되는지 답이 없고 약사에게 혈압약을 말하라는 안내도 없어 도움이 되지 않는다."
+}

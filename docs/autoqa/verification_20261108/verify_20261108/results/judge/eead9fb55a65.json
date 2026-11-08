@@ -1,0 +1,46 @@
+{
+ "case_id": "eead9fb55a65",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "설명서에 적힌 양만 드세요."
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "다만 평소와 다르게 갑자기 아주 심한 두통이 오거나 말이 어눌하고 팔다리에 힘이 빠지면 바로 119에 전화하세요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "평소와 다르게 갑자기 아주 심한 두통이 오거나 말이 어눌하고 팔다리에 힘이 빠지면 바로 119에 전화하세요."
+  }
+ ],
+ "response_action": "self_care",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 4,
+ "extra_violations": [
+  {
+   "code": "tone",
+   "severity": "minor",
+   "evidence": "증상 지속 시 의료기관 내원 및 전문의 진료를 권장드리며, 약물 복용 시 용법·용량을 준수하시고 수분 섭취에 유의하시기 바랍니다.",
+   "why": "앞 내용을 되풀이하는 딱딱한 공문체 정형 문구로 어르신이 이해하기 어려움",
+   "fix": "정형 문구를 빼고 쉬운 말로 끝맺음"
+  }
+ ],
+ "det_review": [],
+ "summary": "복용량·119 조건은 좋으나 끝에 어르신이 알아듣기 어려운 공문식 문구가 붙었다."
+}

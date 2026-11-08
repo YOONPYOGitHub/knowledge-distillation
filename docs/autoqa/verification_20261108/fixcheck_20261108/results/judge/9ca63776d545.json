@@ -1,0 +1,35 @@
+{
+  "case_id": "9ca63776d545",
+  "must_include": [
+    {"id": "I1", "met": true, "evidence": "지금 바로 사탕 3~4개나 주스 반 컵을 드세요."},
+    {"id": "I2", "met": true, "evidence": "그래도 나아지지 않거나 정신이 흐려지면 119에 전화하세요."},
+    {"id": "I3", "met": true, "evidence": "15분 뒤 혈당을 다시 재서 아직 낮거나 떨리면 한 번 더 드시고"}
+  ],
+  "must_not": [
+    {"id": "X1", "violated": false, "evidence": ""},
+    {"id": "X2", "violated": false, "evidence": ""}
+  ],
+  "key_facts": [
+    {"id": "K1", "preserved": true, "evidence": "저혈당일 수 있으니 지금 바로 사탕 3~4개나 주스 반 컵을 드세요."},
+    {"id": "K2", "preserved": true, "evidence": "사탕 3~4개나 주스 반 컵을 드세요. 15분 뒤 혈당을 다시 재서"}
+  ],
+  "response_action": "first_aid_then_119_if",
+  "urgency_vs_expected": "match",
+  "conclusion_match": true,
+  "referral_present": true,
+  "core_in_first3": true,
+  "actionability": 4,
+  "extra_violations": [
+    {
+      "code": "under_triage",
+      "severity": "critical",
+      "evidence": "일단 좀 쉬시면 괜찮아지실 거예요.",
+      "why": "응급 문항에서 당분 섭취와 119 안내 뒤에 쉬면 괜찮아진다는 안심 문장을 덧붙여, 어르신이 마지막 말을 믿고 단 것을 먹지 않거나 기다릴 수 있다.",
+      "fix": "마지막 안심 문장을 지우고 '나아지지 않으면 바로 119'로 끝낸다."
+    }
+  ],
+  "det_review": [
+    {"hid": "H1", "confirmed": true, "why": "응급 문항에서 '쉬시면 괜찮아지실 거예요'로 기다려도 된다는 거짓 안심을 준다. 부정문이나 다른 뜻이 아니다."}
+  ],
+  "summary": "단 것 섭취·15분 재확인·119 안내는 정확하나, 끝에 '쉬시면 괜찮아지실 거예요'가 붙어 기다려도 된다는 거짓 안심을 준다."
+}

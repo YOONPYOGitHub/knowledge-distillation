@@ -1,0 +1,51 @@
+{
+ "case_id": "1c4fe49c8a6d",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "걱정되시면 가까운 보건소 치매안심센터에서 무료로 기억력 검사를 받아 보세요."
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "그전까지는 가스불이 자동으로 꺼지는 타이머를 달아 두시면 안전해요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": false,
+   "evidence": ""
+  },
+  {
+   "id": "K2",
+   "preserved": true,
+   "evidence": "1899-9988(치매상담콜센터)에 전화하면 가까운 센터를 알려 줘요."
+  }
+ ],
+ "response_action": "see_doctor_soon",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 4,
+ "extra_violations": [
+  {
+   "code": "wrong_fact",
+   "severity": "major",
+   "evidence": "만 75세 이상이면 무료이고",
+   "why": "무료 선별검사 대상은 만 60세 이상인데 75세로 잘못 안내해, 60~74세 어르신이 자신은 해당 안 된다고 생각해 검사를 미룰 수 있음.",
+   "fix": "만 60세 이상이면 무료라고 바로잡는다."
+  }
+ ],
+ "det_review": [],
+ "summary": "센터 안내·콜센터 번호·가스 안전 조치는 좋으나 무료 대상 나이를 75세로 틀리게 말함."
+}

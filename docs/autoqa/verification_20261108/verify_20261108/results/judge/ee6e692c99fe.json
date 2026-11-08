@@ -1,0 +1,48 @@
+{
+ "case_id": "ee6e692c99fe",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": false,
+   "evidence": ""
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "드시기 전에 약사님이나 의사 선생님께 꼭 물어보세요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  },
+  {
+   "id": "X2",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "시금치나 청국장 같은 푸른 채소와 발효 음식은 와파린 효과를 바꿀 수 있어서, 어떤 날은 많이 드시고 어떤 날은 안 드시는 식은 위험해요."
+  },
+  {
+   "id": "K2",
+   "preserved": false,
+   "evidence": ""
+  }
+ ],
+ "response_action": "ask_pharmacist_doctor",
+ "urgency_vs_expected": "over",
+ "conclusion_match": false,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 4,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "약사·의사 확인과 들쭉날쭉 먹지 말라는 점은 맞으나 끊을 필요는 없고 일정하게 먹으면 된다는 말이 없어 모호함."
+}

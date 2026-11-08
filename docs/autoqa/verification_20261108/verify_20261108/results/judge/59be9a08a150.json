@@ -1,0 +1,38 @@
+{
+ "case_id": "59be9a08a150",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "먼저 화장실과 현관에 미끄럼 방지 매트를 깔아 보세요. 바닥에 물기나 전선, 문턱에 걸릴 물건이 없게 치우시고 밤에는 복도에 작은 불을 켜 두세요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "화장실과 현관에 미끄럼 방지 매트를 깔아 보세요. 바닥에 물기나 전선, 문턱에 걸릴 물건이 없게 치우시고 밤에는 복도에 작은 불을 켜 두세요."
+  },
+  {
+   "id": "K2",
+   "preserved": false,
+   "evidence": ""
+  }
+ ],
+ "response_action": "self_care",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": false,
+ "core_in_first3": true,
+ "actionability": 4,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "매트·걸림돌 치우기·야간 조명 등 바로 할 수 있는 방법이 구체적이다. 손잡이와 다리 운동 안내는 없다."
+}

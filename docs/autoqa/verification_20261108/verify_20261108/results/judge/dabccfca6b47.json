@@ -1,0 +1,46 @@
+{
+ "case_id": "dabccfca6b47",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "국은 건더기 위주로 드시고 국물은 반 이상 남기세요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": false,
+   "evidence": ""
+  },
+  {
+   "id": "K2",
+   "preserved": false,
+   "evidence": ""
+  }
+ ],
+ "response_action": "call_119",
+ "urgency_vs_expected": "over",
+ "conclusion_match": false,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 2,
+ "extra_violations": [
+  {
+   "code": "over_alarm",
+   "severity": "major",
+   "evidence": "혹시 모르니 지금 바로 119에 전화하세요.",
+   "why": "일상 식단 질문에 근거 없이 119를 권해 지나친 겁주기이자 응급 자원 낭비를 부름",
+   "fix": "119 문장을 빼고 증상이 심해지면 병원에 가라는 정도로 안내"
+  }
+ ],
+ "det_review": [],
+ "summary": "식단 안내는 좋으나 마지막에 이유 없이 119에 전화하라고 해 어르신이 혼란스럽고 불필요한 신고를 할 수 있다."
+}

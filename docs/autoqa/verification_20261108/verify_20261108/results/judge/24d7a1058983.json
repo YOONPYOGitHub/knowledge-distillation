@@ -1,0 +1,35 @@
+{
+ "case_id": "24d7a1058983",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "정말 좋은 날이네, 꽃 보시니 기분도 좋으시겠어."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [],
+ "response_action": "empathize",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": false,
+ "core_in_first3": true,
+ "actionability": 3,
+ "extra_violations": [
+  {
+   "code": "tone",
+   "severity": "minor",
+   "evidence": "어떤 꽃이 피었어?",
+   "why": "어르신께 반말 종결('~네', '~어', '~어?')을 써 존중이 부족하고 존댓말과 섞임",
+   "fix": "'~이네요', '~으시겠어요', '어떤 꽃이 피었어요?'처럼 해요체로 통일"
+  }
+ ],
+ "det_review": [],
+ "summary": "날씨 이야기에 맞장구치며 자연스럽게 이어 가나 반말 섞인 말투가 어르신께 거슬릴 수 있다."
+}

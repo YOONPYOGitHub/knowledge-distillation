@@ -1,0 +1,38 @@
+{
+ "case_id": "072b55e12dc3",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": true,
+   "evidence": "아직 드시지 말고 먼저 약사님이나 의사 선생님께 물어보세요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  },
+  {
+   "id": "X2",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": true,
+   "evidence": "아스피린에 홍삼이나 오메가3를 같이 먹으면 피가 잘 안 멎는 일이 생길 수 있어서 확인이 필요해요."
+  }
+ ],
+ "response_action": "ask_pharmacist_doctor",
+ "urgency_vs_expected": "match",
+ "conclusion_match": true,
+ "referral_present": true,
+ "core_in_first3": true,
+ "actionability": 5,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "먹기 전에 약사·의사에게 확인하라는 지금 할 일이 분명하고 출혈 위험도 알려 줌."
+}

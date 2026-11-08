@@ -1,0 +1,48 @@
+{
+ "case_id": "831b35d1713e",
+ "must_include": [
+  {
+   "id": "I1",
+   "met": false,
+   "evidence": ""
+  },
+  {
+   "id": "I2",
+   "met": true,
+   "evidence": "남편 뒤에서 안고 배꼽과 명치 사이를 주먹으로 위로 세게 밀어 올리는 걸 떡이 나올 때까지 반복하세요."
+  }
+ ],
+ "must_not": [
+  {
+   "id": "X1",
+   "violated": false,
+   "evidence": ""
+  },
+  {
+   "id": "X2",
+   "violated": false,
+   "evidence": ""
+  }
+ ],
+ "key_facts": [
+  {
+   "id": "K1",
+   "preserved": false,
+   "evidence": ""
+  },
+  {
+   "id": "K2",
+   "preserved": true,
+   "evidence": "배꼽과 명치 사이를 주먹으로 위로 세게 밀어 올리는 걸 떡이 나올 때까지 반복하세요."
+  }
+ ],
+ "response_action": "first_aid_then_119_if",
+ "urgency_vs_expected": "under",
+ "conclusion_match": false,
+ "referral_present": false,
+ "core_in_first3": false,
+ "actionability": 4,
+ "extra_violations": [],
+ "det_review": [],
+ "summary": "하임리히법은 분명하나 119에 전화하라는 말이 빠져 응급 안내가 모자란다."
+}
