@@ -1,73 +1,95 @@
-# silvercare_autoqa — 실버케어 지식증류 모델 자동검수
+# silvercare_autoqa — 실버케어 지식증류 모델 자동 채점(autoqa) 코드
 
 ## 한눈에
 
-- 어르신 질문 50문항(골든셋)으로 Teacher·Student KD·Student FT·Student Base 답을 채점한다.
-- 안전 Gate 6종이 0건인지, Scorecard 7종이 목표에 닿는지 보고 모델마다 **Pass / Fix / Hold** 를 낸다.
-- 채점은 이 PC 의 Claude Code(`claude -p`, Sonnet 5.5 · effort high)로 한다. 시험(`pytest`)은 네트워크·LLM 없이 돈다.
-- 처음 보는 분은 [브랜치 첫 화면](../README.md) → [연결 안내](../docs/autoqa/INTEGRATION.md) 순서로 본다.
+- 이 폴더는 autoqa 를 직접 돌리거나 고치는 사람용이다. 팀원은 먼저 [연결 안내](../docs/autoqa/INTEGRATION.md) 를 본다. 역할별 할 일은 [README](../README.md#역할별-할-일) 에 있다.
+- 어르신 질문 50문항(골든셋)으로 Teacher·KD·FT·Base 답을 채점한다. 답마다, 모델마다 **Pass / Fix / Hold** 를 낸다.
+- 채점은 채점하는 PC 의 Claude Code(`claude -p`, 기본 `claude-sonnet-5-5` · effort `high`)로 한다. 시험(`pytest`)은 네트워크·LLM 없이 돈다.
+- 명령 전체는 아래 「명령」 표가 정본이다. 판정 규칙은 [DESIGN.md](../docs/autoqa/DESIGN.md), 고친 기록은 [AUDIT_LOG.md](../docs/autoqa/AUDIT_LOG.md) 에 있다.
 
 ## 준비
 
 - Python 3.10 이상과 `pyyaml` 이 필요하다. 답을 HTTP 로 받으면 `requests` 도 쓴다.
-- 채점 전에 터미널에서 `claude` 를 한 번 실행해 로그인 상태를 확인한다.
+- 채점하는 PC 에 Claude Code 가 설치·로그인돼 있어야 한다. 확인: `python -m silvercare_autoqa preflight --judge` (Sonnet 1회 호출).
 - 다른 경로의 `claude` 를 쓰려면 환경변수 `SILVERCARE_CLAUDE_BIN` 을 정한다.
 
-## 자주 쓰는 명령
+## 명령
 
-실행 전 점검 (골든셋·자체 시험·채점기 로그인):
+모두 `python -m silvercare_autoqa <명령>` 으로 부른다. 옵션은 `<명령> --help` 로 본다.
+
+| 명령 | 하는 일 | LLM 호출 |
+|---|---|---|
+| `validate` | 골든셋 형식 검사 | 없음 |
+| `guardrail` | autoqa 응급 키워드 목록의 감지율 (`--heldout` 이면 처음 보는 발화 60개) | 없음 |
+| `preflight` | 실행 전 점검 — 골든셋·팀 UI 백엔드·자체 시험(`--selftest`)·로그인(`--judge`) | `--judge` 면 1회 |
+| `generate` | 모델 답 받기 — 팀 UI 백엔드·HF·OpenAI 호환·Claude | `--source claude` 일 때만 |
+| `check-responses` | 응답 파일 점검 — 빠진 문항·빈 답·프롬프트 섞임·생성 오류 | 없음 |
+| `prep` | 결정 룰을 돌리고 채점 요청 파일을 만든다 | 없음 |
+| `judge` | 채점 | 빈 답을 뺀 답 수만큼 |
+| `import` | 채점 결과를 검사하고 반박 검증 요청을 만든다 | 없음 |
+| `verify` | 반박 검증 | Hold 가 될 지적이 있는 답 수만큼 |
+| `finalize` | 판정·지표·리포트 | 없음 |
+| `run` | prep → judge → import → verify → finalize 를 한 번에 | judge·verify 만큼 |
+| `contamination` | 골든셋이 학습 데이터에 섞였는지 | 없음 |
+| `export-blind` | 약사·간호사용 블라인드 채점지 | 없음 |
+| `import-labels` | 채운 채점지 → 사람과 autoqa 의 일치도(κ)·놓친 위험 | 없음 |
+| `study-check` | 어르신 실험 문항 답에 Hold 가 없는지 | 없음 |
+| `study-materials` | 어르신 실험 묶음 (카드·대본·기록지) | 없음 |
+| `study-analyze` | 어르신 실험 결과 분석 | 없음 |
+| `mutants` | 변이 시험용 결함 답 만들기 (미묘한 변이는 요청 파일만) | 없음 |
+| `mutation-score` | 변이 시험 회차의 탐지율을 다시 낸다 | 없음 |
+
+## 자주 하는 일
+
+채점하는 PC 에서 실행 전 점검을 하려면 (골든셋·자체 시험·채점기 로그인, Sonnet 1회 호출):
 
 ```bash
 python -m silvercare_autoqa preflight --selftest --judge
 ```
 
-팀 UI 백엔드에서 4-way 답을 받아 채점·리포트까지:
+팀 UI 백엔드에서 4-way 답을 받아 채점·리포트까지 하려면 (GPU 서버의 레포 폴더에서):
 
 ```bash
 bash scripts/autoqa_4way.sh <run_id>
 ```
 
-응답 파일(JSONL)이 이미 있으면:
+응답 파일(JSONL)이 이미 있으면 (형식: [INTEGRATION.md](../docs/autoqa/INTEGRATION.md) §2):
 
 ```bash
 python -m silvercare_autoqa run --responses responses.jsonl --run runs/20261120_kanana_v5 --teacher teacher_ft --pairs student_kd:student_ft
 ```
 
-Claude Code 가 없는 서버에서는 요청 파일만 만들고, 회차 폴더를 옮겨 이어서 돌린다:
+Claude Code 가 없는 서버와 PC 에서 나눠 돌리려면 [INTEGRATION.md](../docs/autoqa/INTEGRATION.md) §6 의 순서를 따른다. 순서를 바꾸면 반박 검증이 빠져 회차가 유효성 미달이 된다.
 
-```bash
-python -m silvercare_autoqa prep --responses responses.jsonl --run runs/x
-python -m silvercare_autoqa judge --run runs/x
-python -m silvercare_autoqa import --run runs/x
-python -m silvercare_autoqa verify --run runs/x
-python -m silvercare_autoqa finalize --run runs/x --teacher teacher_ft --pairs student_kd:student_ft
-```
-
-사람 평가 연결 (전문가 블라인드 채점·κ·어르신 실험):
+약사·간호사에게 보낼 블라인드 채점지를 만들려면:
 
 ```bash
 python -m silvercare_autoqa export-blind --run runs/x --out blind/ --models teacher_ft,student_kd,student_ft
+```
+
+어르신 실험 묶음을 만들려면:
+
+```bash
 python -m silvercare_autoqa study-materials --run runs/x --out study_bundle/
 ```
 
-명령 전체 목록은 `python -m silvercare_autoqa --help` 로 본다.
-
-## 회차 폴더에 생기는 것
+## 채점 회차 폴더에 생기는 것
 
 | 파일 | 내용 |
 |---|---|
 | `report.md` | 첫머리 '한눈에' · 모델별 판정 · 안전 Gate · Scorecard · 고칠 것 |
 | `report.html` | 같은 표 + 문항마다 펼쳐 보기 (발화·응답·지적·근거·고치는 방법) |
-| `defects.csv` | 팀 안 검토용. '사람 판단·사람 의견' 열에 이견을 적는다 |
+| `defects.csv` | 팀 안 검토용. '사람 판단·사람 의견' 열에 이견을 적는다. 판정이 보이므로 κ 에는 쓰지 않는다(κ 는 `export-blind`) |
 | `metrics.json` | 모든 수치와 회차 유효성 |
 | `meta.json` | 평가기준 지문 — 지문이 다른 회차끼리는 숫자를 비교하지 않는다 |
 | `golden.yaml` | prep 때 쓴 골든셋 사본 — 다른 PC 에서도 같은 기준으로 연다 |
 
 ## 고칠 때 지킬 것
 
-- 판정식은 `verdict.verdict_of` 하나다. 다른 곳에 판정 규칙을 복제하지 않는다.
+- 판정은 `verdict.verdict_of` 한 함수만 내린다. 다른 곳에 판정 규칙을 복제하지 않는다.
 - 안전 Gate 표는 `gates.py`, 결정 룰의 종류·형식 실패 여부는 `rules.RULES` 한 곳에만 적는다.
 - 안전 지적은 확신이 낮다는 이유로 낮추지 않는다. 반박 검증(`verify`)만 근거 인용으로 뒤집을 수 있다.
-- 용어집(`data/lexicons/*.yaml`)에 패턴을 넣을 때 확정(confirm)과 후보(hybrid)를 나눈다. 부정문에도 걸리는 패턴은 후보로만 둔다.
-- 골든셋·용어집·룰·프롬프트를 바꾸면 평가기준 지문이 바뀐다. 예전 회차와 비교하려면 같은 응답으로 다시 채점한다.
+- 규칙 단어 목록(`data/lexicons/*.yaml`)에 패턴을 넣을 때 확정(confirm)과 후보(hybrid)를 나눈다. 부정문에도 걸리는 패턴은 후보로만 둔다.
+- 골든셋·규칙 단어 목록·결정 룰·프롬프트를 바꾸면 채점 지문이 바뀐다. `guardrails.yaml` 의 응급 키워드도 들어간다.
+- 지문이 바뀌면 예전 회차와 숫자를 비교할 수 없다. 비교하려면 같은 응답으로 새 회차를 만들어 다시 채점한다. 어느 파일이 어느 지문인지는 [DESIGN.md](../docs/autoqa/DESIGN.md) §6.
 - 문서·리포트 문구는 [문서 쓰는 법](../docs/autoqa/WRITING_GUIDE.md) 을 따른다. 고친 뒤 `python -m pytest silvercare_autoqa/tests -q` 를 돌린다.

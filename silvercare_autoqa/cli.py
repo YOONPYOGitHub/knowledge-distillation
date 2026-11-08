@@ -253,7 +253,11 @@ def cmd_export_blind(a) -> int:
 
 def cmd_import_labels(a) -> int:
     from .human import import_labels, render_agreement_md
-    rep = import_labels(a.run, a.key, a.labels)
+    try:
+        rep = import_labels(a.run, a.key, a.labels)
+    except (ValueError, FileNotFoundError) as e:      # 엑셀 통합 문서·칸 이름 바뀜 등 — 검수자에게 그대로 전할 글
+        print("❌", e)
+        return 2
     md = render_agreement_md(rep)
     print(md)
     if a.out:
