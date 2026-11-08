@@ -27,6 +27,7 @@
 
 - `src/research_models.py`: `qwen3`, `llama`, `gemma3` 로더 추가. `dtype=`를 4.51.3이 받는 `torch_dtype=`로 변경. 설정에 `device_map`이 있으면 분할 로딩. 4.52 미만에서는 `key_mapping`을 쓰지 않습니다. 4.51.3이 `language_model.` 접두사를 직접 처리해, 이름을 먼저 바꾸면 모든 텐서를 건너뛰기 때문입니다. 수정 후 Gemma 3 12B의 텍스트 텐서 전체가 파일과 일치함을 확인했습니다.
 - `src/research_runner.py`: 분할 로딩된 모델은 `.to(device)`를 건너뜁니다.
+- `src/research_tuning.py`: KD 범위를 Student가 예측할 수 있는 토큰 ID로 제한합니다. Gemma 3는 토크나이저가 262,145개, 1B Student 출력이 262,144개이고, 남는 ID 262144는 이미지 자리표시 토큰입니다. train·validation에 그 ID가 없음을 확인한 뒤에만 262,144로 정하고, 있으면 실패합니다. Qwen3와 Kanana는 값이 바뀌지 않습니다.
 - `scripts/run_research.py`: `prepare` 성공 후 인터프리터 종료 과정을 건너뜁니다. 스트리밍 스레드가 종료 중 `PyGILState_Release`로 충돌한 문제를 막습니다. 결과 파일은 그 전에 fsync됩니다. 수정 후 새 준비 3회 모두 정상 종료했고 파일 SHA가 게시값과 일치했습니다.
 
 ## 폐기한 시도

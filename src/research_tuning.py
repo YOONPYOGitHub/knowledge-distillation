@@ -255,9 +255,21 @@ def run_sweep(base_run, output_dir, *, resume=False, max_steps=200, dependencies
     with run_lock(output):
         model = make_model('student', config, dependencies)
         initial_hash = initial_adapter_hash(model)
+        kd_vocab = prepared['tokenizer']['vocab_size']
+        head = model.get_output_embeddings() if hasattr(model, 'get_output_embeddings') else None
+        rows = getattr(head, 'weight', None)
+        if rows is not None and rows.shape[0] < kd_vocab:
+            # Gemma 3 1B scores 262144 IDs while its tokenizer lists one more (an image
+            # placeholder). KD may only cover IDs the Student can predict, and only if
+            # the data never uses the rest.
+            largest = max(int(row['input_ids'].max()) for split in ('train', 'validation')
+                          for row in datasets[split])
+            if largest >= rows.shape[0]:
+                raise ValueError('data uses token IDs the student cannot predict')
+            kd_vocab = int(rows.shape[0])
         teacher_path = Path(teacher_record['result']['best_checkpoint'])
         plan = dict(version=1, trials=trials, numerical_policy=numerical_policy,
-                    common_settings=sweep_settings(config['training'], max_steps, prepared['tokenizer']['vocab_size'],
+                    common_settings=sweep_settings(config['training'], max_steps, kd_vocab,
                                                    seed=seed, settings_overrides=settings_overrides),
                     student=config['student'], adapter=config['adapter'], model_loading=config['model'],
                     initial_adapter_sha256=initial_hash, code=_code_identity(),
