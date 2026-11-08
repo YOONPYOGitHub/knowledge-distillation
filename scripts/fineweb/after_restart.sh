@@ -17,3 +17,9 @@ bash "$R/start_progress.sh"
 tmux kill-session -t models 2>/dev/null
 tmux new -d -s models "$R/ensure_models.sh; exec bash"
 echo "restart services up; models are being restored"
+# Every family continues from wherever it stopped.
+for pair in 'qwen3 0' 'kanana 1' 'gemma3 2,3'; do
+  set -- $pair
+  tmux kill-session -t "a-$1" 2>/dev/null
+  tmux new -d -s "a-$1" "until [ -f $R/.models_verified ]; do sleep 30; done; $R/chain_after.sh $1 $2; exec bash"
+done
