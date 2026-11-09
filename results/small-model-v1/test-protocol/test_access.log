@@ -1,0 +1,16 @@
+2026-11-09T16:59:51Z kanana teacher scored once
+2026-11-09T16:59:52Z qwen3 teacher scored once
+2026-11-09T17:04:58Z kanana pretrained-student scored once
+2026-11-09T17:05:45Z qwen3 pretrained-student scored once
+2026-11-09T17:06:38Z kanana ce-seed42 scored once
+2026-11-09T17:07:39Z qwen3 ce-seed42 scored once
+2026-11-09T17:10:31Z kanana kd-seed42 scored once
+2026-11-09T17:11:45Z qwen3 kd-seed42 scored once
+2026-11-09T17:14:25Z kanana ce-seed43 scored once
+2026-11-09T17:15:50Z qwen3 ce-seed43 scored once
+2026-11-09T17:18:18Z kanana kd-seed43 scored once
+2026-11-09T17:19:55Z qwen3 kd-seed43 scored once
+2026-11-09T17:22:12Z kanana ce-seed44 scored once
+2026-11-09T17:24:00Z qwen3 ce-seed44 scored once
+2026-11-09T17:26:05Z kanana kd-seed44 scored once
+2026-11-09T17:28:06Z qwen3 kd-seed44 scored once
