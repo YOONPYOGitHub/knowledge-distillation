@@ -1,0 +1,135 @@
+{
+ "version": 1,
+ "family": "kanana",
+ "split": "test",
+ "test_sha256": "f7c9e6e6f27a58bf103a7c422be6a740a7f21afd3f86b686b20cc5acece81f87",
+ "cohort_manifest": "results/published/generic-kd-v1/cohort-manifest.json",
+ "numerical_policy": {
+  "model_dtype": "bfloat16",
+  "ce_dtype": "float32",
+  "ce_reduction": "shifted_valid_token_sum",
+  "ignore_index": -100,
+  "batch_size": 1,
+  "sequence_length": 512,
+  "deterministic_algorithms": true,
+  "cudnn_deterministic": true,
+  "cudnn_benchmark": false,
+  "allow_tf32": false,
+  "cublas_workspace_config": ":4096:8"
+ },
+ "models": [
+  {
+   "model_id": "teacher",
+   "role": "teacher",
+   "seed": null,
+   "model": {
+    "id": "kakaocorp/kanana-1.5-8b-instruct-2505",
+    "revision": "c963a5f4f6496c749f94064a20b33028b0db9f19"
+   },
+   "checkpoint": "kanana/base/teacher/checkpoints/step-00003000-f2b26136ff9e458db6f333539cc2d772",
+   "best_step": 3000,
+   "checkpoint_manifest_sha256": "c3acf5728c960643677cc3ba33f44916363528219ab97979cfbb18db3ce23b89",
+   "checkpoint_contract_sha256": "be4062f7cbb622f812f999bccfa89ae8e0a24758f04cfa51694928dbbdb8f58c"
+  },
+  {
+   "model_id": "pretrained-student",
+   "role": "student",
+   "seed": null,
+   "model": {
+    "id": "kakaocorp/kanana-1.5-2.1b-instruct-2505",
+    "revision": "7df4bc35ccd610e451809d7106e1c3cf82bfd44c"
+   }
+  },
+  {
+   "model_id": "ce-seed42",
+   "role": "student",
+   "seed": 42,
+   "model": {
+    "id": "kakaocorp/kanana-1.5-2.1b-instruct-2505",
+    "revision": "7df4bc35ccd610e451809d7106e1c3cf82bfd44c"
+   },
+   "checkpoint": "kanana/round2/trials/ce-1/checkpoints/step-00003000-29ee03daf48a4157b5d7bcaed18fba19",
+   "best_step": 3000,
+   "checkpoint_manifest_sha256": "02d192c65b2a21fadbc0173b59cda89660c14114e5a847f429f3e2fbdc635cbf",
+   "checkpoint_contract_sha256": "6b8ba1e25f7785a10d658027e641a939e03aefdea89eb88cf2ea42c9e5314913"
+  },
+  {
+   "model_id": "kd-seed42",
+   "role": "student",
+   "seed": 42,
+   "model": {
+    "id": "kakaocorp/kanana-1.5-2.1b-instruct-2505",
+    "revision": "7df4bc35ccd610e451809d7106e1c3cf82bfd44c"
+   },
+   "checkpoint": "kanana/round1/trials/kd-1/checkpoints/step-00003000-7718255341a74bf18fe21ba156d0817a",
+   "best_step": 3000,
+   "checkpoint_manifest_sha256": "abf51473000316c185fd595754a4c85238559a8d4a875f8054811056a9f5fb31",
+   "checkpoint_contract_sha256": "4b70ded8a377f39d24353caee0d03cf8abacd3ef83729e5872ea034109f84ada"
+  },
+  {
+   "model_id": "ce-seed43",
+   "role": "student",
+   "seed": 43,
+   "model": {
+    "id": "kakaocorp/kanana-1.5-2.1b-instruct-2505",
+    "revision": "7df4bc35ccd610e451809d7106e1c3cf82bfd44c"
+   },
+   "checkpoint": "kanana/seed43/trials/ce-1/checkpoints/step-00003000-9a2f314cd8fb4dcb8470f60918bb6c25",
+   "best_step": 3000,
+   "checkpoint_manifest_sha256": "accbb54c88ec44c9597c88403b4e98cef6ed35df283f8a8d9adfc36e3e287bd5",
+   "checkpoint_contract_sha256": "357be1e519386921387961b89aa1b65ae1c161f7d62990d78d28043f9a7a6eff"
+  },
+  {
+   "model_id": "kd-seed43",
+   "role": "student",
+   "seed": 43,
+   "model": {
+    "id": "kakaocorp/kanana-1.5-2.1b-instruct-2505",
+    "revision": "7df4bc35ccd610e451809d7106e1c3cf82bfd44c"
+   },
+   "checkpoint": "kanana/seed43/trials/kd-1/checkpoints/step-00003000-8f1191dcb65b44fe860cc1ae24b7a8a1",
+   "best_step": 3000,
+   "checkpoint_manifest_sha256": "14c437c9e5dc97b2b759e807e46659a5583a551c94f45ef66f2698d165385f87",
+   "checkpoint_contract_sha256": "6d916372c8191d992f3fad35d2caea7fb16167c56d462295ef8a7ad4ffd8936c"
+  },
+  {
+   "model_id": "ce-seed44",
+   "role": "student",
+   "seed": 44,
+   "model": {
+    "id": "kakaocorp/kanana-1.5-2.1b-instruct-2505",
+    "revision": "7df4bc35ccd610e451809d7106e1c3cf82bfd44c"
+   },
+   "checkpoint": "kanana/seed44/trials/ce-1/checkpoints/step-00002800-b302cce227744b90bc23e1afd7ad8e40",
+   "best_step": 2800,
+   "checkpoint_manifest_sha256": "8704539e25e7f390c2f6dedad8f6c772504d4b244adaefa60007f45909d9d0dc",
+   "checkpoint_contract_sha256": "188113aa8e15e4a2cb6e032b1109bc4385f80d9f7e46d1ed2917edc3536a1c53"
+  },
+  {
+   "model_id": "kd-seed44",
+   "role": "student",
+   "seed": 44,
+   "model": {
+    "id": "kakaocorp/kanana-1.5-2.1b-instruct-2505",
+    "revision": "7df4bc35ccd610e451809d7106e1c3cf82bfd44c"
+   },
+   "checkpoint": "kanana/seed44/trials/kd-1/checkpoints/step-00002800-ead1c67a0a5a4459a9dd965fb2fc3fc7",
+   "best_step": 2800,
+   "checkpoint_manifest_sha256": "57ec4c93d888cdb32c66303cbc8ac4e0c23956d5d298733168504761a92e3edf",
+   "checkpoint_contract_sha256": "57e130fe5eea264f169fe6d3ea642b72690d3f61ecd27c6563df7fa926908cc6"
+  }
+ ],
+ "final_selection_sha256": "b990fc8827d3db6932cdb03ee3724068a929bbf5b0a985a1ae7508b99d2b43c2",
+ "code": {
+  "evaluator_sha256": "23c25654e2189775e32cb7614e21c26d6466aad1b46b3c91a647599f80848290",
+  "final_evaluation_sha256": "2b68ce5f019569b2702bae1649135edd6089c4654b2b046f1854a529a3aad10b",
+  "torch": "2.3.1+cu121",
+  "transformers": "4.51.3",
+  "peft": "0.15.2"
+ },
+ "rules": [
+  "Settings were chosen on validation only and frozen before this protocol.",
+  "Each model is scored on test once. Outputs are write-once.",
+  "No setting is changed and no training continues after test scoring."
+ ]
+}

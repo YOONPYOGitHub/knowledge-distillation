@@ -1,0 +1,135 @@
+{
+ "version": 1,
+ "family": "qwen3",
+ "split": "test",
+ "test_sha256": "f7c9e6e6f27a58bf103a7c422be6a740a7f21afd3f86b686b20cc5acece81f87",
+ "cohort_manifest": "results/published/generic-kd-v1/cohort-manifest.json",
+ "numerical_policy": {
+  "model_dtype": "bfloat16",
+  "ce_dtype": "float32",
+  "ce_reduction": "shifted_valid_token_sum",
+  "ignore_index": -100,
+  "batch_size": 1,
+  "sequence_length": 512,
+  "deterministic_algorithms": true,
+  "cudnn_deterministic": true,
+  "cudnn_benchmark": false,
+  "allow_tf32": false,
+  "cublas_workspace_config": ":4096:8"
+ },
+ "models": [
+  {
+   "model_id": "teacher",
+   "role": "teacher",
+   "seed": null,
+   "model": {
+    "id": "Qwen/Qwen3-8B",
+    "revision": "b968826d9c46dd6066d109eabc6255188de91218"
+   },
+   "checkpoint": "qwen3/base/teacher/checkpoints/step-00003000-52b930238adf4f5393399d36e90311ec",
+   "best_step": 3000,
+   "checkpoint_manifest_sha256": "3b91631428d81ffec4996121036ccb8cefea5997ea796346c70c06e6912ba1de",
+   "checkpoint_contract_sha256": "f3fe02778c5d56feabc5283f54e4e3433addef096a687c888eed8646da26c214"
+  },
+  {
+   "model_id": "pretrained-student",
+   "role": "student",
+   "seed": null,
+   "model": {
+    "id": "Qwen/Qwen3-1.7B",
+    "revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e"
+   }
+  },
+  {
+   "model_id": "ce-seed42",
+   "role": "student",
+   "seed": 42,
+   "model": {
+    "id": "Qwen/Qwen3-1.7B",
+    "revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e"
+   },
+   "checkpoint": "qwen3/round2/trials/ce-3/checkpoints/step-00003000-8156c8318f774ed98570bd4cb693133d",
+   "best_step": 3000,
+   "checkpoint_manifest_sha256": "83eb99a1e218eb4922bb99621e434ad4b25449f086332b1c6fbbeb9cbab682e7",
+   "checkpoint_contract_sha256": "b71ffdf809fbe2b630bfdf7abd330c213ef45210b721bc69131513277ee468ed"
+  },
+  {
+   "model_id": "kd-seed42",
+   "role": "student",
+   "seed": 42,
+   "model": {
+    "id": "Qwen/Qwen3-1.7B",
+    "revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e"
+   },
+   "checkpoint": "qwen3/round2/trials/kd-3/checkpoints/step-00003000-12eb3276475a45a8b2d66dc9f3a0f433",
+   "best_step": 3000,
+   "checkpoint_manifest_sha256": "f3b09032338ec533fdcf52ac6dd7b4d31d544903000eed2d7130343bb4b62eea",
+   "checkpoint_contract_sha256": "36253f91a5a25599fa6e19399b8b54a5e2535c79442b71c005a6097dc438354f"
+  },
+  {
+   "model_id": "ce-seed43",
+   "role": "student",
+   "seed": 43,
+   "model": {
+    "id": "Qwen/Qwen3-1.7B",
+    "revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e"
+   },
+   "checkpoint": "qwen3/seed43/trials/ce-1/checkpoints/step-00003000-9f64e71447964421ae3c763c41483dbd",
+   "best_step": 3000,
+   "checkpoint_manifest_sha256": "40b7091f609ff6dea0cbfc7fbe779a0226af6b3fd5d73800d561748972188e66",
+   "checkpoint_contract_sha256": "7aaf6ae22fdce8247ec7e50cbddeb5183efefae761d7b4900f11eee8ec45d799"
+  },
+  {
+   "model_id": "kd-seed43",
+   "role": "student",
+   "seed": 43,
+   "model": {
+    "id": "Qwen/Qwen3-1.7B",
+    "revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e"
+   },
+   "checkpoint": "qwen3/seed43/trials/kd-1/checkpoints/step-00003000-0e0b2456dfec44a1abc4f19b2b0ce6e4",
+   "best_step": 3000,
+   "checkpoint_manifest_sha256": "1e503aad2ba2b3b3098b1c01d4160330cde3de1e8db49ec7915c05cbcd856b39",
+   "checkpoint_contract_sha256": "152bed407cba57e9e40d80faf56612440d3177bfeeff9b56442b03790740c500"
+  },
+  {
+   "model_id": "ce-seed44",
+   "role": "student",
+   "seed": 44,
+   "model": {
+    "id": "Qwen/Qwen3-1.7B",
+    "revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e"
+   },
+   "checkpoint": "qwen3/seed44/trials/ce-1/checkpoints/step-00003000-2d461fc688bc40be9d7387d56b0d4f43",
+   "best_step": 3000,
+   "checkpoint_manifest_sha256": "cd26d45fb5fbdd88e25ee41433e1b115a1827a312955c0257e44061c73fa542b",
+   "checkpoint_contract_sha256": "ee81a37d563e57c85812992dd1577be9980b0690b2943d65d8615cdab56d3ff3"
+  },
+  {
+   "model_id": "kd-seed44",
+   "role": "student",
+   "seed": 44,
+   "model": {
+    "id": "Qwen/Qwen3-1.7B",
+    "revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e"
+   },
+   "checkpoint": "qwen3/seed44/trials/kd-1/checkpoints/step-00003000-6affa62dca9f4990ad0e9ef360cf80c3",
+   "best_step": 3000,
+   "checkpoint_manifest_sha256": "050557209ba3160cf45ffaf66d5f21eff8005267f5c021b157ddda77f5634d46",
+   "checkpoint_contract_sha256": "f54600e53fecf21766c6c4ae02278a434dec90d07c35249fdaf9c2d36abfe3c6"
+  }
+ ],
+ "final_selection_sha256": "2b5628a225e407d571f884187d02d4308e345ccae18953cd2f6ad9974027216b",
+ "code": {
+  "evaluator_sha256": "23c25654e2189775e32cb7614e21c26d6466aad1b46b3c91a647599f80848290",
+  "final_evaluation_sha256": "2b68ce5f019569b2702bae1649135edd6089c4654b2b046f1854a529a3aad10b",
+  "torch": "2.3.1+cu121",
+  "transformers": "4.51.3",
+  "peft": "0.15.2"
+ },
+ "rules": [
+  "Settings were chosen on validation only and frozen before this protocol.",
+  "Each model is scored on test once. Outputs are write-once.",
+  "No setting is changed and no training continues after test scoring."
+ ]
+}

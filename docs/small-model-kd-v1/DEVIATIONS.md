@@ -19,7 +19,7 @@
 | 모델 변형 | Qwen3.5 일반판, Gemma 4 `-it`, LFM2.5 | Qwen3 일반판, Gemma 3 `-it`, Kanana `instruct-2505` | 서비스 후보로 쓸 수 있는 대화용 변형입니다. |
 | Gemma 3 Teacher 배치 | 단일 GPU | GPU 2장 분할 | 가중치 24.37GB로 3090 한 장에 들어가지 않습니다. KD에서는 Student가 첫 번째 GPU를 함께 씁니다. |
 | 2라운드 설계 | 1라운드 결과를 본 뒤 계열별로 설계 | [사전 고정 규칙](ROUND2_RULE.md) | 모든 조합에 같은 규칙을 적용합니다. |
-| 최종 채점 도구 | `scripts/evaluate_final.py` | 별도 작성 예정 | 기존 도구는 동료 3개 계열만 지원합니다. CE 계산식은 동일하게 유지합니다. |
+| 최종 채점 도구 | `scripts/evaluate_final.py` | `scripts/fineweb/evaluate_test.py` | 기존 도구는 동료 3개 계열만 지원합니다. test 패킹(`load_final_heldout_batches`)과 CE 계산(`final_token_ce_statistics`, `aggregate_final_token_ce`)은 동료 코드를 그대로 씁니다. 모델 dtype 검사는 이 환경의 PEFT에 `lora_variant`가 없어 DoRA 미사용 여부로 같은 조건을 확인합니다. 같은 도구로 validation을 채점해 학습 기록과 소수점 넷째 자리까지 일치함을 확인한 뒤 test에 썼습니다. |
 
 ## 코드 변경
 

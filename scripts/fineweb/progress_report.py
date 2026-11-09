@@ -176,7 +176,7 @@ def main():
         lines.append(f'워크스페이스 예상 정지까지: 약 {left:.1f}시간')
     lines.append(f'디스크: {pct:.0f}% 사용 ({usage.free / 1e9:.0f}GB 남음)')
     if preparing:
-        lines.append('모델 다운로드·검증 중: 끝나면 Teacher가 자동으로 시작됩니다.')
+        lines.append('모델 다운로드·검증 중: 끝나면 멈춘 학습이 자동으로 이어집니다.')
     lines += ['', 'GPU'] + [f'  {g[0]}번: 메모리 {g[1]}/{g[2]} MiB, 사용률 {g[3]}%' for g in gpu_rows]
     lines += ['', '진행 중']
     for r in active:
