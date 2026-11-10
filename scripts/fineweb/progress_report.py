@@ -25,6 +25,7 @@ DIRECTIONS = (
     ('디스크 사용률', '완료된 trial의 중간 체크포인트 정리가 도는지 확인하고, 불필요한 파일을 정리합니다.'),
     ('공유 볼륨 여유', '학습은 공간이 나면 자동 재개됩니다. 계속되면 GPU 센터에 볼륨 정리를 요청합니다.'),
     ('워크스페이스 정지', '웹 콘솔에서 재시작한 뒤 새 SSH 정보로 보고와 학습을 재개합니다.'),
+    ('GPU 인식 불가', '컨테이너 안에서는 고칠 수 없습니다. 워크스페이스를 재시작한 뒤 after_restart.sh로 이어 갑니다.'),
     ('GitHub push 실패', 'git_milestones.log를 확인합니다. 10분마다 다시 시도합니다.'),
 )
 
@@ -109,12 +110,13 @@ def main():
     gpu = sh('nvidia-smi --query-gpu=index,memory.used,memory.total,utilization.gpu '
              '--format=csv,noheader,nounits').splitlines()
     gpu_rows = [[x.strip() for x in g.split(',')] for g in gpu]
+    if not gpu_rows or any(len(g) != 4 or not all(x.isdigit() for x in g) for g in gpu_rows):
+        warnings.append('GPU 인식 불가(NVML 오류): 컨테이너가 GPU 접근을 잃었습니다.')
+        gpu_rows = []
     busy = sum(1 for g in gpu_rows if int(g[3]) > 0 or int(g[1]) > 200)
     procs = [p for p in sh('ps -eo etimes,cmd').splitlines()
              if re.search(r'scripts/(run_research|tune_research)\.py', p)]
     preparing = bool(sh('pgrep -f [d]ownload_verify.py'))
-    if not procs and not preparing:
-        warnings.append('실행 중인 학습 프로세스가 없습니다.')
 
     rows, plans = [], []
     for group in groups():
