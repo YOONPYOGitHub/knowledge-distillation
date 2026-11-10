@@ -1,0 +1,140 @@
+{
+ "version": 1,
+ "family": "gemma3",
+ "split": "test",
+ "test_sha256": "f7c9e6e6f27a58bf103a7c422be6a740a7f21afd3f86b686b20cc5acece81f87",
+ "cohort_manifest": "results/published/generic-kd-v1/cohort-manifest.json",
+ "numerical_policy": {
+  "model_dtype": "bfloat16",
+  "ce_dtype": "float32",
+  "ce_reduction": "shifted_valid_token_sum",
+  "ignore_index": -100,
+  "batch_size": 1,
+  "sequence_length": 512,
+  "deterministic_algorithms": true,
+  "cudnn_deterministic": true,
+  "cudnn_benchmark": false,
+  "allow_tf32": false,
+  "cublas_workspace_config": ":4096:8"
+ },
+ "models": [
+  {
+   "model_id": "teacher",
+   "role": "teacher",
+   "seed": null,
+   "model": {
+    "device_map": "auto",
+    "id": "google/gemma-3-12b-it",
+    "max_memory": {
+     "0": "12GiB",
+     "1": "20GiB"
+    },
+    "revision": "96b6f1eccf38110c56df3a15bffe176da04bfd80"
+   },
+   "checkpoint": "gemma3/base/teacher/checkpoints/step-00003000-c095aea682bf4c00b07b6a4c67bfdc96",
+   "best_step": 3000,
+   "checkpoint_manifest_sha256": "3534b72ef195d3e945fef5b7298f728677d50134d146f5588deb14b2b17397f7",
+   "checkpoint_contract_sha256": "d1427fa837febac352d8b0435e16924b51080fcd313ab21fdab793d26609e558"
+  },
+  {
+   "model_id": "pretrained-student",
+   "role": "student",
+   "seed": null,
+   "model": {
+    "id": "google/gemma-3-1b-it",
+    "revision": "dcc83ea841ab6100d6b47a070329e1ba4cf78752"
+   }
+  },
+  {
+   "model_id": "ce-seed42",
+   "role": "student",
+   "seed": 42,
+   "model": {
+    "id": "google/gemma-3-1b-it",
+    "revision": "dcc83ea841ab6100d6b47a070329e1ba4cf78752"
+   },
+   "checkpoint": "gemma3/round2/trials/ce-3/checkpoints/step-00003000-0c93bb291b0e4f9582ba53bfefd15f6b",
+   "best_step": 3000,
+   "checkpoint_manifest_sha256": "970d33a1b4ae3aec82ac73a6ed63a74924153de0166d5c57db40ab1aa8a5386b",
+   "checkpoint_contract_sha256": "327e50634d0115fa6c22596d00ab44baae2ae048d0e3346534f42399ec14a241"
+  },
+  {
+   "model_id": "kd-seed42",
+   "role": "student",
+   "seed": 42,
+   "model": {
+    "id": "google/gemma-3-1b-it",
+    "revision": "dcc83ea841ab6100d6b47a070329e1ba4cf78752"
+   },
+   "checkpoint": "gemma3/round2/trials/kd-3/checkpoints/step-00003000-b74d135093e044a9aa0988f888308d49",
+   "best_step": 3000,
+   "checkpoint_manifest_sha256": "5535b418ef31e6a6456d04b630e1eba1b845186b9f3ad48ff4f1241286f8a32f",
+   "checkpoint_contract_sha256": "9e0b4373d77ebcfaeda76c3788333c1abff00b724a4135eb5586ef5766ef614f"
+  },
+  {
+   "model_id": "ce-seed43",
+   "role": "student",
+   "seed": 43,
+   "model": {
+    "id": "google/gemma-3-1b-it",
+    "revision": "dcc83ea841ab6100d6b47a070329e1ba4cf78752"
+   },
+   "checkpoint": "gemma3/seed43/trials/ce-1/checkpoints/step-00003000-a269c0a9a38a44cba20e93f52104180a",
+   "best_step": 3000,
+   "checkpoint_manifest_sha256": "2481120a629d337caf895a0096fea1bac8372fd41a79911b98ac800b0174903b",
+   "checkpoint_contract_sha256": "ae52a213c5c5fdc5db9f423702034bcb882d71fddb9b5f0496c58237934e00f4"
+  },
+  {
+   "model_id": "kd-seed43",
+   "role": "student",
+   "seed": 43,
+   "model": {
+    "id": "google/gemma-3-1b-it",
+    "revision": "dcc83ea841ab6100d6b47a070329e1ba4cf78752"
+   },
+   "checkpoint": "gemma3/seed43/trials/kd-1/checkpoints/step-00003000-d683339815204d16b7dd94eda6795bae",
+   "best_step": 3000,
+   "checkpoint_manifest_sha256": "4826d3c903aadb340cfc86c210f5381d666dfb03c175f60f15013805e39018ad",
+   "checkpoint_contract_sha256": "5793d9dec2167d6d38fa5cf9fb617dfde0f5bf78f81b86fd1fe5b6d146d95ef5"
+  },
+  {
+   "model_id": "ce-seed44",
+   "role": "student",
+   "seed": 44,
+   "model": {
+    "id": "google/gemma-3-1b-it",
+    "revision": "dcc83ea841ab6100d6b47a070329e1ba4cf78752"
+   },
+   "checkpoint": "gemma3/seed44/trials/ce-1/checkpoints/step-00003000-a7e06066fdf74728b1c348e85092d427",
+   "best_step": 3000,
+   "checkpoint_manifest_sha256": "6165593b0041e7db5862dfc68803a002e4db4284f670cad487d6a7aafb30a405",
+   "checkpoint_contract_sha256": "bc3b7f877d88b3c51d7e3ac52e03bf882a389a665bf11e333383ec21ef81a498"
+  },
+  {
+   "model_id": "kd-seed44",
+   "role": "student",
+   "seed": 44,
+   "model": {
+    "id": "google/gemma-3-1b-it",
+    "revision": "dcc83ea841ab6100d6b47a070329e1ba4cf78752"
+   },
+   "checkpoint": "gemma3/seed44/trials/kd-1/checkpoints/step-00003000-aba74078b84344daabad0a759d97b7a5",
+   "best_step": 3000,
+   "checkpoint_manifest_sha256": "08fd64e550534352a8c7c16cceb33640c6fbc58ea80569c15748ce9a518a7326",
+   "checkpoint_contract_sha256": "18bdb64de51d386b927e21804631c2ac7be476dd28ad8a161676170ed4aa5b92"
+  }
+ ],
+ "final_selection_sha256": "0b793bdc27a955e0f368d79c0a978b69a6a13e5d32ba5c5a92b9562f815a71d1",
+ "code": {
+  "evaluator_sha256": "23c25654e2189775e32cb7614e21c26d6466aad1b46b3c91a647599f80848290",
+  "final_evaluation_sha256": "2b68ce5f019569b2702bae1649135edd6089c4654b2b046f1854a529a3aad10b",
+  "torch": "2.3.1+cu121",
+  "transformers": "4.51.3",
+  "peft": "0.15.2"
+ },
+ "rules": [
+  "Settings were chosen on validation only and frozen before this protocol.",
+  "Each model is scored on test once. Outputs are write-once.",
+  "No setting is changed and no training continues after test scoring."
+ ]
+}
