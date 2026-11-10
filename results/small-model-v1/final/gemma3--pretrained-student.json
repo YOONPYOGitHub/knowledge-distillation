@@ -1,0 +1,1 @@
+{"model_id": "pretrained-student", "protocol_sha256": "32372c64a1df91fb251450991cf124f0e6793484e8b2495b5da1630e912482a2", "statistics": {"ce_sum": 2951410.623779297, "tokens": 739417}, "status": "completed", "version": 1}
