@@ -1,0 +1,18 @@
+{
+ "items": 6661,
+ "counts": {
+  "kobest_boolq": 1404,
+  "kobest_copa": 1000,
+  "kobest_hellaswag": 500,
+  "kobest_sentineg": 397,
+  "kobest_wic": 1260,
+  "kmmlu_Health": 100,
+  "kmmlu_Social-Welfare": 1000,
+  "kmmlu_Psychology": 1000
+ },
+ "items_sha256": "bc99403492828ed72e6285518e32bba6ffb244258a001bfeffad2ed13caacf9e",
+ "sources": {
+  "kobest": "skt/kobest_v1 (CC BY-SA 4.0), test split",
+  "kmmlu": "HAERAE-HUB/KMMLU (CC BY-ND 4.0), test split, Health/Social-Welfare/Psychology"
+ }
+}

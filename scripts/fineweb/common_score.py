@@ -140,4 +140,5 @@ def main():
           f"{total_bytes} bytes" + (' (mechanics check)' if limit else ''))
 
 
-main()
+if __name__ == '__main__':
+    main()
