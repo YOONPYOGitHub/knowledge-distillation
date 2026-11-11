@@ -1,0 +1,42 @@
+{
+ "min_prefix_bytes": 64,
+ "documents": 851,
+ "excluded": 0,
+ "covered_bytes": 2917159,
+ "scored_tokens": {
+  "qwen3": 864698,
+  "kanana": 772329,
+  "gemma3": 731355,
+  "qwen35": 663541,
+  "gemma4": 731355,
+  "lfm25": 725528
+ },
+ "median_start_byte": 66,
+ "tokenizers": {
+  "qwen3": {
+   "id": "Qwen/Qwen3-1.7B",
+   "revision": "70d244cc86ccca08cf5af4e1e306ecf908b1ad5e"
+  },
+  "kanana": {
+   "id": "kakaocorp/kanana-1.5-2.1b-instruct-2505",
+   "revision": "7df4bc35ccd610e451809d7106e1c3cf82bfd44c"
+  },
+  "gemma3": {
+   "id": "google/gemma-3-1b-it",
+   "revision": "dcc83ea841ab6100d6b47a070329e1ba4cf78752"
+  },
+  "qwen35": {
+   "id": "Qwen/Qwen3.5-4B",
+   "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+  },
+  "gemma4": {
+   "id": "google/gemma-4-E2B-it",
+   "revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7"
+  },
+  "lfm25": {
+   "id": "LiquidAI/LFM2.5-2.6B",
+   "revision": "654f9463ce32b05d0429d76fe1f580b27d4c1ac0"
+  }
+ },
+ "validation_sha256": "e43df51f89e88204e81de16ec1e8c3285f3ceddea69b4c0e8a83b09c233a6b20"
+}
