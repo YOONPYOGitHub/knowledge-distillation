@@ -5,6 +5,7 @@ R=/root/runs/fineweb4way
 REPO=/root/knowledge-distillation
 command -v tmux >/dev/null || { apt-get update -qq >/dev/null && apt-get install -y -qq tmux >/dev/null; }
 command -v tmux >/dev/null || { echo 'tmux install failed'; exit 1; }
+[ -f /usr/share/fonts/truetype/nanum/NanumBarunGothic.ttf ] || DEBIAN_FRONTEND=noninteractive apt-get install -y -qq fonts-nanum >/dev/null  # Korean chart font
 rm -f "$R/.models_verified"          # the container disk was wiped; verify the cache again
 echo "$(date -d '+24 hours' +%FT%T)+00:00" > "$R/workspace_stop.txt"
 python3 - "$R/workspace_stop.txt" <<'PY'

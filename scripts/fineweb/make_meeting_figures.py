@@ -56,8 +56,8 @@ def style(ax, xlabel):
 
 
 def legend(fig):
-    handles = [plt.Line2D([], [], marker='o', linestyle='', color=OURS, markersize=8, label='소형 모델 (small-model-v1)'),
-               plt.Line2D([], [], marker='o', linestyle='', color=THEIRS, markersize=8, label='대형 모델 (generic-kd-v1)')]
+    handles = [plt.Line2D([], [], marker='o', linestyle='', color=OURS, markersize=8, label='소형 모델 (길량)'),
+               plt.Line2D([], [], marker='o', linestyle='', color=THEIRS, markersize=8, label='대형 모델 (윤표)')]
     fig.legend(handles=handles, loc='lower center', ncol=2, frameon=False, fontsize=10)
 
 
@@ -125,8 +125,8 @@ def fig_retention():
     handles = [plt.Line2D([], [], marker='o', linestyle='', markerfacecolor=SURFACE, markeredgecolor=MUTED,
                           markeredgewidth=2, markersize=8, label='CE (속이 빈 점)'),
                plt.Line2D([], [], marker='o', linestyle='', color=MUTED, markersize=8, label='KD (채운 점)'),
-               plt.Line2D([], [], marker='s', linestyle='', color=OURS, markersize=8, label='소형 모델'),
-               plt.Line2D([], [], marker='s', linestyle='', color=THEIRS, markersize=8, label='대형 모델')]
+               plt.Line2D([], [], marker='s', linestyle='', color=OURS, markersize=8, label='소형 모델 (길량)'),
+               plt.Line2D([], [], marker='s', linestyle='', color=THEIRS, markersize=8, label='대형 모델 (윤표)')]
     fig.legend(handles=handles, loc='lower center', ncol=4, frameon=False, fontsize=10)
     fig.suptitle('기존 능력 유지: 추가 학습 뒤 한국어 이해 정답률 변화', x=0.01, ha='left', fontsize=13, color=INK)
     fig.tight_layout(rect=(0, 0.07, 1, 0.95))
