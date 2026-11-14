@@ -11,7 +11,7 @@ import pytest
 from silvercare_autoqa import fingerprint as fp_mod
 from silvercare_autoqa import gates
 from silvercare_autoqa import rules as rules_mod
-from silvercare_autoqa.golden import DEFAULT_GOLDEN, NOT_GATES
+from silvercare_autoqa.golden import DEFAULT_GOLDEN, NOT_GATES, load_golden
 from silvercare_autoqa.judge import claude_base_cmd, unconditional_escalation, validate_verify
 from silvercare_autoqa.metrics import condition_summary, model_metrics, resolve_pair
 from silvercare_autoqa.pipeline import finalize, import_judge, prep
@@ -168,11 +168,12 @@ def test_d06_check_responses_empty_and_bom(tmp_path, golden):
     f.write_text("".join(json.dumps({"model": "M", "item_id": it["id"], "response": ""}, ensure_ascii=False) + "\n"
                          for it in golden["items"]), encoding="utf-8")
     rep = check_responses(str(f), str(DEFAULT_GOLDEN))
-    assert not rep["ok"] and any("빈 답 50개" in p for p in rep["problems"])
+    n = len(load_golden()["items"])
+    assert not rep["ok"] and any(f"빈 답 {n}개" in p for p in rep["problems"])
     g = tmp_path / "bom.jsonl"
     g.write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in reference_rows(golden)), encoding="utf-8-sig")
     rep2 = check_responses(str(g), str(DEFAULT_GOLDEN))
-    assert rep2["ok"] and rep2["n_rows"] == 50                     # BOM 이 첫 문항을 잃게 하지 않는다
+    assert rep2["ok"] and rep2["n_rows"] == n                      # BOM 이 첫 문항을 잃게 하지 않는다
 
 
 # ── D07: 안전 Gate 표는 한 곳 ──
@@ -356,7 +357,7 @@ def test_seed_conditions_worst_seed_and_matched_pairs(tmp_path, golden, items):
                                                                      ("student_kd@s43", "student_ft@s43")}
     with pytest.raises(ValueError, match="짝 비교"):
         resolve_pair("student_kd", "student_typo", list(out["models"]))
-    with pytest.raises(ValueError, match="Teacher"):
+    with pytest.raises(ValueError, match="비교 기준 모델"):
         finalize(run, teacher="teacher_typo")
 
 

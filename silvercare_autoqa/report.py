@@ -20,7 +20,7 @@ from typing import Any
 
 from .gates import EXTRA_CODES, FIX_HINT
 from .golden import ACTION_LABEL, TYPE_LABEL
-from .metrics import TARGETS, TEACHER_TARGETS
+from .metrics import RAG_TARGETS, REF_TARGETS, TARGETS
 from .rules import RULES
 from .verdict import GATES
 
@@ -47,7 +47,13 @@ _CODE_RE = re.compile(r"\[([a-z_]+)\] (.*)", re.S)
 _URGENCY_RE = re.compile(r"응급 문항인데 응답 행동\((.*)\)이 기대보다 덜 급함", re.S)
 # 고치는 방법이 일반 문구일 때 §6 표에 쓸 지적 종류 이름 (Gate·결정 룰 이름이 없을 때)
 _CAT_NAME = {"content": "금지답 위반(안전 Gate 아님)", "fact": "사실 확인 필요", "conclusion": "결론이 모범 답안과 다름",
-             "safety_must": "안전 필수답 빠짐", "format": "형식 문제"}
+             "safety_must": "안전 필수답 빠짐", "format": "형식 문제", "grounding": "출처·근거 문제"}
+# 근거 대조 지적 종류 이름 (verdict._grounding_findings 의 ref 'grounding:<종류>') — §6 표에서 종류마다 따로 묶는다
+_GROUNDING_NAME = {"contradicted": "근거 자료와 어긋남", "wrong_citation": "인용한 자료가 다른 내용",
+                   "example_as_evidence": "참고 사례를 사실 근거로 인용", "unsupported": "자료에 없는 수치·사실 단정",
+                   "fabricated": "자료가 없는데 지어내어 단정"}
+RAG_NOTE = ("RAG 지표는 출처를 돌려주는 시스템(온담)만 잰다. 목표는 팀 합의 전 잠정값이고 모델 판정에는 넣지 않는다. "
+            "출처 발췌가 잘린 회차는 '자료에 없음'을 결함으로 세지 않는다.")
 
 
 def _pct(r: dict | None) -> str:
@@ -166,7 +172,15 @@ def summary_tables(out: dict) -> list[tuple[str, list[str], list[list[str]], str
                  str(mm[m]["n_judged"]) + (f" (채점 오류·빠짐 {mm[m]['n_error']})" if mm[m]["n_error"] else ""),
                  f"{mm[m]['verdicts']['pass']} / {mm[m]['verdicts']['fix']} / {mm[m]['verdicts']['hold']}"]
              for m in models}
-    T.append(_model_table("1. 모델별 최종 판정", "지표", ["**최종 판정**", "판정된 문항", "Pass / Fix / Hold"], cells, MODEL_RULE))
+    names1 = ["**최종 판정**", "판정된 문항", "Pass / Fix / Hold"]
+    if any(mm[m].get("rag") for m in models):
+        names1.append("공통 기준 Pass / Fix / Hold")
+        for m in models:
+            vc = mm[m].get("verdicts_common") or mm[m]["verdicts"]
+            cells[m].append(f"{vc['pass']} / {vc['fix']} / {vc['hold']}")
+    T.append(_model_table("1. 모델별 최종 판정", "지표", names1, cells,
+                          MODEL_RULE + (" 공통 기준은 출처·인용 지적을 뺀 판정이다 — RAG 없는 시스템과 비교할 때 쓴다."
+                                        if len(names1) > 3 else "")))
     # Gate 표에는 건수만 — 문항 번호는 §6 에 모델별로 있다 (리뷰 P-10)
     cells = {m: [f"**{mm[m]['gate_counts'][g]}건**" if mm[m]["gate_counts"][g] else "0" for g in GATES] for m in models}
     T.append(_model_table("2. 안전 Gate — 0건이어야 한다", "Gate", [f"{g} {name}" for g, name in GATES.items()], cells,
@@ -180,6 +194,7 @@ def summary_tables(out: dict) -> list[tuple[str, list[str], list[list[str]], str
     for name in ("3문장 이내 비율", "존댓말 유지율", "과잉 경고율(일상 문항)"):
         rows.append([name, "참고"] + [_pct(mm[m]["extra"][name]) for m in models])
     T.append(("3. Scorecard — 목표치 (채점 결과가 있는 문항 기준)", ["지표", "목표"] + models, rows, ""))
+    T += _rag_tables(out)
     conds = out.get("conditions") or {}
     if conds:
         rows = []
@@ -190,30 +205,33 @@ def summary_tables(out: dict) -> list[tuple[str, list[str], list[list[str]], str
         T.append(("3-1. seed 반복 — 조건별 (가장 나쁜 seed 가 조건 판정)",
                   ["조건", "seed별 판정", "조건 판정", "Hold 난 seed", "Hold 문항 수", "Pass 문항 수", "필수 응답 준수율", "핵심 정보 보존율"],
                   rows, "가장 좋은 seed 하나만 보고하지 않는다. 평균 ± 표준편차 (최소~최대, seed 수)."))
-    if out.get("teacher_compare"):
-        tc = out["teacher_compare"]
-        rows = [[name, f"{tgt:.0%}"] + [f"{_target_mark(name, tc[m][name], TEACHER_TARGETS)} {_pct(tc[m][name])}" for m in tc]
-                for name, (tgt, _, _) in TEACHER_TARGETS.items()]
+    if out.get("reference_compare"):
+        tc = out["reference_compare"]
+        rows = [[name, f"{tgt:.0%}"] + [f"{_target_mark(name, tc[m][name], REF_TARGETS)} {_pct(tc[m][name])}" for m in tc]
+                for name, (tgt, _, _) in REF_TARGETS.items()]
         rows.append(["생성 조건", ""] + [("⚠ 다름: " + "; ".join(tc[m]["gen_diff"])) if tc[m].get("gen_diff") else "같음"
                                        for m in tc])
-        T.append((f"4. Teacher(`{out['teacher']}`) 대비 보존", ["지표", "목표"] + list(tc), rows,
-                  "채점 결과가 없는 문항은 분모에서 뺐다."))
-        tcond = out.get("teacher_conditions") or {}
+        T.append((f"4. 비교 모델(`{out['reference']}`) 대비", ["지표", "목표"] + list(tc), rows,
+                  "채점 결과가 없는 문항은 분모에서 뺐다. 비교 모델의 답과 행동·핵심 정보가 얼마나 같은지 본다."))
+        tcond = out.get("reference_conditions") or {}
         if tcond:
-            rows = [[cond] + [_ms(v[name], pct=True) for name in TEACHER_TARGETS] for cond, v in tcond.items()]
-            T.append(("4-1. Teacher 대비 — 조건별 seed 평균", ["조건"] + list(TEACHER_TARGETS), rows, ""))
+            rows = [[cond] + [_ms(v[name], pct=True) for name in REF_TARGETS] for cond, v in tcond.items()]
+            T.append(("4-1. 비교 모델 대비 — 조건별 seed 평균", ["조건"] + list(REF_TARGETS), rows, ""))
     else:                       # 절 번호가 비어 보이지 않게 제목은 남긴다 (리뷰 P-11)
-        T.append(("4. Teacher 대비", [], [], "이 회차에는 Teacher 비교가 없다 (`finalize --teacher <모델>` 로 켠다)."))
+        T.append(("4. 비교 모델 대비", [], [], "이 회차에는 비교 모델이 없다 (`finalize --reference <모델>` 로 켠다)."))
     if out.get("pairs"):
         rows = []
         for p in out["pairs"]:
             a, b = p["label_a"], p["label_b"]
             rows.append([f"{a} vs {b}", str(p["n_common"]), f"{a}만 {p['hold'][a + '만']} · {b}만 {p['hold'][b + '만']}",
                          f"{p['hold']['p_mcnemar']:.3f}", f"{a}만 {p['pass'][a + '만']} · {b}만 {p['pass'][b + '만']}",
-                         f"{p['pass']['p_mcnemar']:.3f}",
+                         f"{p['pass']['p_mcnemar']:.3f}", _diff_text(p.get("pass_diff")),
+                         "공통 기준" if p.get("basis") == "common" else "전체 판정",
                          ("⚠ 다름: " + "; ".join(p["gen_diff"])) if p.get("gen_diff") else "같음"])
-        T.append(("5. 짝 비교 (같은 문항)", ["짝", "공통 문항", "Hold", "p(McNemar)", "Pass", "p(McNemar)", "생성 조건"], rows,
-                  "생성 조건(입력 형식·디코딩)이 다르면 차이가 모델 때문인지 조건 때문인지 가릴 수 없다."))
+        T.append(("5. 짝 비교 (같은 문항)", ["짝", "공통 문항", "Hold", "p(McNemar)", "Pass", "p(McNemar)",
+                                          "Pass 비율 차이(앞−뒤)", "판정 기준", "생성 조건"], rows,
+                  "한쪽만 RAG 면 출처·인용 지적을 뺀 공통 기준 판정으로 비교한다. "
+                  "생성 조건이 다르면 차이가 모델 때문인지 조건 때문인지 가릴 수 없다."))
         if out.get("pair_groups"):
             rows = [[g["request"], str(g["summary"]["n_pairs"]), _ms(g["summary"]["hold_diff"]), _ms(g["summary"]["pass_diff"])]
                     for g in out["pair_groups"]]
@@ -232,6 +250,71 @@ def summary_tables(out: dict) -> list[tuple[str, list[str], list[list[str]], str
         ["읽는 법", "Pass 비율보다 안전 Gate 0건인지를 먼저 본다. 쉬운 말·길이는 판정에 넣지 않고 KPI 로만 본다"],
     ], ""))
     return T
+
+
+def _diff_text(d: dict | None) -> str:
+    if not d or d.get("diff") is None:
+        return "—"
+    lo, hi = d["ci95"]
+    return f"{d['diff'] * 100:+.1f}%p (95% 구간 {lo * 100:+.1f}~{hi * 100:+.1f})"
+
+
+def _rag_tables(out: dict) -> list[tuple]:
+    """RAG 지표·응답 시간·고객 질문 묶음별 표 (해당 자료가 있을 때만)."""
+    T = []
+    mm = out["models"]
+    rag_models = [m for m in mm if mm[m].get("rag")]
+    if rag_models:
+        rows = []
+        for name, (tgt, d, _) in RAG_TARGETS.items():
+            t = ("≤ " if d == "<=" else "") + f"{tgt:.0%}"
+            rows.append([name, f"{t} (잠정)"] + [f"{_rag_mark(mm[m]['rag'][name], tgt, d)} {_pct(mm[m]['rag'][name])}"
+                                                for m in rag_models])
+        rows.append(["본문 인용 비율", "참고"] + [_pct(mm[m]["rag"]["본문 인용 비율"]) for m in rag_models])
+        rows.append(["핵심 정보 검색 포함률", "참고"] + [_pct(mm[m]["rag"]["핵심 정보 검색 포함률"]) for m in rag_models])
+        rows.append(["근거 충실도 점수(1~5)", "참고"] + [_num(mm[m]["rag"]["근거 충실도 점수"]) for m in rag_models])
+        rows.append(["응급 고정 안내 비율(응급 문항)", "참고"] + [_pct(mm[m]["rag"]["응급 고정 안내 비율(응급 문항)"])
+                                                       for m in rag_models])
+        rows.append(["건강 질문인데 일상 대화로 답함", "0"] + [str(mm[m]["rag"].get("건강 질문인데 일상 대화로 답함", 0))
+                                                     for m in rag_models])
+        rows.append(["실패 원인(핵심 정보)", "참고"] + [", ".join(f"{k} {v}" for k, v in mm[m]["rag"]["실패 원인(핵심 정보)"].items())
+                                                 or "—" for m in rag_models])
+        rows.append(["자료 범위별 판정", "참고"] + [_cov_text(mm[m]["rag"]["by_coverage"]) for m in rag_models])
+        rows.append(["없는 번호 인용·사례 인용 답", "0"] + [f"{mm[m]['rag']['없는 번호 인용 답']} · {mm[m]['rag']['참고 사례 인용 답']}"
+                                                   for m in rag_models])
+        unknown = sorted({u for m in rag_models for u in mm[m]["rag"]["모르는 출처 묶음"]})
+        note = RAG_NOTE + (" ⚠ 묶음표(rag_sources.yaml)로 알아보지 못한 출처가 있다 — 표를 고친다." if unknown else "")
+        T.append(("3-2. RAG — 출처·인용·근거 대조", ["지표", "목표"] + rag_models, rows, note))
+    lat = {m: mm[m].get("latency") for m in mm if mm[m].get("latency")}
+    if lat:
+        rows = [[m, f"{v['median_ms'] / 1000:.1f}초", f"{v['p90_ms'] / 1000:.1f}초", f"{v['max_ms'] / 1000:.1f}초", str(v["n"])]
+                for m, v in lat.items()]
+        T.append(("3-3. 응답 시간", ["모델", "중앙값", "90%", "가장 느림", "답 수"], rows,
+                  "수집기가 잰 시간이다. 네트워크·기기 사양이 다르면 그대로 비교하지 않는다."))
+    groups = sorted({g for m in mm for g in (mm[m].get("by_group") or {})})
+    if groups:
+        rows = [[g] + [_vc_text((mm[m].get("by_group") or {}).get(g)) for m in mm] for g in groups]
+        T.append(("3-4. 고객 질문 묶음별 판정 (영양제)", ["묶음"] + list(mm), rows, "Pass / Fix / Hold 문항 수."))
+    return T
+
+
+def _rag_mark(r: dict, tgt: float, d: str) -> str:
+    if not r or r.get("value") is None:
+        return ""
+    ok = r["value"] <= tgt if d == "<=" else r["value"] >= tgt
+    return "✅" if ok else "⚠"
+
+
+def _vc_text(v: dict | None) -> str:
+    if not v:
+        return "—"
+    return f"{v.get('pass', 0)} / {v.get('fix', 0)} / {v.get('hold', 0)}"
+
+
+def _cov_text(by: dict) -> str:
+    order = ["covered", "partial", "none", "(표시 없음)"]
+    ko = {"covered": "자료 있음", "partial": "일부", "none": "자료 없음"}
+    return " · ".join(f"{ko.get(k, k)} {_vc_text(by[k])}" for k in order if k in by) or "—"
 
 
 def _md_table(head: list[str], rows: list[list[str]]) -> list[str]:
@@ -289,7 +372,10 @@ def _fix_of(f: dict, item: dict) -> tuple[str, str]:
         return fix, f"{gate} {GATES.get(gate, '')}"
     if f.get("ref") == "extra":
         return fix, ""
-    rule = RULES.get(f.get("ref") or "")
+    ref = f.get("ref") or ""
+    if ref.startswith("grounding:"):
+        return fix, _GROUNDING_NAME.get(ref.split(":", 1)[1], _CAT_NAME["grounding"])
+    rule = RULES.get(ref)
     return fix, (rule.name if rule else _CAT_NAME.get(f.get("cat") or "", "그 밖"))
 
 

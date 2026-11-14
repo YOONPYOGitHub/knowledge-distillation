@@ -1,0 +1,81 @@
+{
+ "run_format": 2,
+ "label": "처음 보는 응급 발화 45개",
+ "created": "2026-11-14 17:15:42",
+ "golden_path": "golden.yaml",
+ "golden_source": "(임시) heldout_golden.yaml — 골든셋 v0.4 기준표를 처음 보는 응급 발화 45개에 복사",
+ "allow_partial": false,
+ "allow_flagged": false,
+ "missing_items": {},
+ "response_check": {
+  "problems": [],
+  "warnings": [],
+  "prompt_formats": {
+   "guardrail": [
+    "ondam-api"
+   ]
+  }
+ },
+ "golden_version": "v0.4-draft-20261114+heldout45",
+ "golden_review_status": "draft (전문가 검수 전)",
+ "golden_sha256": "6f0a67a5fb25781a95fc4bf5e73b4f7697f531fb2b1969c5cad10f7a09490d0d",
+ "judge_model": "claude-sonnet-5-5",
+ "judge_effort": "high",
+ "fingerprint": "c0d6e3bc4a0d4bf6",
+ "judging_fp": "a584e55ce6854398",
+ "scoring_fp": "29e1b7b621afbc1e",
+ "fingerprint_parts": {
+  "guardrails.yaml": "144f9468461b7e89f05c33daf825d21211f58a07fb270fa84b52ccfa4a880bb3",
+  "plain_language.yaml": "ab7acff6f3c82888e0b77bbecb67451e540dc0bc96080808e7757b6dc014c26d",
+  "rag_sources.yaml": "8acab32db0f72cc69cff6067054d51c9550e17596530a11a10168527c8ea8eb0",
+  "gates.py": "3e5edf3a85cab327c670df6869bc7045c0caadb45b12ca120cf168b59741a840",
+  "golden.py": "21ab7b9f621e4973540da8027790d2f65f978e7d9e38e42289cd34e7f8b5a87e",
+  "judge.py": "f8776b67071c8625fc75e6696254766b4097f60e06141d60da594cffe3a1c813",
+  "metrics.py": "ac0d7080bee802d804549751cc18ba63fa39b04d96f1f834f80f44392e73b537",
+  "pipeline.py": "7ebfafd3de1ff4de63ea0e500095787bd301413c0df8e962a68aa3be8c470e19",
+  "prompts.py": "334a1c8ac883070df9d2400b9757890e40a650884ad34d256e211222de2d2719",
+  "rag.py": "584ea48d8b5bd8bbb77a2446e48b2d55f754cd93b5d9ff39c8b72e55b44b9086",
+  "rules.py": "a1dfb791f4dd10b8add161aaabd778f98b569e3d801c33d019f14760045c5957",
+  "textutil.py": "ef23fb8a464c661f6cf1050690de2e073150a0b15e06db6b16be1cadeb9178cc",
+  "verdict.py": "c0e2adbcf8e1b28a4062779fc4dfd4d72feba7919544829c5ca2bb6139fbb480",
+  "golden": "6f0a67a5fb25781a95fc4bf5e73b4f7697f531fb2b1969c5cad10f7a09490d0d",
+  "judge": "7e90d49ca26fcabc3d8dab2be0adfaec4734e3e6be7ef1773c619afd1a656e8c"
+ },
+ "models": [
+  "guardrail"
+ ],
+ "n_cases": 45,
+ "rag_models": [
+  "guardrail"
+ ],
+ "n_judge_packets": 45,
+ "stage_fingerprints": {
+  "judge": {
+   "fingerprint": "c0d6e3bc4a0d4bf6",
+   "judging": "a584e55ce6854398",
+   "scoring": "29e1b7b621afbc1e"
+  },
+  "import": {
+   "fingerprint": "c0d6e3bc4a0d4bf6",
+   "judging": "a584e55ce6854398",
+   "scoring": "29e1b7b621afbc1e"
+  },
+  "verify": {
+   "fingerprint": "c0d6e3bc4a0d4bf6",
+   "judging": "a584e55ce6854398",
+   "scoring": "29e1b7b621afbc1e"
+  },
+  "finalize": {
+   "fingerprint": "c0d6e3bc4a0d4bf6",
+   "judging": "a584e55ce6854398",
+   "scoring": "29e1b7b621afbc1e"
+  }
+ },
+ "import_stats": {
+  "ok": 45,
+  "error": 0,
+  "missing": 0,
+  "skipped_format": 0,
+  "verify_packets": 12
+ }
+}

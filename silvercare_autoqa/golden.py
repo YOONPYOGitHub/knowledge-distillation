@@ -2,6 +2,8 @@
 
 골든셋 한 문항 = 어르신 발화 + 기대 행동 + 필수답(must_include) + 금지답(must_not) + 핵심 정보(key_facts)
 + 모범 답안 + 출처. 필드 정의와 판정 연결은 docs/autoqa/GOLDEN_DATA_CARD.md 가 정본이다.
+v0.4(2026-11-14, RAG 전환)부터 문항마다 rag(팀 RAG 자료에 근거가 있는지·검색되면 좋은 자료 묶음·핵심어)를 붙이고,
+고객이 많이 묻는 영양제 질문(customer_q 12묶음)과 돌봄·복지 문항을 더했다.
 """
 
 from __future__ import annotations
@@ -17,8 +19,8 @@ from . import gates
 DATA_DIR = Path(__file__).resolve().parent / "data"
 DEFAULT_GOLDEN = DATA_DIR / "golden" / "silvercare_golden_v0.yaml"
 
-# 질문 유형 (1학기 평가계획 질문셋 6유형 + 말동무)
-TYPES = ("emergency", "medication", "chronic", "symptom", "prevention", "boundary", "companion")
+# 질문 유형 (1학기 평가계획 질문셋 6유형 + 말동무 + RAG 전환 뒤 영양제·돌봄 복지)
+TYPES = ("emergency", "medication", "chronic", "symptom", "prevention", "boundary", "companion", "supplement", "welfare")
 TYPE_LABEL = {
     "emergency": "응급·악화 신호",
     "medication": "약 복용·상호작용",
@@ -27,7 +29,18 @@ TYPE_LABEL = {
     "prevention": "생활·예방",
     "boundary": "진단·처방 요구·개인정보",
     "companion": "말동무·정서",
+    "supplement": "건강기능식품·영양제",
+    "welfare": "돌봄·복지 서비스",
 }
+# 고객이 영양제에 대해 많이 묻는 질문 12묶음 (2026-11-14 사용자 조사)
+CUSTOMER_GROUPS = {
+    1: "나이·몸에 맞는 추천", 2: "고민별 성분 찾기", 3: "먹는 약과 같이 먹어도 되나", 4: "여러 개를 같이 먹어도 되나",
+    5: "언제·어떻게 먹나", 6: "효과가 진짜인가", 7: "성분표 읽기·제품 비교", 8: "검진 결과를 들고 묻기",
+    9: "먹고 나서 이상해요", 10: "음식으로 대신하기", 11: "가족 대신 고르기", 12: "어디서·얼마에 사나",
+}
+# rag.coverage — 팀 RAG 지식 자료에 이 문항 답의 근거가 있는가 (작성자가 자료를 찾아보고 정함, corpus-coverage 로 다시 잼)
+COVERAGES = ("covered", "partial", "none")
+COVERAGE_LABEL = {"covered": "자료 있음", "partial": "일부만", "none": "자료 없음"}
 RISKS = ("emergency", "urgent", "routine")
 RISK_LABEL = {"emergency": "지금 바로 119·응급실", "urgent": "오늘~며칠 안 진료", "routine": "일상 관리"}
 
@@ -160,6 +173,7 @@ def validate_golden(golden: dict[str, Any]) -> list[str]:
                 errors.append(f"{iid}: 응급 문항에 tier1 escalation 필수답이 없음")
             if ACTIONS.get(it.get("expected_action"), 0) < 3:
                 errors.append(f"{iid}: 응급 문항의 기대 행동 긴급도가 낮음")
+        _check_rag_fields(iid, it, errors)
         ai = it.get("aihub")
         if ai is not None:
             if ai.get("disease_category") not in AIHUB_CATEGORIES:
@@ -167,6 +181,32 @@ def validate_golden(golden: dict[str, Any]) -> list[str]:
             if ai.get("intention") not in AIHUB_INTENTIONS:
                 errors.append(f"{iid}: aihub.intention '{ai.get('intention')}' 가 AI Hub 의도 목록에 없음")
     return errors
+
+
+def _check_rag_fields(iid: str, it: dict, errors: list[str]) -> None:
+    """v0.4 칸 — rag·customer_q·review_note. rag 는 예전 골든셋 호환을 위해 없어도 되지만 있으면 형식을 본다."""
+    from .rag import unknown_expect     # rag.py 가 golden 의 DATA_DIR 을 쓰므로 함수 안에서 불러 순환을 피한다
+
+    rg = it.get("rag")
+    if rg is not None:
+        if not isinstance(rg, dict):
+            errors.append(f"{iid}: rag 는 사전이어야 함")
+        else:
+            if rg.get("coverage") not in COVERAGES:
+                errors.append(f"{iid}: rag.coverage '{rg.get('coverage')}' 는 {COVERAGES} 중 하나")
+            bad = unknown_expect(rg.get("expect"))
+            if bad:
+                errors.append(f"{iid}: rag.expect 의 {bad} 가 자료 묶음표(rag_sources.yaml)에 없음")
+            if not isinstance(rg.get("expect", []), list) or not isinstance(rg.get("terms", []), list):
+                errors.append(f"{iid}: rag.expect·rag.terms 는 목록")
+    cq = it.get("customer_q")
+    if it.get("type") == "supplement":
+        if not isinstance(cq, dict) or cq.get("group") not in CUSTOMER_GROUPS:
+            errors.append(f"{iid}: 영양제 문항은 customer_q.group(1~12)이 있어야 함")
+        elif cq.get("label") != CUSTOMER_GROUPS[cq["group"]]:
+            errors.append(f"{iid}: customer_q.label 은 '{CUSTOMER_GROUPS[cq['group']]}' 이어야 함")
+    if "review_note" in it and not isinstance(it.get("review_note"), str):
+        errors.append(f"{iid}: review_note 는 문자열")
 
 
 def tier1_escalations(item: dict) -> list[dict]:
@@ -184,6 +224,10 @@ def summary(golden: dict[str, Any]) -> dict[str, Any]:
         "by_risk": dict(Counter(it["risk"] for it in items)),
         "by_variant": dict(Counter(it.get("variant", "표준어") for it in items)),
         "by_aihub_category": dict(Counter((it.get("aihub") or {}).get("disease_category", "(해당 없음)") for it in items)),
+        "by_customer_group": dict(Counter((it.get("customer_q") or {}).get("group") for it in items
+                                          if (it.get("customer_q") or {}).get("group"))),
+        "by_rag_coverage": dict(Counter((it.get("rag") or {}).get("coverage", "(표시 없음)") for it in items)),
+        "n_review_notes": sum(1 for it in items if str(it.get("review_note") or "").strip()),
         "study_set": [it["id"] for it in items if it.get("study_set")],
         "n_must_include": sum(len(it["must_include"]) for it in items),
         "n_must_not": sum(len(it["must_not"]) for it in items),

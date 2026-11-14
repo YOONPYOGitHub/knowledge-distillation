@@ -3,7 +3,7 @@
 run 폴더 구성 (회차 형식 2 — 2026-11-08 코드 감사 반영)
   meta.json                 회차 정보·평가기준 지문(prep)·단계별 다시 잰 지문
   golden.yaml               prep 때 쓴 골든셋 사본 — 다른 PC 로 옮기거나 골든셋 v1 이 나온 뒤에도 같은 기준으로 연다
-  cases.jsonl               케이스(모델 × 문항) — 응답 원문·응답 해시·결정 룰 결과 (import 가 채점 결과를 덧붙임)
+  cases.jsonl               케이스(모델 × 문항) — 응답 원문·응답 해시·결정 룰 결과·RAG 출처 (import 가 채점 결과를 덧붙임)
   packets/judge/*.json      채점 요청. packet_id = 지문 + 모델·문항 + 응답 해시 → 답이 바뀌면 다른 요청이 된다
   results/judge/*.json      채점 결과 (claude-cli 또는 외부 실행기가 채움)
   packets/verify/*.json     반박 검증 요청. packet_id = 케이스 + 반박할 지적 내용의 해시 → 채점이 바뀌면 다른 요청이 된다
@@ -31,10 +31,11 @@ from .golden import load_golden, validate_golden
 from .judge import (DEFAULT_EFFORT, DEFAULT_MODEL, judge_validator_factory, validate_judgment, validate_verify,
                     verify_validator_factory)
 from .metrics import (condition_of, condition_summary, model_metrics, pair_condition_summary, paired_compare,
-                      resolve_pair, run_validity, teacher_compare, _mean_sd, TEACHER_TARGETS)
+                      reference_compare, resolve_pair, run_validity, _mean_sd, REF_TARGETS)
+from .rag import normalize_rag, rag_view as make_rag_view
 from .prompts import JUDGE_SYSTEM, VERIFY_SYSTEM, build_judge_user, build_verify_user, judge_schema, verify_schema
 from .rules import det_checks, needs_judge
-from .verdict import build_findings, no_downgrade_fids, verdict_of
+from .verdict import build_findings, conditional_escalation_fids, no_downgrade_fids, verdict_of
 
 RUN_FORMAT = 2
 OUTPUTS = ("scored.jsonl", "metrics.json", "report.md", "report.html", "defects.csv")
@@ -61,7 +62,8 @@ def _read_json(path: Path) -> Any:
 
 
 def load_responses(path: str | Path) -> list[dict]:
-    """응답 JSONL: 한 줄 = {"model": "student_kd", "item_id": "SC-E01", "response": "...", "meta": {...}}
+    """응답 JSONL: 한 줄 = {"model": "ondam_local", "item_id": "SC-E01", "response": "...", "meta": {...}, "rag": {...}}
+    rag 는 선택 — 온담처럼 출처를 돌려주는 시스템만 (rag.py 머리말). 없으면 RAG 없는 모델로 채점한다.
     깨진 줄·필드 빠진 줄이 있으면 멈춘다 (BOM·cp949 로 저장된 파일도 읽는다)."""
     from .tools import read_jsonl_rows
 
@@ -157,21 +159,26 @@ def prep(golden_path: str | Path, responses: list[dict], run_dir: str | Path, *,
                          "\n(문항이 일부러 빠진 변이 시험은 --allow-partial, 빈 답·섞인 답을 일부러 넣을 때는 --allow-flagged)")
     fp = fp_mod.compute(golden_path, judge_model, judge_effort)
     items = golden["by_id"]
-    schema = judge_schema()
     cases, packets = [], []
     for r in responses:
         key = f"{r['model']}|{r['item_id']}|{r.get('sample', 0)}"
-        rsha = hashlib.sha256(str(r["response"]).encode("utf-8")).hexdigest()[:16]
+        rag = normalize_rag(r.get("rag"))
+        view = make_rag_view(rag)
+        # 응답 해시에 출처도 넣는다 — 같은 답이라도 근거 자료가 바뀌면 다른 채점 요청이 된다
+        body = str(r["response"]) + ("\n" + json.dumps(view, ensure_ascii=False, sort_keys=True) if view else "")
+        rsha = hashlib.sha256(body.encode("utf-8")).hexdigest()[:16]
         pid = hashlib.sha256((fp["fingerprint"] + key + "|" + rsha).encode()).hexdigest()[:12]
         item = items[r["item_id"]]
-        det = det_checks(item, r["response"]).to_dict()
+        det = det_checks(item, r["response"], rag=rag).to_dict()
         case = {"pid": pid, "key": key, "model": r["model"], "item_id": r["item_id"], "response": r["response"],
-                "response_sha": rsha, "meta": r.get("meta") or {}, "det": det, "judged": needs_judge(det)}
+                "response_sha": rsha, "meta": r.get("meta") or {}, "det": det, "judged": needs_judge(det),
+                "rag": rag, "rag_view": view}
         cases.append(case)
         if case["judged"]:
             hyb = [h for h in det["hits"] if h["kind"] == "hybrid"]
             packets.append((pid, {"packet_id": pid, "kind": "judge", "system_file": "JUDGE_SYSTEM.txt",
-                                  "user": build_judge_user(pid, item, r["response"], hyb, golden["sources"]), "schema": schema}))
+                                  "user": build_judge_user(pid, item, r["response"], hyb, golden["sources"], view),
+                                  "schema": judge_schema(grounding=view is not None)}))
     (run / "packets" / "judge").mkdir(parents=True, exist_ok=True)
     (run / "results" / "judge").mkdir(parents=True, exist_ok=True)
     shutil.copyfile(golden_path, run / "golden.yaml")
@@ -190,6 +197,7 @@ def prep(golden_path: str | Path, responses: list[dict], run_dir: str | Path, *,
             "fingerprint": fp["fingerprint"], "judging_fp": fp["judging"], "scoring_fp": fp["scoring"],
             "fingerprint_parts": fp["parts"],
             "models": sorted({c["model"] for c in cases}), "n_cases": len(cases),
+            "rag_models": sorted({c["model"] for c in cases if c.get("rag")}),
             "n_judge_packets": len(packets)}
     _atomic_write(run / "meta.json", json.dumps(meta, ensure_ascii=False, indent=1))
     return meta
@@ -237,7 +245,7 @@ def import_judge(run_dir: str | Path, *, rescore: bool = False) -> dict:
             continue
         item = items[c["item_id"]]
         hids = [h["hid"] for h in c["det"]["hits"] if h["kind"] == "hybrid"]
-        errs = validate_judgment(obj, c["pid"], item, c["response"], hids)
+        errs = validate_judgment(obj, c["pid"], item, c["response"], hids, c.get("rag_view"))
         if errs:
             c["judge_errors"] = errs
             stats["error"] += 1
@@ -250,8 +258,10 @@ def import_judge(run_dir: str | Path, *, rescore: bool = False) -> dict:
             nd = no_downgrade_fids(item, need)
             hyb = [h for h in c["det"]["hits"] if h["kind"] == "hybrid"]
             pk = {"packet_id": vid, "case_pid": c["pid"], "kind": "verify", "system_file": "VERIFY_SYSTEM.txt",
-                  "user": build_verify_user(vid, item, c["response"], need, nd, hyb, golden["sources"]), "schema": vschema,
-                  "fids": [f["fid"] for f in need], "fid_gates": {f["fid"]: f["gate"] for f in need}, "no_downgrade": nd}
+                  "user": build_verify_user(vid, item, c["response"], need, nd, hyb, golden["sources"], c.get("rag_view")),
+                  "schema": vschema,
+                  "fids": [f["fid"] for f in need], "fid_gates": {f["fid"]: f["gate"] for f in need}, "no_downgrade": nd,
+                  "conditional_ok": conditional_escalation_fids(item, need)}
             (vdir / f"{vid}.json").write_text(json.dumps(pk, ensure_ascii=False, indent=1), encoding="utf-8")
             c["verify_id"] = vid
             stats["verify_packets"] += 1
@@ -276,15 +286,17 @@ def _legacy_verify_path(run: Path, c: dict, fids: list[str], fid_gates: dict) ->
     return None
 
 
-def finalize(run_dir: str | Path, *, teacher: str | None = None, pairs: list[tuple[str, str]] | None = None,
-             rescore: bool = False) -> dict:
+def finalize(run_dir: str | Path, *, reference: str | None = None, teacher: str | None = None,
+             pairs: list[tuple[str, str]] | None = None, rescore: bool = False) -> dict:
+    """판정·지표·리포트. reference: 비교 기준 모델(상용 LLM 등 — 지식증류 때의 teacher 와 같은 자리)."""
     run = Path(run_dir)
+    teacher = reference or teacher
     meta, cases, golden, items = _load(run)
     check_criteria(run, meta, "finalize", rescore)
     models = sorted({c["model"] for c in cases})
     # 이름이 틀린 Teacher·짝 비교가 말없이 빠지지 않게 먼저 확인한다 (감사 D18)
     if teacher and teacher not in models:
-        raise ValueError(f"Teacher '{teacher}' 가 회차에 없음 — 회차의 모델: {models}")
+        raise ValueError(f"비교 기준 모델 '{teacher}' 가 회차에 없음 — 회차의 모델: {models}")
     pair_reqs = [(a, b, resolve_pair(a, b, models)) for a, b in (pairs or [])]
     for name in OUTPUTS:            # 중간에 멈추면 예전 리포트가 '정상'처럼 남지 않게 먼저 지운다 (감사 R03)
         (run / name).unlink(missing_ok=True)
@@ -300,6 +312,7 @@ def finalize(run_dir: str | Path, *, teacher: str | None = None, pairs: list[tup
             fids = [f["fid"] for f in need_f]
             fg = {f["fid"]: f["gate"] for f in need_f}
             nd = no_downgrade_fids(item, need_f)
+            cok = conditional_escalation_fids(item, need_f)
             vid = verify_key(c["pid"], need_f)
             vr, case_id = run / "results" / "verify" / f"{vid}.json", vid
             if not vr.exists() and legacy:
@@ -309,7 +322,7 @@ def finalize(run_dir: str | Path, *, teacher: str | None = None, pairs: list[tup
             if vr.exists():
                 try:
                     obj = _read_json(vr)
-                    verr = validate_verify(obj, case_id, fids, c["response"], fg, nd)
+                    verr = validate_verify(obj, case_id, fids, c["response"], fg, nd, cok)
                 except (json.JSONDecodeError, UnicodeDecodeError) as e:      # 깨진 파일 하나로 회차 전체가 멈추지 않게 (감사 D14)
                     obj, verr = None, [f"JSON 해석 실패: {e}"]
                 if verr:
@@ -334,16 +347,16 @@ def finalize(run_dir: str | Path, *, teacher: str | None = None, pairs: list[tup
         out["models"][m] = model_metrics(cs, items)
     out["conditions"] = condition_summary(out["models"])
     if teacher:
-        out["teacher"] = teacher
-        out["teacher_compare"] = {m: teacher_compare(cs, by_model[teacher], items)
-                                  for m, cs in by_model.items() if m != teacher}
+        out["reference"] = teacher
+        out["reference_compare"] = {m: reference_compare(cs, by_model[teacher], items)
+                                    for m, cs in by_model.items() if m != teacher}
         tcond = {}
         for cond, info in out["conditions"].items():
-            reps = [m for m in info["replicates"] if m in out["teacher_compare"]]
+            reps = [m for m in info["replicates"] if m in out["reference_compare"]]
             if len(reps) >= 2:
-                tcond[cond] = {name: _mean_sd([out["teacher_compare"][m][name]["value"] for m in reps])
-                               for name in TEACHER_TARGETS}
-        out["teacher_conditions"] = tcond
+                tcond[cond] = {name: _mean_sd([out["reference_compare"][m][name]["value"] for m in reps])
+                               for name in REF_TARGETS}
+        out["reference_conditions"] = tcond
     out["pairs"], out["pair_groups"] = [], []
     for a, b, resolved in pair_reqs:
         group = [paired_compare(by_model[x], by_model[y], x, y) for x, y in resolved]
@@ -358,7 +371,7 @@ def finalize(run_dir: str | Path, *, teacher: str | None = None, pairs: list[tup
         out["models"][m]["gen_conditions"] = gens[m]
     for p in out["pairs"]:
         p["gen_diff"] = gen_diff(gens[p["label_a"]], gens[p["label_b"]])
-    for m, tc in (out.get("teacher_compare") or {}).items():
+    for m, tc in (out.get("reference_compare") or {}).items():
         tc["gen_diff"] = gen_diff(gens[m], gens[teacher])
     out["validity"] = run_validity(cases, vstats)
     _save_meta(run, meta)
@@ -386,7 +399,8 @@ def cli_judge(run_dir: str | Path, *, workers: int = 3, claude_bin: str | None =
     for p in (run / "packets" / "verify").glob("*.json"):
         pk = _read_json(p)
         vindex[pk["packet_id"]] = {"fids": pk["fids"], "fid_gates": pk.get("fid_gates") or {},
-                                   "no_downgrade": pk.get("no_downgrade") or [], "case_pid": pk.get("case_pid") or pk["packet_id"]}
+                                   "no_downgrade": pk.get("no_downgrade") or [], "conditional_ok": pk.get("conditional_ok") or [],
+                                   "case_pid": pk.get("case_pid") or pk["packet_id"]}
     return run_packets_with_cli(run / "packets" / "verify", run / "results" / "verify",
                                 verify_validator_factory(vindex, by_pid), known=set(vindex), model=model, effort=effort,
                                 workers=workers, claude_bin=claude_bin)

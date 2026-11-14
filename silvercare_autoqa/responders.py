@@ -1,7 +1,12 @@
 """응답 생성기 — 골든셋 발화를 모델에 넣고 응답 JSONL 을 만든다. 채점과 분리해 응답을 먼저 동결한다.
 
+RAG 전환(2026-11-14) 뒤 주로 쓰는 것
+- ondam     : 온담 앱 POST /api/chat — 답과 출처(sources)를 함께 받는다. 앱 뒤의 모델이 Azure 든 로컬(Qwen·Kanana·Ollama)이든 같다
+- openai-api: OpenAI 공식 API (ChatGPT luna 6.1 같은 상용 비교 모델). 키는 환경변수 OPENAI_API_KEY
+- sheet     : ChatGPT 앱에서 손으로 받은 답을 채운 CSV (sheet-template 으로 빈 서식을 만든다)
+- openai    : Ollama·llama.cpp·vLLM 같은 OpenAI 호환 서버 — 검색 없이 같은 로컬 모델에 바로 묻기(RAG 효과 비교)
+지식증류 때 쓰던 것 (보관)
 - kd-ui  : 팀 UI 백엔드 POST /generate/batch (teacher_ft / student_kd / student_ft / student_base 한 번에)
-- openai : llama.cpp server · vLLM 같은 OpenAI 호환 /v1/chat/completions (양자화 GGUF 실측용)
 - claude : 이 PC 의 Claude Code (Teacher 대용 기준 응답을 만들 때)
 """
 
@@ -91,7 +96,8 @@ def kd_ui(items: Iterable[dict], base_url: str, run_id: str, model_ids: list[str
 
 
 def openai_compat(items: Iterable[dict], base_url: str, model: str, label: str, *, max_tokens: int = 160,
-                  temperature: float = 0.0, api_key: str = "none", timeout: int = 300, mode: str = "chat") -> list[dict]:
+                  temperature: float = 0.0, api_key: str = "none", timeout: int = 300, mode: str = "chat",
+                  no_think: bool = False) -> list[dict]:
     """llama.cpp server · vLLM 같은 OpenAI 호환 서버 (양자화 GGUF 실측용).
     mode="chat": /v1/chat/completions — 서버가 모델의 chat template 을 쓴다 (대화형 모델).
     mode="raw" : /v1/completions 에 팀 UI 백엔드와 같은 raw prompt — base 모델의 양자화 전후를 같은 입력 형식으로 비교할 때.
@@ -112,7 +118,7 @@ def openai_compat(items: Iterable[dict], base_url: str, model: str, label: str, 
         else:
             url = base_url.rstrip("/") + "/v1/chat/completions"
             body = {"model": model, "messages": [{"role": "system", "content": APP_SYSTEM},
-                                                 {"role": "user", "content": user_turn(it)}],
+                                                 {"role": "user", "content": user_turn(it) + (" /no_think" if no_think else "")}],
                     "max_tokens": max_tokens, "temperature": temperature}
             extras = {"repeat_penalty": rep, "repetition_penalty": rep, "chat_template_kwargs": {"enable_thinking": False}}
         r = requests.post(url, json={**body, **extras} if extras_ok else body, timeout=timeout, headers=headers)
@@ -128,7 +134,7 @@ def openai_compat(items: Iterable[dict], base_url: str, model: str, label: str, 
                      "meta": {"source": "openai", "prompt_format": "raw" if mode == "raw" else "server_chat_template",
                               "system_sha": SYSTEM_SHA, "temperature": temperature, "max_new_tokens": max_tokens,
                               "repetition_penalty": rep if extras_ok else None,
-                              "thinking_off_sent": mode != "raw" and extras_ok,
+                              "thinking_off_sent": mode != "raw" and extras_ok, "no_think_tag": no_think,
                               "model": model, "elapsed_ms": (time.time() - t0) * 1000}})
     return rows
 
@@ -221,3 +227,165 @@ def reference_rows(golden: dict, label: str = "reference") -> list[dict]:
 
 def write_jsonl(rows: list[dict], path: str | Path) -> None:
     Path(path).write_text("".join(json.dumps(r, ensure_ascii=False) + "\n" for r in rows), encoding="utf-8")
+
+
+# ───────────────────────────── RAG 전환 뒤 수집기 ─────────────────────────────
+
+def ondam_api(items: Iterable[dict], base_url: str, label: str, *, timeout: int = 150, pause: float = 0.5,
+              retries: int = 2, log=print) -> list[dict]:
+    """온담 앱 POST /api/chat 으로 답과 출처를 받는다 (한 문항씩, 대화 이력 없이).
+
+    - 앱 뒤의 생성 모델(Azure·로컬 LLM)이 바뀌어도 받는 방법은 같다. 어떤 모델이었는지는 --label 과 기록으로 남긴다.
+    - 422(제공자 안전 거절 등)는 어르신 화면에 뜨는 안내 문구를 답으로 남기고 meta.refusal 에 표시한다.
+    - 그 밖의 서버 오류는 다시 시도하고, 끝내 실패하면 멈춘다 (서버 문제를 빈 답으로 채점하지 않는다 — 감사 A04).
+    - 서비스에 부담을 주지 않게 요청 사이에 pause 초를 쉰다.
+    """
+    import requests
+
+    url = base_url.rstrip("/") + "/api/chat"
+    rows = []
+    items = list(items)
+    for k, it in enumerate(items, 1):
+        body = {"message": user_turn(it), "history": []}
+        last = ""
+        for attempt in range(retries + 1):
+            t0 = time.time()
+            try:
+                r = requests.post(url, json=body, timeout=timeout, headers={"User-Agent": "silvercare-autoqa"})
+            except requests.RequestException as e:
+                last = f"연결 실패: {e}"
+                time.sleep(2 + 2 * attempt)
+                continue
+            elapsed = (time.time() - t0) * 1000
+            if r.status_code == 200:
+                data = r.json()
+                answer = data.get("answer")
+                if not isinstance(answer, str):
+                    raise RuntimeError(f"{it['id']}: 응답에 answer 가 없음 — API 형식이 바뀌었는지 확인")
+                rag = {"mode": data.get("mode"), "sources": data.get("sources") or [],
+                       "health_topics": data.get("health_topics") or []}
+                if isinstance(data.get("contexts"), list):          # 평가용으로 전체 문맥을 주면 함께 받는다
+                    rag["contexts"] = data["contexts"]
+                    rag["contexts_complete"] = True
+                rows.append({"model": label, "item_id": it["id"], "response": answer.strip(), "rag": rag,
+                             "meta": {"source": "ondam-api", "base_url": base_url, "prompt_format": "ondam-api",
+                                      "message": body["message"], "mode": data.get("mode"), "elapsed_ms": round(elapsed, 1),
+                                      "medical_caution": bool(data.get("medical_caution")),
+                                      "display_notice": data.get("display_notice") or ""}})
+                break
+            if r.status_code == 422:
+                try:
+                    detail = r.json().get("detail")
+                except ValueError:
+                    detail = None
+                text = detail if isinstance(detail, str) else json.dumps(detail, ensure_ascii=False)[:300]
+                rows.append({"model": label, "item_id": it["id"], "response": text or "",
+                             "rag": {"mode": "refusal", "sources": []},
+                             "meta": {"source": "ondam-api", "base_url": base_url, "prompt_format": "ondam-api",
+                                      "message": body["message"], "mode": "refusal", "refusal": "http_422",
+                                      "elapsed_ms": round(elapsed, 1)}})
+                break
+            last = f"HTTP {r.status_code}: {r.text[:120]}"
+            time.sleep(2 + 2 * attempt)
+        else:
+            raise RuntimeError(f"{it['id']}: 온담 API 실패 — {last} (서비스 상태를 확인하고 다시 실행)")
+        if k % 10 == 0 or k == len(items):
+            log(f"  온담 {k}/{len(items)}")
+        time.sleep(pause)
+    return rows
+
+
+def openai_api(items: Iterable[dict], model: str, label: str, *, system: str = "app",
+               base_url: str = "https://api.openai.com/v1", api_key_env: str = "OPENAI_API_KEY",
+               max_output_tokens: int | None = None, reasoning_effort: str | None = None, timeout: int = 300,
+               log=print) -> list[dict]:
+    """OpenAI 공식 API 로 상용 비교 모델의 답을 받는다 (예: ChatGPT luna 6.1 — 정확한 모델 이름은 계정에서 확인).
+
+    - system="app": 온담과 같은 어르신 응답 지시문(app_system_prompt.txt)을 준다 — 같은 지시로 비교(기본).
+      system="none": 지시문 없이 묻는다 — 어르신이 ChatGPT 에 그냥 물었을 때와 비교.
+    - 온도·추론 길이는 모델 기본값을 쓴다 (새 모델은 temperature 를 못 바꾸는 경우가 있다). 바꾼 값은 기록에 남는다.
+    - 키는 환경변수에서만 읽고 기록하지 않는다.
+    """
+    import os
+
+    import requests
+
+    key = os.environ.get(api_key_env)
+    if not key:
+        raise SystemExit(f"환경변수 {api_key_env} 가 없음 — OpenAI API 키를 이 PC 환경변수에 넣고 다시 실행 "
+                         "(키가 없으면 sheet-template 으로 ChatGPT 앱 답을 손으로 받는다)")
+    if system not in ("app", "none"):
+        raise ValueError("system 은 app 또는 none")
+    rows = []
+    items = list(items)
+    for k, it in enumerate(items, 1):
+        msgs = ([{"role": "system", "content": APP_SYSTEM}] if system == "app" else []) + \
+            [{"role": "user", "content": user_turn(it)}]
+        body: dict = {"model": model, "messages": msgs}
+        if max_output_tokens:
+            body["max_completion_tokens"] = max_output_tokens
+        if reasoning_effort:
+            body["reasoning_effort"] = reasoning_effort
+        t0 = time.time()
+        r = requests.post(base_url.rstrip("/") + "/chat/completions", json=body, timeout=timeout,
+                          headers={"Authorization": f"Bearer {key}"})
+        if r.status_code != 200:
+            raise RuntimeError(f"{it['id']}: OpenAI API HTTP {r.status_code} — {r.text[:200]}")
+        data = r.json()
+        ch = data["choices"][0]
+        text = (ch.get("message") or {}).get("content")
+        if text is None:
+            raise RuntimeError(f"{it['id']}: content 없이 답함 (거절·도구 호출?) — 빈 답으로 채점하지 않음")
+        rows.append({"model": label, "item_id": it["id"], "response": text.strip(),
+                     "meta": {"source": "openai-api", "model": data.get("model") or model, "requested_model": model,
+                              "message": user_turn(it),
+                              "prompt_format": f"openai-chat:{system}",
+                              "system_sha": SYSTEM_SHA if system == "app" else None,
+                              "max_new_tokens": max_output_tokens, "reasoning_effort": reasoning_effort,
+                              "finish_reason": ch.get("finish_reason"), "usage": data.get("usage"),
+                              "collected_at": time.strftime("%Y-%m-%d"),
+                              "elapsed_ms": round((time.time() - t0) * 1000, 1)}})
+        if k % 10 == 0 or k == len(items):
+            log(f"  {label} {k}/{len(items)}")
+    return rows
+
+
+SHEET_HEAD = ["item_id", "질문", "답", "메모"]
+
+
+def sheet_template(items: Iterable[dict], path: str | Path) -> int:
+    """손으로 답을 받을 빈 서식 (CSV, 엑셀에서 열림). '질문' 칸을 그대로 붙여 넣고 받은 답을 '답' 칸에 붙인다."""
+    import csv
+
+    items = list(items)
+    with open(path, "w", encoding="utf-8-sig", newline="") as f:
+        w = csv.writer(f)
+        w.writerow(SHEET_HEAD)
+        for it in items:
+            w.writerow([it["id"], user_turn(it), "", ""])
+    return len(items)
+
+
+def sheet_rows(path: str | Path, label: str, *, model_name: str, collected_at: str, settings: str) -> list[dict]:
+    """채운 서식 → 응답 행. 빈 답이 있으면 멈춘다 (빠뜨린 문항을 '빈 답'으로 채점하지 않게)."""
+    import csv
+
+    with open(path, encoding="utf-8-sig", newline="") as f:
+        rd = csv.DictReader(f)
+        head = {h.strip().lower(): h for h in rd.fieldnames or []}
+        iid = head.get("item_id") or head.get("문항")
+        ans = head.get("답") or head.get("answer") or head.get("응답")
+        if not iid or not ans:
+            raise SystemExit(f"{path}: 'item_id'·'답' 칸이 필요함 (받은 칸: {rd.fieldnames})")
+        rows, empty = [], []
+        for rec in rd:
+            text = (rec.get(ans) or "").strip()
+            if not text:
+                empty.append(rec.get(iid))
+                continue
+            rows.append({"model": label, "item_id": (rec.get(iid) or "").strip(), "response": text,
+                         "meta": {"source": "sheet", "model": model_name, "collected_at": collected_at,
+                                  "settings": settings, "prompt_format": f"manual:{settings}"}})
+    if empty:
+        raise SystemExit(f"{path}: 답이 빈 문항 {len(empty)}개 {empty[:5]} — 다 채운 뒤 다시 실행")
+    return rows

@@ -17,9 +17,12 @@ from .golden import DATA_DIR
 
 PKG = Path(__file__).resolve().parent
 LEX = [DATA_DIR / "lexicons" / "guardrails.yaml", DATA_DIR / "lexicons" / "plain_language.yaml"]
-JUDGING = [PKG / "rules.py", PKG / "prompts.py", PKG / "textutil.py", PKG / "gates.py", PKG / "golden.py", *LEX]
+# RAG 전환(2026-11-14): 출처 정리·자료 묶음표는 채점기가 보는 근거 자료 칸과 결정 룰을 바꾸므로 두 지문에 모두 넣는다.
+# 직접 비교(compare.py)는 따로 비교 지문을 둔다 (compare.compare_fingerprint).
+RAG = [PKG / "rag.py", DATA_DIR / "rag_sources.yaml"]
+JUDGING = [PKG / "rules.py", PKG / "prompts.py", PKG / "textutil.py", PKG / "gates.py", PKG / "golden.py", *LEX, *RAG]
 SCORING = [PKG / "verdict.py", PKG / "metrics.py", PKG / "judge.py", PKG / "gates.py", PKG / "golden.py",
-           PKG / "pipeline.py", PKG / "textutil.py", PKG / "rules.py", *LEX]
+           PKG / "pipeline.py", PKG / "textutil.py", PKG / "rules.py", *LEX, *RAG]
 PARTS = sorted(set(JUDGING) | set(SCORING))
 
 

@@ -131,7 +131,7 @@ def model_gen_conditions(rows: list[dict]) -> list[dict]:
 
 # 문제 종류. prep 은 HARD 를 늘 거부하고, missing 은 --allow-partial, FLAGGED 는 --allow-flagged 일 때만 받는다.
 HARD = ("bad_row", "unknown_item", "duplicate", "multi_sample")
-FLAGGED = ("empty", "leak", "echo", "generation_error")
+FLAGGED = ("empty", "leak", "echo", "generation_error", "stale_question")
 
 
 def read_jsonl_rows(path: str | Path) -> tuple[list[dict], list[tuple[str, str]]]:
@@ -186,6 +186,10 @@ def check_rows(rows: list[dict], golden: dict, problems: list[tuple[str, str]] |
         leak = [r["item_id"] for r in rs if any(p and p in str(r["response"]) for p in _LEAK_PROBES)]
         echo = [r["item_id"] for r in rs if any(mk in str(r["response"]) for mk in echo_marks)]
         gen_err = [r["item_id"] for r in rs if (r.get("meta") or {}).get("error")]
+        # 답을 받은 뒤 골든셋 질문을 고쳤으면 그 답은 다른 질문의 답이다 — 수집기가 보낸 질문(meta.message)과 대조
+        from .responders import user_turn
+        stale = [r["item_id"] for r in rs if (r.get("meta") or {}).get("message") and r["item_id"] in golden["by_id"]
+                 and (r["meta"]["message"]).strip() != user_turn(golden["by_id"][r["item_id"]]).strip()]
         lens = sorted(len(str(r["response"])) for r in rs)
         missing = sorted(ids - set(c))
         fmts = sorted({str((r.get("meta") or {}).get("prompt_format") or "?") for r in rs})
@@ -196,6 +200,8 @@ def check_rows(rows: list[dict], golden: dict, problems: list[tuple[str, str]] |
         if missing:
             problems.append(("missing", f"{m}: 골든셋 문항 {len(missing)}개 빠짐 {missing[:5]} — 빠진 채로 채점하면 응급 문항 없이 "
                                         "Pass 가 나올 수 있음"))
+        if stale:
+            problems.append(("stale_question", f"{m}: 골든셋 질문이 답을 받은 뒤 바뀜 {stale[:5]} — 그 문항 답을 다시 받는다"))
         if gen_err:
             problems.append(("generation_error", f"{m}: 생성 오류가 있는 답 {gen_err[:5]} — 서버 문제를 빈 답으로 채점하지 않는다"))
         if empty:
@@ -211,8 +217,9 @@ def check_rows(rows: list[dict], golden: dict, problems: list[tuple[str, str]] |
     # 같은 회차 안에서 모델마다 입력 형식·디코딩이 다르면 모델 차이와 조건 차이가 섞인다 (막지는 않고 알린다)
     known = {m: [f for f in s["prompt_formats"] if f != "?"] for m, s in report["models"].items()}
     distinct = sorted({f for fs in known.values() for f in fs})
-    report["warnings"] = ([f"모델마다 입력 형식이 다름 {({m: fs for m, fs in known.items() if fs})} — 4-way·양자화 전후 비교는 "
-                           "같은 형식으로 받은 답끼리만 (INTEGRATION.md §3)"] if len(distinct) > 1 else [])
+    report["warnings"] = ([f"모델마다 입력 형식이 다름 {({m: fs for m, fs in known.items() if fs})} — 같은 모델의 반복·양자화 "
+                           "전후 비교라면 형식을 맞춘다. 온담과 상용 LLM 처럼 다른 시스템끼리는 다른 것이 정상이다 "
+                           "(INTEGRATION.md §3)"] if len(distinct) > 1 else [])
     for m, s in report["models"].items():
         if len(s["gen_conditions"]) > 1:
             report["warnings"].append(f"{m}: 한 모델 안에서 생성 조건이 섞임 {s['gen_conditions']}")

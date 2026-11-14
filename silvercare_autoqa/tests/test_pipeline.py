@@ -39,10 +39,11 @@ def test_end_to_end(tmp_path, golden, items):
              {"model": "BAD", "item_id": "SC-E05", "response": ""}]
     run = tmp_path / "run1"
     meta = prep(DEFAULT_GOLDEN, rows, run, label="시험", allow_partial=True, allow_flagged=True)   # BAD 의 빈 답은 일부러
-    assert meta["n_cases"] == 53 and meta["n_judge_packets"] == 52       # 빈 응답은 채점 생략
+    n = len(golden["items"])
+    assert meta["n_cases"] == n + 3 and meta["n_judge_packets"] == n + 2   # 빈 응답은 채점 생략
     _mock_results(run, items, golden)
     st = import_judge(run)
-    assert st["ok"] == 52 and st["error"] == 0
+    assert st["ok"] == n + 2 and st["error"] == 0
     out = finalize(run, pairs=[("reference", "BAD")])
     ref = out["models"]["reference"]
     assert ref["final"] in ("Pass", "Fix") and sum(ref["gate_counts"].values()) == 0
@@ -51,7 +52,7 @@ def test_end_to_end(tmp_path, golden, items):
     assert (run / "report.md").exists() and (run / "report.html").exists() and (run / "defects.csv").exists()
     v = out["validity"]
     assert v["ok"] == (v["n_error"] == 0 and v["verify_missing"] == 0 and v["unverified_cases"] == 0)
-    assert ref["n_judged"] == 50 and bad["n_judged"] == 3 and bad["pass_rate"]["n"] == bad["hold_rate"]["n"] == 3
+    assert ref["n_judged"] == n and bad["n_judged"] == 3 and bad["pass_rate"]["n"] == bad["hold_rate"]["n"] == 3
 
 
 def test_missing_verify_is_not_valid(tmp_path, golden, items):

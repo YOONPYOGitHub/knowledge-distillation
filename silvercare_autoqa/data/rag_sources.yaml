@@ -1,0 +1,118 @@
+# 온담 RAG 자료 묶음표 — 응답의 출처(sources)가 어느 자료에서 왔는지 알아보는 규칙.
+#
+# - 기준: 온담 RAG v8 (2026-11-14, 지식 6,531 · 참고 사례 6,762). 팀원 문서 rag.md·data-analysis.md 의 dataset_id 를 따랐다.
+# - 온담 /api/chat 의 sources 에는 dataset_id 가 없다. 그래서 evidence_kind·source_type·주소·자료 ID 로 묶음을 정한다.
+# - match 의 키끼리는 모두 맞아야 하고(그리고), 한 키 안의 값은 하나만 맞으면 된다(또는).
+#   위에서부터 처음 맞는 묶음을 쓴다. 아무것도 안 맞으면 OTHER.
+# - role: evidence = 사실 근거로 인용해도 되는 자료 / example = 말투·질문 참고 사례 (사실 근거로 인용하면 결함)
+# - 자료가 바뀌면(v9 등) 이 파일만 고친다. 골든셋의 rag.expect 는 아래 묶음 이름을 쓴다.
+
+version: 1
+corpus: "ondam-rag-v8-20261114"
+
+families:
+  KDCA_API:
+    label: "질병관리청 국가건강정보포털 (실시간 API)"
+    role: evidence
+    match: {host: ["health.kdca.go.kr"]}
+  KDCA_API_KIND:
+    label: "질병관리청 국가건강정보포털 (실시간 API)"
+    role: evidence
+    same_as: KDCA_API
+    match: {evidence_kind: ["official_api"]}
+  AIHUB_GUIDE:
+    label: "AI Hub 전문 의학지식 (학회 가이드라인 등)"
+    role: evidence
+    match: {url_has: ["dataSetSn=71874"], evidence_kind: ["dataset_knowledge"]}
+  AIHUB_ONLINE:
+    label: "AI Hub 필수의료 의학지식 (온라인 의료정보)"
+    role: evidence
+    match: {url_has: ["dataSetSn=71875"], evidence_kind: ["dataset_knowledge"]}
+  AIHUB_KNOWLEDGE:
+    label: "AI Hub 의학지식 (전문·필수의료 구분 안 됨)"
+    role: evidence
+    match: {evidence_kind: ["dataset_knowledge"]}
+  MEDLINEPLUS:
+    label: "MedlinePlus 환자교육 (영문)"
+    role: evidence
+    match: {host: ["medlineplus.gov"]}
+  WHO_ICOPE:
+    label: "WHO ICOPE 노인 통합 돌봄"
+    role: evidence
+    match: {host: ["iris.who.int", "www.who.int", "who.int"]}
+  VA_PRESSURE:
+    label: "VA/DoD 욕창 지침"
+    role: evidence
+    match: {host: ["www.healthquality.va.gov", "healthquality.va.gov"]}
+  OPENFDA_LABEL:
+    label: "openFDA 의약품 라벨 (9성분)"
+    role: evidence
+    match: {source_type: ["drug_label"]}
+  OPENFDA_LABEL_HOST:
+    label: "openFDA 의약품 라벨 (9성분)"
+    role: evidence
+    same_as: OPENFDA_LABEL
+    match: {host: ["api.fda.gov"]}
+  FDA_CYP:
+    label: "FDA 약물 상호작용 기전 표 (CYP·수송체)"
+    role: evidence
+    match: {source_type: ["drug_mechanism"]}
+  FDA_OLDER:
+    label: "FDA 고령자 약물 안전"
+    role: evidence
+    match: {host: ["www.fda.gov", "fda.gov"], source_type: ["patient_education"]}
+  MOHW_129:
+    label: "보건복지상담센터 129 이용안내"
+    role: evidence
+    match: {host: ["www.mohw.go.kr", "mohw.go.kr"], source_type: ["contact_reference"]}
+  MOHW_CARE:
+    label: "보건복지부 노인맞춤돌봄서비스 사업안내"
+    role: evidence
+    match: {host: ["www.mohw.go.kr", "mohw.go.kr"]}
+  WELFARE_SENIOR_2026:
+    label: "2026 나에게 힘이 되는 복지서비스 (노령층)"
+    role: evidence
+    match: {record_prefix: ["welfare-2026-"]}
+  WELFARE_CENTRAL:
+    label: "복지로 중앙부처 복지서비스"
+    role: evidence
+    match: {record_prefix: ["WLF"]}
+  NHIS_LTC:
+    label: "장기요양기관 검색 (서울 강남구)"
+    role: evidence
+    match: {source_type: ["institution_directory"]}
+  ONDAM_REFERENCE:
+    label: "프로젝트 작성 기관·상담 안내"
+    role: evidence
+    match: {source_type: ["contact_reference"]}
+  CASE_DIALOGUE:
+    label: "AI Hub 감성 대화 (참고 사례)"
+    role: example
+    match: {evidence_kind: ["dialogue"]}
+  CASE_DIALOGUE_TYPE:
+    label: "AI Hub 감성 대화 (참고 사례)"
+    role: example
+    same_as: CASE_DIALOGUE
+    match: {source_type: ["dialogue_case"]}
+  CASE_QA:
+    label: "AI Hub 예방의학·내과 QA (참고 사례)"
+    role: example
+    match: {evidence_kind: ["qa_case"]}
+  CASE_QA_TYPE:
+    label: "AI Hub 예방의학·내과 QA (참고 사례)"
+    role: example
+    same_as: CASE_QA
+    match: {source_type: ["qa_case"]}
+
+# 골든셋 rag.expect 를 줄여 쓰는 이름 (묶음 여러 개)
+groups:
+  AIHUB: [AIHUB_GUIDE, AIHUB_ONLINE, AIHUB_KNOWLEDGE]
+  DRUG: [OPENFDA_LABEL, FDA_CYP, FDA_OLDER]
+  WELFARE: [MOHW_CARE, WELFARE_CENTRAL, WELFARE_SENIOR_2026, MOHW_129, NHIS_LTC, ONDAM_REFERENCE]
+
+# 응답 mode — 온담 /api/chat 의 mode 값. 모르는 값이 오면 check-responses 가 알린다.
+modes:
+  grounded: "근거 검색 후 답변"
+  emergency: "응급 표현 고정 안내 (검색·모델 호출 없음)"
+  conversation: "일상 대화 (근거 검색 생략) — 건강 질문이 여기로 가면 출처 없이 답한다"
+  refusal: "제공자 안전 거절 (HTTP 422) — autoqa 수집기가 붙이는 이름"

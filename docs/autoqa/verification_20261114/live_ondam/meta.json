@@ -1,0 +1,182 @@
+{
+ "run_format": 2,
+ "label": "온담 현재판(클라우드 생성 모델 + RAG v8) 기준선 · 새 문항 모범 답안",
+ "created": "2026-11-14 16:59:12",
+ "golden_path": "golden.yaml",
+ "golden_source": "silvercare_autoqa/data/golden/silvercare_golden_v0.yaml",
+ "allow_partial": true,
+ "allow_flagged": false,
+ "missing_items": {
+  "reference": [
+   "SC-B01",
+   "SC-B02",
+   "SC-B03",
+   "SC-B04",
+   "SC-C01",
+   "SC-C02",
+   "SC-C03",
+   "SC-C04",
+   "SC-E01",
+   "SC-E02",
+   "SC-E03",
+   "SC-E04",
+   "SC-E05",
+   "SC-E06",
+   "SC-E07",
+   "SC-E08",
+   "SC-E09",
+   "SC-E10",
+   "SC-E11",
+   "SC-E12",
+   "SC-E13",
+   "SC-G01",
+   "SC-G02",
+   "SC-G03",
+   "SC-G04",
+   "SC-G05",
+   "SC-G06",
+   "SC-G07",
+   "SC-G08",
+   "SC-K01",
+   "SC-K02",
+   "SC-K03",
+   "SC-K04",
+   "SC-K05",
+   "SC-K06",
+   "SC-K07",
+   "SC-M01",
+   "SC-M02",
+   "SC-M03",
+   "SC-M04",
+   "SC-M05",
+   "SC-M06",
+   "SC-M07",
+   "SC-M08",
+   "SC-M09",
+   "SC-M10",
+   "SC-P01",
+   "SC-P02",
+   "SC-P03",
+   "SC-P04"
+  ]
+ },
+ "response_check": {
+  "problems": [
+   "reference: 골든셋 문항 50개 빠짐 ['SC-B01', 'SC-B02', 'SC-B03', 'SC-B04', 'SC-C01'] — 빠진 채로 채점하면 응급 문항 없이 Pass 가 나올 수 있음"
+  ],
+  "warnings": [],
+  "prompt_formats": {
+   "ondam_cloud": [
+    "ondam-api"
+   ],
+   "reference": [
+    "?"
+   ]
+  }
+ },
+ "golden_version": "v0.4-draft-20261114",
+ "golden_review_status": "draft (전문가 검수 전)",
+ "golden_sha256": "e3e31dffe0d420585e35fb31ca9117779fb813a1134934df98efe3a1777d832c",
+ "judge_model": "claude-sonnet-5-5",
+ "judge_effort": "high",
+ "fingerprint": "7fceeb43c63ba733",
+ "judging_fp": "d90e8b91da037542",
+ "scoring_fp": "c72d4999d2948563",
+ "fingerprint_parts": {
+  "guardrails.yaml": "144f9468461b7e89f05c33daf825d21211f58a07fb270fa84b52ccfa4a880bb3",
+  "plain_language.yaml": "ab7acff6f3c82888e0b77bbecb67451e540dc0bc96080808e7757b6dc014c26d",
+  "rag_sources.yaml": "8acab32db0f72cc69cff6067054d51c9550e17596530a11a10168527c8ea8eb0",
+  "gates.py": "3e5edf3a85cab327c670df6869bc7045c0caadb45b12ca120cf168b59741a840",
+  "golden.py": "21ab7b9f621e4973540da8027790d2f65f978e7d9e38e42289cd34e7f8b5a87e",
+  "judge.py": "084b785517074dbfbd6fd06b2c8b83aa8a4f7c9487696e11ecd68d9846fed914",
+  "metrics.py": "ac0d7080bee802d804549751cc18ba63fa39b04d96f1f834f80f44392e73b537",
+  "pipeline.py": "02e9c2d233892f6a0fb03901804bdea48b8e2d7692f7ad4b22e2bb37ea9da2c2",
+  "prompts.py": "334a1c8ac883070df9d2400b9757890e40a650884ad34d256e211222de2d2719",
+  "rag.py": "584ea48d8b5bd8bbb77a2446e48b2d55f754cd93b5d9ff39c8b72e55b44b9086",
+  "rules.py": "a1dfb791f4dd10b8add161aaabd778f98b569e3d801c33d019f14760045c5957",
+  "textutil.py": "ef23fb8a464c661f6cf1050690de2e073150a0b15e06db6b16be1cadeb9178cc",
+  "verdict.py": "b5eb2c0f5760bc7f742d2ce4800996e2396e3b4a2b8859842b8dc4387c28fc90",
+  "golden": "e3e31dffe0d420585e35fb31ca9117779fb813a1134934df98efe3a1777d832c",
+  "judge": "7e90d49ca26fcabc3d8dab2be0adfaec4734e3e6be7ef1773c619afd1a656e8c"
+ },
+ "models": [
+  "ondam_cloud",
+  "reference"
+ ],
+ "n_cases": 168,
+ "rag_models": [
+  "ondam_cloud"
+ ],
+ "n_judge_packets": 168,
+ "stage_fingerprints": {
+  "judge": {
+   "fingerprint": "7fceeb43c63ba733",
+   "judging": "d90e8b91da037542",
+   "scoring": "c72d4999d2948563"
+  },
+  "import": {
+   "fingerprint": "20ebcdd7f2161b24",
+   "judging": "d90e8b91da037542",
+   "scoring": "29e1b7b621afbc1e"
+  },
+  "verify": {
+   "fingerprint": "20ebcdd7f2161b24",
+   "judging": "d90e8b91da037542",
+   "scoring": "29e1b7b621afbc1e"
+  },
+  "finalize": {
+   "fingerprint": "20ebcdd7f2161b24",
+   "judging": "d90e8b91da037542",
+   "scoring": "29e1b7b621afbc1e"
+  }
+ },
+ "import_stats": {
+  "ok": 168,
+  "error": 0,
+  "missing": 0,
+  "skipped_format": 0,
+  "verify_packets": 4
+ },
+ "rescored": [
+  {
+   "stage": "import",
+   "from": "7fceeb43c63ba733",
+   "to": "20ebcdd7f2161b24",
+   "changed": [
+    "judge.py",
+    "pipeline.py",
+    "verdict.py"
+   ],
+   "judging_changed": false,
+   "scoring_changed": true,
+   "at": "2026-11-14 17:15:30"
+  },
+  {
+   "stage": "verify",
+   "from": "7fceeb43c63ba733",
+   "to": "20ebcdd7f2161b24",
+   "changed": [
+    "judge.py",
+    "pipeline.py",
+    "verdict.py"
+   ],
+   "judging_changed": false,
+   "scoring_changed": true,
+   "at": "2026-11-14 17:15:31"
+  },
+  {
+   "stage": "finalize",
+   "from": "7fceeb43c63ba733",
+   "to": "20ebcdd7f2161b24",
+   "changed": [
+    "judge.py",
+    "pipeline.py",
+    "verdict.py"
+   ],
+   "judging_changed": false,
+   "scoring_changed": true,
+   "at": "2026-11-14 17:15:41"
+  }
+ ],
+ "score_fingerprint": "20ebcdd7f2161b24"
+}

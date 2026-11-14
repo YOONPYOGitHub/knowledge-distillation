@@ -165,7 +165,7 @@ def test_p11_plain_run_info_and_caveat_on_first_screen(run3):
     assert "의료 안전 인증이 아니다" in first and "의료 안전" not in md.split("## 7.", 1)[1]
     for gone in ("draft (", "대리지표", "고칠 내용(major)"):
         assert gone not in md, gone
-    assert "## 4. Teacher 대비\n\n이 회차에는 Teacher 비교가 없다" in md
+    assert "## 4. 비교 모델 대비\n\n이 회차에는 비교 모델이 없다" in md
     assert "## 5. 짝 비교\n\n이 회차에는 짝 비교가 없다" in md
     assert "지적 유지 " in md and "지적 취소 " in md
 

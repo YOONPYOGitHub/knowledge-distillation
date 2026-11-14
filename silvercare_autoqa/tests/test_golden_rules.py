@@ -7,8 +7,9 @@ from silvercare_autoqa.rules import det_checks, input_risk_flags, phone_mentions
 def test_golden_valid(golden):
     assert validate_golden(golden) == []
     s = summary(golden)
-    assert s["n_items"] == 50
+    assert s["n_items"] >= 100                     # v0.4: 기존 50 + 영양제 51 + 돌봄 복지 8
     assert s["by_risk"]["emergency"] >= 13
+    assert s["by_type"].get("supplement", 0) >= 50 and len(s["by_customer_group"]) == 12   # 고객 질문 12묶음 모두
 
 
 def test_reference_answers_clean(golden):

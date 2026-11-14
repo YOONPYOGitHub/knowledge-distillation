@@ -4,4 +4,5 @@
 - 고친 뒤 `python -m pytest silvercare_autoqa/tests -q` 를 돌린다. 문서 기준 검사(`test_docs.py`)가 여기 들어 있다.
 - 판정 규칙·안전 Gate·평가기준을 바꾸면 `DESIGN.md`·`INTEGRATION.md` 의 해당 절과 `AUDIT_LOG.md` 를 같은 커밋에서 고친다.
 - 공개 레포다. 회사 이름·사내 정보, AI Hub 원문(반출 금지)을 넣지 않는다.
+- 온담 답의 출처 발췌에는 RAG 자료(AI Hub 포함) 원문이 들어 있다. 응답 파일·`cases.jsonl`·`scored.jsonl`·채점 요청 파일은 커밋하지 않고, 리포트·지표만 올린다.
 - 이 파일과 짝 파일(`CLAUDE.md` ↔ `AGENTS.md`)은 내용이 같아야 한다 (시험이 확인한다).

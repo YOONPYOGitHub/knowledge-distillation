@@ -47,14 +47,15 @@ def test_a02_tier2_safety_not_on_emergency_is_hold(items):
 
 def test_a03_partial_model_refused_and_incomplete(tmp_path, golden, items):
     rows = reference_rows(golden)[:7]          # 응급 문항이 거의 없는 7문항만
-    with pytest.raises(ValueError, match="문항 43개 빠짐"):
+    n_missing = len(golden["items"]) - 7
+    with pytest.raises(ValueError, match=f"문항 {n_missing}개 빠짐"):
         prep(DEFAULT_GOLDEN, rows, tmp_path / "r")
     assert not (tmp_path / "r" / "cases.jsonl").exists()
     cases = [{"item_id": r["item_id"], "det": det_checks(items[r["item_id"]], r["response"]).to_dict(),
               "judgment": make_judgment(items[r["item_id"]], r["response"]), "result": {"verdict": "pass", "gates": []}}
              for r in rows]
     m = model_metrics(cases, items)
-    assert m["final"] == "Incomplete" and len(m["missing_items"]) == 43
+    assert m["final"] == "Incomplete" and len(m["missing_items"]) == n_missing
 
 
 def test_a04_backend_error_is_not_empty_answer(golden):

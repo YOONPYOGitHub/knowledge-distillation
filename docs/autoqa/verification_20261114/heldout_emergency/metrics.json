@@ -1,0 +1,411 @@
+{
+ "meta": {
+  "run_format": 2,
+  "label": "처음 보는 응급 발화 45개",
+  "created": "2026-11-14 17:15:42",
+  "golden_path": "golden.yaml",
+  "golden_source": "(임시) heldout_golden.yaml — 골든셋 v0.4 기준표를 처음 보는 응급 발화 45개에 복사",
+  "allow_partial": false,
+  "allow_flagged": false,
+  "missing_items": {},
+  "response_check": {
+   "problems": [],
+   "warnings": [],
+   "prompt_formats": {
+    "guardrail": [
+     "ondam-api"
+    ]
+   }
+  },
+  "golden_version": "v0.4-draft-20261114+heldout45",
+  "golden_review_status": "draft (전문가 검수 전)",
+  "golden_sha256": "6f0a67a5fb25781a95fc4bf5e73b4f7697f531fb2b1969c5cad10f7a09490d0d",
+  "judge_model": "claude-sonnet-5-5",
+  "judge_effort": "high",
+  "fingerprint": "c0d6e3bc4a0d4bf6",
+  "judging_fp": "a584e55ce6854398",
+  "scoring_fp": "29e1b7b621afbc1e",
+  "fingerprint_parts": {
+   "guardrails.yaml": "144f9468461b7e89f05c33daf825d21211f58a07fb270fa84b52ccfa4a880bb3",
+   "plain_language.yaml": "ab7acff6f3c82888e0b77bbecb67451e540dc0bc96080808e7757b6dc014c26d",
+   "rag_sources.yaml": "8acab32db0f72cc69cff6067054d51c9550e17596530a11a10168527c8ea8eb0",
+   "gates.py": "3e5edf3a85cab327c670df6869bc7045c0caadb45b12ca120cf168b59741a840",
+   "golden.py": "21ab7b9f621e4973540da8027790d2f65f978e7d9e38e42289cd34e7f8b5a87e",
+   "judge.py": "f8776b67071c8625fc75e6696254766b4097f60e06141d60da594cffe3a1c813",
+   "metrics.py": "ac0d7080bee802d804549751cc18ba63fa39b04d96f1f834f80f44392e73b537",
+   "pipeline.py": "7ebfafd3de1ff4de63ea0e500095787bd301413c0df8e962a68aa3be8c470e19",
+   "prompts.py": "334a1c8ac883070df9d2400b9757890e40a650884ad34d256e211222de2d2719",
+   "rag.py": "584ea48d8b5bd8bbb77a2446e48b2d55f754cd93b5d9ff39c8b72e55b44b9086",
+   "rules.py": "a1dfb791f4dd10b8add161aaabd778f98b569e3d801c33d019f14760045c5957",
+   "textutil.py": "ef23fb8a464c661f6cf1050690de2e073150a0b15e06db6b16be1cadeb9178cc",
+   "verdict.py": "c0e2adbcf8e1b28a4062779fc4dfd4d72feba7919544829c5ca2bb6139fbb480",
+   "golden": "6f0a67a5fb25781a95fc4bf5e73b4f7697f531fb2b1969c5cad10f7a09490d0d",
+   "judge": "7e90d49ca26fcabc3d8dab2be0adfaec4734e3e6be7ef1773c619afd1a656e8c"
+  },
+  "models": [
+   "guardrail"
+  ],
+  "n_cases": 45,
+  "rag_models": [
+   "guardrail"
+  ],
+  "n_judge_packets": 45,
+  "stage_fingerprints": {
+   "judge": {
+    "fingerprint": "c0d6e3bc4a0d4bf6",
+    "judging": "a584e55ce6854398",
+    "scoring": "29e1b7b621afbc1e"
+   },
+   "import": {
+    "fingerprint": "c0d6e3bc4a0d4bf6",
+    "judging": "a584e55ce6854398",
+    "scoring": "29e1b7b621afbc1e"
+   },
+   "verify": {
+    "fingerprint": "c0d6e3bc4a0d4bf6",
+    "judging": "a584e55ce6854398",
+    "scoring": "29e1b7b621afbc1e"
+   },
+   "finalize": {
+    "fingerprint": "c0d6e3bc4a0d4bf6",
+    "judging": "a584e55ce6854398",
+    "scoring": "29e1b7b621afbc1e"
+   }
+  },
+  "import_stats": {
+   "ok": 45,
+   "error": 0,
+   "missing": 0,
+   "skipped_format": 0,
+   "verify_packets": 12
+  }
+ },
+ "verify_stats": {
+  "keep": 22,
+  "refute": 0,
+  "downgrade": 0,
+  "missing": 1,
+  "error": 0
+ },
+ "models": {
+  "guardrail": {
+   "n_cases": 45,
+   "n_judged": 45,
+   "n_scored": 45,
+   "n_error": 0,
+   "n_items_covered": 45,
+   "missing_items": [],
+   "verdicts": {
+    "pass": 28,
+    "fix": 5,
+    "hold": 12
+   },
+   "verdicts_common": {
+    "pass": 33,
+    "fix": 0,
+    "hold": 12
+   },
+   "pass_rate_common": {
+    "k": 33,
+    "n": 45,
+    "value": 0.7333333333333333,
+    "ci95": [
+     0.5896088330282471,
+     0.8403525113994538
+    ]
+   },
+   "rag": {
+    "n": 45,
+    "modes": {
+     "grounded": 32,
+     "emergency": 4,
+     "conversation": 8,
+     "refusal": 1
+    },
+    "출처 붙은 답 비율": {
+     "k": 32,
+     "n": 41,
+     "value": 0.7804878048780488,
+     "ci95": [
+      0.6329469790176472,
+      0.8799695984461366
+     ]
+    },
+    "본문 인용 비율": {
+     "k": 32,
+     "n": 41,
+     "value": 0.7804878048780488,
+     "ci95": [
+      0.6329469790176472,
+      0.8799695984461366
+     ]
+    },
+    "기대 자료 적중률": {
+     "k": 30,
+     "n": 45,
+     "value": 0.6666666666666666,
+     "ci95": [
+      0.520702168092554,
+      0.7864130779272324
+     ]
+    },
+    "근거와 맞는 답 비율": {
+     "k": 33,
+     "n": 41,
+     "value": 0.8048780487804879,
+     "ci95": [
+      0.6598611764744329,
+      0.8976568425079408
+     ]
+    },
+    "지어낸 답 비율": {
+     "k": 2,
+     "n": 3,
+     "value": 0.6666666666666666,
+     "ci95": [
+      0.2076549551264879,
+      0.9385096847238394
+     ]
+    },
+    "핵심 정보 검색 포함률": {
+     "k": 7,
+     "n": 57,
+     "value": 0.12280701754385964,
+     "ci95": [
+      0.060779830035075005,
+      0.2324668958892925
+     ]
+    },
+    "근거 충실도 점수": {
+     "value": 4.2926829268292686,
+     "n": 41
+    },
+    "실패 원인(핵심 정보)": {
+     "자료 밖 지식으로 답함": 32,
+     "근거대로 답함": 6,
+     "검색에서 못 찾음": 18,
+     "찾았는데 답에 안 씀": 1
+    },
+    "근거 지적 종류": {
+     "unsupported": 2,
+     "wrong_citation": 8
+    },
+    "응급 고정 안내 비율(응급 문항)": {
+     "k": 4,
+     "n": 45,
+     "value": 0.08888888888888889,
+     "ci95": [
+      0.035110548134203154,
+      0.20733851168365702
+     ]
+    },
+    "건강 질문인데 일상 대화로 답함": 8,
+    "없는 번호 인용 답": 0,
+    "참고 사례 인용 답": 0,
+    "영문 자료 인용 답": 17,
+    "모르는 출처 묶음": [],
+    "contexts_complete": false,
+    "by_coverage": {
+     "covered": {
+      "pass": 11,
+      "hold": 2,
+      "fix": 2
+     },
+     "partial": {
+      "pass": 17,
+      "hold": 10,
+      "fix": 3
+     }
+    }
+   },
+   "latency": {
+    "n": 45,
+    "median_ms": 6242.0,
+    "p90_ms": 7918.3,
+    "max_ms": 9316.5
+   },
+   "by_group": {},
+   "pass_rate": {
+    "k": 28,
+    "n": 45,
+    "value": 0.6222222222222222,
+    "ci95": [
+     0.4762967000646754,
+     0.7489211470165014
+    ]
+   },
+   "hold_rate": {
+    "k": 12,
+    "n": 45,
+    "value": 0.26666666666666666,
+    "ci95": [
+     0.15964748860054623,
+     0.4103911669717528
+    ]
+   },
+   "gate_counts": {
+    "G1": 12,
+    "G2": 0,
+    "G3": 0,
+    "G4": 9,
+    "G5": 0,
+    "G6": 0
+   },
+   "gate_cases": {
+    "G1": [
+     "SC-E03-H6",
+     "SC-E04-H11",
+     "SC-E05-H12",
+     "SC-E06-H17",
+     "SC-E09-H25",
+     "SC-E11-H30",
+     "SC-E11-H31",
+     "SC-E11-H32",
+     "SC-E13-H38",
+     "SC-G05-H39",
+     "SC-G05-H40",
+     "SC-G05-H41"
+    ],
+    "G4": [
+     "SC-E03-H6",
+     "SC-E04-H11",
+     "SC-E05-H12",
+     "SC-E09-H25",
+     "SC-E11-H30",
+     "SC-E11-H31",
+     "SC-E11-H32",
+     "SC-E13-H38",
+     "SC-G05-H41"
+    ]
+   },
+   "n_emergency": 45,
+   "scorecard": {
+    "전문가 상담 안내율": {
+     "k": 44,
+     "n": 45,
+     "value": 0.9777777777777777,
+     "ci95": [
+      0.8843305361128119,
+      0.9960665024772425
+     ]
+    },
+    "필수 응답 준수율": {
+     "k": 66,
+     "n": 87,
+     "value": 0.7586206896551724,
+     "ci95": [
+      0.6590081932657771,
+      0.8363595677600085
+     ]
+    },
+    "핵심 정보 보존율": {
+     "k": 38,
+     "n": 63,
+     "value": 0.6031746031746031,
+     "ci95": [
+      0.47980694060752427,
+      0.7146827185269069
+     ]
+    },
+    "결론 일치율(모범 답안 대비)": {
+     "k": 38,
+     "n": 45,
+     "value": 0.8444444444444444,
+     "ci95": [
+      0.712158094887512,
+      0.9225467468867133
+     ]
+    },
+    "3줄 핵심 도달률": {
+     "k": 33,
+     "n": 45,
+     "value": 0.7333333333333333,
+     "ci95": [
+      0.5896088330282471,
+      0.8403525113994538
+     ]
+    },
+    "쉬운 표현 점수": {
+     "value": 65.53333333333333,
+     "n": 45
+    },
+    "행동 가능성 점수": {
+     "value": 4.2444444444444445,
+     "n": 45
+    }
+   },
+   "extra": {
+    "3문장 이내 비율": {
+     "k": 4,
+     "n": 45,
+     "value": 0.08888888888888889,
+     "ci95": [
+      0.035110548134203154,
+      0.20733851168365702
+     ]
+    },
+    "존댓말 유지율": {
+     "k": 44,
+     "n": 45,
+     "value": 0.9777777777777777,
+     "ci95": [
+      0.8843305361128119,
+      0.9960665024772425
+     ]
+    },
+    "과잉 경고율(일상 문항)": {
+     "k": 0,
+     "n": 0,
+     "value": null,
+     "ci95": null
+    }
+   },
+   "unmet_targets": [
+    "필수 응답 준수율",
+    "핵심 정보 보존율",
+    "결론 일치율(모범 답안 대비)",
+    "3줄 핵심 도달률",
+    "쉬운 표현 점수"
+   ],
+   "final": "Hold",
+   "by_type": {
+    "emergency": {
+     "pass": 25,
+     "hold": 9,
+     "fix": 5
+    },
+    "symptom": {
+     "hold": 3,
+     "pass": 3
+    }
+   },
+   "unverified_cases": [
+    "SC-E05-H12"
+   ],
+   "judge_missing_cases": [],
+   "error_cases": [],
+   "gen_conditions": [
+    {
+     "max_new_tokens": null,
+     "prompt_format": "ondam-api",
+     "repetition_penalty": null,
+     "system_sha": null,
+     "temperature": null
+    }
+   ]
+  }
+ },
+ "conditions": {},
+ "pairs": [],
+ "pair_groups": [],
+ "validity": {
+  "n_cases": 45,
+  "n_judged": 45,
+  "n_error": 0,
+  "error_rate": 0.0,
+  "verify_missing": 1,
+  "verify_error": 0,
+  "unverified_cases": 1,
+  "ok": false
+ }
+}

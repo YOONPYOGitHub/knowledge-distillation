@@ -111,11 +111,17 @@ def _entries(es: list[dict]) -> str:
     return " / ".join(e["text"] for e in es or [])
 
 
+def _strip_cites(text: str) -> str:
+    from .rag import strip_citations
+    return strip_citations(text)
+
+
 def export_blind(run_dir: str | Path, out_dir: str | Path, *, models: list[str] | None = None, sample: int | None = None,
-                 seed: int = 20261123, allow_test_answers: bool = False) -> dict[str, Any]:
+                 seed: int = 20261123, allow_test_answers: bool = False, strip_cites: bool = False) -> dict[str, Any]:
     """블라인드 채점지(blind_sheet.csv) · 대응표(blind_key.json) · 검수 안내(검수_안내.md)를 만든다.
     sample: 일부만 뽑을 때 건수. autoqa 판정(hold/fix/pass)별로 고르게 뽑아 Hold 가 모자라지 않게 한다.
-    검증용 답(모범 답안·변이)은 받지 않는다 — 채점기를 그 답으로 맞췄으므로 κ 가 부푼다 (노하우 점검 K42)."""
+    검증용 답(모범 답안·변이)은 받지 않는다 — 채점기를 그 답으로 맞췄으므로 κ 가 부푼다 (노하우 점검 K42).
+    strip_cites: 답의 인용 번호 [1] 을 지운다 — 출처를 내는 시스템(온담)인지 번호로 드러나지 않게."""
     run, out = Path(run_dir), Path(out_dir)
     meta, cases, items = _load_scored(run)
     pool = [c for c in cases if c["result"]["verdict"] != "error" and (not models or c["model"] in models)]
@@ -154,7 +160,8 @@ def export_blind(run_dir: str | Path, out_dir: str | Path, *, models: list[str] 
             # 글 칸은 엑셀이 수식으로 읽지 않게 막는다 — '- 지금 바로…' 로 시작하는 답이 #NAME? 으로 보이지 않게 (감사 A16 과 같은 처리)
             w.writerow([rid, c["item_id"], RISK_SHORT.get(it["risk"], it["risk"])] +
                        [_csv_safe(x) for x in (it["utterance"], it.get("context") or "", _entries(it.get("must_include")),
-                                               _entries(it.get("must_not")), c["response"])] +
+                                               _entries(it.get("must_not")),
+                                               _strip_cites(c["response"]) if strip_cites else c["response"])] +
                        [""] * (len(COLS) - COLS.index("응답") - 1))        # 검수자가 채울 칸
     (out / "blind_key.json").write_text(json.dumps(key, ensure_ascii=False, indent=1), encoding="utf-8")
     (out / "검수_안내.md").write_text(GUIDE, encoding="utf-8")

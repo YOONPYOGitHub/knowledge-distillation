@@ -16,9 +16,9 @@ from .conftest import make_judgment
 
 
 def _run(tmp_path, golden, items, bad=None):
-    """teacher·kd·ft 세 모델 모두 모범 답안. bad=(모델, 문항) 이면 그 답을 응급 놓침 답으로."""
+    """기본 세 조건(온담 로컬+RAG · ChatGPT · 검색 끈 로컬) 모두 모범 답안. bad=(모델, 문항) 이면 그 답을 응급 놓침 답으로."""
     rows = []
-    for m in ("teacher_ft", "student_kd", "student_ft"):
+    for m in ("ondam_local", "chatgpt_luna61", "local_norag"):
         rows += reference_rows(golden, m)
     for r in rows:
         if bad and (r["model"], r["item_id"]) == bad:
@@ -37,7 +37,7 @@ def _run(tmp_path, golden, items, bad=None):
 
 
 def test_latin_schedule_is_balanced():
-    sched = latin_schedule(MAIN_ITEMS, ["teacher", "kd", "ft"], 15, seed=1)
+    sched = latin_schedule(MAIN_ITEMS, ["ondam", "chatgpt", "norag"], 15, seed=1)
     b = schedule_balance(sched)
     assert b["item_condition_min"] == b["item_condition_max"] == 5          # 15명 → 문항×조건 5번씩
     assert all(sorted(pp.values()) in ([3, 3, 4], [3, 4, 3]) or sum(pp.values()) == 10 for pp in b["per_participant"])
@@ -49,7 +49,7 @@ def test_materials_bundle_and_blinding(tmp_path, golden, items):
     rep = materials(run, tmp_path / "b", n_participants=3)
     assert rep["main_items"] == MAIN_ITEMS and not rep["swaps"]
     script = (tmp_path / "b" / "P01" / "진행대본.html").read_text(encoding="utf-8")
-    for name in ("teacher_ft", "student_kd", "student_ft", "teacher", "Teacher"):
+    for name in ("ondam_local", "chatgpt_luna61", "local_norag", "chatgpt", "ChatGPT", "norag"):
         assert name not in script, name                                    # 대본에 모델·조건 이름이 없음 (블라인드)
     key = json.loads((tmp_path / "b" / "대응표_봉인.json").read_text(encoding="utf-8"))
     assert len([t for t in key["trials"].values() if t["phase"] == "main"]) == 30
@@ -57,7 +57,7 @@ def test_materials_bundle_and_blinding(tmp_path, golden, items):
 
 
 def test_hold_answer_is_swapped_out(tmp_path, golden, items):
-    run = _run(tmp_path, golden, items, bad=("student_kd", "SC-E01"))          # KD 의 E01 대답이 Hold
+    run = _run(tmp_path, golden, items, bad=("ondam_local", "SC-E01"))         # 온담의 E01 대답이 Hold
     rep = materials(run, tmp_path / "b", n_participants=3)
     assert "SC-E01" not in rep["main_items"] and rep["swaps"][0]["from"] == "SC-E01" and rep["swaps"][0]["to"]
     key = json.loads((tmp_path / "b" / "대응표_봉인.json").read_text(encoding="utf-8"))
@@ -66,7 +66,7 @@ def test_hold_answer_is_swapped_out(tmp_path, golden, items):
 
 def test_hold_without_spare_refuses(tmp_path, golden, items, monkeypatch):
     import silvercare_autoqa.study as S
-    run = _run(tmp_path, golden, items, bad=("student_kd", "SC-E01"))
+    run = _run(tmp_path, golden, items, bad=("ondam_local", "SC-E01"))
     monkeypatch.setitem(S.SPARE, "risk", [])
     with pytest.raises(ValueError, match="Hold"):
         materials(run, tmp_path / "b", n_participants=3)
@@ -92,7 +92,7 @@ def test_analyze_end_to_end(tmp_path, golden, items):
     rows = list(csv.DictReader((tmp_path / "b" / "입력서식_본과제.csv").read_text(encoding="utf-8-sig").splitlines()))
     for r in rows:
         t = key["trials"][r["trial"]]
-        good = t["condition"] != "ft"                                         # FT 대답만 덜 알아듣는다고 가정
+        good = t["condition"] != "norag"                                      # 검색 끈 로컬 대답만 덜 알아듣는다고 가정
         r["restate_code"] = "맞음" if good else "틀림"
         r["restate_code_2"] = r["restate_code"]
         r["mcq_choice"] = str(t["mcq_answer"] if good else (t["mcq_answer"] % 4) + 1)
@@ -104,8 +104,9 @@ def test_analyze_end_to_end(tmp_path, golden, items):
         w.writerows(rows)
     rep = analyze(f, tmp_path / "b" / "대응표_봉인.json", run_dir=run)
     m = rep["metrics"]["행동 이해율"]
-    assert m["by_condition"]["kd"]["mean"] == 1.0 and m["by_condition"]["ft"]["mean"] == 0.0
-    assert m["pairwise"]["kd vs ft"]["p"] < 0.05 and m["kd_minus_teacher"]["almost_same"]
+    assert m["by_condition"]["ondam"]["mean"] == 1.0 and m["by_condition"]["norag"]["mean"] == 0.0
+    assert m["pairwise"]["ondam vs norag"]["p"] < 0.05 and m["primary_diff"]["almost_same"]
+    assert m["primary_diff"]["pair"] == ["ondam", "chatgpt"]
     assert rep["restate_coder_kappa"]["kappa"] == 1.0 and not rep["errors"] and rep["rq1"]
     md = render_analysis_md(rep)
     assert "## 한눈에" in md and "차이가 거의 없음" in md

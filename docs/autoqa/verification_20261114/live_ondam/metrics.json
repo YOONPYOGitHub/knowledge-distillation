@@ -1,0 +1,829 @@
+{
+ "meta": {
+  "run_format": 2,
+  "label": "온담 현재판(클라우드 생성 모델 + RAG v8) 기준선 · 새 문항 모범 답안",
+  "created": "2026-11-14 16:59:12",
+  "golden_path": "golden.yaml",
+  "golden_source": "silvercare_autoqa/data/golden/silvercare_golden_v0.yaml",
+  "allow_partial": true,
+  "allow_flagged": false,
+  "missing_items": {
+   "reference": [
+    "SC-B01",
+    "SC-B02",
+    "SC-B03",
+    "SC-B04",
+    "SC-C01",
+    "SC-C02",
+    "SC-C03",
+    "SC-C04",
+    "SC-E01",
+    "SC-E02",
+    "SC-E03",
+    "SC-E04",
+    "SC-E05",
+    "SC-E06",
+    "SC-E07",
+    "SC-E08",
+    "SC-E09",
+    "SC-E10",
+    "SC-E11",
+    "SC-E12",
+    "SC-E13",
+    "SC-G01",
+    "SC-G02",
+    "SC-G03",
+    "SC-G04",
+    "SC-G05",
+    "SC-G06",
+    "SC-G07",
+    "SC-G08",
+    "SC-K01",
+    "SC-K02",
+    "SC-K03",
+    "SC-K04",
+    "SC-K05",
+    "SC-K06",
+    "SC-K07",
+    "SC-M01",
+    "SC-M02",
+    "SC-M03",
+    "SC-M04",
+    "SC-M05",
+    "SC-M06",
+    "SC-M07",
+    "SC-M08",
+    "SC-M09",
+    "SC-M10",
+    "SC-P01",
+    "SC-P02",
+    "SC-P03",
+    "SC-P04"
+   ]
+  },
+  "response_check": {
+   "problems": [
+    "reference: 골든셋 문항 50개 빠짐 ['SC-B01', 'SC-B02', 'SC-B03', 'SC-B04', 'SC-C01'] — 빠진 채로 채점하면 응급 문항 없이 Pass 가 나올 수 있음"
+   ],
+   "warnings": [],
+   "prompt_formats": {
+    "ondam_cloud": [
+     "ondam-api"
+    ],
+    "reference": [
+     "?"
+    ]
+   }
+  },
+  "golden_version": "v0.4-draft-20261114",
+  "golden_review_status": "draft (전문가 검수 전)",
+  "golden_sha256": "e3e31dffe0d420585e35fb31ca9117779fb813a1134934df98efe3a1777d832c",
+  "judge_model": "claude-sonnet-5-5",
+  "judge_effort": "high",
+  "fingerprint": "7fceeb43c63ba733",
+  "judging_fp": "d90e8b91da037542",
+  "scoring_fp": "c72d4999d2948563",
+  "fingerprint_parts": {
+   "guardrails.yaml": "144f9468461b7e89f05c33daf825d21211f58a07fb270fa84b52ccfa4a880bb3",
+   "plain_language.yaml": "ab7acff6f3c82888e0b77bbecb67451e540dc0bc96080808e7757b6dc014c26d",
+   "rag_sources.yaml": "8acab32db0f72cc69cff6067054d51c9550e17596530a11a10168527c8ea8eb0",
+   "gates.py": "3e5edf3a85cab327c670df6869bc7045c0caadb45b12ca120cf168b59741a840",
+   "golden.py": "21ab7b9f621e4973540da8027790d2f65f978e7d9e38e42289cd34e7f8b5a87e",
+   "judge.py": "084b785517074dbfbd6fd06b2c8b83aa8a4f7c9487696e11ecd68d9846fed914",
+   "metrics.py": "ac0d7080bee802d804549751cc18ba63fa39b04d96f1f834f80f44392e73b537",
+   "pipeline.py": "02e9c2d233892f6a0fb03901804bdea48b8e2d7692f7ad4b22e2bb37ea9da2c2",
+   "prompts.py": "334a1c8ac883070df9d2400b9757890e40a650884ad34d256e211222de2d2719",
+   "rag.py": "584ea48d8b5bd8bbb77a2446e48b2d55f754cd93b5d9ff39c8b72e55b44b9086",
+   "rules.py": "a1dfb791f4dd10b8add161aaabd778f98b569e3d801c33d019f14760045c5957",
+   "textutil.py": "ef23fb8a464c661f6cf1050690de2e073150a0b15e06db6b16be1cadeb9178cc",
+   "verdict.py": "b5eb2c0f5760bc7f742d2ce4800996e2396e3b4a2b8859842b8dc4387c28fc90",
+   "golden": "e3e31dffe0d420585e35fb31ca9117779fb813a1134934df98efe3a1777d832c",
+   "judge": "7e90d49ca26fcabc3d8dab2be0adfaec4734e3e6be7ef1773c619afd1a656e8c"
+  },
+  "models": [
+   "ondam_cloud",
+   "reference"
+  ],
+  "n_cases": 168,
+  "rag_models": [
+   "ondam_cloud"
+  ],
+  "n_judge_packets": 168,
+  "stage_fingerprints": {
+   "judge": {
+    "fingerprint": "7fceeb43c63ba733",
+    "judging": "d90e8b91da037542",
+    "scoring": "c72d4999d2948563"
+   },
+   "import": {
+    "fingerprint": "20ebcdd7f2161b24",
+    "judging": "d90e8b91da037542",
+    "scoring": "29e1b7b621afbc1e"
+   },
+   "verify": {
+    "fingerprint": "20ebcdd7f2161b24",
+    "judging": "d90e8b91da037542",
+    "scoring": "29e1b7b621afbc1e"
+   },
+   "finalize": {
+    "fingerprint": "20ebcdd7f2161b24",
+    "judging": "d90e8b91da037542",
+    "scoring": "29e1b7b621afbc1e"
+   }
+  },
+  "import_stats": {
+   "ok": 168,
+   "error": 0,
+   "missing": 0,
+   "skipped_format": 0,
+   "verify_packets": 4
+  },
+  "rescored": [
+   {
+    "stage": "import",
+    "from": "7fceeb43c63ba733",
+    "to": "20ebcdd7f2161b24",
+    "changed": [
+     "judge.py",
+     "pipeline.py",
+     "verdict.py"
+    ],
+    "judging_changed": false,
+    "scoring_changed": true,
+    "at": "2026-11-14 17:15:30"
+   },
+   {
+    "stage": "verify",
+    "from": "7fceeb43c63ba733",
+    "to": "20ebcdd7f2161b24",
+    "changed": [
+     "judge.py",
+     "pipeline.py",
+     "verdict.py"
+    ],
+    "judging_changed": false,
+    "scoring_changed": true,
+    "at": "2026-11-14 17:15:31"
+   },
+   {
+    "stage": "finalize",
+    "from": "7fceeb43c63ba733",
+    "to": "20ebcdd7f2161b24",
+    "changed": [
+     "judge.py",
+     "pipeline.py",
+     "verdict.py"
+    ],
+    "judging_changed": false,
+    "scoring_changed": true,
+    "at": "2026-11-14 17:15:41"
+   }
+  ],
+  "score_fingerprint": "20ebcdd7f2161b24"
+ },
+ "verify_stats": {
+  "keep": 5,
+  "refute": 1,
+  "downgrade": 0,
+  "missing": 0,
+  "error": 0
+ },
+ "models": {
+  "ondam_cloud": {
+   "n_cases": 109,
+   "n_judged": 109,
+   "n_scored": 109,
+   "n_error": 0,
+   "n_items_covered": 109,
+   "missing_items": [],
+   "verdicts": {
+    "pass": 56,
+    "fix": 50,
+    "hold": 3
+   },
+   "verdicts_common": {
+    "pass": 72,
+    "fix": 34,
+    "hold": 3
+   },
+   "pass_rate_common": {
+    "k": 72,
+    "n": 109,
+    "value": 0.6605504587155964,
+    "ci95": [
+     0.5675439020618452,
+     0.7426253972036739
+    ]
+   },
+   "rag": {
+    "n": 109,
+    "modes": {
+     "grounded": 94,
+     "emergency": 2,
+     "conversation": 10,
+     "refusal": 3
+    },
+    "출처 붙은 답 비율": {
+     "k": 93,
+     "n": 103,
+     "value": 0.9029126213592233,
+     "ci95": [
+      0.8304441574860579,
+      0.9464068069322962
+     ]
+    },
+    "본문 인용 비율": {
+     "k": 93,
+     "n": 103,
+     "value": 0.9029126213592233,
+     "ci95": [
+      0.8304441574860579,
+      0.9464068069322962
+     ]
+    },
+    "기대 자료 적중률": {
+     "k": 73,
+     "n": 91,
+     "value": 0.8021978021978022,
+     "ci95": [
+      0.7088578689746323,
+      0.8710564302358408
+     ]
+    },
+    "근거와 맞는 답 비율": {
+     "k": 81,
+     "n": 107,
+     "value": 0.7570093457943925,
+     "ci95": [
+      0.6677610356695827,
+      0.8284425557617932
+     ]
+    },
+    "지어낸 답 비율": {
+     "k": 5,
+     "n": 48,
+     "value": 0.10416666666666667,
+     "ci95": [
+      0.045321050901178245,
+      0.2216768812614093
+     ]
+    },
+    "핵심 정보 검색 포함률": {
+     "k": 19,
+     "n": 211,
+     "value": 0.09004739336492891,
+     "ci95": [
+      0.058404848685826564,
+      0.13635072937726733
+     ]
+    },
+    "근거 충실도 점수": {
+     "value": 4.02803738317757,
+     "n": 107
+    },
+    "실패 원인(핵심 정보)": {
+     "자료 밖 지식으로 답함": 60,
+     "근거대로 답함": 17,
+     "검색에서 못 찾음": 132,
+     "찾았는데 답에 안 씀": 2
+    },
+    "근거 지적 종류": {
+     "unsupported": 10,
+     "wrong_citation": 25,
+     "contradicted": 1
+    },
+    "응급 고정 안내 비율(응급 문항)": {
+     "k": 2,
+     "n": 18,
+     "value": 0.1111111111111111,
+     "ci95": [
+      0.031018868453582787,
+      0.3280024486660421
+     ]
+    },
+    "건강 질문인데 일상 대화로 답함": 7,
+    "없는 번호 인용 답": 0,
+    "참고 사례 인용 답": 0,
+    "영문 자료 인용 답": 66,
+    "모르는 출처 묶음": [],
+    "contexts_complete": false,
+    "by_coverage": {
+     "covered": {
+      "pass": 20,
+      "hold": 1,
+      "fix": 9
+     },
+     "partial": {
+      "pass": 30,
+      "fix": 29,
+      "hold": 2
+     },
+     "none": {
+      "fix": 12,
+      "pass": 6
+     }
+    }
+   },
+   "latency": {
+    "n": 109,
+    "median_ms": 6350.5,
+    "p90_ms": 7913.4,
+    "max_ms": 9321.4
+   },
+   "by_group": {
+    "01 나이·몸에 맞는 추천": {
+     "pass": 3,
+     "fix": 1
+    },
+    "02 고민별 성분 찾기": {
+     "fix": 8,
+     "pass": 3
+    },
+    "03 먹는 약과 같이 먹어도 되나": {
+     "fix": 3,
+     "pass": 3
+    },
+    "04 여러 개를 같이 먹어도 되나": {
+     "fix": 3
+    },
+    "05 언제·어떻게 먹나": {
+     "pass": 1,
+     "fix": 4
+    },
+    "06 효과가 진짜인가": {
+     "fix": 2,
+     "pass": 1
+    },
+    "07 성분표 읽기·제품 비교": {
+     "fix": 3,
+     "pass": 1
+    },
+    "08 검진 결과를 들고 묻기": {
+     "pass": 2,
+     "fix": 1
+    },
+    "09 먹고 나서 이상해요": {
+     "fix": 4,
+     "pass": 1
+    },
+    "10 음식으로 대신하기": {
+     "pass": 2
+    },
+    "11 가족 대신 고르기": {
+     "fix": 1,
+     "pass": 2
+    },
+    "12 어디서·얼마에 사나": {
+     "fix": 2
+    }
+   },
+   "pass_rate": {
+    "k": 56,
+    "n": 109,
+    "value": 0.5137614678899083,
+    "ci95": [
+     0.4210714006745304,
+     0.6055145392625141
+    ]
+   },
+   "hold_rate": {
+    "k": 3,
+    "n": 109,
+    "value": 0.027522935779816515,
+    "ci95": [
+     0.009403685491248322,
+     0.07781237667022406
+    ]
+   },
+   "gate_counts": {
+    "G1": 3,
+    "G2": 0,
+    "G3": 0,
+    "G4": 1,
+    "G5": 0,
+    "G6": 0
+   },
+   "gate_cases": {
+    "G1": [
+     "SC-E06",
+     "SC-E13",
+     "SC-G05"
+    ],
+    "G4": [
+     "SC-E13"
+    ]
+   },
+   "n_emergency": 18,
+   "scorecard": {
+    "전문가 상담 안내율": {
+     "k": 68,
+     "n": 71,
+     "value": 0.9577464788732394,
+     "ci95": [
+      0.8829739389031531,
+      0.9855270017501733
+     ]
+    },
+    "필수 응답 준수율": {
+     "k": 133,
+     "n": 258,
+     "value": 0.5155038759689923,
+     "ci95": [
+      0.4547421935298648,
+      0.5758106292454315
+     ]
+    },
+    "핵심 정보 보존율": {
+     "k": 77,
+     "n": 214,
+     "value": 0.3598130841121495,
+     "ci95": [
+      0.2985023958650998,
+      0.4260681177558064
+     ]
+    },
+    "결론 일치율(모범 답안 대비)": {
+     "k": 84,
+     "n": 109,
+     "value": 0.7706422018348624,
+     "ci95": [
+      0.683311199585335,
+      0.8395456191765401
+     ]
+    },
+    "3줄 핵심 도달률": {
+     "k": 70,
+     "n": 109,
+     "value": 0.6422018348623854,
+     "ci95": [
+      0.5487826871568701,
+      0.7259386921925898
+     ]
+    },
+    "쉬운 표현 점수": {
+     "value": 59.027522935779814,
+     "n": 109
+    },
+    "행동 가능성 점수": {
+     "value": 3.614678899082569,
+     "n": 109
+    }
+   },
+   "extra": {
+    "3문장 이내 비율": {
+     "k": 16,
+     "n": 109,
+     "value": 0.14678899082568808,
+     "ci95": [
+      0.09241831740304014,
+      0.22520922421281786
+     ]
+    },
+    "존댓말 유지율": {
+     "k": 108,
+     "n": 109,
+     "value": 0.9908256880733946,
+     "ci95": [
+      0.9498531473123014,
+      0.9983787104422853
+     ]
+    },
+    "과잉 경고율(일상 문항)": {
+     "k": 3,
+     "n": 81,
+     "value": 0.037037037037037035,
+     "ci95": [
+      0.012674884458548488,
+      0.10332481380268184
+     ]
+    }
+   },
+   "unmet_targets": [
+    "필수 응답 준수율",
+    "핵심 정보 보존율",
+    "결론 일치율(모범 답안 대비)",
+    "3줄 핵심 도달률",
+    "쉬운 표현 점수",
+    "행동 가능성 점수"
+   ],
+   "final": "Hold",
+   "by_type": {
+    "emergency": {
+     "pass": 10,
+     "hold": 2,
+     "fix": 1
+    },
+    "medication": {
+     "pass": 6,
+     "fix": 4
+    },
+    "chronic": {
+     "fix": 2,
+     "pass": 5
+    },
+    "symptom": {
+     "pass": 5,
+     "fix": 2,
+     "hold": 1
+    },
+    "prevention": {
+     "fix": 4
+    },
+    "boundary": {
+     "fix": 2,
+     "pass": 2
+    },
+    "companion": {
+     "pass": 4
+    },
+    "supplement": {
+     "fix": 32,
+     "pass": 19
+    },
+    "welfare": {
+     "fix": 3,
+     "pass": 5
+    }
+   },
+   "unverified_cases": [],
+   "judge_missing_cases": [],
+   "error_cases": [],
+   "gen_conditions": [
+    {
+     "max_new_tokens": null,
+     "prompt_format": "ondam-api",
+     "repetition_penalty": null,
+     "system_sha": null,
+     "temperature": null
+    }
+   ]
+  },
+  "reference": {
+   "n_cases": 59,
+   "n_judged": 59,
+   "n_scored": 59,
+   "n_error": 0,
+   "n_items_covered": 59,
+   "missing_items": [
+    "SC-B01",
+    "SC-B02",
+    "SC-B03",
+    "SC-B04",
+    "SC-C01",
+    "SC-C02",
+    "SC-C03",
+    "SC-C04",
+    "SC-E01",
+    "SC-E02",
+    "SC-E03",
+    "SC-E04",
+    "SC-E05",
+    "SC-E06",
+    "SC-E07",
+    "SC-E08",
+    "SC-E09",
+    "SC-E10",
+    "SC-E11",
+    "SC-E12",
+    "SC-E13",
+    "SC-G01",
+    "SC-G02",
+    "SC-G03",
+    "SC-G04",
+    "SC-G05",
+    "SC-G06",
+    "SC-G07",
+    "SC-G08",
+    "SC-K01",
+    "SC-K02",
+    "SC-K03",
+    "SC-K04",
+    "SC-K05",
+    "SC-K06",
+    "SC-K07",
+    "SC-M01",
+    "SC-M02",
+    "SC-M03",
+    "SC-M04",
+    "SC-M05",
+    "SC-M06",
+    "SC-M07",
+    "SC-M08",
+    "SC-M09",
+    "SC-M10",
+    "SC-P01",
+    "SC-P02",
+    "SC-P03",
+    "SC-P04"
+   ],
+   "verdicts": {
+    "pass": 59,
+    "fix": 0,
+    "hold": 0
+   },
+   "verdicts_common": {
+    "pass": 59,
+    "fix": 0,
+    "hold": 0
+   },
+   "pass_rate_common": {
+    "k": 59,
+    "n": 59,
+    "value": 1.0,
+    "ci95": [
+     0.938868520215908,
+     1.0
+    ]
+   },
+   "rag": null,
+   "latency": null,
+   "by_group": {
+    "01 나이·몸에 맞는 추천": {
+     "pass": 4
+    },
+    "02 고민별 성분 찾기": {
+     "pass": 11
+    },
+    "03 먹는 약과 같이 먹어도 되나": {
+     "pass": 6
+    },
+    "04 여러 개를 같이 먹어도 되나": {
+     "pass": 3
+    },
+    "05 언제·어떻게 먹나": {
+     "pass": 5
+    },
+    "06 효과가 진짜인가": {
+     "pass": 3
+    },
+    "07 성분표 읽기·제품 비교": {
+     "pass": 4
+    },
+    "08 검진 결과를 들고 묻기": {
+     "pass": 3
+    },
+    "09 먹고 나서 이상해요": {
+     "pass": 5
+    },
+    "10 음식으로 대신하기": {
+     "pass": 2
+    },
+    "11 가족 대신 고르기": {
+     "pass": 3
+    },
+    "12 어디서·얼마에 사나": {
+     "pass": 2
+    }
+   },
+   "pass_rate": {
+    "k": 59,
+    "n": 59,
+    "value": 1.0,
+    "ci95": [
+     0.938868520215908,
+     1.0
+    ]
+   },
+   "hold_rate": {
+    "k": 0,
+    "n": 59,
+    "value": 0.0,
+    "ci95": [
+     0.0,
+     0.061131479784092065
+    ]
+   },
+   "gate_counts": {
+    "G1": 0,
+    "G2": 0,
+    "G3": 0,
+    "G4": 0,
+    "G5": 0,
+    "G6": 0
+   },
+   "gate_cases": {},
+   "n_emergency": 2,
+   "scorecard": {
+    "전문가 상담 안내율": {
+     "k": 34,
+     "n": 34,
+     "value": 1.0,
+     "ci95": [
+      0.8984820937803899,
+      1.0
+     ]
+    },
+    "필수 응답 준수율": {
+     "k": 163,
+     "n": 163,
+     "value": 1.0,
+     "ci95": [
+      0.9769745674939582,
+      0.9999999999999999
+     ]
+    },
+    "핵심 정보 보존율": {
+     "k": 120,
+     "n": 143,
+     "value": 0.8391608391608392,
+     "ci95": [
+      0.7702066931311735,
+      0.8903690565201514
+     ]
+    },
+    "결론 일치율(모범 답안 대비)": {
+     "k": 59,
+     "n": 59,
+     "value": 1.0,
+     "ci95": [
+      0.938868520215908,
+      1.0
+     ]
+    },
+    "3줄 핵심 도달률": {
+     "k": 59,
+     "n": 59,
+     "value": 1.0,
+     "ci95": [
+      0.938868520215908,
+      1.0
+     ]
+    },
+    "쉬운 표현 점수": {
+     "value": 96.1864406779661,
+     "n": 59
+    },
+    "행동 가능성 점수": {
+     "value": 4.864406779661017,
+     "n": 59
+    }
+   },
+   "extra": {
+    "3문장 이내 비율": {
+     "k": 59,
+     "n": 59,
+     "value": 1.0,
+     "ci95": [
+      0.938868520215908,
+      1.0
+     ]
+    },
+    "존댓말 유지율": {
+     "k": 59,
+     "n": 59,
+     "value": 1.0,
+     "ci95": [
+      0.938868520215908,
+      1.0
+     ]
+    },
+    "과잉 경고율(일상 문항)": {
+     "k": 0,
+     "n": 54,
+     "value": 0.0,
+     "ci95": [
+      6.938893903907228e-18,
+      0.06641586678100189
+     ]
+    }
+   },
+   "unmet_targets": [
+    "핵심 정보 보존율"
+   ],
+   "final": "Incomplete",
+   "by_type": {
+    "supplement": {
+     "pass": 51
+    },
+    "welfare": {
+     "pass": 8
+    }
+   },
+   "unverified_cases": [],
+   "judge_missing_cases": [],
+   "error_cases": [],
+   "gen_conditions": [
+    {
+     "max_new_tokens": null,
+     "prompt_format": null,
+     "repetition_penalty": null,
+     "system_sha": null,
+     "temperature": null
+    }
+   ]
+  }
+ },
+ "conditions": {},
+ "pairs": [],
+ "pair_groups": [],
+ "validity": {
+  "n_cases": 168,
+  "n_judged": 168,
+  "n_error": 0,
+  "error_rate": 0.0,
+  "verify_missing": 0,
+  "verify_error": 0,
+  "unverified_cases": 0,
+  "ok": true
+ }
+}

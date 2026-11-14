@@ -1,10 +1,11 @@
 """어르신 사용자 실험 — 준비물 만들기와 결과 분석 (LLM 채점과 따로, 실제 타깃 고객에게 평가받는다).
 
 실행안 정본 = docs/user_study/README.md. 이 모듈은 그 실행안의 준비물을 만들고 결과를 계산한다.
-- materials : autoqa 회차의 Teacher·KD·FT 답으로 참가자별 실험 묶음을 만든다 (순서 상쇄 · 블라인드 · 큰 글씨 카드 ·
-              진행 대본 · 관찰 기록지 · 입력 서식). Hold·검증 전 답은 어르신에게 들려주지 않는다 — 그 문항은 바꾼다.
+- materials : autoqa 회차의 세 조건 답(기본: 온담 로컬+RAG · ChatGPT luna 6.1 · 검색 끈 로컬)으로 참가자별 실험 묶음을
+              만든다 (순서 상쇄 · 블라인드 · 큰 글씨 카드 · 진행 대본 · 관찰 기록지 · 입력 서식).
+              Hold·검증 전 답은 어르신에게 들려주지 않는다 — 그 문항은 바꾼다.
 - analyze   : 채운 입력 서식 → 조건별 행동 이해율·보기 정답률·만족도, Friedman·Wilcoxon(정확검정)·Holm 보정,
-              KD 와 Teacher 차이의 신뢰구간, autoqa 기술 지표와 어르신 지표의 상관(Proposal RQ1).
+              주 비교(온담 − ChatGPT, 지식증류 때는 KD − Teacher) 차이의 신뢰구간, autoqa 기술 지표와 어르신 지표의 상관(RQ1).
 통계는 의존성 없이 직접 계산한다 (팀원 PC 에 scipy 가 없어도 돈다). 리커트(5점)는 순서형이라 t-검정을 쓰지 않는다.
 """
 
@@ -26,15 +27,21 @@ from .golden import ACTIONS
 
 # ───────────────────────────── 실행안의 기본값 (docs/user_study/README.md §2) ─────────────────────────────
 
+# 2026-11-14: 고객이 가장 많이 묻는 영양제 질문 2개(먹는 약과 같이·여러 개 같이)를 일반 문항에 넣었다 (G01·P01 대신)
 MAIN_ITEMS = ["SC-E01", "SC-E06", "SC-K01", "SC-E09",                   # 위험 4
-              "SC-M01", "SC-K03", "SC-K06", "SC-G01", "SC-P01", "SC-B02"]  # 일반 6
+              "SC-M01", "SC-K03", "SC-K06", "SC-S16", "SC-S23", "SC-B02"]  # 일반 6
 PRACTICE_ITEM = "SC-G06"                                                 # 연습 (집계 안 함)
 PREF_ITEMS = ["SC-K02", "SC-G04"]                                        # 세 답을 다 듣고 고르기
 # Hold 가 나온 문항을 바꿀 후보 (같은 위험도끼리). 자살 관련(E10·E11)·민감 주제는 넣지 않는다.
 SPARE = {"risk": ["SC-E08", "SC-E03", "SC-M02", "SC-K05", "SC-G05"],
-         "routine": ["SC-G06", "SC-K04", "SC-P03", "SC-M05", "SC-G02"]}
-DEFAULT_CONDITIONS = {"teacher": "teacher_ft", "kd": "student_kd", "ft": "student_ft"}
-MARGIN_VS_TEACHER = 0.10    # "큰 모델과 이해도 차이가 거의 없음" 판단선: KD−Teacher 행동 이해율 차이의 95% 하한 > −10%p
+         "routine": ["SC-G01", "SC-P01", "SC-G06", "SC-M05", "SC-G02"]}
+# 조건 이름 = 회차의 모델 이름 (RAG 전환 2026-11-14). 모델 이름이 다르면 study-materials --conditions 로 바꾼다.
+DEFAULT_CONDITIONS = {"ondam": "ondam_local", "chatgpt": "chatgpt_luna61", "norag": "local_norag"}
+# 주 비교 — "온담이 ChatGPT 만큼 알아듣기 쉬운가": (앞 − 뒤) 행동 이해율 차이의 95% 하한 > −10%p 면 "차이가 거의 없음".
+# 지식증류 때 묶음(kd·teacher)도 그대로 읽는다.
+PRIMARY_PAIRS = (("ondam", "chatgpt"), ("kd", "teacher"))
+MARGIN_VS_REFERENCE = 0.10
+MARGIN_VS_TEACHER = MARGIN_VS_REFERENCE      # 예전 이름
 TARGETS = {"행동 이해율": 0.90, "보기 정답률": 0.90, "만족도(100점)": 80.0}   # Proposal §5 시니어 실효성 목표
 
 # 보기 문항의 선택지 — 답이 권한 행동의 긴급도 사다리 (어르신이 읽는 말)
@@ -480,12 +487,15 @@ def analyze(data_csv: str | Path, key_json: str | Path, *, run_dir: str | Path |
             for k_ in pw:
                 pw[k_]["p_holm"] = adj[k_]
             res["pairwise"] = pw
-            if "kd" in conds and "teacher" in conds:
-                a, b = conds.index("kd"), conds.index("teacher")
+            pair = next(((x, y) for x, y in PRIMARY_PAIRS if x in conds and y in conds), None)
+            if pair:
+                a, b = conds.index(pair[0]), conds.index(pair[1])
                 m, lo, hi = bootstrap_diff([row[a] for row in table], [row[b] for row in table])
                 scale = 100.0 if name == "만족도(100점)" else 1.0
-                res["kd_minus_teacher"] = {"mean": m, "ci95": [lo, hi],
-                                           "almost_same": (lo > -MARGIN_VS_TEACHER * scale) if not math.isnan(lo) else None}
+                res["primary_diff"] = {"pair": list(pair), "mean": m, "ci95": [lo, hi],
+                                       "almost_same": (lo > -MARGIN_VS_REFERENCE * scale) if not math.isnan(lo) else None}
+                if pair == ("kd", "teacher"):
+                    res["kd_minus_teacher"] = res["primary_diff"]      # 예전 이름
         out["metrics"][name] = res
     # 재진술 판정 두 사람 일치도 (같은 답을 두 사람이 따로 판정)
     pairs = [(t["restate"], t["restate2"]) for t in trials if t["restate"] is not None and t["restate2"] is not None]
@@ -542,9 +552,10 @@ def render_analysis_md(rep: dict) -> str:
         pct = name != "만족도(100점)"
         means = " · ".join(f"{c} {_fmt(m['by_condition'][c]['mean'], pct)}" for c in conds)
         L.append(f"- **{name}** (참가자 {m['n_participants']}명): {means}")
-    km = rep["metrics"].get("행동 이해율", {}).get("kd_minus_teacher")
+    km = rep["metrics"].get("행동 이해율", {}).get("primary_diff")
     if km:
-        L.append(f"- KD − Teacher 행동 이해율 {_fmt(km['mean'], True)} (95% 구간 {_fmt(km['ci95'][0], True)}~{_fmt(km['ci95'][1], True)}) → "
+        x, y = km["pair"]
+        L.append(f"- {x} − {y} 행동 이해율 {_fmt(km['mean'], True)} (95% 구간 {_fmt(km['ci95'][0], True)}~{_fmt(km['ci95'][1], True)}) → "
                  + ("**차이가 거의 없음** (하한이 −10%p 보다 위)" if km["almost_same"] else "차이가 거의 없다고 말할 수 없음"))
     if rep["errors"]:
         L.append(f"- ⚠ 읽지 못한 기록 {len(rep['errors'])}건 — 고친 뒤 다시 계산한다")

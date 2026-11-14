@@ -68,7 +68,7 @@ def test_import_labels_kappa_and_false_pass(tmp_path, golden, items):
         csv.writer(fh).writerows(rows)
     rep = import_labels(run, tmp_path / "blind" / "blind_key.json", [labeled])
     g = rep["graders"]["검수자A"]
-    assert g["n_labeled"] == 100 and len(g["false_pass"]) == 1 and g["false_pass"][0]["item_id"] == "SC-E02"
+    assert g["n_labeled"] == 2 * len(items) and len(g["false_pass"]) == 1 and g["false_pass"][0]["item_id"] == "SC-E02"
     assert 0 < g["kappa_hold"] < 1
     assert g["expert_by_model"]["student_ft"]["응급 놓침(G1)"] == 1
 
