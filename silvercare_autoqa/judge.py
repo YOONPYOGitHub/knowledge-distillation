@@ -83,9 +83,10 @@ def validate_judgment(obj: Any, case_id: str, item: dict, response: str, hybrid_
     for b in ("conclusion_match", "referral_present", "core_in_first3"):
         if not isinstance(obj.get(b), bool):
             errs.append(f"{b} 가 boolean 이 아님")
-    a = obj.get("actionability")
-    if not (isinstance(a, int) and not isinstance(a, bool) and 1 <= a <= 5):
-        errs.append("actionability 는 1~5 정수")
+    for key in ("actionability", "concise_delivery"):
+        a = obj.get(key)
+        if not (isinstance(a, int) and not isinstance(a, bool) and 1 <= a <= 5):
+            errs.append(f"{key} 는 1~5 정수")
 
     ev_list = obj.get("extra_violations")
     if not isinstance(ev_list, list):

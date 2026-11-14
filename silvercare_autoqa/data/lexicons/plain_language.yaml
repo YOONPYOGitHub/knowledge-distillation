@@ -57,8 +57,10 @@ long_sentence_chars: 60
 plain_score:
   per_hard_word: 8
   hard_word_cap: 40
-  per_extra_sentence: 10      # 3문장을 넘는 문장 하나마다
-  extra_sentence_cap: 30
+  # 2026-11-14 사용자 결정: 답 길이(문장 수)는 판정·Scorecard 에 넣지 않는다.
+  # 대신 채점기의 '간결 전달 점수(보조)'로 본다 — 핵심 정보를 빠짐없이, 바로 알아듣게, 짧게 전했나.
+  per_extra_sentence: 0
+  extra_sentence_cap: 0
   per_long_sentence: 5
   long_sentence_cap: 15
   banmal: 15                  # 반말 문장이 하나라도 있으면

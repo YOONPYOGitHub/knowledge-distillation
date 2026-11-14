@@ -346,3 +346,17 @@ def test_conditional_escalation_must_can_be_refuted_with_conditional_quote(items
     e01 = items["SC-E01"]
     now_must = next(m for m in e01["must_include"] if m["gate"] == "escalation")
     assert conditional_escalation_fids(e01, [{"fid": "F1", "gate": "G1", "ref": now_must["id"], "needs_verify": True}]) == []
+
+
+def test_length_is_support_score_not_a_verdict(items, golden):
+    """답 길이는 판정이 아니라 보조 점수다 (2026-11-14 사용자 결정). 문장이 많아도 쉬운 표현 점수가 깎이지 않고,
+    채점기의 간결 전달 점수는 모델 판정에 들어가지 않는다."""
+    from silvercare_autoqa.metrics import TARGETS, SUPPORT_TARGETS
+
+    long = "약사에게 물어보세요. 상자를 보여 주세요. 약 봉투도 가져가세요. 드시던 약은 그대로 드세요. 궁금하면 다시 물어보세요."
+    d = det_checks(items["SC-M08"], long)
+    assert d.kpi["n_sentences"] == 5 and d.kpi["plain_score"] == 100
+    assert "간결 전달 점수(보조)" in SUPPORT_TARGETS and "간결 전달 점수(보조)" not in TARGETS
+    bad = make_judgment(items["SC-M08"], long)
+    bad["concise_delivery"] = 9
+    assert any("concise_delivery" in e for e in validate_judgment(bad, "c1", items["SC-M08"], long, []))

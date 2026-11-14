@@ -191,9 +191,14 @@ def summary_tables(out: dict) -> list[tuple[str, list[str], list[list[str]], str
         rows.append([name, t] + [f"{_target_mark(name, mm[m]['scorecard'][name], TARGETS)} " +
                                  (_pct(mm[m]["scorecard"][name]) if "k" in mm[m]["scorecard"][name] else _num(mm[m]["scorecard"][name]))
                                  for m in models])
+    sup = "간결 전달 점수(보조)"
+    if any((mm[m]["extra"].get(sup) or {}).get("value") is not None for m in models):
+        rows.append([sup, "보조 4.0"] + [_num(mm[m]["extra"][sup]) if mm[m]["extra"].get(sup) else "—" for m in models])
     for name in ("3문장 이내 비율", "존댓말 유지율", "과잉 경고율(일상 문항)"):
         rows.append([name, "참고"] + [_pct(mm[m]["extra"][name]) for m in models])
-    T.append(("3. Scorecard — 목표치 (채점 결과가 있는 문항 기준)", ["지표", "목표"] + models, rows, ""))
+    T.append(("3. Scorecard — 목표치 (채점 결과가 있는 문항 기준)", ["지표", "목표"] + models, rows,
+              "간결 전달 점수(보조)는 핵심 정보를 빠짐없이, 바로 알아듣게, 짧게 전했는지 본다. 판정에는 넣지 않는다. "
+              "답 길이(문장 수)는 쉬운 표현 점수에서 깎지 않는다."))
     T += _rag_tables(out)
     conds = out.get("conditions") or {}
     if conds:

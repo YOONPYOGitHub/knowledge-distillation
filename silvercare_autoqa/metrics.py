@@ -42,6 +42,8 @@ REF_TARGETS = {
     "핵심 정보 보존율(비교 모델 대비)": (0.90, ">=", "Proposal §5 기술 목표 (90% 이상)"),
 }
 TEACHER_TARGETS = REF_TARGETS          # 예전 이름 (지식증류 때 코드·시험 호환)
+# 보조 점수 — 판정·모델 판정에 넣지 않는다 (2026-11-14 사용자 결정: 답 길이는 must 가 아니라 시니어 맞춤 직관성의 보조점수)
+SUPPORT_TARGETS = {"간결 전달 점수(보조)": (4.0, ">=", "핵심 정보를 빠짐없이, 바로 알아듣게, 짧게 전했나 (채점기 1~5)")}
 # RAG 지표 잠정 목표 — 팀 합의 전. 모델 판정에는 넣지 않는다 (리포트에 '잠정'으로 표시)
 RAG_TARGETS = {
     "근거와 맞는 답 비율": (0.95, ">=", "근거 자료와 어긋남·잘못된 인용·사례 인용이 없는 답"),
@@ -118,6 +120,7 @@ def _case_metrics(case: dict, item: dict) -> dict:
         met = {m["id"]: False for m in musts}
         pres = {k["id"]: False for k in facts}
         action, urg, concl, referral, first3, actionability = "none", "under", False, False, False, 1
+        concise = 1
     else:
         met = {r["id"]: bool(r["met"]) for r in j["must_include"]}
         refuted = {f["ref"] for f in (case.get("result") or {}).get("findings") or [] if f.get("status") == "refuted"}
@@ -128,8 +131,9 @@ def _case_metrics(case: dict, item: dict) -> dict:
         pres = {r["id"]: bool(r["preserved"]) for r in j["key_facts"]}
         action, urg = j["response_action"], j["urgency_vs_expected"]
         concl, referral, first3, actionability = j["conclusion_match"], j["referral_present"], j["core_in_first3"], j["actionability"]
+        concise = j.get("concise_delivery")          # 예전 회차(2026-11-14 이전)에는 없다
     return {"met": met, "pres": pres, "action": action, "urg": urg, "concl": concl, "referral": referral,
-            "first3": first3, "actionability": actionability, "plain": kpi.get("plain_score", 0),
+            "first3": first3, "actionability": actionability, "concise": concise, "plain": kpi.get("plain_score", 0),
             "within3": kpi.get("within_3_sentences", False), "honorific": kpi.get("honorific_ok", False),
             "hard_words": len(kpi.get("hard_words") or [])}
 
@@ -160,6 +164,7 @@ def model_metrics(cases: list[dict], items: dict[str, dict]) -> dict[str, Any]:
     must_k = must_n = fact_k = fact_n = 0
     concl_k = first3_k = ref_k = ref_n = within3_k = hon_k = over_k = over_n = 0
     plain_sum = act_sum = 0.0
+    concise_vals: list[float] = []
     by_type: dict[str, Counter] = defaultdict(Counter)
     for c in full:
         it = items[c["item_id"]]
@@ -174,6 +179,8 @@ def model_metrics(cases: list[dict], items: dict[str, dict]) -> dict[str, Any]:
         hon_k += int(cm["honorific"])
         plain_sum += cm["plain"]
         act_sum += cm["actionability"]
+        if cm["concise"] is not None:
+            concise_vals.append(cm["concise"])
         if needs_referral(it):
             ref_n += 1
             ref_k += int(cm["referral"])
@@ -193,6 +200,8 @@ def model_metrics(cases: list[dict], items: dict[str, dict]) -> dict[str, Any]:
         "행동 가능성 점수": {"value": (act_sum / n) if n else None, "n": n},
     }
     extra = {
+        "간결 전달 점수(보조)": {"value": (sum(concise_vals) / len(concise_vals)) if concise_vals else None,
+                             "n": len(concise_vals)},
         "3문장 이내 비율": rate(within3_k, n),
         "존댓말 유지율": rate(hon_k, n),
         "과잉 경고율(일상 문항)": rate(over_k, over_n),

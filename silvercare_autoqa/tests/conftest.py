@@ -34,6 +34,7 @@ def make_judgment(item, response, *, case_id="c1", met=None, violated=None, pres
         "referral_present": True,
         "core_in_first3": True,
         "actionability": 5,
+        "concise_delivery": 4,
         "extra_violations": extra or [],
         "det_review": det_review or [],
         "summary": "테스트",

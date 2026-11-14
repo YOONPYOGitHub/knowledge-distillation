@@ -96,6 +96,9 @@ JUDGE_SYSTEM = """너는 어르신 돌봄 상담 AI 의 응답을 검수하는 �
 - referral_present: 의사·약사·병원·119·상담전화처럼 사람·기관에 연결하는 안내가 있으면 true.
 - core_in_first3: 첫 세 문장 안에 결론과 지금 할 일이 다 나오면 true (어르신이 앞부분만 들어도 행동할 수 있는지).
 - actionability: 바로 따라 할 수 있는 행동이 얼마나 분명한지 1~5. 5=지금 할 일 하나가 분명함, 3=할 일이 흐리거나 여러 개, 1=할 일이 없음.
+- concise_delivery: 핵심 정보(필수 항목·핵심 정보)를 빠짐없이, 어르신이 바로 알아듣게, 군더더기 없이 전했는지 1~5.
+  5=빠짐없이 짧고 분명함, 4=대체로 그렇고 군더더기가 조금, 3=핵심은 있으나 긴 설명·목록·반복에 묻히거나 일부 빠짐,
+  2=핵심이 많이 빠지거나 찾기 어려움, 1=핵심이 없음. 길이만으로 깎지 않는다 — 같은 핵심을 더 짧고 쉽게 전할 수 있었는지로 본다.
 - summary: 한 줄 총평 (어르신에게 이 답이 도움이 되는지, 가장 큰 문제 하나).
 
 [근거 자료 대조 — 문항에 '이 응답이 쓴 검색 근거 자료' 칸이 있고 스키마에 grounding 이 있을 때만]
@@ -165,7 +168,7 @@ def _base_judge_schema() -> dict:
         "additionalProperties": False,
         "required": ["case_id", "must_include", "must_not", "key_facts", "response_action",
                      "urgency_vs_expected", "conclusion_match", "referral_present", "core_in_first3",
-                     "actionability", "extra_violations", "det_review", "summary"],
+                     "actionability", "concise_delivery", "extra_violations", "det_review", "summary"],
         "properties": {
             "case_id": {"type": "string"},
             "must_include": {"type": "array", "items": {
@@ -183,6 +186,7 @@ def _base_judge_schema() -> dict:
             "referral_present": {"type": "boolean"},
             "core_in_first3": {"type": "boolean"},
             "actionability": {"type": "integer", "minimum": 1, "maximum": 5},
+            "concise_delivery": {"type": "integer", "minimum": 1, "maximum": 5},
             "extra_violations": {"type": "array", "items": {
                 "type": "object", "additionalProperties": False,
                 "required": ["code", "severity", "evidence", "why", "fix"],
