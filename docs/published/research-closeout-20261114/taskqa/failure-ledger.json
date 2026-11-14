@@ -1,0 +1,79 @@
+{
+  "research_negative": [
+    {
+      "trial": "qa-v5-optimized / qa-order-answer-first",
+      "outcome": "Teacher gate failed",
+      "observed": "Teacher answerable F1 advantage 0.0257609773738805 < required 0.05; CI lower <0; overall exact and answerability lower; impossible false-answer rate higher",
+      "causal_limit": "does not identify gradient conflict, inadequate capacity, or KD failure"
+    },
+    {
+      "trial": "qa-order-abstain-first",
+      "outcome": "Teacher gate failed, usefulness/abstention tradeoff",
+      "observed": "Teacher impossible false answers 0/31 but answerable false abstention66/93; Student1/31 and60/93",
+      "causal_limit": "observed decoding intervention, not universal impossibility or medical safety success"
+    }
+  ],
+  "execution_incomplete": [
+    {
+      "trial": "qa-predeployment-blocked",
+      "cause": "legacy enabled workload occupied GPU",
+      "kind": "confirmed admission conflict"
+    },
+    {
+      "trial": "qa-v1-import-failure",
+      "cause": "no writable tempdir under strict service sandbox",
+      "kind": "confirmed exception before model load"
+    },
+    {
+      "trial": "qa-v2 / qa-v3",
+      "cause": "strict parser rejected nonempty abstention",
+      "kind": "confirmed output-contract failure; no partial scoring"
+    },
+    {
+      "trial": "qa-v4-grammar",
+      "cause": "3600-second bounded unit termination before full paired coverage",
+      "kind": "confirmed timeout, no efficacy estimate"
+    },
+    {
+      "trial": "train-teacher-FT / train-A-gold-CE",
+      "cause": "interruptions, publication/restore boundaries and eventual explicit user pause",
+      "kind": "incomplete experiment, not completed negative KD result"
+    }
+  ],
+  "environment_metadata": [
+    {
+      "source_id": "src-2c0f97d088bd222b",
+      "source_sha256": "2c0f97d088bd222b1d4cea0ce8ef7965b2bec7fe3cfc59ecb4b3b691ec04137a",
+      "source_bytes": 885,
+      "fields": {
+        "/projection/statuses/0/code": "ProvisioningState/failed/OverconstrainedAllocationRequest",
+        "/projection/statuses/0/message": "Allocation failed. VM(s) with the following constraints cannot be allocated, because the condition is too restrictive. Please remove some constraints and try again. Constraints applied are:\n  - Low Priority VMs\n  - Preemptible VMs (VM might be preempted by another VM with a higher priority)\n  - VM Size\n"
+      }
+    },
+    {
+      "source_id": "src-cfa06bbaa4390237",
+      "source_sha256": "cfa06bbaa4390237c0313bfeb402ca1e7969335bd09dd59a5c7c18157cd4a0e5",
+      "source_bytes": 370,
+      "fields": {
+        "/compact_custody_bytes": 23677,
+        "/existing_custody_limit_bytes": 16384
+      }
+    }
+  ],
+  "teacher_stall": {
+    "confirmed": "bounded samples: first recovery update charged1/completed0; one busy CPU thread, stable IO and RAM, GPU utilization0 in sampled windows; optional FLA fast-path unavailable/reference fallback supported by source and saved environment",
+    "hypotheses": "exact long-running Python/native frame unlocated; first-call CUDA solver/JIT or native host loop possible; missing optimized path not a certified explanation for entire stall",
+    "uncompleted": "FLA candidate installation and six CUDA qualification cases not executed; do not claim a fix",
+    "source_sha256": "ad7b0e5b61e6906dd6d56e46e540892391e85fd2ddbfab15d3f5d4ea3027dfbe",
+    "source_line_selector": "1-end"
+  },
+  "unmeasured": [
+    "Azure actual cost",
+    "whole experiment wall-time and GPU compute",
+    "medical safety",
+    "senior-user benefit",
+    "whole-app device latency/RAM/thermal",
+    "new adapted teacher QA scores"
+  ],
+  "stale_snapshot_correction": "Earlier public 2026-11-05 document says Student A/B/C each zero. Later original receipts certify A1000updates/latest1000/best900 publication; B/C still unexecuted and selected restore evaluation incomplete."
+}

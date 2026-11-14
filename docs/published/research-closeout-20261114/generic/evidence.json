@@ -1,0 +1,2810 @@
+{
+  "schema_version": 1,
+  "scope": "원본 read-only metadata 감사; 새 학습/채점/네트워크/원문/모델/QA payload 접근 없음. 계산은 aggregate 산술만.",
+  "repository_head": "dbdaa7d718f07fc8d68cbd4593a5c9eb2e9acb88",
+  "cohort": {
+    "source": "results/published/generic-kd-v1/cohort-manifest.json",
+    "counts": {
+      "test": 851,
+      "train": 6814,
+      "validation": 851
+    },
+    "counts_pointer": "/counts",
+    "identity": {
+      "dataset": "HuggingFaceFW/fineweb-2",
+      "revision": "af9c13333eb981300149d5ca60a8e9d659b276b9",
+      "subset": "kor_Hang",
+      "seed": 42,
+      "max_documents": 10000
+    },
+    "identity_pointer": "/identity",
+    "cleaning": "exact text SHA256 dedup; heuristic email/Korean mobile exclusion, not complete PII/minhash cleaning",
+    "cleaning_pointer": "/cleaning",
+    "fingerprint": "4af0eda0ce631ae529a0affd21e559b29dcab42cc3b679fa45c6bb0eeffffb04",
+    "fingerprint_pointer": "/fingerprint",
+    "split_hashes": {
+      "test.jsonl": "f7c9e6e6f27a58bf103a7c422be6a740a7f21afd3f86b686b20cc5acece81f87",
+      "train.jsonl": "194082b463bfb226a7220040077c135ebb2bf2bfda167ea192b8b85cc7f6c00b",
+      "validation.jsonl": "e43df51f89e88204e81de16ec1e8c3285f3ceddea69b4c0e8a83b09c233a6b20"
+    },
+    "split_hashes_pointer": "/files",
+    "excluded_from_extract": "exposure_exclusion의 개별 source IDs/text hashes; 원문 경로/내용 미포함"
+  },
+  "final_results": [
+    {
+      "family": "qwen35",
+      "role": "StudentCE",
+      "seed": 42,
+      "source": "results/published/generic-kd-v1/final/qwen35--ce-seed42.json",
+      "original_source": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/final-exact-ce-seed42.json",
+      "pointers": {
+        "status": "/status",
+        "protocol_sha256": "/protocol_sha256",
+        "ce_sum": "/statistics/ce_sum",
+        "tokens": "/statistics/tokens"
+      },
+      "statistics": {
+        "ce_sum": 1807995.8857421875,
+        "tokens": 669921
+      },
+      "status": "completed",
+      "protocol_sha256": "fe0a525699e8c26318565e94fe47e156c9d210449a111ef8dd00c4d6c2d9b5b1",
+      "ce_csv": 2.6988195410237736,
+      "ppl_csv": 14.862177175245707,
+      "csv_source": "results/published/generic-kd-v1/results.csv",
+      "csv_row_selector": {
+        "model_id": "ce-seed42",
+        "family": "qwen35"
+      }
+    },
+    {
+      "family": "qwen35",
+      "role": "StudentCE",
+      "seed": 43,
+      "source": "results/published/generic-kd-v1/final/qwen35--ce-seed43.json",
+      "original_source": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/final-exact-ce-seed43.json",
+      "pointers": {
+        "status": "/status",
+        "protocol_sha256": "/protocol_sha256",
+        "ce_sum": "/statistics/ce_sum",
+        "tokens": "/statistics/tokens"
+      },
+      "statistics": {
+        "ce_sum": 1808955.9849853516,
+        "tokens": 669921
+      },
+      "status": "completed",
+      "protocol_sha256": "fe0a525699e8c26318565e94fe47e156c9d210449a111ef8dd00c4d6c2d9b5b1",
+      "ce_csv": 2.700252693952498,
+      "ppl_csv": 14.883492218201454,
+      "csv_source": "results/published/generic-kd-v1/results.csv",
+      "csv_row_selector": {
+        "model_id": "ce-seed43",
+        "family": "qwen35"
+      }
+    },
+    {
+      "family": "qwen35",
+      "role": "StudentCE",
+      "seed": 44,
+      "source": "results/published/generic-kd-v1/final/qwen35--ce-seed44.json",
+      "original_source": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/final-exact-ce-seed44.json",
+      "pointers": {
+        "status": "/status",
+        "protocol_sha256": "/protocol_sha256",
+        "ce_sum": "/statistics/ce_sum",
+        "tokens": "/statistics/tokens"
+      },
+      "statistics": {
+        "ce_sum": 1809640.269317627,
+        "tokens": 669921
+      },
+      "status": "completed",
+      "protocol_sha256": "fe0a525699e8c26318565e94fe47e156c9d210449a111ef8dd00c4d6c2d9b5b1",
+      "ce_csv": 2.7012741342899043,
+      "ppl_csv": 14.898702584432938,
+      "csv_source": "results/published/generic-kd-v1/results.csv",
+      "csv_row_selector": {
+        "model_id": "ce-seed44",
+        "family": "qwen35"
+      }
+    },
+    {
+      "family": "qwen35",
+      "role": "StudentKD",
+      "seed": 42,
+      "source": "results/published/generic-kd-v1/final/qwen35--kd-seed42.json",
+      "original_source": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/final-exact-kd-seed42.json",
+      "pointers": {
+        "status": "/status",
+        "protocol_sha256": "/protocol_sha256",
+        "ce_sum": "/statistics/ce_sum",
+        "tokens": "/statistics/tokens"
+      },
+      "statistics": {
+        "ce_sum": 1806249.4592895508,
+        "tokens": 669921
+      },
+      "status": "completed",
+      "protocol_sha256": "fe0a525699e8c26318565e94fe47e156c9d210449a111ef8dd00c4d6c2d9b5b1",
+      "ce_csv": 2.696212626995647,
+      "ppl_csv": 14.823483214906739,
+      "csv_source": "results/published/generic-kd-v1/results.csv",
+      "csv_row_selector": {
+        "model_id": "kd-seed42",
+        "family": "qwen35"
+      }
+    },
+    {
+      "family": "qwen35",
+      "role": "StudentKD",
+      "seed": 43,
+      "source": "results/published/generic-kd-v1/final/qwen35--kd-seed43.json",
+      "original_source": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/final-exact-kd-seed43.json",
+      "pointers": {
+        "status": "/status",
+        "protocol_sha256": "/protocol_sha256",
+        "ce_sum": "/statistics/ce_sum",
+        "tokens": "/statistics/tokens"
+      },
+      "statistics": {
+        "ce_sum": 1805328.9508666992,
+        "tokens": 669921
+      },
+      "status": "completed",
+      "protocol_sha256": "fe0a525699e8c26318565e94fe47e156c9d210449a111ef8dd00c4d6c2d9b5b1",
+      "ce_csv": 2.69483857181175,
+      "ppl_csv": 14.80312891811785,
+      "csv_source": "results/published/generic-kd-v1/results.csv",
+      "csv_row_selector": {
+        "model_id": "kd-seed43",
+        "family": "qwen35"
+      }
+    },
+    {
+      "family": "qwen35",
+      "role": "StudentKD",
+      "seed": 44,
+      "source": "results/published/generic-kd-v1/final/qwen35--kd-seed44.json",
+      "original_source": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/final-exact-kd-seed44.json",
+      "pointers": {
+        "status": "/status",
+        "protocol_sha256": "/protocol_sha256",
+        "ce_sum": "/statistics/ce_sum",
+        "tokens": "/statistics/tokens"
+      },
+      "statistics": {
+        "ce_sum": 1806268.8265686035,
+        "tokens": 669921
+      },
+      "status": "completed",
+      "protocol_sha256": "fe0a525699e8c26318565e94fe47e156c9d210449a111ef8dd00c4d6c2d9b5b1",
+      "ce_csv": 2.6962415367910597,
+      "ppl_csv": 14.823911764968404,
+      "csv_source": "results/published/generic-kd-v1/results.csv",
+      "csv_row_selector": {
+        "model_id": "kd-seed44",
+        "family": "qwen35"
+      }
+    },
+    {
+      "family": "qwen35",
+      "role": "pretrainedStudent",
+      "seed": null,
+      "source": "results/published/generic-kd-v1/final/qwen35--pretrained-student.json",
+      "original_source": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/final-exact-pretrained-student.json",
+      "pointers": {
+        "status": "/status",
+        "protocol_sha256": "/protocol_sha256",
+        "ce_sum": "/statistics/ce_sum",
+        "tokens": "/statistics/tokens"
+      },
+      "statistics": {
+        "ce_sum": 1995246.2039794922,
+        "tokens": 669921
+      },
+      "status": "completed",
+      "protocol_sha256": "fe0a525699e8c26318565e94fe47e156c9d210449a111ef8dd00c4d6c2d9b5b1",
+      "ce_csv": 2.978330585217499,
+      "ppl_csv": 19.654976931798476,
+      "csv_source": "results/published/generic-kd-v1/results.csv",
+      "csv_row_selector": {
+        "model_id": "pretrained-student",
+        "family": "qwen35"
+      }
+    },
+    {
+      "family": "qwen35",
+      "role": "Teacher",
+      "seed": null,
+      "source": "results/published/generic-kd-v1/final/qwen35--teacher.json",
+      "original_source": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/final-exact-teacher.json",
+      "pointers": {
+        "status": "/status",
+        "protocol_sha256": "/protocol_sha256",
+        "ce_sum": "/statistics/ce_sum",
+        "tokens": "/statistics/tokens"
+      },
+      "statistics": {
+        "ce_sum": 1675291.9736328125,
+        "tokens": 669921
+      },
+      "status": "completed",
+      "protocol_sha256": "fe0a525699e8c26318565e94fe47e156c9d210449a111ef8dd00c4d6c2d9b5b1",
+      "ce_csv": 2.500730643811453,
+      "ppl_csv": 12.191398277069625,
+      "csv_source": "results/published/generic-kd-v1/results.csv",
+      "csv_row_selector": {
+        "model_id": "teacher",
+        "family": "qwen35"
+      }
+    },
+    {
+      "family": "gemma4",
+      "role": "StudentCE",
+      "seed": 42,
+      "source": "results/published/generic-kd-v1/final/gemma4--ce-seed42.json",
+      "original_source": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/gemma-final-exact-ce-seed42.json",
+      "pointers": {
+        "status": "/status",
+        "protocol_sha256": "/protocol_sha256",
+        "ce_sum": "/statistics/ce_sum",
+        "tokens": "/statistics/tokens"
+      },
+      "statistics": {
+        "ce_sum": 1853327.143005371,
+        "tokens": 739417
+      },
+      "status": "completed",
+      "protocol_sha256": "141c71995cf098c50a8cd791551055d729be7252a22ab7d1ac8f6b34d118c1bf",
+      "ce_csv": 2.5064708317571425,
+      "ppl_csv": 12.261580431171273,
+      "csv_source": "results/published/generic-kd-v1/results.csv",
+      "csv_row_selector": {
+        "model_id": "ce-seed42",
+        "family": "gemma4"
+      }
+    },
+    {
+      "family": "gemma4",
+      "role": "StudentCE",
+      "seed": 43,
+      "source": "results/published/generic-kd-v1/final/gemma4--ce-seed43.json",
+      "original_source": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/gemma-final-exact-ce-seed43.json",
+      "pointers": {
+        "status": "/status",
+        "protocol_sha256": "/protocol_sha256",
+        "ce_sum": "/statistics/ce_sum",
+        "tokens": "/statistics/tokens"
+      },
+      "statistics": {
+        "ce_sum": 1854368.2789916992,
+        "tokens": 739417
+      },
+      "status": "completed",
+      "protocol_sha256": "141c71995cf098c50a8cd791551055d729be7252a22ab7d1ac8f6b34d118c1bf",
+      "ce_csv": 2.507878881594147,
+      "ppl_csv": 12.278857508137035,
+      "csv_source": "results/published/generic-kd-v1/results.csv",
+      "csv_row_selector": {
+        "model_id": "ce-seed43",
+        "family": "gemma4"
+      }
+    },
+    {
+      "family": "gemma4",
+      "role": "StudentCE",
+      "seed": 44,
+      "source": "results/published/generic-kd-v1/final/gemma4--ce-seed44.json",
+      "original_source": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/gemma-final-exact-ce-seed44.json",
+      "pointers": {
+        "status": "/status",
+        "protocol_sha256": "/protocol_sha256",
+        "ce_sum": "/statistics/ce_sum",
+        "tokens": "/statistics/tokens"
+      },
+      "statistics": {
+        "ce_sum": 1855453.0117797852,
+        "tokens": 739417
+      },
+      "status": "completed",
+      "protocol_sha256": "141c71995cf098c50a8cd791551055d729be7252a22ab7d1ac8f6b34d118c1bf",
+      "ce_csv": 2.509345892479866,
+      "ppl_csv": 12.296883945022318,
+      "csv_source": "results/published/generic-kd-v1/results.csv",
+      "csv_row_selector": {
+        "model_id": "ce-seed44",
+        "family": "gemma4"
+      }
+    },
+    {
+      "family": "gemma4",
+      "role": "StudentKD",
+      "seed": 42,
+      "source": "results/published/generic-kd-v1/final/gemma4--kd-seed42.json",
+      "original_source": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/gemma-final-exact-kd-seed42.json",
+      "pointers": {
+        "status": "/status",
+        "protocol_sha256": "/protocol_sha256",
+        "ce_sum": "/statistics/ce_sum",
+        "tokens": "/statistics/tokens"
+      },
+      "statistics": {
+        "ce_sum": 1859565.3723144531,
+        "tokens": 739417
+      },
+      "status": "completed",
+      "protocol_sha256": "141c71995cf098c50a8cd791551055d729be7252a22ab7d1ac8f6b34d118c1bf",
+      "ce_csv": 2.514907518104741,
+      "ppl_csv": 12.36546514457793,
+      "csv_source": "results/published/generic-kd-v1/results.csv",
+      "csv_row_selector": {
+        "model_id": "kd-seed42",
+        "family": "gemma4"
+      }
+    },
+    {
+      "family": "gemma4",
+      "role": "StudentKD",
+      "seed": 43,
+      "source": "results/published/generic-kd-v1/final/gemma4--kd-seed43.json",
+      "original_source": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/gemma-final-exact-kd-seed43.json",
+      "pointers": {
+        "status": "/status",
+        "protocol_sha256": "/protocol_sha256",
+        "ce_sum": "/statistics/ce_sum",
+        "tokens": "/statistics/tokens"
+      },
+      "statistics": {
+        "ce_sum": 1858847.050201416,
+        "tokens": 739417
+      },
+      "status": "completed",
+      "protocol_sha256": "141c71995cf098c50a8cd791551055d729be7252a22ab7d1ac8f6b34d118c1bf",
+      "ce_csv": 2.513936047185034,
+      "ppl_csv": 12.353458287881676,
+      "csv_source": "results/published/generic-kd-v1/results.csv",
+      "csv_row_selector": {
+        "model_id": "kd-seed43",
+        "family": "gemma4"
+      }
+    },
+    {
+      "family": "gemma4",
+      "role": "StudentKD",
+      "seed": 44,
+      "source": "results/published/generic-kd-v1/final/gemma4--kd-seed44.json",
+      "original_source": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/gemma-final-exact-kd-seed44.json",
+      "pointers": {
+        "status": "/status",
+        "protocol_sha256": "/protocol_sha256",
+        "ce_sum": "/statistics/ce_sum",
+        "tokens": "/statistics/tokens"
+      },
+      "statistics": {
+        "ce_sum": 1853388.6912841797,
+        "tokens": 739417
+      },
+      "status": "completed",
+      "protocol_sha256": "141c71995cf098c50a8cd791551055d729be7252a22ab7d1ac8f6b34d118c1bf",
+      "ce_csv": 2.5065540706856613,
+      "ppl_csv": 12.262601114468014,
+      "csv_source": "results/published/generic-kd-v1/results.csv",
+      "csv_row_selector": {
+        "model_id": "kd-seed44",
+        "family": "gemma4"
+      }
+    },
+    {
+      "family": "gemma4",
+      "role": "pretrainedStudent",
+      "seed": null,
+      "source": "results/published/generic-kd-v1/final/gemma4--pretrained-student.json",
+      "original_source": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/gemma-final-exact-pretrained-student.json",
+      "pointers": {
+        "status": "/status",
+        "protocol_sha256": "/protocol_sha256",
+        "ce_sum": "/statistics/ce_sum",
+        "tokens": "/statistics/tokens"
+      },
+      "statistics": {
+        "ce_sum": 6269031.435058594,
+        "tokens": 739417
+      },
+      "status": "completed",
+      "protocol_sha256": "141c71995cf098c50a8cd791551055d729be7252a22ab7d1ac8f6b34d118c1bf",
+      "ce_csv": 8.478343661369152,
+      "ppl_csv": 4809.47717309216,
+      "csv_source": "results/published/generic-kd-v1/results.csv",
+      "csv_row_selector": {
+        "model_id": "pretrained-student",
+        "family": "gemma4"
+      }
+    },
+    {
+      "family": "gemma4",
+      "role": "Teacher",
+      "seed": null,
+      "source": "results/published/generic-kd-v1/final/gemma4--teacher.json",
+      "original_source": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/gemma-final-exact-teacher.json",
+      "pointers": {
+        "status": "/status",
+        "protocol_sha256": "/protocol_sha256",
+        "ce_sum": "/statistics/ce_sum",
+        "tokens": "/statistics/tokens"
+      },
+      "statistics": {
+        "ce_sum": 1788694.8274841309,
+        "tokens": 739417
+      },
+      "status": "completed",
+      "protocol_sha256": "141c71995cf098c50a8cd791551055d729be7252a22ab7d1ac8f6b34d118c1bf",
+      "ce_csv": 2.4190610000637407,
+      "ppl_csv": 11.235304410005034,
+      "csv_source": "results/published/generic-kd-v1/results.csv",
+      "csv_row_selector": {
+        "model_id": "teacher",
+        "family": "gemma4"
+      }
+    },
+    {
+      "family": "lfm25",
+      "role": "StudentCE",
+      "seed": 42,
+      "source": "results/published/generic-kd-v1/final/lfm25--ce-seed42.json",
+      "original_source": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/liquid-final-exact-ce-seed42.json",
+      "pointers": {
+        "status": "/status",
+        "protocol_sha256": "/protocol_sha256",
+        "ce_sum": "/statistics/ce_sum",
+        "tokens": "/statistics/tokens"
+      },
+      "statistics": {
+        "ce_sum": 2102637.8010253906,
+        "tokens": 733285
+      },
+      "status": "completed",
+      "protocol_sha256": "c6223d65a4601522671da8cb2f011d72ba036b801d65ad8c4109bce37c3ee645",
+      "ce_csv": 2.8674223542352437,
+      "ppl_csv": 17.59161475670737,
+      "csv_source": "results/published/generic-kd-v1/results.csv",
+      "csv_row_selector": {
+        "model_id": "ce-seed42",
+        "family": "lfm25"
+      }
+    },
+    {
+      "family": "lfm25",
+      "role": "StudentCE",
+      "seed": 43,
+      "source": "results/published/generic-kd-v1/final/lfm25--ce-seed43.json",
+      "original_source": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/liquid-final-exact-ce-seed43.json",
+      "pointers": {
+        "status": "/status",
+        "protocol_sha256": "/protocol_sha256",
+        "ce_sum": "/statistics/ce_sum",
+        "tokens": "/statistics/tokens"
+      },
+      "statistics": {
+        "ce_sum": 2104200.0797424316,
+        "tokens": 733285
+      },
+      "status": "completed",
+      "protocol_sha256": "c6223d65a4601522671da8cb2f011d72ba036b801d65ad8c4109bce37c3ee645",
+      "ce_csv": 2.8695528747246044,
+      "ppl_csv": 17.629134005960093,
+      "csv_source": "results/published/generic-kd-v1/results.csv",
+      "csv_row_selector": {
+        "model_id": "ce-seed43",
+        "family": "lfm25"
+      }
+    },
+    {
+      "family": "lfm25",
+      "role": "StudentCE",
+      "seed": 44,
+      "source": "results/published/generic-kd-v1/final/lfm25--ce-seed44.json",
+      "original_source": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/liquid-final-exact-ce-seed44.json",
+      "pointers": {
+        "status": "/status",
+        "protocol_sha256": "/protocol_sha256",
+        "ce_sum": "/statistics/ce_sum",
+        "tokens": "/statistics/tokens"
+      },
+      "statistics": {
+        "ce_sum": 2100655.540222168,
+        "tokens": 733285
+      },
+      "status": "completed",
+      "protocol_sha256": "c6223d65a4601522671da8cb2f011d72ba036b801d65ad8c4109bce37c3ee645",
+      "ce_csv": 2.864719093152278,
+      "ppl_csv": 17.544124247691666,
+      "csv_source": "results/published/generic-kd-v1/results.csv",
+      "csv_row_selector": {
+        "model_id": "ce-seed44",
+        "family": "lfm25"
+      }
+    },
+    {
+      "family": "lfm25",
+      "role": "StudentKD",
+      "seed": 42,
+      "source": "results/published/generic-kd-v1/final/lfm25--kd-seed42.json",
+      "original_source": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/liquid-final-exact-kd-seed42.json",
+      "pointers": {
+        "status": "/status",
+        "protocol_sha256": "/protocol_sha256",
+        "ce_sum": "/statistics/ce_sum",
+        "tokens": "/statistics/tokens"
+      },
+      "statistics": {
+        "ce_sum": 2101926.786895752,
+        "tokens": 733285
+      },
+      "status": "completed",
+      "protocol_sha256": "c6223d65a4601522671da8cb2f011d72ba036b801d65ad8c4109bce37c3ee645",
+      "ce_csv": 2.8664527256056678,
+      "ppl_csv": 17.57456569036598,
+      "csv_source": "results/published/generic-kd-v1/results.csv",
+      "csv_row_selector": {
+        "model_id": "kd-seed42",
+        "family": "lfm25"
+      }
+    },
+    {
+      "family": "lfm25",
+      "role": "StudentKD",
+      "seed": 43,
+      "source": "results/published/generic-kd-v1/final/lfm25--kd-seed43.json",
+      "original_source": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/liquid-final-exact-kd-seed43.json",
+      "pointers": {
+        "status": "/status",
+        "protocol_sha256": "/protocol_sha256",
+        "ce_sum": "/statistics/ce_sum",
+        "tokens": "/statistics/tokens"
+      },
+      "statistics": {
+        "ce_sum": 2102020.1902160645,
+        "tokens": 733285
+      },
+      "status": "completed",
+      "protocol_sha256": "c6223d65a4601522671da8cb2f011d72ba036b801d65ad8c4109bce37c3ee645",
+      "ce_csv": 2.8665801021650035,
+      "ppl_csv": 17.57680442065329,
+      "csv_source": "results/published/generic-kd-v1/results.csv",
+      "csv_row_selector": {
+        "model_id": "kd-seed43",
+        "family": "lfm25"
+      }
+    },
+    {
+      "family": "lfm25",
+      "role": "StudentKD",
+      "seed": 44,
+      "source": "results/published/generic-kd-v1/final/lfm25--kd-seed44.json",
+      "original_source": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/liquid-final-exact-kd-seed44.json",
+      "pointers": {
+        "status": "/status",
+        "protocol_sha256": "/protocol_sha256",
+        "ce_sum": "/statistics/ce_sum",
+        "tokens": "/statistics/tokens"
+      },
+      "statistics": {
+        "ce_sum": 2101213.7398376465,
+        "tokens": 733285
+      },
+      "status": "completed",
+      "protocol_sha256": "c6223d65a4601522671da8cb2f011d72ba036b801d65ad8c4109bce37c3ee645",
+      "ce_csv": 2.865480324618186,
+      "ppl_csv": 17.55748447157706,
+      "csv_source": "results/published/generic-kd-v1/results.csv",
+      "csv_row_selector": {
+        "model_id": "kd-seed44",
+        "family": "lfm25"
+      }
+    },
+    {
+      "family": "lfm25",
+      "role": "pretrainedStudent",
+      "seed": null,
+      "source": "results/published/generic-kd-v1/final/lfm25--pretrained-student.json",
+      "original_source": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/liquid-final-exact-pretrained-student.json",
+      "pointers": {
+        "status": "/status",
+        "protocol_sha256": "/protocol_sha256",
+        "ce_sum": "/statistics/ce_sum",
+        "tokens": "/statistics/tokens"
+      },
+      "statistics": {
+        "ce_sum": 2934208.4052124023,
+        "tokens": 733285
+      },
+      "status": "completed",
+      "protocol_sha256": "c6223d65a4601522671da8cb2f011d72ba036b801d65ad8c4109bce37c3ee645",
+      "ce_csv": 4.001457012229082,
+      "ppl_csv": 54.67775818637094,
+      "csv_source": "results/published/generic-kd-v1/results.csv",
+      "csv_row_selector": {
+        "model_id": "pretrained-student",
+        "family": "lfm25"
+      }
+    },
+    {
+      "family": "lfm25",
+      "role": "Teacher",
+      "seed": null,
+      "source": "results/published/generic-kd-v1/final/lfm25--teacher.json",
+      "original_source": "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/liquid-final-exact-teacher.json",
+      "pointers": {
+        "status": "/status",
+        "protocol_sha256": "/protocol_sha256",
+        "ce_sum": "/statistics/ce_sum",
+        "tokens": "/statistics/tokens"
+      },
+      "statistics": {
+        "ce_sum": 2159264.541381836,
+        "tokens": 733285
+      },
+      "status": "completed",
+      "protocol_sha256": "c6223d65a4601522671da8cb2f011d72ba036b801d65ad8c4109bce37c3ee645",
+      "ce_csv": 2.9446457262617343,
+      "ppl_csv": 19.00392860091,
+      "csv_source": "results/published/generic-kd-v1/results.csv",
+      "csv_row_selector": {
+        "model_id": "teacher",
+        "family": "lfm25"
+      }
+    }
+  ],
+  "paired_effects": [
+    {
+      "family": "qwen35",
+      "seed": 42,
+      "ce_ppl": 14.862177175245707,
+      "kd_ppl": 14.823483214906739,
+      "kd_relative_ppl_change_percent": -0.26035189785932333,
+      "pretrained_to_ce_ppl_decrease_percent": 24.384662333532525,
+      "selection_seed_reused": true,
+      "source": "results/published/generic-kd-v1/paired_effects.csv",
+      "row_selector": {
+        "family": "qwen35",
+        "seed": "42"
+      }
+    },
+    {
+      "family": "qwen35",
+      "seed": 43,
+      "ce_ppl": 14.883492218201454,
+      "kd_ppl": 14.80312891811785,
+      "kd_relative_ppl_change_percent": -0.539949219614777,
+      "pretrained_to_ce_ppl_decrease_percent": 24.27621629958545,
+      "selection_seed_reused": false,
+      "source": "results/published/generic-kd-v1/paired_effects.csv",
+      "row_selector": {
+        "family": "qwen35",
+        "seed": "43"
+      }
+    },
+    {
+      "family": "qwen35",
+      "seed": 44,
+      "ce_ppl": 14.898702584432938,
+      "kd_ppl": 14.823911764968404,
+      "kd_relative_ppl_change_percent": -0.5019955196815529,
+      "pretrained_to_ce_ppl_decrease_percent": 24.198829456119476,
+      "selection_seed_reused": false,
+      "source": "results/published/generic-kd-v1/paired_effects.csv",
+      "row_selector": {
+        "family": "qwen35",
+        "seed": "44"
+      }
+    },
+    {
+      "family": "gemma4",
+      "seed": 42,
+      "ce_ppl": 12.261580431171273,
+      "kd_ppl": 12.36546514457793,
+      "kd_relative_ppl_change_percent": 0.8472375481268557,
+      "pretrained_to_ce_ppl_decrease_percent": 99.74505377632788,
+      "selection_seed_reused": true,
+      "source": "results/published/generic-kd-v1/paired_effects.csv",
+      "row_selector": {
+        "family": "gemma4",
+        "seed": "42"
+      }
+    },
+    {
+      "family": "gemma4",
+      "seed": 43,
+      "ce_ppl": 12.278857508137035,
+      "kd_ppl": 12.353458287881676,
+      "kd_relative_ppl_change_percent": 0.60755473133558,
+      "pretrained_to_ce_ppl_decrease_percent": 99.74469454649179,
+      "selection_seed_reused": false,
+      "source": "results/published/generic-kd-v1/paired_effects.csv",
+      "row_selector": {
+        "family": "gemma4",
+        "seed": "43"
+      }
+    },
+    {
+      "family": "gemma4",
+      "seed": 44,
+      "ce_ppl": 12.296883945022318,
+      "kd_ppl": 12.262601114468014,
+      "kd_relative_ppl_change_percent": -0.27879282839113895,
+      "pretrained_to_ce_ppl_decrease_percent": 99.7443197357538,
+      "selection_seed_reused": false,
+      "source": "results/published/generic-kd-v1/paired_effects.csv",
+      "row_selector": {
+        "family": "gemma4",
+        "seed": "44"
+      }
+    },
+    {
+      "family": "lfm25",
+      "seed": 42,
+      "ce_ppl": 17.59161475670737,
+      "kd_ppl": 17.57456569036598,
+      "kd_relative_ppl_change_percent": -0.09691586916368289,
+      "pretrained_to_ce_ppl_decrease_percent": 67.8267446577715,
+      "selection_seed_reused": true,
+      "source": "results/published/generic-kd-v1/paired_effects.csv",
+      "row_selector": {
+        "family": "lfm25",
+        "seed": "42"
+      }
+    },
+    {
+      "family": "lfm25",
+      "seed": 43,
+      "ce_ppl": 17.629134005960093,
+      "kd_ppl": 17.57680442065329,
+      "kd_relative_ppl_change_percent": -0.2968358246588476,
+      "pretrained_to_ce_ppl_decrease_percent": 67.75812580707752,
+      "selection_seed_reused": false,
+      "source": "results/published/generic-kd-v1/paired_effects.csv",
+      "row_selector": {
+        "family": "lfm25",
+        "seed": "43"
+      }
+    },
+    {
+      "family": "lfm25",
+      "seed": 44,
+      "ce_ppl": 17.544124247691666,
+      "kd_ppl": 17.55748447157706,
+      "kd_relative_ppl_change_percent": 0.07615212761133971,
+      "pretrained_to_ce_ppl_decrease_percent": 67.9135999177363,
+      "selection_seed_reused": false,
+      "source": "results/published/generic-kd-v1/paired_effects.csv",
+      "row_selector": {
+        "family": "lfm25",
+        "seed": "44"
+      }
+    }
+  ],
+  "selected_models_and_settings": [
+    {
+      "source": "results/published/generic-kd-v1/selected-metadata.json",
+      "pointer": "/selections/0",
+      "family": "qwen35",
+      "model_key": "ce-seed42",
+      "model_id": "Qwen/Qwen3.5-4B",
+      "model_revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 1.0,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 248077
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 8e-05,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "initialization": "direct_pretrained_with_paired_seeded_lora",
+      "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4",
+      "cohort_identity_sha256": "099b5d9e5610f00c8ff91a533840777929ab097574226e5f49c96dc95bb2cb14",
+      "prepared_data_sha256": "4bc72b16dd819aca93987be1967539c3dd26bf097290853ff8ece31d9f61e702",
+      "kd_support": null
+    },
+    {
+      "source": "results/published/generic-kd-v1/selected-metadata.json",
+      "pointer": "/selections/1",
+      "family": "qwen35",
+      "model_key": "ce-seed43",
+      "model_id": "Qwen/Qwen3.5-4B",
+      "model_revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 1.0,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 43,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 248077
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 8e-05,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "initialization": "direct_pretrained_with_paired_seeded_lora",
+      "initial_adapter_sha256": "5b8968282e2d782b71e13df5e66f996e7bb471cdeceab2c658e864f6cd04f224",
+      "cohort_identity_sha256": "099b5d9e5610f00c8ff91a533840777929ab097574226e5f49c96dc95bb2cb14",
+      "prepared_data_sha256": "4bc72b16dd819aca93987be1967539c3dd26bf097290853ff8ece31d9f61e702",
+      "kd_support": null
+    },
+    {
+      "source": "results/published/generic-kd-v1/selected-metadata.json",
+      "pointer": "/selections/2",
+      "family": "qwen35",
+      "model_key": "ce-seed44",
+      "model_id": "Qwen/Qwen3.5-4B",
+      "model_revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 1.0,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 44,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 248077
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 8e-05,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "initialization": "direct_pretrained_with_paired_seeded_lora",
+      "initial_adapter_sha256": "c6a861f945fbb59a30746b68b042a10d5a9447c568a1e07d1c9d992ef36fbd0c",
+      "cohort_identity_sha256": "099b5d9e5610f00c8ff91a533840777929ab097574226e5f49c96dc95bb2cb14",
+      "prepared_data_sha256": "4bc72b16dd819aca93987be1967539c3dd26bf097290853ff8ece31d9f61e702",
+      "kd_support": null
+    },
+    {
+      "source": "results/published/generic-kd-v1/selected-metadata.json",
+      "pointer": "/selections/3",
+      "family": "qwen35",
+      "model_key": "kd-seed42",
+      "model_id": "Qwen/Qwen3.5-4B",
+      "model_revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 0.7,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 248077
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 8e-05,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "initialization": "direct_pretrained_with_paired_seeded_lora",
+      "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4",
+      "cohort_identity_sha256": "099b5d9e5610f00c8ff91a533840777929ab097574226e5f49c96dc95bb2cb14",
+      "prepared_data_sha256": "4bc72b16dd819aca93987be1967539c3dd26bf097290853ff8ece31d9f61e702",
+      "kd_support": "renormalized_verified_tokenizer_ids; excludes_unassigned_head_padding; CE_uses_full_head"
+    },
+    {
+      "source": "results/published/generic-kd-v1/selected-metadata.json",
+      "pointer": "/selections/4",
+      "family": "qwen35",
+      "model_key": "kd-seed43",
+      "model_id": "Qwen/Qwen3.5-4B",
+      "model_revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 0.7,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 43,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 248077
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 8e-05,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "initialization": "direct_pretrained_with_paired_seeded_lora",
+      "initial_adapter_sha256": "5b8968282e2d782b71e13df5e66f996e7bb471cdeceab2c658e864f6cd04f224",
+      "cohort_identity_sha256": "099b5d9e5610f00c8ff91a533840777929ab097574226e5f49c96dc95bb2cb14",
+      "prepared_data_sha256": "4bc72b16dd819aca93987be1967539c3dd26bf097290853ff8ece31d9f61e702",
+      "kd_support": "renormalized_verified_tokenizer_ids; excludes_unassigned_head_padding; CE_uses_full_head"
+    },
+    {
+      "source": "results/published/generic-kd-v1/selected-metadata.json",
+      "pointer": "/selections/5",
+      "family": "qwen35",
+      "model_key": "kd-seed44",
+      "model_id": "Qwen/Qwen3.5-4B",
+      "model_revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 0.7,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 44,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 248077
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 8e-05,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "initialization": "direct_pretrained_with_paired_seeded_lora",
+      "initial_adapter_sha256": "c6a861f945fbb59a30746b68b042a10d5a9447c568a1e07d1c9d992ef36fbd0c",
+      "cohort_identity_sha256": "099b5d9e5610f00c8ff91a533840777929ab097574226e5f49c96dc95bb2cb14",
+      "prepared_data_sha256": "4bc72b16dd819aca93987be1967539c3dd26bf097290853ff8ece31d9f61e702",
+      "kd_support": "renormalized_verified_tokenizer_ids; excludes_unassigned_head_padding; CE_uses_full_head"
+    },
+    {
+      "source": "results/published/generic-kd-v1/selected-metadata.json",
+      "pointer": "/selections/6",
+      "family": "qwen35",
+      "model_key": "teacher",
+      "model_id": "Qwen/Qwen3.5-9B",
+      "model_revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 1.0,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "temperature": 2.0,
+        "validation_interval": 200,
+        "vocab_size": 248077
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 2e-05,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "numerical_policy_at_identity": null,
+      "initialization": "direct_pretrained_with_paired_seeded_lora",
+      "initial_adapter_sha256": null,
+      "cohort_identity_sha256": "099b5d9e5610f00c8ff91a533840777929ab097574226e5f49c96dc95bb2cb14",
+      "prepared_data_sha256": "4bc72b16dd819aca93987be1967539c3dd26bf097290853ff8ece31d9f61e702",
+      "kd_support": null
+    },
+    {
+      "source": "results/published/generic-kd-v1/selected-metadata.json",
+      "pointer": "/selections/7",
+      "family": "gemma4",
+      "model_key": "ce-seed42",
+      "model_id": "google/gemma-4-E2B-it",
+      "model_revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 1.0,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 262144
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 0.00015,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "initialization": "direct_pretrained_with_paired_seeded_lora",
+      "initial_adapter_sha256": "9a1d1ee98db9726f76fc6fce4c34fde86fdb561282734f7357b554ab2381bd0a",
+      "cohort_identity_sha256": "b115f22f3f9c09008a9a16a4a3dc26d3077e255fc0a6a8dfcfd736e95abfc736",
+      "prepared_data_sha256": "b11965bb21730e4172800e49b1e60bf525be5f2aad379efb50e2c5c1b38efe80",
+      "kd_support": null
+    },
+    {
+      "source": "results/published/generic-kd-v1/selected-metadata.json",
+      "pointer": "/selections/8",
+      "family": "gemma4",
+      "model_key": "ce-seed43",
+      "model_id": "google/gemma-4-E2B-it",
+      "model_revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 1.0,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 43,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 262144
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 0.00015,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "initialization": "direct_pretrained_with_paired_seeded_lora",
+      "initial_adapter_sha256": "a1ffbcc0d482e4d879237fc49b672f297548dcf6de001c199af4f46ce65f2897",
+      "cohort_identity_sha256": "b115f22f3f9c09008a9a16a4a3dc26d3077e255fc0a6a8dfcfd736e95abfc736",
+      "prepared_data_sha256": "b11965bb21730e4172800e49b1e60bf525be5f2aad379efb50e2c5c1b38efe80",
+      "kd_support": null
+    },
+    {
+      "source": "results/published/generic-kd-v1/selected-metadata.json",
+      "pointer": "/selections/9",
+      "family": "gemma4",
+      "model_key": "ce-seed44",
+      "model_id": "google/gemma-4-E2B-it",
+      "model_revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 1.0,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 44,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 262144
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 0.00015,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "initialization": "direct_pretrained_with_paired_seeded_lora",
+      "initial_adapter_sha256": "4be8369a60841c3311acd751198ed3173bd37d9049179960557ffbc6e4c421fb",
+      "cohort_identity_sha256": "b115f22f3f9c09008a9a16a4a3dc26d3077e255fc0a6a8dfcfd736e95abfc736",
+      "prepared_data_sha256": "b11965bb21730e4172800e49b1e60bf525be5f2aad379efb50e2c5c1b38efe80",
+      "kd_support": null
+    },
+    {
+      "source": "results/published/generic-kd-v1/selected-metadata.json",
+      "pointer": "/selections/10",
+      "family": "gemma4",
+      "model_key": "kd-seed42",
+      "model_id": "google/gemma-4-E2B-it",
+      "model_revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 0.7,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 262144
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 0.00015,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "initialization": "direct_pretrained_with_paired_seeded_lora",
+      "initial_adapter_sha256": "9a1d1ee98db9726f76fc6fce4c34fde86fdb561282734f7357b554ab2381bd0a",
+      "cohort_identity_sha256": "b115f22f3f9c09008a9a16a4a3dc26d3077e255fc0a6a8dfcfd736e95abfc736",
+      "prepared_data_sha256": "b11965bb21730e4172800e49b1e60bf525be5f2aad379efb50e2c5c1b38efe80",
+      "kd_support": "renormalized_verified_tokenizer_ids; excludes_unassigned_head_padding; CE_uses_full_head"
+    },
+    {
+      "source": "results/published/generic-kd-v1/selected-metadata.json",
+      "pointer": "/selections/11",
+      "family": "gemma4",
+      "model_key": "kd-seed43",
+      "model_id": "google/gemma-4-E2B-it",
+      "model_revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 0.7,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 43,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 262144
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 0.00015,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "initialization": "direct_pretrained_with_paired_seeded_lora",
+      "initial_adapter_sha256": "a1ffbcc0d482e4d879237fc49b672f297548dcf6de001c199af4f46ce65f2897",
+      "cohort_identity_sha256": "b115f22f3f9c09008a9a16a4a3dc26d3077e255fc0a6a8dfcfd736e95abfc736",
+      "prepared_data_sha256": "b11965bb21730e4172800e49b1e60bf525be5f2aad379efb50e2c5c1b38efe80",
+      "kd_support": "renormalized_verified_tokenizer_ids; excludes_unassigned_head_padding; CE_uses_full_head"
+    },
+    {
+      "source": "results/published/generic-kd-v1/selected-metadata.json",
+      "pointer": "/selections/12",
+      "family": "gemma4",
+      "model_key": "kd-seed44",
+      "model_id": "google/gemma-4-E2B-it",
+      "model_revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 0.7,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 44,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 262144
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 0.00015,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "initialization": "direct_pretrained_with_paired_seeded_lora",
+      "initial_adapter_sha256": "4be8369a60841c3311acd751198ed3173bd37d9049179960557ffbc6e4c421fb",
+      "cohort_identity_sha256": "b115f22f3f9c09008a9a16a4a3dc26d3077e255fc0a6a8dfcfd736e95abfc736",
+      "prepared_data_sha256": "b11965bb21730e4172800e49b1e60bf525be5f2aad379efb50e2c5c1b38efe80",
+      "kd_support": "renormalized_verified_tokenizer_ids; excludes_unassigned_head_padding; CE_uses_full_head"
+    },
+    {
+      "source": "results/published/generic-kd-v1/selected-metadata.json",
+      "pointer": "/selections/13",
+      "family": "gemma4",
+      "model_key": "teacher",
+      "model_id": "google/gemma-4-12B-it",
+      "model_revision": "707f0a3b8a3c7ad586ed01e27eafbad8a27dd0f7",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 1.0,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "temperature": 2.0,
+        "validation_interval": 200,
+        "vocab_size": 262144
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 2e-05,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "numerical_policy_at_identity": null,
+      "initialization": "direct_pretrained_with_paired_seeded_lora",
+      "initial_adapter_sha256": null,
+      "cohort_identity_sha256": "b115f22f3f9c09008a9a16a4a3dc26d3077e255fc0a6a8dfcfd736e95abfc736",
+      "prepared_data_sha256": "b11965bb21730e4172800e49b1e60bf525be5f2aad379efb50e2c5c1b38efe80",
+      "kd_support": null
+    },
+    {
+      "source": "results/published/generic-kd-v1/selected-metadata.json",
+      "pointer": "/selections/14",
+      "family": "lfm25",
+      "model_key": "ce-seed42",
+      "model_id": "LiquidAI/LFM2.5-2.6B",
+      "model_revision": "654f9463ce32b05d0429d76fe1f580b27d4c1ac0",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 1.0,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 125017
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 0.000125,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "initialization": "direct_pretrained_with_paired_seeded_lora",
+      "initial_adapter_sha256": "eca3825bc968e54e44f606baa3c5a908271157cb6e6ee4275c42406a8eb932fc",
+      "cohort_identity_sha256": "5d97d3db1752219d22b38c2d7f7ae37396ec1bf22407e257312c606f45110824",
+      "prepared_data_sha256": "1f7387c5096c005af6b7ca623538130861d4551e20e3dfb90f0bae36c55112a3",
+      "kd_support": null
+    },
+    {
+      "source": "results/published/generic-kd-v1/selected-metadata.json",
+      "pointer": "/selections/15",
+      "family": "lfm25",
+      "model_key": "ce-seed43",
+      "model_id": "LiquidAI/LFM2.5-2.6B",
+      "model_revision": "654f9463ce32b05d0429d76fe1f580b27d4c1ac0",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 1.0,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 43,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 125017
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 0.000125,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "initialization": "direct_pretrained_with_paired_seeded_lora",
+      "initial_adapter_sha256": "011c2ce18d461623a0989ace7e679db23617304854751c000d3c7538d6d0cfe7",
+      "cohort_identity_sha256": "5d97d3db1752219d22b38c2d7f7ae37396ec1bf22407e257312c606f45110824",
+      "prepared_data_sha256": "1f7387c5096c005af6b7ca623538130861d4551e20e3dfb90f0bae36c55112a3",
+      "kd_support": null
+    },
+    {
+      "source": "results/published/generic-kd-v1/selected-metadata.json",
+      "pointer": "/selections/16",
+      "family": "lfm25",
+      "model_key": "ce-seed44",
+      "model_id": "LiquidAI/LFM2.5-2.6B",
+      "model_revision": "654f9463ce32b05d0429d76fe1f580b27d4c1ac0",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 1.0,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 44,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 125017
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 0.000125,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "initialization": "direct_pretrained_with_paired_seeded_lora",
+      "initial_adapter_sha256": "45fd5ec74a093bf51d571ef3d75292f12c5478a11dd18f3829d576ac97b3217e",
+      "cohort_identity_sha256": "5d97d3db1752219d22b38c2d7f7ae37396ec1bf22407e257312c606f45110824",
+      "prepared_data_sha256": "1f7387c5096c005af6b7ca623538130861d4551e20e3dfb90f0bae36c55112a3",
+      "kd_support": null
+    },
+    {
+      "source": "results/published/generic-kd-v1/selected-metadata.json",
+      "pointer": "/selections/17",
+      "family": "lfm25",
+      "model_key": "kd-seed42",
+      "model_id": "LiquidAI/LFM2.5-2.6B",
+      "model_revision": "654f9463ce32b05d0429d76fe1f580b27d4c1ac0",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 0.9,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 125017
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 0.000125,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "initialization": "direct_pretrained_with_paired_seeded_lora",
+      "initial_adapter_sha256": "eca3825bc968e54e44f606baa3c5a908271157cb6e6ee4275c42406a8eb932fc",
+      "cohort_identity_sha256": "5d97d3db1752219d22b38c2d7f7ae37396ec1bf22407e257312c606f45110824",
+      "prepared_data_sha256": "1f7387c5096c005af6b7ca623538130861d4551e20e3dfb90f0bae36c55112a3",
+      "kd_support": "renormalized_verified_tokenizer_ids; excludes_unassigned_head_padding; CE_uses_full_head"
+    },
+    {
+      "source": "results/published/generic-kd-v1/selected-metadata.json",
+      "pointer": "/selections/18",
+      "family": "lfm25",
+      "model_key": "kd-seed43",
+      "model_id": "LiquidAI/LFM2.5-2.6B",
+      "model_revision": "654f9463ce32b05d0429d76fe1f580b27d4c1ac0",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 0.9,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 43,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 125017
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 0.000125,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "initialization": "direct_pretrained_with_paired_seeded_lora",
+      "initial_adapter_sha256": "011c2ce18d461623a0989ace7e679db23617304854751c000d3c7538d6d0cfe7",
+      "cohort_identity_sha256": "5d97d3db1752219d22b38c2d7f7ae37396ec1bf22407e257312c606f45110824",
+      "prepared_data_sha256": "1f7387c5096c005af6b7ca623538130861d4551e20e3dfb90f0bae36c55112a3",
+      "kd_support": "renormalized_verified_tokenizer_ids; excludes_unassigned_head_padding; CE_uses_full_head"
+    },
+    {
+      "source": "results/published/generic-kd-v1/selected-metadata.json",
+      "pointer": "/selections/19",
+      "family": "lfm25",
+      "model_key": "kd-seed44",
+      "model_id": "LiquidAI/LFM2.5-2.6B",
+      "model_revision": "654f9463ce32b05d0429d76fe1f580b27d4c1ac0",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 0.9,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 44,
+        "temperature": 1.0,
+        "validation_interval": 200,
+        "vocab_size": 125017
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 0.000125,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "numerical_policy_at_identity": {
+        "allow_tf32": false,
+        "cublas_workspace_config": ":4096:8",
+        "cudnn_benchmark": false,
+        "cudnn_deterministic": true,
+        "deterministic_algorithms": true
+      },
+      "initialization": "direct_pretrained_with_paired_seeded_lora",
+      "initial_adapter_sha256": "45fd5ec74a093bf51d571ef3d75292f12c5478a11dd18f3829d576ac97b3217e",
+      "cohort_identity_sha256": "5d97d3db1752219d22b38c2d7f7ae37396ec1bf22407e257312c606f45110824",
+      "prepared_data_sha256": "1f7387c5096c005af6b7ca623538130861d4551e20e3dfb90f0bae36c55112a3",
+      "kd_support": "renormalized_verified_tokenizer_ids; excludes_unassigned_head_padding; CE_uses_full_head"
+    },
+    {
+      "source": "results/published/generic-kd-v1/selected-metadata.json",
+      "pointer": "/selections/20",
+      "family": "lfm25",
+      "model_key": "teacher",
+      "model_id": "LiquidAI/LFM2.5-24B-A2B",
+      "model_revision": "3fcfdbfa1a1b6d8166846a6323e69f1e1254440d",
+      "selected_step": 3000,
+      "settings": {
+        "alpha": 1.0,
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "divergence": "forward_kl",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "temperature": 2.0,
+        "validation_interval": 200,
+        "vocab_size": 125017
+      },
+      "optimizer_class": "torch.optim.adamw.AdamW",
+      "optimizer_groups": [
+        {
+          "amsgrad": false,
+          "betas": [
+            0.9,
+            0.999
+          ],
+          "capturable": false,
+          "decoupled_weight_decay": true,
+          "differentiable": false,
+          "eps": 1e-08,
+          "foreach": null,
+          "fused": null,
+          "lr": 2e-05,
+          "maximize": false,
+          "weight_decay": 0.01
+        }
+      ],
+      "numerical_policy_at_identity": null,
+      "initialization": "direct_pretrained_with_paired_seeded_lora",
+      "initial_adapter_sha256": null,
+      "cohort_identity_sha256": "5d97d3db1752219d22b38c2d7f7ae37396ec1bf22407e257312c606f45110824",
+      "prepared_data_sha256": "1f7387c5096c005af6b7ca623538130861d4551e20e3dfb90f0bae36c55112a3",
+      "kd_support": null
+    }
+  ],
+  "execution_census": {
+    "source": "results/published/generic-kd-v1/run-census.json",
+    "classification_counts": {
+      "common_student": 60,
+      "formal_teacher": 3,
+      "historical_diagnostic": 10,
+      "historical_pilot": 16
+    },
+    "pointer": "/classification_counts",
+    "limit": "resume 별도 계수 아님; seed42 선택 재사용; 추가 고정쌍은43/44; family별 fixed Teacher1; 전체 역사적 census 아님"
+  },
+  "historical_log_summaries": [
+    {
+      "source": "results/logs/20260403_234340/summary.json",
+      "models": {
+        "teacher_model": "gpt2",
+        "student_model": "distilgpt2"
+      },
+      "model_pointers": [
+        "/config/teacher_model",
+        "/config/student_model"
+      ],
+      "device": "mps",
+      "device_pointer": "/config/device",
+      "dataset_explicit": null,
+      "dataset_pointer": "/config/dataset",
+      "training_seed": null,
+      "seed_limit": "summary에 training seed 없음; split seed와 동일하다고 추정하지 않음",
+      "metrics": {
+        "Teacher": {
+          "ppl": 32573.542780610776,
+          "pointer": "/results/Teacher/ppl"
+        },
+        "Student (KD)": {
+          "ppl": 128.2214528844431,
+          "pointer": "/results/Student (KD)/ppl"
+        },
+        "Student (FT)": {
+          "ppl": 1.00005868950082,
+          "pointer": "/results/Student (FT)/ppl"
+        },
+        "Student (Base)": {
+          "ppl": 36265.532644995066,
+          "pointer": "/results/Student (Base)/ppl"
+        }
+      },
+      "settings": {
+        "alpha": 0.3,
+        "temperature": 4.0,
+        "epochs": 3
+      },
+      "initialization_or_teacher_checkpoint_reference_present": false,
+      "cohort_limit": "독립 cohort; 공통 FineWeb2 결과에 합산하지 않음"
+    },
+    {
+      "source": "results/logs/20260403_local_test/summary.json",
+      "models": {
+        "teacher_model": "gpt2",
+        "student_model": "distilgpt2"
+      },
+      "model_pointers": [
+        "/config/teacher_model",
+        "/config/student_model"
+      ],
+      "device": "mps",
+      "device_pointer": "/config/device",
+      "dataset_explicit": null,
+      "dataset_pointer": "/config/dataset",
+      "training_seed": null,
+      "seed_limit": "summary에 training seed 없음; split seed와 동일하다고 추정하지 않음",
+      "metrics": {
+        "Teacher": {
+          "ppl": 20803.176097401018,
+          "pointer": "/results/Teacher/ppl"
+        },
+        "Student (KD)": {
+          "ppl": 57.07588050701337,
+          "pointer": "/results/Student (KD)/ppl"
+        },
+        "Student (FT)": {
+          "ppl": 1.0000352615987362,
+          "pointer": "/results/Student (FT)/ppl"
+        },
+        "Student (Base)": {
+          "ppl": 20138.81564397336,
+          "pointer": "/results/Student (Base)/ppl"
+        }
+      },
+      "settings": {
+        "alpha": 0.5,
+        "temperature": 3.0,
+        "epochs": 1
+      },
+      "initialization_or_teacher_checkpoint_reference_present": false,
+      "cohort_limit": "독립 cohort; 공통 FineWeb2 결과에 합산하지 않음"
+    },
+    {
+      "source": "results/logs/20260404_082410/summary.json",
+      "models": {
+        "teacher_model": "gpt2",
+        "student_model": "distilgpt2"
+      },
+      "model_pointers": [
+        "/config/teacher_model",
+        "/config/student_model"
+      ],
+      "device": "mps",
+      "device_pointer": "/config/device",
+      "dataset_explicit": null,
+      "dataset_pointer": "/config/dataset",
+      "training_seed": null,
+      "seed_limit": "summary에 training seed 없음; split seed와 동일하다고 추정하지 않음",
+      "metrics": {
+        "Teacher": {
+          "ppl": 43.598587580218656,
+          "pointer": "/results/Teacher/ppl"
+        },
+        "Student (KD)": {
+          "ppl": 48.962919841025716,
+          "pointer": "/results/Student (KD)/ppl"
+        },
+        "Student (FT)": {
+          "ppl": 32.559685719290655,
+          "pointer": "/results/Student (FT)/ppl"
+        },
+        "Student (Base)": {
+          "ppl": 65.26706107771084,
+          "pointer": "/results/Student (Base)/ppl"
+        }
+      },
+      "settings": {
+        "alpha": 0.3,
+        "temperature": 4.0,
+        "epochs": 3
+      },
+      "initialization_or_teacher_checkpoint_reference_present": false,
+      "cohort_limit": "독립 cohort; 공통 FineWeb2 결과에 합산하지 않음"
+    },
+    {
+      "source": "results/logs/20260404_223130/summary.json",
+      "models": {
+        "teacher_model": "gpt2",
+        "student_model": "distilgpt2"
+      },
+      "model_pointers": [
+        "/config/teacher_model",
+        "/config/student_model"
+      ],
+      "device": "mps",
+      "device_pointer": "/config/device",
+      "dataset_explicit": null,
+      "dataset_pointer": "/config/dataset",
+      "training_seed": null,
+      "seed_limit": "summary에 training seed 없음; split seed와 동일하다고 추정하지 않음",
+      "metrics": {
+        "Teacher": {
+          "ppl": 43.598587580218656,
+          "pointer": "/results/Teacher/ppl"
+        },
+        "Student (KD)": {
+          "ppl": 48.712077615686695,
+          "pointer": "/results/Student (KD)/ppl"
+        },
+        "Student (FT)": {
+          "ppl": 32.691084390531884,
+          "pointer": "/results/Student (FT)/ppl"
+        },
+        "Student (Base)": {
+          "ppl": 65.26706107771084,
+          "pointer": "/results/Student (Base)/ppl"
+        }
+      },
+      "settings": {
+        "alpha": 0.5,
+        "temperature": 2.0,
+        "epochs": 3
+      },
+      "initialization_or_teacher_checkpoint_reference_present": false,
+      "cohort_limit": "독립 cohort; 공통 FineWeb2 결과에 합산하지 않음"
+    },
+    {
+      "source": "results/logs/20260405_093536/summary.json",
+      "models": {
+        "teacher_model": "gpt2-medium",
+        "student_model": "distilgpt2"
+      },
+      "model_pointers": [
+        "/config/teacher_model",
+        "/config/student_model"
+      ],
+      "device": "mps",
+      "device_pointer": "/config/device",
+      "dataset_explicit": null,
+      "dataset_pointer": "/config/dataset",
+      "training_seed": null,
+      "seed_limit": "summary에 training seed 없음; split seed와 동일하다고 추정하지 않음",
+      "metrics": {
+        "Teacher": {
+          "ppl": 31.320080395418362,
+          "pointer": "/results/Teacher/ppl"
+        },
+        "Student (KD)": {
+          "ppl": 47.31293131326812,
+          "pointer": "/results/Student (KD)/ppl"
+        },
+        "Student (FT)": {
+          "ppl": 32.772384552501386,
+          "pointer": "/results/Student (FT)/ppl"
+        },
+        "Student (Base)": {
+          "ppl": 65.26706107771084,
+          "pointer": "/results/Student (Base)/ppl"
+        }
+      },
+      "settings": {
+        "alpha": 0.5,
+        "temperature": 2.0,
+        "epochs": 3
+      },
+      "initialization_or_teacher_checkpoint_reference_present": false,
+      "cohort_limit": "독립 cohort; 공통 FineWeb2 결과에 합산하지 않음"
+    },
+    {
+      "source": "results/logs/20260405_110352/summary.json",
+      "models": {
+        "teacher_model": "gpt2-medium",
+        "student_model": "distilgpt2"
+      },
+      "model_pointers": [
+        "/config/teacher_model",
+        "/config/student_model"
+      ],
+      "device": "mps",
+      "device_pointer": "/config/device",
+      "dataset_explicit": "wikitext-103-raw-v1",
+      "dataset_pointer": "/config/dataset",
+      "training_seed": null,
+      "seed_limit": "summary에 training seed 없음; split seed와 동일하다고 추정하지 않음",
+      "metrics": {
+        "Teacher": {
+          "ppl": 31.320080395418362,
+          "pointer": "/results/Teacher/ppl"
+        },
+        "Student (KD)": {
+          "ppl": 40.962637803410765,
+          "pointer": "/results/Student (KD)/ppl"
+        },
+        "Student (FT)": {
+          "ppl": 22.71686223085643,
+          "pointer": "/results/Student (FT)/ppl"
+        },
+        "Student (Base)": {
+          "ppl": 65.26706107771084,
+          "pointer": "/results/Student (Base)/ppl"
+        }
+      },
+      "settings": {
+        "alpha": 0.5,
+        "temperature": 2.0,
+        "epochs": 3
+      },
+      "initialization_or_teacher_checkpoint_reference_present": false,
+      "cohort_limit": "독립 cohort; 공통 FineWeb2 결과에 합산하지 않음"
+    },
+    {
+      "source": "results/logs/20260408_000443/summary.json",
+      "models": {
+        "teacher_model": "gpt2",
+        "student_model": "distilgpt2"
+      },
+      "model_pointers": [
+        "/config/teacher_model",
+        "/config/student_model"
+      ],
+      "device": "mps",
+      "device_pointer": "/config/device",
+      "dataset_explicit": "wikitext-2-raw-v1",
+      "dataset_pointer": "/config/dataset",
+      "training_seed": null,
+      "seed_limit": "summary에 training seed 없음; split seed와 동일하다고 추정하지 않음",
+      "metrics": {
+        "Teacher": {
+          "ppl": 25.07083015627373,
+          "pointer": "/results/Teacher/ppl"
+        },
+        "Student (KD)": {
+          "ppl": 33.00399460776076,
+          "pointer": "/results/Student (KD)/ppl"
+        },
+        "Student (FT)": {
+          "ppl": 32.5632244826575,
+          "pointer": "/results/Student (FT)/ppl"
+        },
+        "Student (Base)": {
+          "ppl": 65.26706107771084,
+          "pointer": "/results/Student (Base)/ppl"
+        }
+      },
+      "settings": {
+        "alpha": 0.5,
+        "temperature": 2.0,
+        "epochs": 3
+      },
+      "initialization_or_teacher_checkpoint_reference_present": false,
+      "cohort_limit": "독립 cohort; 공통 FineWeb2 결과에 합산하지 않음"
+    },
+    {
+      "source": "results/logs/20260408_020149/summary.json",
+      "models": {
+        "teacher_model": "gpt2",
+        "student_model": "distilgpt2"
+      },
+      "model_pointers": [
+        "/config/teacher_model",
+        "/config/student_model"
+      ],
+      "device": "mps",
+      "device_pointer": "/config/device",
+      "dataset_explicit": "wikitext-2-raw-v1",
+      "dataset_pointer": "/config/dataset",
+      "training_seed": null,
+      "seed_limit": "summary에 training seed 없음; split seed와 동일하다고 추정하지 않음",
+      "metrics": {
+        "Teacher": {
+          "ppl": 25.068836320126053,
+          "pointer": "/results/Teacher/ppl"
+        },
+        "Student (KD)": {
+          "ppl": 32.889289881778716,
+          "pointer": "/results/Student (KD)/ppl"
+        },
+        "Student (FT)": {
+          "ppl": 32.68212451984514,
+          "pointer": "/results/Student (FT)/ppl"
+        },
+        "Student (Base)": {
+          "ppl": 65.26706107771084,
+          "pointer": "/results/Student (Base)/ppl"
+        }
+      },
+      "settings": {
+        "alpha": 0.3,
+        "temperature": 2.0,
+        "epochs": 5
+      },
+      "initialization_or_teacher_checkpoint_reference_present": false,
+      "cohort_limit": "독립 cohort; 공통 FineWeb2 결과에 합산하지 않음"
+    },
+    {
+      "source": "results/logs/20260410_041631/summary.json",
+      "models": {
+        "teacher_model": "gpt2",
+        "student_model": "distilgpt2"
+      },
+      "model_pointers": [
+        "/config/teacher_model",
+        "/config/student_model"
+      ],
+      "device": "mps",
+      "device_pointer": "/config/device",
+      "dataset_explicit": null,
+      "dataset_pointer": "/config/dataset",
+      "training_seed": null,
+      "seed_limit": "summary에 training seed 없음; split seed와 동일하다고 추정하지 않음",
+      "metrics": {
+        "Teacher (FT)": {
+          "ppl": 25.097404780964215,
+          "pointer": "/results/Teacher (FT)/ppl"
+        },
+        "Student (KD)": {
+          "ppl": 32.44255220049383,
+          "pointer": "/results/Student (KD)/ppl"
+        },
+        "Student (FT)": {
+          "ppl": 32.81794268364906,
+          "pointer": "/results/Student (FT)/ppl"
+        },
+        "Student (Base)": {
+          "ppl": 65.26706107771084,
+          "pointer": "/results/Student (Base)/ppl"
+        }
+      },
+      "settings": {
+        "alpha": 0.2,
+        "temperature": 2.0,
+        "epochs": 8
+      },
+      "initialization_or_teacher_checkpoint_reference_present": true,
+      "cohort_limit": "독립 cohort; 공통 FineWeb2 결과에 합산하지 않음"
+    },
+    {
+      "source": "results/logs/20260823_080109/summary.json",
+      "models": {
+        "teacher_model": "Qwen/Qwen2.5-3B",
+        "student_model": "Qwen/Qwen2.5-1.5B"
+      },
+      "model_pointers": [
+        "/config/teacher_model",
+        "/config/student_model"
+      ],
+      "device": "cuda",
+      "device_pointer": "/config/device",
+      "dataset_explicit": null,
+      "dataset_pointer": "/config/dataset",
+      "training_seed": null,
+      "seed_limit": "summary에 training seed 없음; split seed와 동일하다고 추정하지 않음",
+      "metrics": {
+        "Teacher (FT)": {
+          "ppl": 10.02298646228374,
+          "pointer": "/results/Teacher (FT)/ppl"
+        },
+        "Student (KD)": {
+          "ppl": 14.225834324376834,
+          "pointer": "/results/Student (KD)/ppl"
+        },
+        "Student (FT)": {
+          "ppl": 11.800220931488933,
+          "pointer": "/results/Student (FT)/ppl"
+        },
+        "Student (Base)": {
+          "ppl": 12.12541071318881,
+          "pointer": "/results/Student (Base)/ppl"
+        }
+      },
+      "settings": {
+        "alpha": 0.2,
+        "temperature": 2.0,
+        "epochs": 8
+      },
+      "initialization_or_teacher_checkpoint_reference_present": true,
+      "cohort_limit": "독립 cohort; 공통 FineWeb2 결과에 합산하지 않음"
+    },
+    {
+      "source": "results/logs/qwen7b-korean-4way-v1/summary.json",
+      "models": {
+        "teacher_model": "Qwen/Qwen2.5-7B",
+        "student_model": "Qwen/Qwen2.5-1.5B"
+      },
+      "model_pointers": [
+        "/config/teacher_model",
+        "/config/student_model"
+      ],
+      "device": "cuda",
+      "device_pointer": "/config/device",
+      "dataset_explicit": null,
+      "dataset_pointer": "/config/dataset",
+      "training_seed": null,
+      "seed_limit": "summary에 training seed 없음; split seed와 동일하다고 추정하지 않음",
+      "metrics": {
+        "Teacher (FT)": {
+          "ppl": 7.656845280347504,
+          "pointer": "/results/Teacher (FT)/ppl"
+        },
+        "Student (KD)": {
+          "ppl": 14.353540872934012,
+          "pointer": "/results/Student (KD)/ppl"
+        },
+        "Student (FT)": {
+          "ppl": 11.813621536575697,
+          "pointer": "/results/Student (FT)/ppl"
+        },
+        "Student (Base)": {
+          "ppl": 12.127221652905641,
+          "pointer": "/results/Student (Base)/ppl"
+        }
+      },
+      "settings": {
+        "alpha": 0.2,
+        "temperature": 2.0,
+        "epochs": 8
+      },
+      "initialization_or_teacher_checkpoint_reference_present": true,
+      "cohort_limit": "독립 cohort; 공통 FineWeb2 결과에 합산하지 않음"
+    },
+    {
+      "source": "results/logs/qwen7b-korean-reverse-v3/summary.json",
+      "models": {
+        "teacher_model": "Qwen/Qwen2.5-7B",
+        "student_model": "Qwen/Qwen2.5-1.5B"
+      },
+      "model_pointers": [
+        "/config/teacher_model",
+        "/config/student_model"
+      ],
+      "device": "cuda",
+      "device_pointer": "/config/device",
+      "dataset_explicit": null,
+      "dataset_pointer": "/config/dataset",
+      "training_seed": null,
+      "seed_limit": "summary에 training seed 없음; split seed와 동일하다고 추정하지 않음",
+      "metrics": {
+        "Teacher (FT)": {
+          "ppl": 7.656845280347504,
+          "pointer": "/results/Teacher (FT)/ppl"
+        },
+        "Student (KD)": {
+          "ppl": 11.6848729040593,
+          "pointer": "/results/Student (KD)/ppl"
+        },
+        "Student (FT)": {
+          "ppl": 11.813621536575697,
+          "pointer": "/results/Student (FT)/ppl"
+        },
+        "Student (Base)": {
+          "ppl": 12.127221652905641,
+          "pointer": "/results/Student (Base)/ppl"
+        }
+      },
+      "settings": {
+        "alpha": 0.5,
+        "temperature": 2.0,
+        "epochs": 8,
+        "kd_reduction": "tokenmean",
+        "kd_divergence": "reverse_kl"
+      },
+      "initialization_or_teacher_checkpoint_reference_present": true,
+      "cohort_limit": "독립 cohort; 공통 FineWeb2 결과에 합산하지 않음"
+    },
+    {
+      "source": "results/logs/qwen7b-korean-t4-tokenmean-v1/summary.json",
+      "models": {
+        "teacher_model": "Qwen/Qwen2.5-7B",
+        "student_model": "Qwen/Qwen2.5-1.5B"
+      },
+      "model_pointers": [
+        "/config/teacher_model",
+        "/config/student_model"
+      ],
+      "device": "cuda",
+      "device_pointer": "/config/device",
+      "dataset_explicit": null,
+      "dataset_pointer": "/config/dataset",
+      "training_seed": null,
+      "seed_limit": "summary에 training seed 없음; split seed와 동일하다고 추정하지 않음",
+      "metrics": {
+        "Teacher (FT)": {
+          "ppl": 7.656845280347504,
+          "pointer": "/results/Teacher (FT)/ppl"
+        },
+        "Student (KD)": {
+          "ppl": 18.78493479498928,
+          "pointer": "/results/Student (KD)/ppl"
+        },
+        "Student (FT)": {
+          "ppl": 11.813621536575697,
+          "pointer": "/results/Student (FT)/ppl"
+        },
+        "Student (Base)": {
+          "ppl": 12.127221652905641,
+          "pointer": "/results/Student (Base)/ppl"
+        }
+      },
+      "settings": {
+        "alpha": 0.2,
+        "temperature": 4.0,
+        "epochs": 8
+      },
+      "initialization_or_teacher_checkpoint_reference_present": true,
+      "cohort_limit": "독립 cohort; 공통 FineWeb2 결과에 합산하지 않음"
+    },
+    {
+      "source": "results/logs/qwen7b-korean-t4-tokenmean-v2/summary.json",
+      "models": {
+        "teacher_model": "Qwen/Qwen2.5-7B",
+        "student_model": "Qwen/Qwen2.5-1.5B"
+      },
+      "model_pointers": [
+        "/config/teacher_model",
+        "/config/student_model"
+      ],
+      "device": "cuda",
+      "device_pointer": "/config/device",
+      "dataset_explicit": null,
+      "dataset_pointer": "/config/dataset",
+      "training_seed": null,
+      "seed_limit": "summary에 training seed 없음; split seed와 동일하다고 추정하지 않음",
+      "metrics": {
+        "Teacher (FT)": {
+          "ppl": 7.656845280347504,
+          "pointer": "/results/Teacher (FT)/ppl"
+        },
+        "Student (KD)": {
+          "ppl": 15.710539669384737,
+          "pointer": "/results/Student (KD)/ppl"
+        },
+        "Student (FT)": {
+          "ppl": 11.813621536575697,
+          "pointer": "/results/Student (FT)/ppl"
+        },
+        "Student (Base)": {
+          "ppl": 12.127221652905641,
+          "pointer": "/results/Student (Base)/ppl"
+        }
+      },
+      "settings": {
+        "alpha": 0.2,
+        "temperature": 4.0,
+        "epochs": 8,
+        "kd_reduction": "tokenmean"
+      },
+      "initialization_or_teacher_checkpoint_reference_present": true,
+      "cohort_limit": "독립 cohort; 공통 FineWeb2 결과에 합산하지 않음"
+    }
+  ],
+  "historical_h100": {
+    "source": "results/logs/h100-tuning-20260920/test_results.json",
+    "metrics_pointer": "/test",
+    "metrics": {
+      "student_ft_initial": {
+        "ce": 2.4693623869164796,
+        "ppl": 11.814911107554344,
+        "tokens": 35955
+      },
+      "student_kd_v3_reference": {
+        "ce": 2.4581891941138987,
+        "ppl": 11.683635576914197,
+        "tokens": 35955
+      },
+      "student_kd_selected": {
+        "ce": 2.429492015199392,
+        "ppl": 11.353113405876357,
+        "tokens": 35955
+      },
+      "student_ce_control_best": {
+        "ce": 2.4693623869164796,
+        "ppl": 11.814911107554344,
+        "tokens": 35955
+      },
+      "student_ce_at_kd_step": {
+        "ce": 2.490608616164357,
+        "ppl": 12.06861904233821,
+        "tokens": 35955
+      }
+    },
+    "selection_pointer": "/selection",
+    "selection": "Validation-only, test evaluated once after selection freeze",
+    "caution_pointer": "/caution",
+    "caution": "Single training seed, small Wikipedia holdout; not a general capability benchmark.",
+    "metadata_source": "results/logs/h100-tuning-20260920/summary.json",
+    "training_seed": 42,
+    "training_seed_pointer": "/manifest/training_seed",
+    "gpu": "NVIDIA H100 NVL",
+    "gpu_pointer": "/manifest/gpu",
+    "configuration": {
+      "teacher_model": "Qwen/Qwen2.5-7B",
+      "student_model": "Qwen/Qwen2.5-1.5B",
+      "dataset_name": "wikimedia/wikipedia",
+      "dataset_config": "20231101.ko",
+      "dataset_revision": "b04c8d1ceb2f5cd4588862100d08de323dccfbaa",
+      "dataset_max_samples": 1000,
+      "validation_ratio": 0.05,
+      "test_ratio": 0.05,
+      "max_seq_length": 256,
+      "kd_reduction": "tokenmean",
+      "kd_divergence": "reverse_kl",
+      "epochs": 2,
+      "learning_rate": 1e-05,
+      "optimizer": "adafactor",
+      "seed": 42
+    },
+    "configuration_pointer": "/manifest/base_config",
+    "control_note": "기존 FT Student에서 추가훈련; CE best=step0. KD만의 초기학습 대조가 아님; CE LR 탐색 예산 동등성을 보장하지 않음",
+    "selected_parameters": {
+      "name": "alpha7",
+      "learning_rate": 1e-05,
+      "alpha": 0.7,
+      "temperature": 2.0,
+      "best_step": 765,
+      "final_step": 1530
+    },
+    "selected_parameters_pointer": "/selected_parameters"
+  },
+  "earlier_qwen35": {
+    "smoke": {
+      "source": "results/research/qwen35-smoke-v1/test-results.json",
+      "metrics": {
+        "student_ce": {
+          "ce": 2.7189710103105322,
+          "ppl": 15.164709883737956,
+          "tokens": 11753
+        },
+        "student_kd": {
+          "ce": 2.735665094068403,
+          "ppl": 15.419995773890824,
+          "tokens": 11753
+        },
+        "student_pretrained": {
+          "ce": 2.769436900751404,
+          "ppl": 15.949650244587595,
+          "tokens": 11753
+        },
+        "teacher_selected": {
+          "ce": 2.530138254469936,
+          "ppl": 12.555241834986253,
+          "tokens": 11753
+        }
+      },
+      "metrics_pointer": "/metrics",
+      "packing": {
+        "blocks": 23,
+        "documents": 16,
+        "dropped_tail_tokens": 115,
+        "packed_tokens": 11776,
+        "total_tokens": 11891
+      },
+      "packing_pointer": "/packing",
+      "split_policy": "deterministic hash-ranked 80/10/10 from source train; not official test",
+      "split_policy_pointer": "/split_policy",
+      "config_source": "results/research/qwen35-smoke-v1/config.json",
+      "training_seed_pointer": "/training/seed",
+      "training_seed": 42,
+      "max_steps": 20,
+      "max_steps_pointer": "/training/max_steps",
+      "data_max_documents": 200,
+      "data_max_documents_pointer": "/data/max_documents"
+    },
+    "pilot_round1": {
+      "source": "results/research/qwen35-tuning-round1/metrics.json",
+      "methods": {
+        "ce": {
+          "trial_id": "ce-3",
+          "ppl": 17.667033827809654,
+          "ce": 2.8717004073742616,
+          "best_step": 200
+        },
+        "kd": {
+          "trial_id": "kd-1",
+          "ppl": 17.73947862773708,
+          "ce": 2.875792586806769,
+          "best_step": 200
+        }
+      },
+      "methods_pointer": "/methods",
+      "test_evaluated": false,
+      "test_evaluated_pointer": "/test_evaluated",
+      "ppl_kd_worse_percent": 0.41005638316824466,
+      "effect_pointer": "/ppl_kd_worse_percent"
+    },
+    "pilot_round2": {
+      "source": "results/research/qwen35-tuning-round2/boundary-compact.json",
+      "methods": {
+        "ce": {
+          "trial_id": "ce-3",
+          "best_validation": {
+            "ce": 2.8715678261150885,
+            "ppl": 17.66469166548576,
+            "tokens": 14308
+          },
+          "best_step": 220
+        },
+        "kd": {
+          "trial_id": "kd-1",
+          "best_validation": {
+            "ce": 2.872542614039676,
+            "ppl": 17.681919388937064,
+            "tokens": 14308
+          },
+          "best_step": 220
+        }
+      },
+      "methods_pointer": "/methods",
+      "test_evaluated": false,
+      "test_evaluated_pointer": "/test_evaluated"
+    }
+  },
+  "verification": {
+    "original_and_published_aggregate_pairs_matched": 24,
+    "final_result_count": 24,
+    "paired_effects_recomputed": 9,
+    "selected_metadata_count": 21,
+    "paired_initial_adapter_hash_equal": true,
+    "consumed_published_manifest_entries_matched": 33,
+    "limits": "로컬 retained metadata SHA/bytes/산술 검증; external signature/fresh cloud authentication/전체 payload 재현/비접근 증명 아님"
+  },
+  "safe_publication_proposal": [
+    "공개 모델 ID/revision 및 Base/Instruct 표기(공식 권리는 별도 확인)",
+    "cohort dataset/subset/revision, split count와 split manifest SHA, 정제/중복/노출 한계",
+    "최종 aggregate JSON의 status/protocol_sha256/ce_sum/tokens, 계산 CE/PPL 및 nine paired effects",
+    "training/split seeds 구분, seed42 reuse, fixed Teacher 조건",
+    "path-free selected hyperparameters/optimizer/steps/수치정책과 누락 필드",
+    "범위 한정 실행수/실패 분류 및 GPU/synthetic 구분",
+    "본 감사의 repo-relative source path/JSON pointer/SHA provenance; original operational JSON 통째 복사 금지"
+  ],
+  "exclude_from_publication": [
+    "개인 홈/VM 절대경로, cloud 구독/resource/VM/service/storage IDs, 인증/연락처/운영로그",
+    "원문·개별 document/source IDs·텍스트 해시목록·prepared token IDs·QA heldout·prompt/answer/prediction",
+    "모델/adapter/checkpoint payload, 원격전송 bundle 및 원본 ZIP"
+  ],
+  "sources_sha256": {
+    "docs/published/generic-kd-v1/EVIDENCE.md": "230c57f8db725df8dc7a540d998b0d05afb8d3b0cbb14cc1a619c6722e834abf",
+    "docs/published/generic-kd-v1/README.md": "b62ca0af0274c5221a8cbecf2d98dedcf0f0ad648f3745c501c92a73e0984f37",
+    "docs/published/generic-kd-v1/REPORT.md": "a290957b5e4101b26996f0687eadd671ae888754ffbe7a2e0afb652db5d96e54",
+    "docs/research-campaign/GEMMA_GENERIC_A_CLOSURE.md": "e1a656a4d397b23a6e7122f98e4a35f69d11f7f000c248e5dae38ef64a8911fe",
+    "docs/research-campaign/LIQUID_GENERIC_A_CLOSURE.md": "3e827d05f0db00ed8bb36f10828534af398772add445904b614113fcbdd4ca57",
+    "docs/research-campaign/QWEN_GENERIC_A_CLOSURE.md": "1255864028320dddf24d2e918627c13d5e34f4decfbd5f1bc5803408bec74cc7",
+    "docs/research-campaign/reports/basic-integrated-v1/FAILURES.md": "17fe3ad14ff2fdb1179a5275700801bee6aa118dd24b682a454f2fe2059d1a9a",
+    "results/logs/20260403_234340/summary.json": "b0b2aa77fbf99bddf82c165d057b36032e002f2b2c37501870a38e2c5ff15099",
+    "results/logs/20260403_local_test/summary.json": "f321cf30f631f1bddc39c2ea67c90d04e2772c8357edaf5707d0423c0e555023",
+    "results/logs/20260404_082410/notes.md": "5bee35fadea65148f316b69257779842e8fe0ec9abf0d283e96cf1a237b026b2",
+    "results/logs/20260404_082410/summary.json": "77de8383170ae25589afc9a89067b07cf08cc939a46efebd55118213a0c310eb",
+    "results/logs/20260404_223130/summary.json": "925229b1f04cc83247d2eb6424be4fcbdd451c4716822e51f00fbc3eb0170386",
+    "results/logs/20260405_093536/summary.json": "7367cf4e7bea191a3a55e4c4e729b218dd734391de7c06182826bacd2c3b0926",
+    "results/logs/20260405_110352/summary.json": "0938571aa5d37af6afd2e5774d1e7a53919ae1a14639e382d7e7aae944ae778b",
+    "results/logs/20260408_000443/summary.json": "7c45438744f3dc4c6a65d2a57aa86585692ffcbe774baffd5b0d90321004aeaf",
+    "results/logs/20260408_020149/summary.json": "2004d36be65a88a8f6102bfe77e5de012675732a6edecefb35289caf8c09b48d",
+    "results/logs/20260410_041631/notes.md": "a6a366a3f8ad7ced773cb4a21491a0869edc80b2ce8be9f65598a9c3c886ccde",
+    "results/logs/20260410_041631/summary.json": "f613bf36dd00a53e465a19988e32647c63ce6aadc6d8fe5770b0fd98ed7ef46e",
+    "results/logs/20260823_080109/notes.md": "e6ed6461f9fed187a8614e952224524053488fff1484e34b73ad6070a80bfc89",
+    "results/logs/20260823_080109/summary.json": "2db377d5d3fa74cbe17a4fffcfa5050fa9d57594c4bb40bb02adf309a550b06a",
+    "results/logs/h100-tuning-20260920/evaluation_results.json": "625fae48f6eff8b65d45918049fb975af98e3bb6a6630bcf7a3cb3ccc5fa4a0a",
+    "results/logs/h100-tuning-20260920/report.md": "93a3ca8c34250a614304c515a3cbc36d1f25fadfd76f22bb87af3a58dd2f1707",
+    "results/logs/h100-tuning-20260920/summary.json": "4ba1a22f78acf2c9681f0da7e3f3bd9f05f786768c0e09b18d7fd764ca865a56",
+    "results/logs/h100-tuning-20260920/test_results.json": "f2e95f939e48bba828c5ee17f101fdb317e9788fe94fa327063ca858927b7e41",
+    "results/logs/qwen7b-korean-4way-v1/notes.md": "7c2448a9b04236e0d4592a3b5f95f30eaa4e294212701ad3f870a9194420e870",
+    "results/logs/qwen7b-korean-4way-v1/summary.json": "e99c4ab2f17abe717f17a514cb972e492edb5baa0936644220957c62ad5196b2",
+    "results/logs/qwen7b-korean-reverse-v3/notes.md": "6bc75d3a245f05ce2518dbca0737cf7d46da14c365af77c4237aba037e64277e",
+    "results/logs/qwen7b-korean-reverse-v3/summary.json": "e9aa78128a629a1b1e35c43f0f5b16ecca888440bd48680ee81e62eb3d17227b",
+    "results/logs/qwen7b-korean-t4-tokenmean-v1/summary.json": "278b45a34ba3a77fbf2816276725d3cc64e5a1d085d6afe41618764f50d0d53f",
+    "results/logs/qwen7b-korean-t4-tokenmean-v2/summary.json": "53bf52d7a9766ffe073c33d922f5c1144ce453dd65ddc0034abe355a4db4db1a",
+    "results/published/generic-kd-v1/README.md": "082572b0726dbc302761bb35bda789320c5b09583ad5af4ce4e79e96673a4b4d",
+    "results/published/generic-kd-v1/cohort-manifest.json": "53e4e887ec898c2cce985a8027f0dec33360761ba16f705a3c95d244887f904a",
+    "results/published/generic-kd-v1/final/gemma4--ce-seed42.json": "c530dd6fed541be27b518d2854ec561317628b9fe9afa97e3bdf498bf90bdc21",
+    "results/published/generic-kd-v1/final/gemma4--ce-seed43.json": "5b70b61cc0f42ae19888f3253ae7c801d94d3cf4bc418e9697970fe1bc70f4d6",
+    "results/published/generic-kd-v1/final/gemma4--ce-seed44.json": "b13e175d4d24737517e6c6b76ec4e5e1d3fa6db216ed5e7986a63806b7a7ea9a",
+    "results/published/generic-kd-v1/final/gemma4--kd-seed42.json": "f5b7f0273d2bad8256f25b74818a967e111922f0ba3371fe3c34fdb01d2b9d9e",
+    "results/published/generic-kd-v1/final/gemma4--kd-seed43.json": "18a611e55725aa71f2af62af1e63987960b2bd0ea048f2fb96cfafbd13c81fe1",
+    "results/published/generic-kd-v1/final/gemma4--kd-seed44.json": "7b59e5e222504368b5df89b4e31d20c5629abd615b7e68b74e06eb9b902aa0ab",
+    "results/published/generic-kd-v1/final/gemma4--pretrained-student.json": "26afdd9a4963cf230e46bb7e1fe245bd1118484daf391708e5c6acfc558bfbee",
+    "results/published/generic-kd-v1/final/gemma4--teacher.json": "6a2ee95f915f71d24f1dc0e79286ca8b42ce68f817b428e0d1236c1122f62c84",
+    "results/published/generic-kd-v1/final/lfm25--ce-seed42.json": "421ed9fbecbfe2f01bc34db1334352996b2b252e2badfa9534a7c8d3f6c4aa5f",
+    "results/published/generic-kd-v1/final/lfm25--ce-seed43.json": "d9fda52af98ae9b8bf40d915e4d9e772f9f41177eb2722c343f5646e6f1892f2",
+    "results/published/generic-kd-v1/final/lfm25--ce-seed44.json": "58cd1d7126e74c409e2b1df771218576333e895d7fa440280f3f24a0977879e8",
+    "results/published/generic-kd-v1/final/lfm25--kd-seed42.json": "bc448b65790d76376ccc32675a1d8c77db2ec7f4447e4e2cccdfb4f57f1edf07",
+    "results/published/generic-kd-v1/final/lfm25--kd-seed43.json": "a765707da112b2f35f56bb1fda2b1466c844644db5b86e4a398054b72dea7fa6",
+    "results/published/generic-kd-v1/final/lfm25--kd-seed44.json": "c9236041902038c672921d00473c13fa7abfaf384a6e2b2847a2b6e60836aab0",
+    "results/published/generic-kd-v1/final/lfm25--pretrained-student.json": "29aa2302c900400ee7303312aedba9fe94b9e7bde64db454d3521e4d0622fd3c",
+    "results/published/generic-kd-v1/final/lfm25--teacher.json": "09dd04ea940e4e7226cd9c9d0e9cb047ef0d4943b1b63fe9181f107146553aac",
+    "results/published/generic-kd-v1/final/qwen35--ce-seed42.json": "c3e0f29a896c1ae705e7e3c42109d1880424774caecfd8c103a09c99e5727b39",
+    "results/published/generic-kd-v1/final/qwen35--ce-seed43.json": "58aeb2323fdaf0b843143dbebf2be5bfd7a72bbbab8a6c69501cbbe168fe39c2",
+    "results/published/generic-kd-v1/final/qwen35--ce-seed44.json": "4a65a6659181e6a1588c0a792a80ebed0910f8bbea65ac70af962ff82e0f5291",
+    "results/published/generic-kd-v1/final/qwen35--kd-seed42.json": "9a0d3b2714e7e5e78b4df96d2090231157b9361d695d954ddfffba0965e6a6c3",
+    "results/published/generic-kd-v1/final/qwen35--kd-seed43.json": "a700ec24d3cd5e9689f8c66601484dd9a66b505e639eed41cb945025d19de2fd",
+    "results/published/generic-kd-v1/final/qwen35--kd-seed44.json": "5c2944dfb39efb3f36bfb12b848fdf91fcc79da5464df2ebe0ca7ec7b448cea3",
+    "results/published/generic-kd-v1/final/qwen35--pretrained-student.json": "cde3ec578af9b8e2442a91722ab968722b68c38ad5b4e6df18760e81768f4309",
+    "results/published/generic-kd-v1/final/qwen35--teacher.json": "298503fdc9fb422914a8b95e4d47a0bb9c23e0773266b91806e81bc03ae5af94",
+    "results/published/generic-kd-v1/manifest.json": "3c9bb132a9d0372219ca6c302467af8ec0031445aa465ff074129a454c22690f",
+    "results/published/generic-kd-v1/paired_effects.csv": "899942f136ad7bb0c8a54372f66dedd93c0edc20e0320eaf381c6d32532a3a88",
+    "results/published/generic-kd-v1/results.csv": "8d622bf38203da8fe478ac1dc15852a07740097f8686258dd24a1eda28c9a7bb",
+    "results/published/generic-kd-v1/run-census.json": "8392a2b5b6bd967c4a2d57164fd2a2be1bcc4d70390881479fbdb1de8d5959ea",
+    "results/published/generic-kd-v1/selected-metadata.json": "2d9c3285adee1425dfe3f11a47771a1c196c506d05b1d6acc12d751967897aea",
+    "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/final-exact-ce-seed42.json": "c3e0f29a896c1ae705e7e3c42109d1880424774caecfd8c103a09c99e5727b39",
+    "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/final-exact-ce-seed43.json": "58aeb2323fdaf0b843143dbebf2be5bfd7a72bbbab8a6c69501cbbe168fe39c2",
+    "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/final-exact-ce-seed44.json": "4a65a6659181e6a1588c0a792a80ebed0910f8bbea65ac70af962ff82e0f5291",
+    "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/final-exact-kd-seed42.json": "9a0d3b2714e7e5e78b4df96d2090231157b9361d695d954ddfffba0965e6a6c3",
+    "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/final-exact-kd-seed43.json": "a700ec24d3cd5e9689f8c66601484dd9a66b505e639eed41cb945025d19de2fd",
+    "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/final-exact-kd-seed44.json": "5c2944dfb39efb3f36bfb12b848fdf91fcc79da5464df2ebe0ca7ec7b448cea3",
+    "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/final-exact-pretrained-student.json": "cde3ec578af9b8e2442a91722ab968722b68c38ad5b4e6df18760e81768f4309",
+    "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/final-exact-teacher.json": "298503fdc9fb422914a8b95e4d47a0bb9c23e0773266b91806e81bc03ae5af94",
+    "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/gemma-final-exact-ce-seed42.json": "c530dd6fed541be27b518d2854ec561317628b9fe9afa97e3bdf498bf90bdc21",
+    "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/gemma-final-exact-ce-seed43.json": "5b70b61cc0f42ae19888f3253ae7c801d94d3cf4bc418e9697970fe1bc70f4d6",
+    "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/gemma-final-exact-ce-seed44.json": "b13e175d4d24737517e6c6b76ec4e5e1d3fa6db216ed5e7986a63806b7a7ea9a",
+    "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/gemma-final-exact-kd-seed42.json": "f5b7f0273d2bad8256f25b74818a967e111922f0ba3371fe3c34fdb01d2b9d9e",
+    "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/gemma-final-exact-kd-seed43.json": "18a611e55725aa71f2af62af1e63987960b2bd0ea048f2fb96cfafbd13c81fe1",
+    "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/gemma-final-exact-kd-seed44.json": "7b59e5e222504368b5df89b4e31d20c5629abd615b7e68b74e06eb9b902aa0ab",
+    "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/gemma-final-exact-pretrained-student.json": "26afdd9a4963cf230e46bb7e1fe245bd1118484daf391708e5c6acfc558bfbee",
+    "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/gemma-final-exact-teacher.json": "6a2ee95f915f71d24f1dc0e79286ca8b42ce68f817b428e0d1236c1122f62c84",
+    "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/liquid-final-exact-ce-seed42.json": "421ed9fbecbfe2f01bc34db1334352996b2b252e2badfa9534a7c8d3f6c4aa5f",
+    "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/liquid-final-exact-ce-seed43.json": "d9fda52af98ae9b8bf40d915e4d9e772f9f41177eb2722c343f5646e6f1892f2",
+    "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/liquid-final-exact-ce-seed44.json": "58cd1d7126e74c409e2b1df771218576333e895d7fa440280f3f24a0977879e8",
+    "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/liquid-final-exact-kd-seed42.json": "bc448b65790d76376ccc32675a1d8c77db2ec7f4447e4e2cccdfb4f57f1edf07",
+    "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/liquid-final-exact-kd-seed43.json": "a765707da112b2f35f56bb1fda2b1466c844644db5b86e4a398054b72dea7fa6",
+    "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/liquid-final-exact-kd-seed44.json": "c9236041902038c672921d00473c13fa7abfaf384a6e2b2847a2b6e60836aab0",
+    "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/liquid-final-exact-pretrained-student.json": "29aa2302c900400ee7303312aedba9fe94b9e7bde64db454d3521e4d0622fd3c",
+    "results/research/campaign/common-corpus-v1/evaluator-scoring-recovery/liquid-final-exact-teacher.json": "09dd04ea940e4e7226cd9c9d0e9cb047ef0d4943b1b63fe9181f107146553aac",
+    "results/research/campaign/common-corpus-v1/gemma-replication-closure-20261029T0632.json": "30a8ef93652e7af6deabad15ec36f2551525e9b277705b5eeb2a9f4748fbef12",
+    "results/research/campaign/common-corpus-v1/liquid-replication-closure-20261031T0453.json": "a0059ef6f078c76c2b0d81708dfd8d67d5713e1dba9f3d27d2b003cf703189ff",
+    "results/research/campaign/common-corpus-v1/liquid-synthetic-acceptance-20261031T0718.json": "94330898e1d3ce7db86ef387f5b3e27d2a8ed97d297fcdb248a25defbf26842f",
+    "results/research/campaign/common-corpus-v1/training-count-audit.json": "fe0ec8034a36dbb988a1dd4819f77c574b5ec51210b24271caae92d29bf10714",
+    "results/research/qwen35-smoke-v1/config.json": "e1a43a903c43db1e898408af6eca1010ab85aaf16c23fac0a550c94f04d2c957",
+    "results/research/qwen35-smoke-v1/test-results.json": "e4fbf7574e66e84dbd2fc298a25671815d1078048c9537db470306500d652bf3",
+    "results/research/qwen35-tuning-round1/metrics.json": "776c6203b4a48e6c5f420c162dd883f1b2f5fc961753ff822bb4e6ddf281fea9",
+    "results/research/qwen35-tuning-round1/selected-config.json": "6a0ad1962bcf773d2a7e6b0b64a13ba25f8057d89936601ab9c88400329ca9ac",
+    "results/research/qwen35-tuning-round2/boundary-compact.json": "67422afac99be1bd1f5c26d27ab8702ab879e3bc7a2a843f4438a4109beb9571"
+  }
+}

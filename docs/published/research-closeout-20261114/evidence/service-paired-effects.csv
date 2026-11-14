@@ -1,0 +1,4 @@
+cohort,baseline,comparison,baseline_dev_ppl,comparison_dev_ppl,relative_ppl_change_percent,seed,updates_per_arm,heldout_test
+auxiliary-matched12-dev11,A_gold_ce,B_response_ce,13.089092144543514,13.43709260760771,2.658705884420476,42,12,False
+auxiliary-matched12-dev11,B_response_ce,C_response_ce_plus_kl,13.43709260760771,13.105095465446862,-2.4707513139626713,42,12,False
+auxiliary-matched12-dev11,A_gold_ce,C_response_ce_plus_kl,13.089092144543514,13.105095465446862,0.1222645598840888,42,12,False

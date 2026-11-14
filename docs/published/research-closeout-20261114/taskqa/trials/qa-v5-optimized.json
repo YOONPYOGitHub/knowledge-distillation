@@ -1,0 +1,222 @@
+{
+  "trial_id": "qa-v5-optimized",
+  "kind": "pretrained_generation_not_training",
+  "status_receipt": {
+    "source_id": "src-81b7fc622fee53a5",
+    "source_sha256": "81b7fc622fee53a5db348f04e52fb3b9e9ccd966b5acdce39bcfa20e98172790",
+    "source_bytes": 419,
+    "fields": {
+      "/status": "complete_predictions_pending_local_authentic_scoring",
+      "/started_at": "2026-11-02T09:41:50.492517+00:00",
+      "/ended_at": "2026-11-02T10:44:50.913948+00:00",
+      "/elapsed_seconds": 3780.4214202559997,
+      "/generation_calls": 248,
+      "/successful_calls": {
+        "teacher": 124,
+        "student": 124
+      },
+      "/output_tokens": 3802,
+      "/actual_metrics": null,
+      "/teacher_advantage_gate": null,
+      "/currency_cost": null
+    }
+  },
+  "configurations": {
+    "execution.json": {
+      "source_id": "src-ca66babe827dd89e",
+      "source_sha256": "ca66babe827dd89ecb81e415e746352f27c2bef4da303b83842790cc04a1ff64",
+      "source_bytes": 1131,
+      "fields": {
+        "/models": {
+          "teacher": {
+            "repo_id": "Qwen/Qwen3.5-9B",
+            "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+            "tokenizer_sha256": "5f9e4d4901a92b997e463c1f46055088b6cca5ca61a6522d1b9f64c4bb81cb42",
+            "adapter_sha256": null,
+            "dtype": "bfloat16",
+            "eos_token_ids": [
+              248044,
+              248046
+            ],
+            "bos_policy": "tokenizer_default_once"
+          },
+          "student": {
+            "repo_id": "Qwen/Qwen3.5-4B",
+            "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+            "tokenizer_sha256": "5f9e4d4901a92b997e463c1f46055088b6cca5ca61a6522d1b9f64c4bb81cb42",
+            "adapter_sha256": null,
+            "dtype": "bfloat16",
+            "eos_token_ids": [
+              248044,
+              248046
+            ],
+            "bos_policy": "tokenizer_default_once"
+          }
+        },
+        "/frozen_at": "2026-11-02T09:27:08.452729+00:00",
+        "/common_sha256": "055c444fbdb36bb4e717dbb1e3dccceb926b48c486c265739036eb187e6483a2",
+        "/generation_source_sha256": "9e0083341748dee0a4baeec2962d026ec802b2845ef7b8b37be7622faa96e359"
+      }
+    },
+    "phase2a/contract.json": {
+      "source_id": "src-055c444fbdb36bb4",
+      "source_sha256": "055c444fbdb36bb4e717dbb1e3dccceb926b48c486c265739036eb187e6483a2",
+      "source_bytes": 2278,
+      "fields": {
+        "/version": "taskqa-dev-v3-symmetric-abstention-clarification",
+        "/dev_sha256": "1f7c2d04f84318f6a2c16a469eda0e34729b348e8e3b6683dc116625057aebc0",
+        "/dev_rows": 124,
+        "/dev_clusters": 90,
+        "/model_choice": "approved pretrained instruction-tuned Qwen/Qwen3.5-9B and Qwen/Qwen3.5-4B at exact prior approved immutable revisions; not -Base",
+        "/adapter_choice": "not default; generic baseline adapters only in a separately preregistered symmetric pair; generic PPL is not QA suitability evidence",
+        "/common_decoding": {
+          "do_sample": false,
+          "num_beams": 1,
+          "max_new_tokens": 256,
+          "max_input_tokens": 8192,
+          "enable_thinking": false,
+          "truncate_input": false,
+          "stop_strings": [],
+          "seed": 20261031,
+          "input_interface": {
+            "kind": "official_chat_template",
+            "messages": "one user message containing unchanged gold-free full prompt",
+            "add_generation_prompt": true,
+            "enable_thinking": false,
+            "add_special_tokens_after_render": false,
+            "official_template_sha256": "a4aee8afcf2e0711942cf848899be66016f8d14a889ff9ede07bca099c28f715",
+            "prefill": "official template empty think block; no manual prefix or output stripping"
+          }
+        },
+        "/prompt_character_ceiling": 30000,
+        "/budget": {
+          "arms": 2,
+          "questions_per_arm": 124,
+          "smoke_questions_per_arm": 8,
+          "successful_generation_calls_total_max": 248,
+          "max_generated_tokens_total": 63488,
+          "retries": 0,
+          "tuning_rounds": 0,
+          "budget_increase_requires_new_approval": true
+        },
+        "/gate": {
+          "answerable_f1_delta_min": 0.05,
+          "answerable_f1_cluster_ci_lower_exclusive": 0.0,
+          "overall_exact_delta_min": 0.0,
+          "answerability_delta_min": -0.02,
+          "impossible_false_answer_delta_max": 0.0,
+          "bootstrap_replicates": 2000,
+          "bootstrap_seed": 20261031
+        },
+        "/scorer": "local NFKC-casefold-Unicode-punctuation/symbol-to-space; whitespace-token multiset F1 max over gold; not official KLUE EM/ROUGE-W; no safety score",
+        "/cost_policy": "currency cost remains null without evidenced price; tokens separately null if unavailable, never estimated from characters; phase2a authentic predictions=0"
+      }
+    },
+    "method_policy.json": {
+      "source_id": "src-3896916074ab08bd",
+      "source_sha256": "3896916074ab08bda4100c93f4a4dbf9315bfa33c27293385e289b805e2ecdaf",
+      "source_bytes": 3927,
+      "fields": {
+        "/method_id": "taskqa-symmetric-canonical-json-greedy-v1",
+        "/algorithm": "canonical answer-first JSON prefix grammar applied before greedy argmax at every generated token; EOS only at complete JSON",
+        "/constraint_source_sha256": "90ec579e369471eaebaaee965a99d4aa812a4529a967edc77557ebb7b3b563da",
+        "/base_contract_sha256": "055c444fbdb36bb4e717dbb1e3dccceb926b48c486c265739036eb187e6483a2",
+        "/tokenizer_sha256": "5f9e4d4901a92b997e463c1f46055088b6cca5ca61a6522d1b9f64c4bb81cb42",
+        "/logits_size": 248320,
+        "/ordinary_tokens": 248056,
+        "/special_tokens": 14,
+        "/excluded_no_token_ids_inclusive": [
+          248070,
+          248319
+        ],
+        "/eos_token_ids": [
+          248044,
+          248046
+        ],
+        "/empty_answer_confound": "empty answer commits abstain=true; any nonempty normalized answer forces abstain=false. Answer-first masking does not independently improve answerability. Generating 없음 may become a valid false answer rather than an abstention; no salvage or quality claim from syntax.",
+        "/completion_limit": "every admitted text prefix has a bounded character completion, not a proof of token-budget completion; empty mask or no terminal EOS room is fatal; no fallback, retries, repaired output or excluded rows",
+        "/scoring": "unchanged strict parser/scorer/rawtrace; full paired coverage, answerable F1 delta>=0.05, cluster lower CI>0, overall EM delta>=0, answerability delta>=-0.02 and Teacher impossible false-answer rate no worse than Student; independent Teacher response review before A/B/C",
+        "/new_pretrained_run_boundary": {
+          "calls": 248,
+          "output_tokens": 63488,
+          "gpu_seconds": 5400,
+          "retries": 0,
+          "tuning_rounds": 0
+        },
+        "/budget_interpretation": "Approved optimized grammar reevaluation: 248calls/63488outputtokens/5400seconds/retries0. Fresh pinned full-vocab/native caller CPU and immutable remote regression preparation in progress; parent independent capsule review required before pretrained launch. v4 timeout remains closed; no retry/extension. Authorization OPTIMIZED_GRAMMAR_REEVALUATION_AUTHORIZATION.md supersedes historical budget-pending strings."
+      }
+    }
+  },
+  "selection": "No adapted checkpoint selected by this generation trial; immutable pretrained model pair.",
+  "stop_reason": "full_coverage_then_negative_teacher_gate",
+  "quality_result": {
+    "source_id": "src-1ae3aaed616b8a13",
+    "source_sha256": "1ae3aaed616b8a13d4d7dd841f9e76daf8ec0c9531809a536c22e03d1ec0b6d1",
+    "source_bytes": 78413,
+    "fields": {
+      "/status": "authentic_dev_scored_owner_attested",
+      "/summary": {
+        "teacher": {
+          "exact": 0.6370967741935484,
+          "f1": 0.7041945957268538,
+          "answerability": 0.8225806451612904,
+          "answerable_exact": 0.7419354838709677,
+          "answerable_f1": 0.831399245915375,
+          "impossible_false_answer_rate": 0.6774193548387096
+        },
+        "student": {
+          "exact": 0.6612903225806451,
+          "f1": 0.7251964433416046,
+          "answerability": 0.8467741935483871,
+          "answerable_exact": 0.7204301075268817,
+          "answerable_f1": 0.8056382685414945,
+          "impossible_false_answer_rate": 0.5161290322580645
+        }
+      },
+      "/cluster_uncertainty": {
+        "answerable_f1_delta_ci95": [
+          -0.04470031686526532,
+          0.09683023247379681
+        ],
+        "sampling_unit": "cluster",
+        "interpretation": "question-weighted paired percentile interval, conditional on fixed models; not training-seed replication"
+      },
+      "/teacher_advantage_gate": false,
+      "/costs": {
+        "teacher": {
+          "currency_cost": null,
+          "input_tokens": 97741,
+          "output_tokens": 1904
+        },
+        "student": {
+          "currency_cost": null,
+          "input_tokens": 97741,
+          "output_tokens": 1898
+        }
+      },
+      "/safety_score": null,
+      "/authenticity_limitation": "Hashes bind supplied files; cannot independently prove that external generation really ran. Owner must review receipt and model/source provenance."
+    }
+  },
+  "aggregate_counts": {
+    "teacher": {
+      "n": 124,
+      "clusters": 90,
+      "answerable_n": 93,
+      "impossible_n": 31,
+      "exact_count": 79.0,
+      "false_answer_count": 21.0,
+      "false_abstention_count": 1.0
+    },
+    "student": {
+      "n": 124,
+      "clusters": 90,
+      "answerable_n": 93,
+      "impossible_n": 31,
+      "exact_count": 82.0,
+      "false_answer_count": 16.0,
+      "false_abstention_count": 3.0
+    }
+  },
+  "interpretation": "dev-only negative suitability; not a KD comparison; v5 and answer-first deterministic control must not be independent training replications."
+}

@@ -1,0 +1,71 @@
+{
+  "included": {
+    "generation_trial_documents": 6,
+    "non_generation_failure_documents": 2,
+    "training_execution_documents": 2,
+    "unexecuted_B_C_document": 1,
+    "student_A_cadence_points": 11,
+    "teacher_saved_cadence_points": 6,
+    "score_summary_objects": 3,
+    "original_evaluation_code_files": 6
+  },
+  "generation_census": {
+    "started_calls": 1124,
+    "complete_paired_evaluations": 3,
+    "independent_training_replications_from_generation": 0,
+    "reported_counts_scope": "six preserved inference executions only; separate import/predeployment failures not counted as generation"
+  },
+  "excluded": [
+    {
+      "category": "raw/train/dev/sealed corpus, QA references and records",
+      "reason": "privacy, protected evaluation and source redistribution rights"
+    },
+    {
+      "category": "generated model responses, token traces, prediction/attempt records, per-question scores/IDs",
+      "reason": "not needed for aggregate reanalysis; public package deliberately not item-level replay"
+    },
+    {
+      "category": "weights, optimizer/RNG tensors, checkpoint payloads",
+      "reason": "large/private; hashes and scalar selection only"
+    },
+    {
+      "category": "private authorization, SSH/config, credentials/SAS, cloud/guest identifiers and full operations logs",
+      "reason": "secrets/operational privacy; use source SHA aliases"
+    },
+    {
+      "category": "full state/PROGRESS/RUNBOOK and nested historic snapshots",
+      "reason": "stale fields, operational identities and excessive unrelated contents"
+    },
+    {
+      "category": "bound evaluator membership contract and corpus-specific fixtures",
+      "reason": "exposes row/cluster IDs; original evaluator source alone is not standalone evaluation certification"
+    }
+  ],
+  "gaps": [
+    {
+      "item": "Teacher step0 dev CE",
+      "status": "not acquired in bounded audit; no interpolation"
+    },
+    {
+      "item": "complete final adapted Teacher QA generation and suitability gate",
+      "status": "uncompleted"
+    },
+    {
+      "item": "selected Student best900 restoration evaluation",
+      "status": "one call remained at pause; no final arm completion"
+    },
+    {
+      "item": "B/C methods and additional families/seeds taskQA comparison",
+      "status": "not completed; not replaced by generic studies"
+    },
+    {
+      "item": "all historical nonaccess or scoring absence",
+      "status": "not proven from flags/missing files"
+    },
+    {
+      "item": "full checkpoint/cloud custody authentication today",
+      "status": "not performed; saved receipts only"
+    }
+  ],
+  "original_vs_projection": "Exact selected JSON values preserve source SHA and RFC6901 pointers. Explanatory trial labels/stop categories are audit annotations, not original file fields. Public source aliases resolve through private LOCAL_PROVENANCE.json outside this directory."
+}

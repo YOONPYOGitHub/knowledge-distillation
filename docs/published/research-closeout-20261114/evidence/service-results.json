@@ -1,0 +1,523 @@
+{
+  "schema": "research-closeout-safe-projections-v1",
+  "scope": "Historical auxiliary nonmedical dialogue; internal development only, not clinical or heldout results",
+  "source_authentication": "Original metadata bytes were read locally and projected exactly. Published hashes do not independently authenticate unavailable originals or model payloads.",
+  "sources": [
+    {
+      "id": "student41",
+      "logical_path": "yonsei/receipts/student-gold-20261109T0315-train.json",
+      "source_sha256": "bcac59d16648eaa54e022f735ce70ba6fcfda0fbc6fae07cc988a629e24c0924",
+      "source_bytes": 3127,
+      "original_included": false,
+      "projection": {
+        "/summary/initial_validation": {
+          "ce": 2.849849890713668,
+          "ppl": 17.28518697873459,
+          "tokens": 201
+        },
+        "/summary/best_validation": {
+          "ce": 1.7288385552553396,
+          "ppl": 5.634106403608484,
+          "tokens": 201
+        },
+        "/summary/best_step": 41,
+        "/summary/final_step": 41,
+        "/summary/history": [
+          {
+            "ce": 2.849849890713668,
+            "ppl": 17.28518697873459,
+            "step": 0,
+            "tokens": 201
+          },
+          {
+            "ce": 2.6373588220397037,
+            "ppl": 13.976241077009472,
+            "step": 10,
+            "tokens": 201
+          },
+          {
+            "ce": 2.082783371654909,
+            "ppl": 8.026779360913824,
+            "step": 20,
+            "tokens": 201
+          },
+          {
+            "ce": 1.827615557618402,
+            "ppl": 6.219040022482448,
+            "step": 30,
+            "tokens": 201
+          },
+          {
+            "ce": 1.7336251273084042,
+            "ppl": 5.66113910523828,
+            "step": 40,
+            "tokens": 201
+          },
+          {
+            "ce": 1.7288385552553396,
+            "ppl": 5.634106403608484,
+            "step": 41,
+            "tokens": 201
+          }
+        ],
+        "/summary/status": "completed",
+        "/summary/stop_reason": "max_steps",
+        "/identity/model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "/identity/cohort_rows": {
+          "dev": 11,
+          "train": 41
+        },
+        "/identity/adapter": {
+          "alpha": 16,
+          "dropout": 0.05,
+          "rank": 8
+        },
+        "/identity/numerical_policy": {
+          "allow_tf32": false,
+          "cublas_workspace_config": ":4096:8",
+          "cudnn_benchmark": false,
+          "cudnn_deterministic": true,
+          "deterministic_algorithms": true
+        },
+        "/elapsed_seconds": 61.929591812193394,
+        "/peak_vram_bytes": 9238711808,
+        "/accepted_auxiliary_updates": 41,
+        "/clinical_accepted_rows": 0,
+        "/medical_training": false,
+        "/status": "PASS"
+      }
+    },
+    {
+      "id": "teacher41",
+      "logical_path": "yonsei/receipts/auxiliary-full-20261109T0134-train-readback.json",
+      "source_sha256": "c46dd8457a801c1ce824913156507e619e94bdcc4bfe55b903bedbf833c7f719",
+      "source_bytes": 3650,
+      "original_included": false,
+      "projection": {
+        "/summary/initial_validation": {
+          "ce": 2.757958938826376,
+          "ppl": 15.76762739041548,
+          "tokens": 201
+        },
+        "/summary/best_validation": {
+          "ce": 1.694984891521397,
+          "ppl": 5.446563675300413,
+          "tokens": 201
+        },
+        "/summary/best_step": 41,
+        "/summary/final_step": 41,
+        "/summary/history": [
+          {
+            "ce": 2.757958938826376,
+            "ppl": 15.76762739041548,
+            "step": 0,
+            "tokens": 201
+          },
+          {
+            "ce": 2.60487420760577,
+            "ppl": 13.529523284572665,
+            "step": 10,
+            "tokens": 201
+          },
+          {
+            "ce": 2.113177683816027,
+            "ppl": 8.274493275640664,
+            "step": 20,
+            "tokens": 201
+          },
+          {
+            "ce": 1.83942339313564,
+            "ppl": 6.292908680364769,
+            "step": 30,
+            "tokens": 201
+          },
+          {
+            "ce": 1.7038228523671923,
+            "ppl": 5.494913534171577,
+            "step": 40,
+            "tokens": 201
+          },
+          {
+            "ce": 1.694984891521397,
+            "ppl": 5.446563675300413,
+            "step": 41,
+            "tokens": 201
+          }
+        ],
+        "/summary/status": "completed",
+        "/summary/stop_reason": "max_steps",
+        "/identity/model": {
+          "id": "Qwen/Qwen3.5-9B",
+          "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a"
+        },
+        "/identity/cohort_rows": {
+          "dev": 11,
+          "train": 41
+        },
+        "/identity/adapter": {
+          "alpha": 16,
+          "dropout": 0.05,
+          "rank": 8
+        },
+        "/identity/numerical_policy": {
+          "allow_tf32": false,
+          "cublas_workspace_config": ":4096:8",
+          "cudnn_benchmark": false,
+          "cudnn_deterministic": true,
+          "deterministic_algorithms": true
+        },
+        "/elapsed_seconds": 62.67426171596162,
+        "/peak_vram_bytes": 18712146432,
+        "/accepted_auxiliary_updates": 41,
+        "/clinical_accepted_rows": 0,
+        "/medical_training": false,
+        "/status": "PASS"
+      }
+    },
+    {
+      "id": "matched12-ce",
+      "logical_path": "yonsei/receipts/train12-ce-native-parent-20261109T2138.json",
+      "source_sha256": "740282bd4ec10995310cb1b2842e78a3de96f86036b5cf3536fe55b223b3f67b",
+      "source_bytes": 15639,
+      "original_included": false,
+      "projection": {
+        "/arms/gold_ce_subset12/summary/initial_validation": {
+          "ce": 2.849849890713668,
+          "ppl": 17.28518697873459,
+          "tokens": 201
+        },
+        "/arms/gold_ce_subset12/summary/best_validation": {
+          "ce": 2.571779222630743,
+          "ppl": 13.089092144543514,
+          "tokens": 201
+        },
+        "/arms/gold_ce_subset12/summary/best_step": 12,
+        "/arms/gold_ce_subset12/summary/final_step": 12,
+        "/arms/gold_ce_subset12/summary/history": [
+          {
+            "ce": 2.849849890713668,
+            "ppl": 17.28518697873459,
+            "step": 0,
+            "tokens": 201
+          },
+          {
+            "ce": 2.571779222630743,
+            "ppl": 13.089092144543514,
+            "step": 12,
+            "tokens": 201
+          }
+        ],
+        "/arms/gold_ce_subset12/summary/status": "completed",
+        "/arms/gold_ce_subset12/summary/stop_reason": "max_steps",
+        "/arms/gold_ce_subset12/updates": 12,
+        "/arms/gold_ce_subset12/identity/model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "/arms/gold_ce_subset12/identity/limits": {
+          "batch_size": 1,
+          "epochs": 1,
+          "seconds": 1800,
+          "sequence_length": 128,
+          "updates": 12
+        },
+        "/arms/gold_ce_subset12/identity/seed": 42,
+        "/arms/gold_ce_subset12/identity/optimizer": {
+          "class": "AdamW",
+          "lr": 2e-05
+        },
+        "/arms/gold_ce_subset12/identity/initial_adapter_sha256": "d19e419d391c807e59faa28745d63316d6e465434d65bd365adc5e06f7f02692",
+        "/arms/gold_ce_subset12/identity/teacher_advantage_verified": false,
+        "/arms/gold_ce_subset12/identity/target": "provider_gold_auxiliary",
+        "/arms/teacher_response_ce_subset12/summary/initial_validation": {
+          "ce": 2.849849890713668,
+          "ppl": 17.28518697873459,
+          "tokens": 201
+        },
+        "/arms/teacher_response_ce_subset12/summary/best_validation": {
+          "ce": 2.598018987854915,
+          "ppl": 13.43709260760771,
+          "tokens": 201
+        },
+        "/arms/teacher_response_ce_subset12/summary/best_step": 12,
+        "/arms/teacher_response_ce_subset12/summary/final_step": 12,
+        "/arms/teacher_response_ce_subset12/summary/history": [
+          {
+            "ce": 2.849849890713668,
+            "ppl": 17.28518697873459,
+            "step": 0,
+            "tokens": 201
+          },
+          {
+            "ce": 2.598018987854915,
+            "ppl": 13.43709260760771,
+            "step": 12,
+            "tokens": 201
+          }
+        ],
+        "/arms/teacher_response_ce_subset12/summary/status": "completed",
+        "/arms/teacher_response_ce_subset12/summary/stop_reason": "max_steps",
+        "/arms/teacher_response_ce_subset12/updates": 12,
+        "/arms/teacher_response_ce_subset12/identity/model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "/arms/teacher_response_ce_subset12/identity/limits": {
+          "batch_size": 1,
+          "epochs": 1,
+          "seconds": 1800,
+          "sequence_length": 128,
+          "updates": 12
+        },
+        "/arms/teacher_response_ce_subset12/identity/seed": 42,
+        "/arms/teacher_response_ce_subset12/identity/optimizer": {
+          "class": "AdamW",
+          "lr": 2e-05
+        },
+        "/arms/teacher_response_ce_subset12/identity/initial_adapter_sha256": "d19e419d391c807e59faa28745d63316d6e465434d65bd365adc5e06f7f02692",
+        "/arms/teacher_response_ce_subset12/identity/teacher_advantage_verified": false,
+        "/arms/teacher_response_ce_subset12/identity/target": "admitted_teacher_response_auxiliary"
+      }
+    },
+    {
+      "id": "matched12-kd",
+      "logical_path": "yonsei/backups/train12-kd-native-finalgate-20261109T215646Z-teacher_distribution_kd_subset12/result.json",
+      "source_sha256": "ddaee4d0f194c0a9d11495fb8c1d0bdcf2b14dbac27a28538c20528b5e4230fe",
+      "source_bytes": 43011,
+      "original_included": false,
+      "projection": {
+        "/summary/initial_validation": {
+          "ce": 2.849849890713668,
+          "ppl": 17.28518697873459,
+          "tokens": 201
+        },
+        "/summary/best_validation": {
+          "ce": 2.5730011214071244,
+          "ppl": 13.105095465446862,
+          "tokens": 201
+        },
+        "/summary/best_step": 12,
+        "/summary/final_step": 12,
+        "/summary/history": [
+          {
+            "ce": 2.849849890713668,
+            "ppl": 17.28518697873459,
+            "step": 0,
+            "tokens": 201
+          },
+          {
+            "ce": 2.5730011214071244,
+            "ppl": 13.105095465446862,
+            "step": 12,
+            "tokens": 201
+          }
+        ],
+        "/summary/status": "completed",
+        "/summary/stop_reason": "max_steps",
+        "/updates": 12,
+        "/kd": {
+          "alpha": 0.5,
+          "divergence": "forward_kl",
+          "temperature": 1.0,
+          "vocab_size": 0
+        },
+        "/identity/model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "/identity/seed": 42,
+        "/identity/optimizer": {
+          "class": "AdamW",
+          "lr": 2e-05
+        },
+        "/identity/initial_adapter_sha256": "d19e419d391c807e59faa28745d63316d6e465434d65bd365adc5e06f7f02692",
+        "/teacher_advantage_verified": false,
+        "/clinical_approval": false
+      }
+    },
+    {
+      "id": "dev33-metadata",
+      "logical_path": "yonsei/review/matched12-paired-metadata-20261112T105711Z/ANALYSIS.json",
+      "source_sha256": "7020a8c418b5446b673466a3ac13026f41b37a7ef82e0f9abf68778675fd9503",
+      "source_bytes": 4643,
+      "original_included": false,
+      "projection": {
+        "/coverage": {
+          "gold_ce_subset12": {
+            "cap_without_eos": 10,
+            "ended_eos": 1,
+            "output_tokens": 704,
+            "measured_tokens_per_generation_second": 6.222207867670482
+          },
+          "teacher_distribution_kd_subset12": {
+            "cap_without_eos": 11,
+            "ended_eos": 0,
+            "output_tokens": 704,
+            "measured_tokens_per_generation_second": 6.277491380558904
+          },
+          "teacher_response_ce_subset12": {
+            "cap_without_eos": 11,
+            "ended_eos": 0,
+            "output_tokens": 704,
+            "measured_tokens_per_generation_second": 6.194027687420806
+          }
+        },
+        "/paired_complete_answer_cases": 0,
+        "/pairs": [
+          {
+            "first": "gold_ce_subset12",
+            "second": "teacher_distribution_kd_subset12",
+            "definition": "first seconds minus second seconds, fixed matched case indices",
+            "case_count": 11,
+            "mean_delta_seconds": 0.09058263813230125,
+            "median_delta_seconds": 0.04053153493441641,
+            "min_delta_seconds": -0.016571328975260258,
+            "max_delta_seconds": 0.31314497208222747,
+            "first_faster_cases": 2,
+            "second_faster_cases": 9,
+            "leave_one_case_out_mean_range_seconds": [
+              0.06832640473730862,
+              0.1012980348430574
+            ],
+            "case_deltas_seconds": [
+              -0.014269065810367465,
+              0.027193037094548345,
+              -0.016571328975260258,
+              0.03997912514023483,
+              0.029533522902056575,
+              0.0525211940985173,
+              0.31314497208222747,
+              0.30592025606893003,
+              0.070993737783283,
+              0.04053153493441641,
+              0.14743203413672745
+            ]
+          },
+          {
+            "first": "gold_ce_subset12",
+            "second": "teacher_response_ce_subset12",
+            "definition": "first seconds minus second seconds, fixed matched case indices",
+            "case_count": 11,
+            "mean_delta_seconds": -0.04679571449841288,
+            "median_delta_seconds": -0.016177045879885554,
+            "min_delta_seconds": -0.3924480921123177,
+            "max_delta_seconds": 0.29934711498208344,
+            "first_faster_cases": 6,
+            "second_faster_cases": 5,
+            "leave_one_case_out_mean_range_seconds": [
+              -0.08140999744646252,
+              -0.0122304767370224
+            ],
+            "case_deltas_seconds": [
+              -0.06121532688848674,
+              0.02501627802848816,
+              -0.016177045879885554,
+              0.007709528086706996,
+              -0.03931201598607004,
+              0.013095814036205411,
+              0.29934711498208344,
+              0.2654643061105162,
+              -0.3486061890143901,
+              -0.3924480921123177,
+              -0.26762723084539175
+            ]
+          },
+          {
+            "first": "teacher_distribution_kd_subset12",
+            "second": "teacher_response_ce_subset12",
+            "definition": "first seconds minus second seconds, fixed matched case indices",
+            "case_count": 11,
+            "mean_delta_seconds": -0.13737835263071413,
+            "median_delta_seconds": -0.04045594995841384,
+            "min_delta_seconds": -0.4329796270467341,
+            "max_delta_seconds": 0.0003942830953747034,
+            "first_faster_cases": 10,
+            "second_faster_cases": 1,
+            "leave_one_case_out_mean_range_seconds": [
+              -0.15115561620332302,
+              -0.10781822518911213
+            ],
+            "case_deltas_seconds": [
+              -0.04694626107811928,
+              -0.0021767590660601854,
+              0.0003942830953747034,
+              -0.03226959705352783,
+              -0.06884553888812661,
+              -0.03942538006231189,
+              -0.013797857100144029,
+              -0.04045594995841384,
+              -0.4195999267976731,
+              -0.4329796270467341,
+              -0.4150592649821192
+            ]
+          }
+        ],
+        "/limits": [
+          "Single sequential run per arm; no randomized repeat, uncertainty estimate or causal speed winner.",
+          "All33 outputs used64 tokens, including one EOS at boundary; cap_without_eos is termination evidence, not a semantic completeness label.",
+          "No measured TTFT; generation token rate is not streaming TTFT or whole-app latency.",
+          "No common EOS-completed matched case across3 arms; cannot form a3-model full-answer quality comparison from these outputs.",
+          "No QA raw files opened or transmitted; no provider review, clinical or quality admission."
+        ]
+      }
+    },
+    {
+      "id": "service-state-snapshot",
+      "logical_path": "yonsei/STATE.json",
+      "source_sha256": "12ca91e295aa7d2abb390049c1bdcd06232619d43d1c160d1c89923bf2f6270a",
+      "source_bytes": 511147,
+      "original_included": false,
+      "projection": {
+        "/auxiliary_teacher_dev_review/basic_acceptable_count": 3,
+        "/auxiliary_teacher_dev_review/revision_needed_count": 8,
+        "/auxiliary_teacher_dev_review/reviewed_rows": 11,
+        "/auxiliary_teacher_dev_review/status": "REVIEW_COMPLETED_QUALITY_GATE_NOT_PASSED",
+        "/auxiliary_teacher_dev_review/clinical_safety_certification": false,
+        "/matched12_devgen_completed/capped_rows": {
+          "gold_ce_subset12": 10,
+          "teacher_distribution_kd_subset12": 11,
+          "teacher_response_ce_subset12": 11
+        },
+        "/matched12_devgen_completed/rows_per_arm": 11,
+        "/matched12_devgen_completed/new_answer_rows": 33,
+        "/matched12_devgen_completed/content_review_status": "NOT_AUTHORIZED_NEW_OUTPUTS_PRIVATE_ONLY",
+        "/private_bounded_input_app_e2e/status": "PASS_PRIVATE_BOUNDED_NONMEDICAL_UI_API_NATIVE_E2E",
+        "/private_bounded_input_app_e2e/native_metrics": {
+          "ended_eos": true,
+          "input_tokens": 20,
+          "output_tokens": 13,
+          "seconds": 2.3031760221347213
+        },
+        "/private_bounded_input_app_e2e/browser_real_js_click_verified": true,
+        "/private_bounded_input_app_e2e/display_matches_native_answer_hash": true,
+        "/private_bounded_input_app_e2e/public_release": false,
+        "/private_bounded_input_app_e2e/quality_acceptance": false,
+        "/private_bounded_input_app_e2e/clinical_release": false,
+        "/school_gate_provenance_parent/provider_policy_prohibition_established": false,
+        "/mac_model_admission/model_execution_verified": false,
+        "/mac_model_admission/fixture": {
+          "all_finite": true,
+          "cpu_fallback_enabled": false,
+          "device": "mps:0",
+          "dtype": "torch.bfloat16",
+          "scope": "random reduced-shape Qwen3.5 architecture, not restored model weights",
+          "shape": [
+            1,
+            4,
+            128
+          ],
+          "status": "PASS"
+        },
+        "/auxiliary_data_qualification/accepted_auxiliary_rows": 52,
+        "/auxiliary_data_qualification/clinical_accepted_rows": 0,
+        "/auxiliary_data_qualification/train_rows": 41,
+        "/auxiliary_data_qualification/internal_derived_dev_rows": 11,
+        "/school_ce41_composition/actual_app_switch_verified": false,
+        "/school_ce41_composition/source_adopted": false
+      }
+    }
+  ]
+}

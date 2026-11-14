@@ -1,0 +1,264 @@
+{
+  "trial_id": "train-A-gold-CE",
+  "kind": "single_training_execution_seed42_resumed_not_replicated",
+  "config_and_final_budget": {
+    "source_id": "src-b31427495676620a",
+    "source_sha256": "b31427495676620ad125463b3260259a1f0009935173af196c99e20f3babb413",
+    "source_bytes": 30722,
+    "fields": {
+      "/ledger/value/identity/policy": {
+        "accumulation": 1,
+        "cap": 1000,
+        "clip": 1.0,
+        "deterministic": true,
+        "lr": 0.0001,
+        "torch": "2.11.0+cu128"
+      },
+      "/ledger/value/identity/limits": {
+        "train_calls": 1000,
+        "train_tokens": 8192000,
+        "validation_calls": 12,
+        "validation_tokens": 12189696
+      },
+      "/ledger/value/budget": {
+        "train_calls": 1000,
+        "train_tokens": 806091,
+        "validation_calls": 11,
+        "validation_tokens": 1094731
+      },
+      "/ledger/value/complete": false,
+      "/ledger/value/pending": true,
+      "/runtime/versions": {
+        "accelerate": "1.15.0",
+        "huggingface-hub": "2.2.0",
+        "numpy": "2.2.6",
+        "peft": "0.21.2",
+        "safetensors": "0.8.0",
+        "tokenizers": "0.23.3",
+        "torch": "2.11.0+cu128",
+        "transformers": "5.20.2"
+      },
+      "/ledger/value/identity/runner/repo_id": "Qwen/Qwen3.5-4B",
+      "/ledger/value/identity/runner/revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+      "/ledger/value/identity/runner/seed": 42,
+      "/ledger/value/identity/runner/execution_claim/objective": "gold CE",
+      "/ledger/value/identity/runner/execution_claim/effective/scientific_arm": "A_gold_response_only_CE",
+      "/ledger/value/identity/runner/execution_claim/evaluator/policy": "complete ordered dev124; no truncation; response+EOS; shifted FP32 CE sum / actual tokens; inference_mode; exact module mode restoration; response-position logits_to_keep",
+      "/ledger/value/identity/runner/execution_claim/evaluator/max_length": 8192,
+      "/ledger/value/identity/runner/execution_claim/evaluator/torch": "2.11.0+cu128",
+      "/ledger/value/identity/runner/execution_claim/evaluator/transformers": "5.20.2"
+    }
+  },
+  "history": [
+    {
+      "step": 0,
+      "response_ce": 0.16465599801956435,
+      "checkpoint_sha256": "19862e19ab5765a2ebf00adccab49841b784c65cf55a327d4dea39c90c4ef114",
+      "origin": {
+        "source_id": "src-d2745e35b078ce2e",
+        "source_sha256": "d2745e35b078ce2e5dac5f369da36f5993ea20f7864a4835ca517ab634c2d001",
+        "source_bytes": 3074,
+        "fields": {
+          "/history/0/step": 0,
+          "/history/0/response_ce": 0.16465599801956435,
+          "/history/0/sha256": "19862e19ab5765a2ebf00adccab49841b784c65cf55a327d4dea39c90c4ef114"
+        }
+      }
+    },
+    {
+      "step": 100,
+      "response_ce": 0.13744903800706904,
+      "checkpoint_sha256": "403ef67aab923557190cdc8865997c3c42d48a12f02f74720b1830101489bede",
+      "origin": {
+        "source_id": "src-d2745e35b078ce2e",
+        "source_sha256": "d2745e35b078ce2e5dac5f369da36f5993ea20f7864a4835ca517ab634c2d001",
+        "source_bytes": 3074,
+        "fields": {
+          "/history/1/step": 100,
+          "/history/1/response_ce": 0.13744903800706904,
+          "/history/1/sha256": "403ef67aab923557190cdc8865997c3c42d48a12f02f74720b1830101489bede"
+        }
+      }
+    },
+    {
+      "step": 200,
+      "response_ce": 0.11184202828921974,
+      "checkpoint_sha256": "f7533ee5c78a836161aa5e72adeaed9f71684acb5a1c4b4aeef90ef5217e6637",
+      "origin": {
+        "source_id": "src-d2745e35b078ce2e",
+        "source_sha256": "d2745e35b078ce2e5dac5f369da36f5993ea20f7864a4835ca517ab634c2d001",
+        "source_bytes": 3074,
+        "fields": {
+          "/history/2/step": 200,
+          "/history/2/response_ce": 0.11184202828921974,
+          "/history/2/sha256": "f7533ee5c78a836161aa5e72adeaed9f71684acb5a1c4b4aeef90ef5217e6637"
+        }
+      }
+    },
+    {
+      "step": 300,
+      "response_ce": 0.1033754403502131,
+      "checkpoint_sha256": "754c182f060a696106704e6d8b04bb10bbc94e84b7ea62b0ea8791824aabe13d",
+      "origin": {
+        "source_id": "src-d2745e35b078ce2e",
+        "source_sha256": "d2745e35b078ce2e5dac5f369da36f5993ea20f7864a4835ca517ab634c2d001",
+        "source_bytes": 3074,
+        "fields": {
+          "/history/3/step": 300,
+          "/history/3/response_ce": 0.1033754403502131,
+          "/history/3/sha256": "754c182f060a696106704e6d8b04bb10bbc94e84b7ea62b0ea8791824aabe13d"
+        }
+      }
+    },
+    {
+      "step": 400,
+      "response_ce": 0.1189662004559395,
+      "checkpoint_sha256": "3527472c1bb66eeb0a6e17b4d6483dd4645e37bd122914aeb5fbf504670c73e0",
+      "origin": {
+        "source_id": "src-d2745e35b078ce2e",
+        "source_sha256": "d2745e35b078ce2e5dac5f369da36f5993ea20f7864a4835ca517ab634c2d001",
+        "source_bytes": 3074,
+        "fields": {
+          "/history/4/step": 400,
+          "/history/4/response_ce": 0.1189662004559395,
+          "/history/4/sha256": "3527472c1bb66eeb0a6e17b4d6483dd4645e37bd122914aeb5fbf504670c73e0"
+        }
+      }
+    },
+    {
+      "step": 500,
+      "response_ce": 0.0897416053130553,
+      "checkpoint_sha256": "2a32dbb7a0e20e4fc86b6edb08cec0dc567c25692283433877dfbed4ca4265ed",
+      "origin": {
+        "source_id": "src-d2745e35b078ce2e",
+        "source_sha256": "d2745e35b078ce2e5dac5f369da36f5993ea20f7864a4835ca517ab634c2d001",
+        "source_bytes": 3074,
+        "fields": {
+          "/history/5/step": 500,
+          "/history/5/response_ce": 0.0897416053130553,
+          "/history/5/sha256": "2a32dbb7a0e20e4fc86b6edb08cec0dc567c25692283433877dfbed4ca4265ed"
+        }
+      }
+    },
+    {
+      "step": 600,
+      "response_ce": 0.10076335234877527,
+      "checkpoint_sha256": "0cfc60f342fb1e51a1a2cb41014716362a307ecc1619f46140451da558f1fe84",
+      "origin": {
+        "source_id": "src-d2745e35b078ce2e",
+        "source_sha256": "d2745e35b078ce2e5dac5f369da36f5993ea20f7864a4835ca517ab634c2d001",
+        "source_bytes": 3074,
+        "fields": {
+          "/history/6/step": 600,
+          "/history/6/response_ce": 0.10076335234877527,
+          "/history/6/sha256": "0cfc60f342fb1e51a1a2cb41014716362a307ecc1619f46140451da558f1fe84"
+        }
+      }
+    },
+    {
+      "step": 700,
+      "response_ce": 0.08714137483660257,
+      "checkpoint_sha256": "066ab1d356cc2831708ff775d3623f5556d574574e5bd1288300aa83c5e86000",
+      "origin": {
+        "source_id": "src-d2745e35b078ce2e",
+        "source_sha256": "d2745e35b078ce2e5dac5f369da36f5993ea20f7864a4835ca517ab634c2d001",
+        "source_bytes": 3074,
+        "fields": {
+          "/history/7/step": 700,
+          "/history/7/response_ce": 0.08714137483660257,
+          "/history/7/sha256": "066ab1d356cc2831708ff775d3623f5556d574574e5bd1288300aa83c5e86000"
+        }
+      }
+    },
+    {
+      "step": 800,
+      "response_ce": 0.08377575153456164,
+      "checkpoint_sha256": "3a467f6803199a294025bd188ccb0cd5e6f7661773e21f690eb9733d45764c02",
+      "origin": {
+        "source_id": "src-d2745e35b078ce2e",
+        "source_sha256": "d2745e35b078ce2e5dac5f369da36f5993ea20f7864a4835ca517ab634c2d001",
+        "source_bytes": 3074,
+        "fields": {
+          "/history/8/step": 800,
+          "/history/8/response_ce": 0.08377575153456164,
+          "/history/8/sha256": "3a467f6803199a294025bd188ccb0cd5e6f7661773e21f690eb9733d45764c02"
+        }
+      }
+    },
+    {
+      "step": 900,
+      "response_ce": 0.08195323988509474,
+      "checkpoint_sha256": "fe3eb9791b075579ae69c078f33390766e883271ff7fcaae5c3742e34e4ac6c8",
+      "origin": {
+        "source_id": "src-d2745e35b078ce2e",
+        "source_sha256": "d2745e35b078ce2e5dac5f369da36f5993ea20f7864a4835ca517ab634c2d001",
+        "source_bytes": 3074,
+        "fields": {
+          "/history/9/step": 900,
+          "/history/9/response_ce": 0.08195323988509474,
+          "/history/9/sha256": "fe3eb9791b075579ae69c078f33390766e883271ff7fcaae5c3742e34e4ac6c8"
+        }
+      }
+    },
+    {
+      "step": 1000,
+      "response_ce": 0.0897350995161432,
+      "checkpoint_sha256": "dd55d54d01e03d39bf8c193aa7bc8d770565eff1c7ce66cee8ddecc34f19fb57",
+      "origin": {
+        "source_id": "src-858a5293d1e71cf0",
+        "source_sha256": "858a5293d1e71cf0cfb9b4f1468dae983ed1a7afc64b355a7d8735ccb38ec1b6",
+        "source_bytes": 1509,
+        "fields": {
+          "/nested/latest/step": 1000,
+          "/nested/latest/response_ce": 0.0897350995161432,
+          "/nested/latest/sha256": "dd55d54d01e03d39bf8c193aa7bc8d770565eff1c7ce66cee8ddecc34f19fb57"
+        }
+      }
+    }
+  ],
+  "last": {
+    "source_id": "src-858a5293d1e71cf0",
+    "source_sha256": "858a5293d1e71cf0cfb9b4f1468dae983ed1a7afc64b355a7d8735ccb38ec1b6",
+    "source_bytes": 1509,
+    "fields": {
+      "/nested/latest/step": 1000,
+      "/nested/latest/response_ce": 0.0897350995161432,
+      "/nested/best/step": 900,
+      "/nested/best/response_ce": 0.08195323988509474,
+      "/nested/budget": {
+        "train_calls": 1000,
+        "train_tokens": 806091,
+        "validation_calls": 11,
+        "validation_tokens": 1094731
+      },
+      "/scalars": {
+        "complete": false,
+        "pending": true
+      }
+    }
+  },
+  "published": {
+    "source_id": "src-b8bdb0fa4499444f",
+    "source_sha256": "b8bdb0fa4499444f5d0c2370d5ebbec9b486b03f873dd44c1ce2b32882871478",
+    "source_bytes": 339,
+    "fields": {
+      "/latest": {
+        "generation": "g1000",
+        "manifest_sha256": "cd8bd237d8988b4285abe7fa8ed2ed91c59c599ad2e8d161ea2caec474f15024",
+        "response_ce": 0.0897350995161432,
+        "step": 1000
+      },
+      "/best": {
+        "generation": "g900",
+        "manifest_sha256": "54663dc0758633a82cae54408b9ecba93ef9b0764fd92860c705ba861c516905",
+        "response_ce": 0.08195323988509474,
+        "step": 900
+      }
+    }
+  },
+  "final_completion": false,
+  "stop_reason": "user_directed_pause_before_one_remaining_selected_best_restore_evaluation",
+  "teacher_gate": "not_required_for_independent_gold_CE; required before B/C",
+  "remaining_selection_evaluation_calls": 1,
+  "remaining_selection_evaluation_tokens": 99521
+}

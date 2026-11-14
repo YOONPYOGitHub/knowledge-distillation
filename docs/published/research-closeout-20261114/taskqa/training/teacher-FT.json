@@ -1,0 +1,141 @@
+{
+  "trial_id": "train-teacher-FT",
+  "kind": "single_teacher_adaptation_execution_with_interrupted_continuations",
+  "config": {
+    "source_id": "src-4a68d66e87ba18d6",
+    "source_sha256": "4a68d66e87ba18d66e76c84dd60c64848ca4ef174071166871c958fc50599750",
+    "source_bytes": 17382,
+    "fields": {
+      "/original_ledger_identity/cap": 1000,
+      "/original_ledger_identity/limits": {
+        "train_calls": 1000,
+        "train_tokens": 8192000,
+        "validation_calls": 12,
+        "validation_tokens": 12189696
+      },
+      "/original_ledger_identity/policy": {
+        "accumulation": 1,
+        "cap": 1000,
+        "clip": 1.0,
+        "deterministic": false,
+        "lr": 0.0001,
+        "torch": "2.11.0+cu128"
+      },
+      "/original_ledger_identity/protocol": "clean-boundary-v2",
+      "/original_ledger_identity/runner/arm": "teacher",
+      "/original_ledger_identity/runner/repo_id": "Qwen/Qwen3.5-9B",
+      "/original_ledger_identity/runner/revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+      "/original_ledger_identity/runner/seed": 42
+    }
+  },
+  "history": [
+    {
+      "step": 100,
+      "response_ce": 0.12659206885181948,
+      "checkpoint_sha256": "7129c7b340708cca0bb7e03e96622845f46e33af6a8d48f5ecc6f158b7ac7615",
+      "origin": {
+        "source_id": "src-0ff9111c72fcb07b",
+        "source_sha256": "0ff9111c72fcb07b3f3238713ed7d0e08d5f0bd4dae78a7c59c76e34dca41197",
+        "source_bytes": 4399,
+        "fields": {
+          "/runtime~1continuation~1native~1budget.json/projection/latest/step": 100,
+          "/runtime~1continuation~1native~1budget.json/projection/latest/response_ce": 0.12659206885181948,
+          "/runtime~1continuation~1native~1budget.json/projection/latest/sha256": "7129c7b340708cca0bb7e03e96622845f46e33af6a8d48f5ecc6f158b7ac7615"
+        }
+      }
+    },
+    {
+      "step": 200,
+      "response_ce": 0.10462669519945623,
+      "checkpoint_sha256": "66c772270ddb9879681f01010a9a8d6680aa2146d66a7061870e12e43e902ddb",
+      "origin": {
+        "source_id": "src-64b08f5b433511ff",
+        "source_sha256": "64b08f5b433511ff642aac4503bd3c3a15e979c243a8f745fb12f114391229f7",
+        "source_bytes": 5512,
+        "fields": {
+          "/runtime~1continuation~1native~1budget.json/projection/latest/step": 200,
+          "/runtime~1continuation~1native~1budget.json/projection/latest/response_ce": 0.10462669519945623,
+          "/runtime~1continuation~1native~1budget.json/projection/latest/sha256": "66c772270ddb9879681f01010a9a8d6680aa2146d66a7061870e12e43e902ddb"
+        }
+      }
+    },
+    {
+      "step": 300,
+      "response_ce": 0.1032031352281112,
+      "checkpoint_sha256": "96ff00d368c02d917fb6c4edfa0996b952e04708a0bf787064c407cb13722f66",
+      "origin": {
+        "source_id": "src-342ef3e0acd4439c",
+        "source_sha256": "342ef3e0acd4439c8d54084df3f68b0da563c2f00e5b7b05fff3cffddc32459e",
+        "source_bytes": 6117,
+        "fields": {
+          "/runtime~1continuation~1native~1budget.json/projection/latest/step": 300,
+          "/runtime~1continuation~1native~1budget.json/projection/latest/response_ce": 0.1032031352281112,
+          "/runtime~1continuation~1native~1budget.json/projection/latest/sha256": "96ff00d368c02d917fb6c4edfa0996b952e04708a0bf787064c407cb13722f66"
+        }
+      }
+    },
+    {
+      "step": 400,
+      "response_ce": 0.10645721559092308,
+      "checkpoint_sha256": "fc27c779325f0fb4800bafba78acc87757875ebbea3df15df4bf25c31f77813c",
+      "origin": {
+        "source_id": "src-1f091be03743894b",
+        "source_sha256": "1f091be03743894b562e30a903aca5bc4408467ead124a86d78de7446b605495",
+        "source_bytes": 6715,
+        "fields": {
+          "/runtime~1continuation~1native~1budget.json/projection/latest/step": 400,
+          "/runtime~1continuation~1native~1budget.json/projection/latest/response_ce": 0.10645721559092308,
+          "/runtime~1continuation~1native~1budget.json/projection/latest/sha256": "fc27c779325f0fb4800bafba78acc87757875ebbea3df15df4bf25c31f77813c"
+        }
+      }
+    },
+    {
+      "step": 500,
+      "response_ce": 0.0934396254011231,
+      "checkpoint_sha256": "b39645123107612ae60ceb4c4b9578c013a6088ba4bca009308cbc066d4b11de",
+      "origin": {
+        "source_id": "src-e68948ee46dafc2e",
+        "source_sha256": "e68948ee46dafc2e46bfe4d265c20692697ada16cebb1f5951593c5fbf8012e6",
+        "source_bytes": 7312,
+        "fields": {
+          "/runtime~1continuation~1native~1budget.json/projection/latest/step": 500,
+          "/runtime~1continuation~1native~1budget.json/projection/latest/response_ce": 0.0934396254011231,
+          "/runtime~1continuation~1native~1budget.json/projection/latest/sha256": "b39645123107612ae60ceb4c4b9578c013a6088ba4bca009308cbc066d4b11de"
+        }
+      }
+    },
+    {
+      "step": 600,
+      "response_ce": 0.09499394191815544,
+      "checkpoint_sha256": "4a23cb44762e60259ae2ccc188182fd913bb88ba81495859c6e7facc2df60621",
+      "origin": {
+        "source_id": "src-500673181b1dacf7",
+        "source_sha256": "500673181b1dacf79e844af0254f1541f86475ac551e8872ba2c617c26ec8436",
+        "source_bytes": 7914,
+        "fields": {
+          "/runtime~1continuation~1native~1budget.json/projection/latest/step": 600,
+          "/runtime~1continuation~1native~1budget.json/projection/latest/response_ce": 0.09499394191815544,
+          "/runtime~1continuation~1native~1budget.json/projection/latest/sha256": "4a23cb44762e60259ae2ccc188182fd913bb88ba81495859c6e7facc2df60621"
+        }
+      }
+    }
+  ],
+  "final_completion": false,
+  "adapted_generated_QA_metrics": null,
+  "adapted_teacher_suitability_gate": null,
+  "stop_reason": "interrupted_training_then_user_directed_research_pause; recovery first update remained charged/pending",
+  "recovery": {
+    "source_id": "src-46d44016448f80a8",
+    "source_sha256": "46d44016448f80a8f8a05cb1dc36efb85d96a9df78820aab98a0a47e8eda509e",
+    "source_bytes": 1140,
+    "fields": {
+      "/source_step": 500,
+      "/completed_new_optimizer_updates": 0,
+      "/charged_new_updates": 1,
+      "/pending": "update",
+      "/latest_committed": 500
+    }
+  },
+  "history_coverage": "saved authenticated cadence observations step100..600; step0 CE not acquired in this audit; no inferred missing metrics",
+  "recovery_limitation": "historical local600 is not authenticated recoverable Blob600; g500 recovery verified by saved closure metadata, not new payload read"
+}

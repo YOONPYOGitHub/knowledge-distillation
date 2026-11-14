@@ -1,0 +1,20 @@
+{
+  "trial_id": "qa-v1-import-failure",
+  "kind": "application_failure_before_model_load",
+  "receipt": {
+    "source_id": "src-63200088108978f0",
+    "source_sha256": "63200088108978f0a497f17dab323c7ced3b2b4a2608a643a52f3b2454f7951c",
+    "source_bytes": 6468,
+    "fields": {
+      "/status": "blocked_before_model_load_no_inference_retry",
+      "/first_failure/type": "FileNotFoundError",
+      "/first_failure/message": "[Errno 2] No usable temporary directory found in ['/tmp', '/var/tmp', '/usr/tmp', '/']",
+      "/model_generation_calls": 0,
+      "/generated_tokens": 0,
+      "/actual_metrics": null,
+      "/teacher_advantage_gate": null,
+      "/app_runtime_seconds": 0.9338051929998983
+    }
+  },
+  "stop_reason": "strict service sandbox had no writable temporary directory; torch import failed; no inference"
+}

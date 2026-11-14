@@ -5,12 +5,14 @@
 
 ## 2026년 한국어 KD 연구 결과 및 재실험 안내
 
-이 브랜치는 **`feature/azure-h100-kd-tuning`**입니다. 아래 공개 자료는 **완료된 일반 평문 연구**와 **진행 중인 문답 연구**를 구분합니다.
+이 브랜치는 **`feature/azure-h100-kd-tuning`**입니다. 아래 공개 자료는 완료된 일반 평문 연구와 별도 문답/서비스 연구를 구분합니다. **2026-11-14 기준 자동 실행은 사용자 요청으로 중지했으며, 과거 문서의 계속진행·자동복구 안내는 재개 승인이 아닙니다.**
+
+- **[연구 결과 통합 정리: 성공·미개선·실행 실패·미완료](docs/published/research-closeout-20261114/README.md)** — 기존 전체 공개 결과를 보존하고 후속 QA·보조 대화 결과, 수치/설정/실패 근거 및 제외 자료 목록을 연결합니다.
 
 - **[4-way 브랜치 개발자를 위한 재실험 가이드](docs/FOUR_WAY_REPRODUCTION_GUIDE.md)** — 공통 데이터, 평가 기준, 학습/선택/seed 통제, 코드·환경 및 협업 체크리스트
 - **[Qwen3.5·Gemma4·Liquid 3계열 기본 연구 최종보고](docs/published/generic-kd-v1/README.md)** — 동일 Student의 CE-only 대 KD, 고정 설정의 Student seed42/43/44 비교
 - **[공개 결과 JSON·CSV와 검증 방법](results/published/generic-kd-v1/README.md)** — 집계 수치 재계산용 결과물. 가중치나 원문 test는 포함하지 않음
-- **[문헌 기반 후속 QA 연구 중간보고](docs/published/taskqa-status-20261105.md)** — 완료된 QA 개발평가·출력순서 대조와 아직 미완료인 Teacher 적응/A·B·C 비교 구분
+- **[11월 5일 QA 연구 중간보고(과거 스냅샷)](docs/published/taskqa-status-20261105.md)** — 당시 완료 개발평가와 미완료 비교. 최신 결과·종료 범위는 위 통합 정리를 따릅니다.
 - **[공개 범위·출처·검증 기록](docs/published/PUBLICATION.md)**
 
 기본 연구에서는 Qwen의 KD가 세 Student seed에서 소폭 개선했고 Gemma·Liquid는 결과가 혼재했습니다. 이는 KD의 보편적 우위, 서로 다른 모델의 한국어 품질 순위, 의료안전이나 실버케어 서비스 효능의 입증이 아닙니다. 과거 pilot와 다른 데이터 cohort의 점수를 섞지 않습니다.

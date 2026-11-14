@@ -1,0 +1,26 @@
+{
+  "arms": {
+    "B": "Teacher_response_only_CE",
+    "C": "same_B_responses_and_prefixes_plus_KL_Teacher_to_Student"
+  },
+  "executed": {
+    "B": 0,
+    "C": 0
+  },
+  "effect_estimates": {
+    "A_vs_B": null,
+    "B_vs_C": null,
+    "A_vs_C": null
+  },
+  "source": {
+    "source_id": "src-663607f3685dcefc",
+    "source_sha256": "663607f3685dcefcab4d478c004203417863162f8ff635c14e9cc77083c5dc29",
+    "source_bytes": 2157,
+    "fields": {
+      "/student_B_C": "not_executed",
+      "/taskqa_research": "incomplete_paused_for_later_resume"
+    }
+  },
+  "gate": "verified adapted Teacher task advantage and independent response/provenance review before B and C; pretrained Teacher gate failed; adapted gate not completed",
+  "interpretation": "uncompleted comparison, not observed negative KD effect"
+}

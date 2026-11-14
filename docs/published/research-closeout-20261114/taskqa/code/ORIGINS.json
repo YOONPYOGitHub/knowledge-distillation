@@ -1,0 +1,50 @@
+{
+  "code/original-d95be02a31be5584-qa_eval.py": {
+    "source_id": "src-d95be02a31be5584",
+    "source_sha256": "d95be02a31be5584cd7820c953d9121235b29eba608a3ef5895bcafac743aa94",
+    "used_by": [
+      "qa-v2"
+    ]
+  },
+  "code/original-8651b08c693d077d-qa_eval.py": {
+    "source_id": "src-8651b08c693d077d",
+    "source_sha256": "8651b08c693d077dcafcf4c54a54d7bb4137d666c3a3e5756cd3490649378c22",
+    "used_by": [
+      "qa-v3",
+      "qa-v4-grammar",
+      "qa-v5-optimized",
+      "qa-order-answer-first",
+      "qa-order-abstain-first"
+    ]
+  },
+  "code/original-14cc2c848f5e16ce-constraint.py": {
+    "source_id": "src-14cc2c848f5e16ce",
+    "source_sha256": "14cc2c848f5e16ce2f634f60078960d1f56519d7558627dbc88cb0e9ed79020d",
+    "used_by": [
+      "qa-v4-grammar"
+    ]
+  },
+  "code/original-90ec579e369471ea-constraint.py": {
+    "source_id": "src-90ec579e369471ea",
+    "source_sha256": "90ec579e369471eaebaaee965a99d4aa812a4529a967edc77557ebb7b3b563da",
+    "used_by": [
+      "qa-v5-optimized",
+      "qa-order-answer-first"
+    ]
+  },
+  "code/original-8be7d71308da61df-constraint.py": {
+    "source_id": "src-8be7d71308da61df",
+    "source_sha256": "8be7d71308da61df30972f871dfdc9f448390505fafec6fe8043033729a3ae0e",
+    "used_by": [
+      "qa-order-abstain-first"
+    ]
+  },
+  "code/original-dev-response-ce-evaluator.py": {
+    "source_id": "src-48ffa593208c9c32",
+    "source_sha256": "48ffa593208c9c320b639cab3851fad7e4080ce24953c1810929ba740c348d8e",
+    "used_by": [
+      "train-A-gold-CE"
+    ],
+    "limits": "Exact source only, not a standalone runnable service. Corpus membership, seam and model cache deliberately excluded."
+  }
+}

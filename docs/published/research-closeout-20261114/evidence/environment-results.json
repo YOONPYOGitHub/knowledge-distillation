@@ -1,0 +1,275 @@
+{
+  "schema": "research-closeout-environment-v1",
+  "scope": "Historical observations; not a current cloud diagnostic or a demonstrated causal explanation for a numeric KD effect",
+  "sources": [
+    {
+      "id": "additional-data-access",
+      "source_sha256": "962519329b0dc2fb53df06b7689fe65136d529b7b3d9f16f85063a753188b4e0",
+      "source_bytes": 1425,
+      "original_included": false,
+      "logical_path": "silvercare/data/key-rotation-20261109/ACCESS_PROBE.json",
+      "projection": {
+        "/observed_utc": "2026-11-09T01:56:53.232464+00:00",
+        "/probes": [
+          {
+            "dataset": "71852",
+            "fileSn": "553391",
+            "hops": [
+              {
+                "host": "api.aihub.or.kr",
+                "http_status": 502,
+                "api_key_header_sent": true
+              }
+            ],
+            "body_bytes_read": 0,
+            "payload_retained": false,
+            "http_status": 502,
+            "content_type": "text/plain",
+            "download_access_observed": false
+          },
+          {
+            "dataset": "576",
+            "fileSn": "66073",
+            "hops": [
+              {
+                "host": "api.aihub.or.kr",
+                "http_status": 502,
+                "api_key_header_sent": true
+              }
+            ],
+            "body_bytes_read": 0,
+            "payload_retained": false,
+            "http_status": 502,
+            "content_type": "text/plain",
+            "download_access_observed": false
+          },
+          {
+            "dataset": "470",
+            "fileSn": "55166",
+            "hops": [
+              {
+                "host": "api.aihub.or.kr",
+                "http_status": 502,
+                "api_key_header_sent": true
+              }
+            ],
+            "body_bytes_read": 0,
+            "payload_retained": false,
+            "http_status": 502,
+            "content_type": "text/plain",
+            "download_access_observed": false
+          }
+        ]
+      }
+    },
+    {
+      "id": "access-control",
+      "source_sha256": "578f22b50d9238f686a13723877e57669fa345da45f36b15434c96235f9f7994",
+      "source_bytes": 489,
+      "original_included": false,
+      "logical_path": "silvercare/data/key-rotation-20261109/KNOWN_SOURCE_CONTROL.json",
+      "projection": {
+        "/dataset": "71875",
+        "/fileSn": "556384",
+        "/http_status": 404,
+        "/content_type": "text/html",
+        "/payload_retained": false,
+        "/fixed_reason_flags": {
+          "approval_expired": false,
+          "reapplication_requested": false,
+          "explicit_invalid_key": false,
+          "explicit_unapproved": false,
+          "generic_gateway": false
+        },
+        "/observed_utc": "2026-11-09T01:57:23.219326+00:00"
+      }
+    },
+    {
+      "id": "cpu-sigkill-checkpoint",
+      "source_sha256": "9b5b5ee056ffe4b3394ece21ca8c6df6d56cb1eedfcf50383e7e11805e994b61",
+      "source_bytes": 3825,
+      "original_included": false,
+      "logical_path": "silvercare/infra/spot-only-preparation-20261109/PARENT_SIGKILL_REPLAY.json",
+      "projection": {
+        "/cases": [
+          {
+            "direct_orphan_refusal": "checkpoint is incomplete: COMPLETE missing",
+            "exact_equal_to_control": {
+              "best_step": true,
+              "best_validation": true,
+              "cursor": true,
+              "history": true,
+              "model_state": true,
+              "optimizer": true,
+              "rng": true
+            },
+            "killed": {
+              "mode": "kill_during_payload",
+              "returncode": -9,
+              "stderr": "",
+              "stdout": ""
+            },
+            "latest_step_before_resume": 0,
+            "name": "kill_during_payload",
+            "orphan_complete": false,
+            "orphan_step": 1,
+            "resumed": {
+              "mode": "resume",
+              "returncode": 0,
+              "stderr": "",
+              "stdout": "{\"final_step\": 4, \"history_steps\": [0, 3, 4], \"status\": \"completed\"}\n"
+            }
+          },
+          {
+            "direct_orphan_refusal": null,
+            "exact_equal_to_control": {
+              "best_step": true,
+              "best_validation": true,
+              "cursor": true,
+              "history": true,
+              "model_state": true,
+              "optimizer": true,
+              "rng": true
+            },
+            "killed": {
+              "mode": "kill_after_complete",
+              "returncode": -9,
+              "stderr": "",
+              "stdout": ""
+            },
+            "latest_step_before_resume": 0,
+            "name": "kill_after_complete",
+            "orphan_complete": true,
+            "orphan_step": 1,
+            "resumed": {
+              "mode": "resume",
+              "returncode": 0,
+              "stderr": "",
+              "stdout": "{\"final_step\": 4, \"history_steps\": [0, 3, 4], \"status\": \"completed\"}\n"
+            }
+          }
+        ],
+        "/cuda_available": false,
+        "/summary": "2 new isolated SIGKILL publication-boundary cases passed; frozen source hashes unchanged",
+        "/source_sha256_before": {
+          "services/silvercare/silvercare_service/data.py": "728e65bb47af53e9e568fb696604de39bfc51731805ba02956eceb730b40f9f4",
+          "services/silvercare/silvercare_service/pipeline.py": "a102e96ff290e1185958ef7b81fbd03e088a108275e9b9b0fc9f88c82d7753c5",
+          "services/silvercare/tests/test_pipeline.py": "156c85dfb20bea3ca0e0c602f40b69b4c2197d7bcc56d630e24e1c6f95aed24d",
+          "src/research_models.py": "525c6056b56822280723d8c1adb26fae77ca31babb4b873d18abb3c90f9ca785",
+          "src/research_runner.py": "e30c420fd318a2933a22b3b377b8e5ea5e376555644343ac716de0a62c0af2fa",
+          "src/resume_checkpoint.py": "c75ebfa780c136e5b6d67269a0a4b244cd8f39772261aaa76be353ec6ca2f632",
+          "tests/test_research_runner.py": "a03f274838dad84c658af054a47ea0f0ad7c59e3864ca7b4866f6d3f350ea1aa",
+          "tests/test_training_resume.py": "972abecbea58ece6109ca9c3b948e241bd1341f5d3aea7ecc4b4441391565d82"
+        },
+        "/source_sha256_after": {
+          "services/silvercare/silvercare_service/data.py": "728e65bb47af53e9e568fb696604de39bfc51731805ba02956eceb730b40f9f4",
+          "services/silvercare/silvercare_service/pipeline.py": "a102e96ff290e1185958ef7b81fbd03e088a108275e9b9b0fc9f88c82d7753c5",
+          "services/silvercare/tests/test_pipeline.py": "156c85dfb20bea3ca0e0c602f40b69b4c2197d7bcc56d630e24e1c6f95aed24d",
+          "src/research_models.py": "525c6056b56822280723d8c1adb26fae77ca31babb4b873d18abb3c90f9ca785",
+          "src/research_runner.py": "e30c420fd318a2933a22b3b377b8e5ea5e376555644343ac716de0a62c0af2fa",
+          "src/resume_checkpoint.py": "c75ebfa780c136e5b6d67269a0a4b244cd8f39772261aaa76be353ec6ca2f632",
+          "tests/test_research_runner.py": "a03f274838dad84c658af054a47ea0f0ad7c59e3864ca7b4866f6d3f350ea1aa",
+          "tests/test_training_resume.py": "972abecbea58ece6109ca9c3b948e241bd1341f5d3aea7ecc4b4441391565d82"
+        }
+      }
+    },
+    {
+      "id": "spot-and-loader",
+      "source_sha256": "f4b88f5d0cf9380724939b00f8520c6f8cbe216bb39b73291ed35b7b609aba6f",
+      "source_bytes": 6054,
+      "original_included": false,
+      "logical_path": "silvercare/docs/VM003_GPU_UTILIZATION_DIAGNOSIS_20261109.md",
+      "line_excerpts": [
+        {
+          "line": 5,
+          "text": "관측: 2026-11-09 07:40 KST. 읽기 전용 조사이며 VM 시작/중지·SKU/IAM/네트워크·진행 중 worker 변경은 하지 않았다."
+        },
+        {
+          "line": 10,
+          "text": "VM003 현재 설정은 Spot / Standard_NC24ads_A100_v4 / maxPrice=-1 / evictionPolicy=Deallocate다. 정확한 VM의 최근24시간 Activity Log269개를 조회했다(max-events1000 미도달). Spot 회수8회, 시작 Succeeded8회, 시작 Failed7회다. 최신 실제 회수는 11/09 07:13:17 KST, 이어 07:17:24 시작 성공. 이전 0658 continuation의 '회수 원인 UNKNOWN'은 당시 제한된 조회의 결과였으며, 이번 전체-window 조회에는 정확한 evictSpotVM/action Succeeded가 있다."
+        },
+        {
+          "line": 12,
+          "text": "회수 시각(KST): 11/08 07:50:36,10:11:52,12:41:52,14:44:09,18:51:58,21:12:18,23:42:33; 11/09 07:13:17. 11/08 14:54–16:31 시작7회 실패 후16:49 성공. 기존 기록에는 OverconstrainedAllocationRequest/SkuNotAvailable가 확인된다. 현재 maxPrice=-1은 가격 기반 회수를 피하도록 되어 있으므로 단순 가격 상한 인상은 현재 구성의 해결책이 아니다. 당시 모든 회수의 상세 capacity 사유까지 독립 검증한 것은 아니다."
+        },
+        {
+          "line": 16,
+          "text": "- 11/08 모델 초기 실행은 PROCESSOR ImportError로 중단됐다. 기존 text-only CausalLM 경로와 불필요 multimodal processor 의존성을 분리해야 한다."
+        },
+        {
+          "line": 17,
+          "text": "- 11/09 05:13–05:18 모델 요청은 worker alarm300과 systemd RuntimeMaxSec300이었다. 후속 native journal에서 unit_timeout=true/main_sigkill=true가 확인됐다. 이 실패는 로컬 실행 제한에 의한 중단이며 Spot 회수와 구분된다. 전역 OOM 부재를 증명하지는 않는다."
+        },
+        {
+          "line": 18,
+          "text": "- 06:50 모델 복원 진단에는 missing/mismatch/error0, unexpected visual297/MTP15가 반환됐다. 불필요 분기를 엄격히 거부하는 현재 loader/검사 경로에서 종료됐다. MTP 문자열 집합 확인은 텍스트 tensor 복원/정확한 dtype·tie 검증이나 추론 성공과 다르다. 설치된 변환/로딩 구현의 실행 경로 확인 및 필요한 텍스트 파라미터 검증이 미완료다."
+        },
+        {
+          "line": 21,
+          "text": "최신 0724 continuation에서07:30–07:31 새 boot/mount/package admission은 완료됐지만 venv/installed-source capture는 아직 실행 전이다. 실제 추론·학습 update·checkpoint·앱 E2E 성공0이며, GPU utilization은 측정되지 않았다. Running/ARM Succeeded/CPU fixture PASS를 GPU 학습 성공으로 볼 수 없다. 긴 준비·진단·원본 요청 조정이 GPU 시간에 들어가고 Spot 회수가 겹쳐 실작업 진입이 지연된다."
+        }
+      ]
+    },
+    {
+      "id": "application-not-provider-ban",
+      "source_sha256": "b1284f9d695bc9ec30f6408cc274dae1a50b024c18001ea321d8a9ab850f13be",
+      "source_bytes": 12564,
+      "original_included": false,
+      "logical_path": "yonsei/review/school-gate-provenance-20261113T024748Z/AUDIT.md",
+      "line_excerpts": [
+        {
+          "line": 5,
+          "text": "The blocked candidate is **not evidence of a provider ban on the earlier CE41 app**. Systemd/cgroup implementation choices, publisher-lock policy and executable-constructor custody are application requirements; actual cached guest observations establish missing substrate, not provider authorization refusal. Keep those gates closed for this candidate until a reviewed equivalent is evidenced. This audit neither adopts source nor authorizes reverting to the earlier launcher as a bypass."
+        },
+        {
+          "line": 30,
+          "text": "| Active systemd manager | Application-design requirement | No inspected user contract mandates systemd. L:185-190 selects systemd-run/systemctl; L:49-57 makes whole-parent approval a separate design admission. User requires existing resources, lifetime/privacy and bounded candidate verification (P:4,9,18; C:7-9). | H:13-17 reports bash PID1 and absent active manager. This is cached guest capability evidence, **not a provider policy denial**. H:32 explicitly limits the claim. | Current launcher cannot execute unchanged. Do not infer all app/training paths forbidden or require mandatory administrator approval merely from this feature test. |"
+        },
+        {
+          "line": 31,
+          "text": "| Writable/delegated cgroup and v2 observer | Application-design requirement | L:114-140 requires systemctl identity and v2 events/procs; L:186 selects control-group kill and task128. User contract does not name cgroup version, delegation, task128 or this observer. | H:15-16 reports readonly v1 controllers and no effective SYS_ADMIN. No policy forbidding a supported alternative is evidenced. Namespace operation remains untested (N:43). | Preserve admission; no remount, capability escalation, invocation-ID spoof or unchanged drop-in equivalence claim. |"
+        },
+        {
+          "line": 32,
+          "text": "| Whole-descendant independent termination | Application-design safety requirement implementing bounded lifetime, not an explicit user-mandated mechanism | User constraints: school cutoff/no policy bypass, sole owner and bounded native/candidate execution (C:7-9,17; P:9,18). Exact independent490s/stop5s/all-descendants semantics are selected by L:95-104,185-190 and A:13. No inspected user text specifies those numbers or systemd as the only means. | No observed provider prohibition. H:16 and N:32 distinguish unverified operation/termination from a ban. | Required for this candidate's safety case. Earlier timeout success is not whole-descendant/parent-death equivalence. L:94,140,165-174 deliberately keeps native/GPU cleanup unverified. |"
+        },
+        {
+          "line": 33,
+          "text": "| Cache publisher custody, /root0777, immutable ancestry, common publisher lock/template | Application-design provenance/custody requirement; underlies explicit exact-source/cache preservation | E:32-34; C:9,19; P:9,14 require frozen source/base/adapter, cache reuse and preservation. Exact dir_fd ancestry UID/mode/nlink and .publisher.lock rules are attributed to the selected model_artifacts implementation by N:35; not explicitly prescribed by user contracts. N:35 is secondary code evidence: that dependency was not opened in this audit. | H:18,23 and S:5304 selected custody key report cached /root0777 and missing lock/template. No actual provider policy requires root0777 or bans locking. ACL/all-writer cooperation remains unknown. | Original-path integrity remains closed; do not chmod root, move/copy cache or provision a lock merely to evade a refusal. Administrator can supply supported custody facts, but installed-callable binding is separately application-owned. |"
+        },
+        {
+          "line": 34,
+          "text": "| Aggregate RAM / VRAM / constructor peak | Application-design admission requirement; explicit measurement/no-memory-gate-waiver constraints | E:16,23,33-34 requires real memory measurement and disk budget; P:13,18 requires avoiding shared-GPU OOM and no silent Mac gate weakening. **50GiB is disk, not a user RAM cap** (A:7-9). No aggregate numeric RAM cap appears in selected contracts. L:186 has no MemoryMax/MemoryHigh/MemorySwapMax/MemoryAccounting. | Readonly controllers are capability evidence, not a RAM allocation/policy statement. M:6-10 shows restore bytes/reference topology only, not measured simultaneous peaks or upper bounds; host meminfo is not container entitlement. | RAM/VRAM admission remains UNKNOWN. Do not substitute storage headroom, environment thread flags, TasksMax or historical single-model peaks. A:7 explicitly corrects N:33,54; preserve historical report without adopting its 50GiB RAM conflation. |"
+        },
+        {
+          "line": 35,
+          "text": "| Executable model/tokenizer/PEFT constructor identity and effective import resolution | Application-design provenance requirement supporting explicit exact base/tokenizer/adapter compatibility | P:9,14 requires exact compatibility before switch; E:7-10,21,34 preserves model/tokenizer/numerical identity. K:7-10 shows artifact bytes do not authenticate mutable installed constructors; source pathname authentication is not effective import resolution. | No provider policy refusal demonstrated. K:22's 'Admin owns' sentence is an engineering responsibility proposal, **not proof user/provider requires administrator authorization**. | Current direct Qwen2Tokenizer and candidate conditional Qwen3_5Tokenizer must remain distinct; no proven native equivalence/inequality. Latest selected S:6264 projection helper admits no target runtime acquisition and is unadopted. Missing target identities must refuse; no runtime imports before admission. |"
+        },
+        {
+          "line": 37,
+          "text": "None of these six blocking mechanisms has an **actual observed provider-policy refusal** established by the 12-file evidence set. The separately preserved school execution window/POLICY_LIMIT_REFUSED restriction is a hard user contract (C:9; E:28,36); this audit does not freshly verify its provider receipt or current deadline. A cached running observation is not current GPU availability."
+        },
+        {
+          "line": 41,
+          "text": "**Historical success remains:** S:3555 (`private_bounded_input_app_e2e`) records PASS_PRIVATE_BOUNDED_NONMEDICAL_UI_API_NATIVE_E2E, gold_ce, exact restore, one native inference, real browser click and matching prompt/answer hashes, observed 2026-11-09T03:48:48Z. This is a selected parent-verified summary, not independent replay or fresh authentication of every historic receipt."
+        },
+        {
+          "line": 43,
+          "text": "Earlier implementation: O:18-28 checks sole ownership, completed operation, locks, storage/GPU state; O:37-43 reuses the capsule/cache and runs one180s timeout with kill-after10s under two flocks; O:47-65 carries bounded stdin and verifies receipt/answer hashes; O:76-85 records browser/native readback and tail empty compute/locks. I:19-24,69-100 pins selected model/adapter/template and restores exact gold_ce; I:28-40,51-54 bounds prompt and generation. Neither selected earlier file requires systemd or a common publisher lock. This historical app proves the bounded one-shot path worked then; it does not prove the new persistent switching/lifetime topology works now."
+        },
+        {
+          "line": 45,
+          "text": "Privacy qualification: earlier raw prompt is stdin/hash-only in these selected callers (O:51-65), but **I:102-104 explicitly writes a private answer JSON**, read by O:60. Therefore historical 'private E2E' must not be inflated into proof of zero answer persistence, clinical safety, OS isolation or full current no-storage acceptance. No such body was opened or copied by this audit. Preserve current input-no-storage/user privacy constraints rather than infer a waiver from that success."
+        },
+        {
+          "line": 47,
+          "text": "New service requirement P:9 keeps verified current until candidate exact restore/bounded inference/termination passes, then switches and rolls back without first deleting current. The composed capsule remains unadopted (S:5304); its launcher still names the older remote guest-wire deployment (L:6,180-190), so local composed preparation is not installed source. Additional resident roots can arise across activation/rollback (M:7-9). The memory review, namespace analysis and constructor investigation are already completed limited evidence, not native admission. S:7765 and S:5923/6264 leave peaks, runtime identity and adoption open."
+        },
+        {
+          "line": 59,
+          "text": "Single cron native/source-adoption/STATE owner and original resources unchanged; no original33 dev generations/PEFT3 replay; 32/33 hit64-token cap, no quality ranking; no original/cache deletion/copy, clinical/public release or heldout access; disk50GiB remains distinct from unknown aggregate memory. All six candidate gates remain unwaived. No mandatory administrator authorization is newly inferred. Primary code was inspected for both historical caller and selected supervisor; composed cache/model dependency behavior is cited only through the existing N/K reports. No exhaustive recursive provenance discovery or claim of live-provider policy/health."
+        }
+      ]
+    }
+  ]
+}

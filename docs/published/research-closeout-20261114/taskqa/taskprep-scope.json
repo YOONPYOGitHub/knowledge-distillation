@@ -1,0 +1,43 @@
+{
+  "preparation": {
+    "source_id": "src-31a50d52b574e9e0",
+    "source_sha256": "31a50d52b574e9e0da3185567b2884e2560bf78bde62cfabbe67b2e8bee41fe1",
+    "source_bytes": 1108,
+    "fields": {
+      "/scope": "NSMC infrastructure smoke only, not target QA or safety",
+      "/raw_train_rows_preparation_read": 128,
+      "/accepted_records": 111,
+      "/rejected_records": 17,
+      "/counts": {
+        "train": 89,
+        "dev": 6,
+        "sealed_test": 16
+      },
+      "/known_README_exposure_records": 8,
+      "/limitations": [
+        "heuristic near-duplicate clusters, not semantic dedup",
+        "private permissions and cooperative guards do not prevent arbitrary owner Python reads",
+        "unresolved earlier exposure; target-final purpose refused"
+      ]
+    }
+  },
+  "closure": {
+    "source_id": "src-e9d3669f93f47e83",
+    "source_sha256": "e9d3669f93f47e831459f43ccc856fde4cbb907d46f8ee96f16040501efac685",
+    "source_bytes": 2569,
+    "fields": {
+      "/status": "cpu_ready_gpu_pending",
+      "/regression_tests": 20,
+      "/limitations": [
+        "no_model_quality_evidence",
+        "no_real_model_or_teacher_generation",
+        "no_gpu_or_remote_actions",
+        "real_QA_medical_gold_unresolved",
+        "no_historical_nonexposure_proof",
+        "no_durable_model_checkpoints"
+      ]
+    }
+  },
+  "authored_fixture_scope": "3 exposed nonmedical authored development fixtures; train0/test0, no teacher generation",
+  "meaning": "A/B/C synthetic CPU plumbing replay, not pretrained-model effectiveness; no published durable model checkpoint"
+}

@@ -1,0 +1,130 @@
+{
+  "trial_id": "qa-v2",
+  "kind": "pretrained_generation_not_training",
+  "status_receipt": {
+    "source_id": "src-524003e1609e825f",
+    "source_sha256": "524003e1609e825f2076c6999dcdc66ea4d30a30df20cba039b5b506d3ad033a",
+    "source_bytes": 394,
+    "fields": {
+      "/status": "first_failure_stopped_no_retry",
+      "/started_at": "2026-11-01T12:48:33.825136+00:00",
+      "/ended_at": "2026-11-01T12:50:17.227421+00:00",
+      "/elapsed_seconds": 103.40227262099984,
+      "/generation_calls": 102,
+      "/successful_calls": {
+        "teacher": 93,
+        "student": 8
+      },
+      "/output_tokens": 1591,
+      "/actual_metrics": null,
+      "/teacher_advantage_gate": null,
+      "/currency_cost": null
+    }
+  },
+  "configurations": {
+    "execution.json": {
+      "source_id": "src-eacc0b823a25f024",
+      "source_sha256": "eacc0b823a25f024a2d850595548f492f67628994e89dadda3a68db24a092002",
+      "source_bytes": 1099,
+      "fields": {
+        "/models": {
+          "teacher": {
+            "repo_id": "Qwen/Qwen3.5-9B",
+            "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+            "tokenizer_sha256": "5f9e4d4901a92b997e463c1f46055088b6cca5ca61a6522d1b9f64c4bb81cb42",
+            "adapter_sha256": null,
+            "dtype": "bfloat16",
+            "eos_token_ids": [
+              248044,
+              248046
+            ],
+            "bos_policy": "tokenizer_default_once"
+          },
+          "student": {
+            "repo_id": "Qwen/Qwen3.5-4B",
+            "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+            "tokenizer_sha256": "5f9e4d4901a92b997e463c1f46055088b6cca5ca61a6522d1b9f64c4bb81cb42",
+            "adapter_sha256": null,
+            "dtype": "bfloat16",
+            "eos_token_ids": [
+              248044,
+              248046
+            ],
+            "bos_policy": "tokenizer_default_once"
+          }
+        },
+        "/frozen_at": "2026-11-01T12:45:40.237342+00:00",
+        "/common_sha256": "8788954ecdce8ef16d3900cfb9b90093f253f0cb7a7f6fc95d8e6597487bbd35",
+        "/generation_source_sha256": "05e9042673a389553fe483f48a4fc7551d69391456cabbd04b283c2b8ca1bb49"
+      }
+    },
+    "phase2a/contract.json": {
+      "source_id": "src-8788954ecdce8ef1",
+      "source_sha256": "8788954ecdce8ef16d3900cfb9b90093f253f0cb7a7f6fc95d8e6597487bbd35",
+      "source_bytes": 2235,
+      "fields": {
+        "/version": "taskqa-dev-v2-official-nonthinking-preinference",
+        "/dev_sha256": "1f7c2d04f84318f6a2c16a469eda0e34729b348e8e3b6683dc116625057aebc0",
+        "/dev_rows": 124,
+        "/dev_clusters": 90,
+        "/model_choice": "approved pretrained instruction-tuned Qwen/Qwen3.5-9B and Qwen/Qwen3.5-4B at exact prior approved immutable revisions; not -Base",
+        "/adapter_choice": "not default; generic baseline adapters only in a separately preregistered symmetric pair; generic PPL is not QA suitability evidence",
+        "/common_decoding": {
+          "do_sample": false,
+          "num_beams": 1,
+          "max_new_tokens": 256,
+          "max_input_tokens": 8192,
+          "enable_thinking": false,
+          "truncate_input": false,
+          "stop_strings": [],
+          "seed": 20261031,
+          "input_interface": {
+            "kind": "official_chat_template",
+            "messages": "one user message containing unchanged gold-free full prompt",
+            "add_generation_prompt": true,
+            "enable_thinking": false,
+            "add_special_tokens_after_render": false,
+            "official_template_sha256": "a4aee8afcf2e0711942cf848899be66016f8d14a889ff9ede07bca099c28f715",
+            "prefill": "official template empty think block; no manual prefix or output stripping"
+          }
+        },
+        "/prompt_character_ceiling": 30000,
+        "/budget": {
+          "arms": 2,
+          "questions_per_arm": 124,
+          "smoke_questions_per_arm": 8,
+          "successful_generation_calls_total_max": 248,
+          "max_generated_tokens_total": 63488,
+          "retries": 0,
+          "tuning_rounds": 0,
+          "budget_increase_requires_new_approval": true
+        },
+        "/gate": {
+          "answerable_f1_delta_min": 0.05,
+          "answerable_f1_cluster_ci_lower_exclusive": 0.0,
+          "overall_exact_delta_min": 0.0,
+          "answerability_delta_min": -0.02,
+          "impossible_false_answer_delta_max": 0.0,
+          "bootstrap_replicates": 2000,
+          "bootstrap_seed": 20261031
+        },
+        "/scorer": "local NFKC-casefold-Unicode-punctuation/symbol-to-space; whitespace-token multiset F1 max over gold; not official KLUE EM/ROUGE-W; no safety score",
+        "/cost_policy": "currency cost remains null without evidenced price; tokens separately null if unavailable, never estimated from characters; phase2a authentic predictions=0"
+      }
+    }
+  },
+  "selection": "No adapted checkpoint selected by this generation trial; immutable pretrained model pair.",
+  "stop_reason": "first_failure_no_retry",
+  "quality_result": null,
+  "failure": {
+    "source_id": "src-4e1fc3a57a9c2c61",
+    "source_sha256": "4e1fc3a57a9c2c61bb721cb8330f04f0b0fc99c1ff5e6f380e3afcd78572d43d",
+    "source_bytes": 1105,
+    "fields": {
+      "/at": "2026-11-01T12:50:17.217562+00:00",
+      "/type": "ValueError",
+      "/message": "abstention must be exactly empty"
+    }
+  },
+  "interpretation": "Incomplete paired coverage; no partial efficacy estimate or teacher gate verdict."
+}

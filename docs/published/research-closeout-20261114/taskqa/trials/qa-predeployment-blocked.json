@@ -1,0 +1,31 @@
+{
+  "trial_id": "qa-predeployment-blocked",
+  "kind": "admission_failure_no_model_execution",
+  "receipt": {
+    "source_id": "src-402cb8c3dfd8a7c4",
+    "source_sha256": "402cb8c3dfd8a7c49c9e372c6cc1ebde00e553a8891135ce511b2a73c2fcfc48",
+    "source_bytes": 2351,
+    "fields": {
+      "/status": "blocked_before_taskqa_deployment_legacy_gpu_autostart",
+      "/generation_calls": 0,
+      "/output_tokens": 0,
+      "/actual_metrics": null,
+      "/teacher_advantage_gate": null,
+      "/official_metadata_verified": {
+        "teacher": {
+          "repo_id": "Qwen/Qwen3.5-9B",
+          "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a",
+          "license": "apache-2.0",
+          "gated": false
+        },
+        "student": {
+          "repo_id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+          "license": "apache-2.0",
+          "gated": false
+        }
+      }
+    }
+  },
+  "stop_reason": "enabled legacy workload occupied GPU; duplicate taskQA launch withheld"
+}

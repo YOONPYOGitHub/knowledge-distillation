@@ -1,0 +1,4566 @@
+{
+  "schema_version": 1,
+  "scope": "Retained 14-report projection joined to frozen-plan seed metadata; 60 common +16 historical pilot. Null identity seed is preserved, not repaired. No original remote path copied.",
+  "trials": [
+    {
+      "family": "qwen35",
+      "cohort": "common-korean-v1",
+      "phase": "paired",
+      "report_index": 0,
+      "training_seed": 43,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/0/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 43,
+        "validation_interval": 200,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/0/trials/0",
+      "historical_report_sha256": "62fc8018e6eb47c7fa46adb8d2c689a8640e961266a54c768bd0c6c0a4353618",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-2",
+        "learning_rate": 8e-05,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-2",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "5b8968282e2d782b71e13df5e66f996e7bb471cdeceab2c658e864f6cd04f224"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.7000030161682487,
+          "ppl": 14.879776604714895,
+          "tokens": 677586
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 2.9578554502981937,
+          "ppl": 19.256630640810926,
+          "tokens": 677586
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "common-korean-v1",
+      "phase": "paired",
+      "report_index": 0,
+      "training_seed": 43,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/0/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 43,
+        "validation_interval": 200,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/0/trials/1",
+      "historical_report_sha256": "62fc8018e6eb47c7fa46adb8d2c689a8640e961266a54c768bd0c6c0a4353618",
+      "trial": {
+        "alpha": 0.7,
+        "divergence": "forward_kl",
+        "id": "kd-1",
+        "learning_rate": 8e-05,
+        "method": "kd",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-1",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "5b8968282e2d782b71e13df5e66f996e7bb471cdeceab2c658e864f6cd04f224"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.694442200902718,
+          "ppl": 14.797262551157468,
+          "tokens": 677586
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 2.9578554502981937,
+          "ppl": 19.256630640810926,
+          "tokens": 677586
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "common-korean-v1",
+      "phase": "paired",
+      "report_index": 1,
+      "training_seed": 44,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/1/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 44,
+        "validation_interval": 200,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/1/trials/0",
+      "historical_report_sha256": "db449c077e7698e4493966e3b1adaec0ab887fbdec689c4519e2d1ff449474b2",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-2",
+        "learning_rate": 8e-05,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-2",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "c6a861f945fbb59a30746b68b042a10d5a9447c568a1e07d1c9d992ef36fbd0c"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.6992904762351184,
+          "ppl": 14.869177946120145,
+          "tokens": 677586
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 2.9578554502981937,
+          "ppl": 19.256630640810926,
+          "tokens": 677586
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "common-korean-v1",
+      "phase": "paired",
+      "report_index": 1,
+      "training_seed": 44,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/1/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 44,
+        "validation_interval": 200,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/1/trials/1",
+      "historical_report_sha256": "db449c077e7698e4493966e3b1adaec0ab887fbdec689c4519e2d1ff449474b2",
+      "trial": {
+        "alpha": 0.7,
+        "divergence": "forward_kl",
+        "id": "kd-1",
+        "learning_rate": 8e-05,
+        "method": "kd",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-1",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "c6a861f945fbb59a30746b68b042a10d5a9447c568a1e07d1c9d992ef36fbd0c"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.694345042654396,
+          "ppl": 14.795824944886817,
+          "tokens": 677586
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 2.9578554502981937,
+          "ppl": 19.256630640810926,
+          "tokens": 677586
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 2,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/2/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/2/trials/0",
+      "historical_report_sha256": "64c2ea321fab638e788a2efa611db9df03232ce42e94a6fa06f74b2b9bb78d75",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-1",
+        "learning_rate": 2e-05,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-1",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.7186712856085378,
+          "ppl": 15.160165326679246,
+          "tokens": 677586
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 2.9578554502981937,
+          "ppl": 19.256630640810926,
+          "tokens": 677586
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 2,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/2/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/2/trials/1",
+      "historical_report_sha256": "64c2ea321fab638e788a2efa611db9df03232ce42e94a6fa06f74b2b9bb78d75",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-2",
+        "learning_rate": 5e-05,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-2",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.7006981257499048,
+          "ppl": 14.89012327562417,
+          "tokens": 677586
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 2.9578554502981937,
+          "ppl": 19.256630640810926,
+          "tokens": 677586
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 2,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/2/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/2/trials/2",
+      "historical_report_sha256": "64c2ea321fab638e788a2efa611db9df03232ce42e94a6fa06f74b2b9bb78d75",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-3",
+        "learning_rate": 0.0001,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-3",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.6990922308118597,
+          "ppl": 14.866230491814022,
+          "tokens": 677586
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 2.9578554502981937,
+          "ppl": 19.256630640810926,
+          "tokens": 677586
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 2,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/2/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/2/trials/3",
+      "historical_report_sha256": "64c2ea321fab638e788a2efa611db9df03232ce42e94a6fa06f74b2b9bb78d75",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-4",
+        "learning_rate": 0.0002,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-4",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.7391235835458065,
+          "ppl": 15.473417993859993,
+          "tokens": 677586
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 2.9578554502981937,
+          "ppl": 19.256630640810926,
+          "tokens": 677586
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 2,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/2/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/2/trials/4",
+      "historical_report_sha256": "64c2ea321fab638e788a2efa611db9df03232ce42e94a6fa06f74b2b9bb78d75",
+      "trial": {
+        "alpha": 0.7,
+        "divergence": "forward_kl",
+        "id": "kd-1",
+        "learning_rate": 0.0001,
+        "method": "kd",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-1",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.695684427043923,
+          "ppl": 14.815655519264464,
+          "tokens": 677586
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 2.9578554502981937,
+          "ppl": 19.256630640810926,
+          "tokens": 677586
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 2,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/2/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/2/trials/5",
+      "historical_report_sha256": "64c2ea321fab638e788a2efa611db9df03232ce42e94a6fa06f74b2b9bb78d75",
+      "trial": {
+        "alpha": 0.7,
+        "divergence": "forward_kl",
+        "id": "kd-2",
+        "learning_rate": 5e-05,
+        "method": "kd",
+        "temperature": 2.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-2",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.7158244040838024,
+          "ppl": 15.117067508398128,
+          "tokens": 677586
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 2.9578554502981937,
+          "ppl": 19.256630640810926,
+          "tokens": 677586
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 2,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/2/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/2/trials/6",
+      "historical_report_sha256": "64c2ea321fab638e788a2efa611db9df03232ce42e94a6fa06f74b2b9bb78d75",
+      "trial": {
+        "alpha": 0.7,
+        "divergence": "reverse_kl",
+        "id": "kd-3",
+        "learning_rate": 5e-05,
+        "method": "kd",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-3",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.702065068991639,
+          "ppl": 14.91049114669472,
+          "tokens": 677586
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 2.9578554502981937,
+          "ppl": 19.256630640810926,
+          "tokens": 677586
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 2,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/2/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/2/trials/7",
+      "historical_report_sha256": "64c2ea321fab638e788a2efa611db9df03232ce42e94a6fa06f74b2b9bb78d75",
+      "trial": {
+        "alpha": 0.9,
+        "divergence": "reverse_kl",
+        "id": "kd-4",
+        "learning_rate": 2e-05,
+        "method": "kd",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-4",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.717394021672301,
+          "ppl": 15.140814155147648,
+          "tokens": 677586
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 2.9578554502981937,
+          "ppl": 19.256630640810926,
+          "tokens": 677586
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 3,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/3/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/3/trials/0",
+      "historical_report_sha256": "f825a35a5653850f7a7c804c1d3788373419f9a6576c59a53ad5f8f8d42ee122",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-1",
+        "learning_rate": 6e-05,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-1",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.6984024131173117,
+          "ppl": 14.855979039192757,
+          "tokens": 677586
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 2.9578554502981937,
+          "ppl": 19.256630640810926,
+          "tokens": 677586
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 3,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/3/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/3/trials/1",
+      "historical_report_sha256": "f825a35a5653850f7a7c804c1d3788373419f9a6576c59a53ad5f8f8d42ee122",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-2",
+        "learning_rate": 8e-05,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-2",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.6972848210253133,
+          "ppl": 14.839385388693088,
+          "tokens": 677586
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 2.9578554502981937,
+          "ppl": 19.256630640810926,
+          "tokens": 677586
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 3,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/3/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/3/trials/2",
+      "historical_report_sha256": "f825a35a5653850f7a7c804c1d3788373419f9a6576c59a53ad5f8f8d42ee122",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-3",
+        "learning_rate": 0.00012,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-3",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.7028934077588995,
+          "ppl": 14.92284720134346,
+          "tokens": 677586
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 2.9578554502981937,
+          "ppl": 19.256630640810926,
+          "tokens": 677586
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 3,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/3/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/3/trials/3",
+      "historical_report_sha256": "f825a35a5653850f7a7c804c1d3788373419f9a6576c59a53ad5f8f8d42ee122",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-4",
+        "learning_rate": 0.00015,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-4",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.713123891801693,
+          "ppl": 15.076298754958328,
+          "tokens": 677586
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 2.9578554502981937,
+          "ppl": 19.256630640810926,
+          "tokens": 677586
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 3,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/3/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/3/trials/4",
+      "historical_report_sha256": "f825a35a5653850f7a7c804c1d3788373419f9a6576c59a53ad5f8f8d42ee122",
+      "trial": {
+        "alpha": 0.7,
+        "divergence": "forward_kl",
+        "id": "kd-1",
+        "learning_rate": 8e-05,
+        "method": "kd",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-1",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.695376977552538,
+          "ppl": 14.811101153665101,
+          "tokens": 677586
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 2.9578554502981937,
+          "ppl": 19.256630640810926,
+          "tokens": 677586
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 3,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/3/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/3/trials/5",
+      "historical_report_sha256": "f825a35a5653850f7a7c804c1d3788373419f9a6576c59a53ad5f8f8d42ee122",
+      "trial": {
+        "alpha": 0.7,
+        "divergence": "forward_kl",
+        "id": "kd-2",
+        "learning_rate": 0.00012,
+        "method": "kd",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-2",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.6991295555133594,
+          "ppl": 14.866785379785005,
+          "tokens": 677586
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 2.9578554502981937,
+          "ppl": 19.256630640810926,
+          "tokens": 677586
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 3,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/3/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/3/trials/6",
+      "historical_report_sha256": "f825a35a5653850f7a7c804c1d3788373419f9a6576c59a53ad5f8f8d42ee122",
+      "trial": {
+        "alpha": 0.5,
+        "divergence": "forward_kl",
+        "id": "kd-3",
+        "learning_rate": 0.0001,
+        "method": "kd",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-3",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.696723966880594,
+          "ppl": 14.831064991375515,
+          "tokens": 677586
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 2.9578554502981937,
+          "ppl": 19.256630640810926,
+          "tokens": 677586
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 3,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/3/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/3/trials/7",
+      "historical_report_sha256": "f825a35a5653850f7a7c804c1d3788373419f9a6576c59a53ad5f8f8d42ee122",
+      "trial": {
+        "alpha": 0.85,
+        "divergence": "forward_kl",
+        "id": "kd-4",
+        "learning_rate": 0.0001,
+        "method": "kd",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-4",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.6971001924835667,
+          "ppl": 14.836645867513042,
+          "tokens": 677586
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 2.9578554502981937,
+          "ppl": 19.256630640810926,
+          "tokens": 677586
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "gemma4",
+      "cohort": "common-korean-v1",
+      "phase": "paired",
+      "report_index": 4,
+      "training_seed": 43,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/5/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 43,
+        "validation_interval": 200,
+        "vocab_size": 262144
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/4/trials/0",
+      "historical_report_sha256": "10ea60de06536a56ca77e3c273c8600365d5c02419322fbdc2fd0aea83fd9593",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-1",
+        "learning_rate": 0.00015,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-1",
+        "model": {
+          "id": "google/gemma-4-E2B-it",
+          "revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7"
+        },
+        "initial_adapter_sha256": "a1ffbcc0d482e4d879237fc49b672f297548dcf6de001c199af4f46ce65f2897"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.5160335345809255,
+          "ppl": 12.379396704177235,
+          "tokens": 747082
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 8.406372998075764,
+          "ppl": 4475.498396718515,
+          "tokens": 747082
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "gemma4",
+      "cohort": "common-korean-v1",
+      "phase": "paired",
+      "report_index": 4,
+      "training_seed": 43,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/5/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 43,
+        "validation_interval": 200,
+        "vocab_size": 262144
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/4/trials/1",
+      "historical_report_sha256": "10ea60de06536a56ca77e3c273c8600365d5c02419322fbdc2fd0aea83fd9593",
+      "trial": {
+        "alpha": 0.7,
+        "divergence": "forward_kl",
+        "id": "kd-1",
+        "learning_rate": 0.00015,
+        "method": "kd",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-1",
+        "model": {
+          "id": "google/gemma-4-E2B-it",
+          "revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7"
+        },
+        "initial_adapter_sha256": "a1ffbcc0d482e4d879237fc49b672f297548dcf6de001c199af4f46ce65f2897"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.520715532657196,
+          "ppl": 12.437492912772301,
+          "tokens": 747082
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 8.406372998075764,
+          "ppl": 4475.498396718515,
+          "tokens": 747082
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "gemma4",
+      "cohort": "common-korean-v1",
+      "phase": "paired",
+      "report_index": 5,
+      "training_seed": 44,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/6/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 44,
+        "validation_interval": 200,
+        "vocab_size": 262144
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/5/trials/0",
+      "historical_report_sha256": "e7146d8f5476e31ce9e8e78d21c42a4435cad60af3fb768a8549b66663045df4",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-1",
+        "learning_rate": 0.00015,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-1",
+        "model": {
+          "id": "google/gemma-4-E2B-it",
+          "revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7"
+        },
+        "initial_adapter_sha256": "4be8369a60841c3311acd751198ed3173bd37d9049179960557ffbc6e4c421fb"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.5194342237809932,
+          "ppl": 12.421566847988428,
+          "tokens": 747082
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 8.406372998075764,
+          "ppl": 4475.498396718515,
+          "tokens": 747082
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "gemma4",
+      "cohort": "common-korean-v1",
+      "phase": "paired",
+      "report_index": 5,
+      "training_seed": 44,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/6/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 44,
+        "validation_interval": 200,
+        "vocab_size": 262144
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/5/trials/1",
+      "historical_report_sha256": "e7146d8f5476e31ce9e8e78d21c42a4435cad60af3fb768a8549b66663045df4",
+      "trial": {
+        "alpha": 0.7,
+        "divergence": "forward_kl",
+        "id": "kd-1",
+        "learning_rate": 0.00015,
+        "method": "kd",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-1",
+        "model": {
+          "id": "google/gemma-4-E2B-it",
+          "revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7"
+        },
+        "initial_adapter_sha256": "4be8369a60841c3311acd751198ed3173bd37d9049179960557ffbc6e4c421fb"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.516813681567136,
+          "ppl": 12.389058221418859,
+          "tokens": 747082
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 8.406372998075764,
+          "ppl": 4475.498396718515,
+          "tokens": 747082
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "gemma4",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 6,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/10/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 262144
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/6/trials/0",
+      "historical_report_sha256": "c773d930d86f434f2773b57f7f7788672f5b8718b92ea2349ad7ac7ae6cf5e68",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-1",
+        "learning_rate": 2e-05,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-1",
+        "model": {
+          "id": "google/gemma-4-E2B-it",
+          "revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7"
+        },
+        "initial_adapter_sha256": "9a1d1ee98db9726f76fc6fce4c34fde86fdb561282734f7357b554ab2381bd0a"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.5995089440139973,
+          "ppl": 13.457128208875796,
+          "tokens": 747082
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 8.406372998075764,
+          "ppl": 4475.498396718515,
+          "tokens": 747082
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "gemma4",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 6,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/10/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 262144
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/6/trials/1",
+      "historical_report_sha256": "c773d930d86f434f2773b57f7f7788672f5b8718b92ea2349ad7ac7ae6cf5e68",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-2",
+        "learning_rate": 5e-05,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-2",
+        "model": {
+          "id": "google/gemma-4-E2B-it",
+          "revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7"
+        },
+        "initial_adapter_sha256": "9a1d1ee98db9726f76fc6fce4c34fde86fdb561282734f7357b554ab2381bd0a"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.548005324841206,
+          "ppl": 12.781583231957532,
+          "tokens": 747082
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 8.406372998075764,
+          "ppl": 4475.498396718515,
+          "tokens": 747082
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "gemma4",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 6,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/10/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 262144
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/6/trials/2",
+      "historical_report_sha256": "c773d930d86f434f2773b57f7f7788672f5b8718b92ea2349ad7ac7ae6cf5e68",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-3",
+        "learning_rate": 0.0001,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-3",
+        "model": {
+          "id": "google/gemma-4-E2B-it",
+          "revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7"
+        },
+        "initial_adapter_sha256": "9a1d1ee98db9726f76fc6fce4c34fde86fdb561282734f7357b554ab2381bd0a"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.5241563778466927,
+          "ppl": 12.480362111272816,
+          "tokens": 747082
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 8.406372998075764,
+          "ppl": 4475.498396718515,
+          "tokens": 747082
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "gemma4",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 6,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/10/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 262144
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/6/trials/3",
+      "historical_report_sha256": "c773d930d86f434f2773b57f7f7788672f5b8718b92ea2349ad7ac7ae6cf5e68",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-4",
+        "learning_rate": 0.0002,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-4",
+        "model": {
+          "id": "google/gemma-4-E2B-it",
+          "revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7"
+        },
+        "initial_adapter_sha256": "9a1d1ee98db9726f76fc6fce4c34fde86fdb561282734f7357b554ab2381bd0a"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.5164807754599074,
+          "ppl": 12.384934514715797,
+          "tokens": 747082
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 8.406372998075764,
+          "ppl": 4475.498396718515,
+          "tokens": 747082
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "gemma4",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 6,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/10/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 262144
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/6/trials/4",
+      "historical_report_sha256": "c773d930d86f434f2773b57f7f7788672f5b8718b92ea2349ad7ac7ae6cf5e68",
+      "trial": {
+        "alpha": 0.7,
+        "divergence": "forward_kl",
+        "id": "kd-1",
+        "learning_rate": 0.0001,
+        "method": "kd",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-1",
+        "model": {
+          "id": "google/gemma-4-E2B-it",
+          "revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7"
+        },
+        "initial_adapter_sha256": "9a1d1ee98db9726f76fc6fce4c34fde86fdb561282734f7357b554ab2381bd0a"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.5305893753677853,
+          "ppl": 12.56090704470674,
+          "tokens": 747082
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 8.406372998075764,
+          "ppl": 4475.498396718515,
+          "tokens": 747082
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "gemma4",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 6,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/10/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 262144
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/6/trials/5",
+      "historical_report_sha256": "c773d930d86f434f2773b57f7f7788672f5b8718b92ea2349ad7ac7ae6cf5e68",
+      "trial": {
+        "alpha": 0.7,
+        "divergence": "forward_kl",
+        "id": "kd-2",
+        "learning_rate": 5e-05,
+        "method": "kd",
+        "temperature": 2.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-2",
+        "model": {
+          "id": "google/gemma-4-E2B-it",
+          "revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7"
+        },
+        "initial_adapter_sha256": "9a1d1ee98db9726f76fc6fce4c34fde86fdb561282734f7357b554ab2381bd0a"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.582698987470285,
+          "ppl": 13.232805180965233,
+          "tokens": 747082
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 8.406372998075764,
+          "ppl": 4475.498396718515,
+          "tokens": 747082
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "gemma4",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 6,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/10/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 262144
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/6/trials/6",
+      "historical_report_sha256": "c773d930d86f434f2773b57f7f7788672f5b8718b92ea2349ad7ac7ae6cf5e68",
+      "trial": {
+        "alpha": 0.7,
+        "divergence": "reverse_kl",
+        "id": "kd-3",
+        "learning_rate": 5e-05,
+        "method": "kd",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-3",
+        "model": {
+          "id": "google/gemma-4-E2B-it",
+          "revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7"
+        },
+        "initial_adapter_sha256": "9a1d1ee98db9726f76fc6fce4c34fde86fdb561282734f7357b554ab2381bd0a"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.55127329998189,
+          "ppl": 12.823421454118302,
+          "tokens": 747082
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 8.406372998075764,
+          "ppl": 4475.498396718515,
+          "tokens": 747082
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "gemma4",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 6,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/10/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 262144
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/6/trials/7",
+      "historical_report_sha256": "c773d930d86f434f2773b57f7f7788672f5b8718b92ea2349ad7ac7ae6cf5e68",
+      "trial": {
+        "alpha": 0.9,
+        "divergence": "reverse_kl",
+        "id": "kd-4",
+        "learning_rate": 2e-05,
+        "method": "kd",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-4",
+        "model": {
+          "id": "google/gemma-4-E2B-it",
+          "revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7"
+        },
+        "initial_adapter_sha256": "9a1d1ee98db9726f76fc6fce4c34fde86fdb561282734f7357b554ab2381bd0a"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.600415779663659,
+          "ppl": 13.469337147391347,
+          "tokens": 747082
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 8.406372998075764,
+          "ppl": 4475.498396718515,
+          "tokens": 747082
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "gemma4",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 7,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/11/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 262144
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/7/trials/0",
+      "historical_report_sha256": "2b4737387dfda9aa8f0a39b1a412d2c83279e97d387b160484155687bd1a7b45",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-1",
+        "learning_rate": 0.00015,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-1",
+        "model": {
+          "id": "google/gemma-4-E2B-it",
+          "revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7"
+        },
+        "initial_adapter_sha256": "9a1d1ee98db9726f76fc6fce4c34fde86fdb561282734f7357b554ab2381bd0a"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.512386426727771,
+          "ppl": 12.334329940867535,
+          "tokens": 747082
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 8.406372998075764,
+          "ppl": 4475.498396718515,
+          "tokens": 747082
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "gemma4",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 7,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/11/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 262144
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/7/trials/1",
+      "historical_report_sha256": "2b4737387dfda9aa8f0a39b1a412d2c83279e97d387b160484155687bd1a7b45",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-2",
+        "learning_rate": 0.00025,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-2",
+        "model": {
+          "id": "google/gemma-4-E2B-it",
+          "revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7"
+        },
+        "initial_adapter_sha256": "9a1d1ee98db9726f76fc6fce4c34fde86fdb561282734f7357b554ab2381bd0a"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.5260722144594605,
+          "ppl": 12.504295364727366,
+          "tokens": 747082
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 8.406372998075764,
+          "ppl": 4475.498396718515,
+          "tokens": 747082
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "gemma4",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 7,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/11/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 262144
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/7/trials/2",
+      "historical_report_sha256": "2b4737387dfda9aa8f0a39b1a412d2c83279e97d387b160484155687bd1a7b45",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-3",
+        "learning_rate": 0.0003,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-3",
+        "model": {
+          "id": "google/gemma-4-E2B-it",
+          "revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7"
+        },
+        "initial_adapter_sha256": "9a1d1ee98db9726f76fc6fce4c34fde86fdb561282734f7357b554ab2381bd0a"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.546411423837359,
+          "ppl": 12.761226880927179,
+          "tokens": 747082
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 8.406372998075764,
+          "ppl": 4475.498396718515,
+          "tokens": 747082
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "gemma4",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 7,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/11/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 262144
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/7/trials/3",
+      "historical_report_sha256": "2b4737387dfda9aa8f0a39b1a412d2c83279e97d387b160484155687bd1a7b45",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-4",
+        "learning_rate": 0.0004,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-4",
+        "model": {
+          "id": "google/gemma-4-E2B-it",
+          "revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7"
+        },
+        "initial_adapter_sha256": "9a1d1ee98db9726f76fc6fce4c34fde86fdb561282734f7357b554ab2381bd0a"
+      },
+      "result": {
+        "best_step": 1400,
+        "best_validation": {
+          "ce": 2.593020713778559,
+          "ppl": 13.370097904385595,
+          "tokens": 747082
+        },
+        "final_step": 2000,
+        "initial_validation": {
+          "ce": 8.406372998075764,
+          "ppl": 4475.498396718515,
+          "tokens": 747082
+        },
+        "status": "completed",
+        "stop_reason": "early_stopping"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "gemma4",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 7,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/11/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 262144
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/7/trials/4",
+      "historical_report_sha256": "2b4737387dfda9aa8f0a39b1a412d2c83279e97d387b160484155687bd1a7b45",
+      "trial": {
+        "alpha": 0.7,
+        "divergence": "forward_kl",
+        "id": "kd-1",
+        "learning_rate": 0.00015,
+        "method": "kd",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-1",
+        "model": {
+          "id": "google/gemma-4-E2B-it",
+          "revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7"
+        },
+        "initial_adapter_sha256": "9a1d1ee98db9726f76fc6fce4c34fde86fdb561282734f7357b554ab2381bd0a"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.520898823008675,
+          "ppl": 12.439772794153544,
+          "tokens": 747082
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 8.406372998075764,
+          "ppl": 4475.498396718515,
+          "tokens": 747082
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "gemma4",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 7,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/11/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 262144
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/7/trials/5",
+      "historical_report_sha256": "2b4737387dfda9aa8f0a39b1a412d2c83279e97d387b160484155687bd1a7b45",
+      "trial": {
+        "alpha": 0.7,
+        "divergence": "forward_kl",
+        "id": "kd-2",
+        "learning_rate": 0.00025,
+        "method": "kd",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-2",
+        "model": {
+          "id": "google/gemma-4-E2B-it",
+          "revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7"
+        },
+        "initial_adapter_sha256": "9a1d1ee98db9726f76fc6fce4c34fde86fdb561282734f7357b554ab2381bd0a"
+      },
+      "result": {
+        "best_step": 2800,
+        "best_validation": {
+          "ce": 2.53000270219302,
+          "ppl": 12.55354005871072,
+          "tokens": 747082
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 8.406372998075764,
+          "ppl": 4475.498396718515,
+          "tokens": 747082
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "gemma4",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 7,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/11/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 262144
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/7/trials/6",
+      "historical_report_sha256": "2b4737387dfda9aa8f0a39b1a412d2c83279e97d387b160484155687bd1a7b45",
+      "trial": {
+        "alpha": 0.7,
+        "divergence": "forward_kl",
+        "id": "kd-3",
+        "learning_rate": 0.0003,
+        "method": "kd",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-3",
+        "model": {
+          "id": "google/gemma-4-E2B-it",
+          "revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7"
+        },
+        "initial_adapter_sha256": "9a1d1ee98db9726f76fc6fce4c34fde86fdb561282734f7357b554ab2381bd0a"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.5268977793625838,
+          "ppl": 12.514622734489222,
+          "tokens": 747082
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 8.406372998075764,
+          "ppl": 4475.498396718515,
+          "tokens": 747082
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "gemma4",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 7,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/11/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 262144
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/7/trials/7",
+      "historical_report_sha256": "2b4737387dfda9aa8f0a39b1a412d2c83279e97d387b160484155687bd1a7b45",
+      "trial": {
+        "alpha": 0.7,
+        "divergence": "forward_kl",
+        "id": "kd-4",
+        "learning_rate": 0.0004,
+        "method": "kd",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-4",
+        "model": {
+          "id": "google/gemma-4-E2B-it",
+          "revision": "3e22461f65e89153144f8adb70e3b8c2cc9845a7"
+        },
+        "initial_adapter_sha256": "9a1d1ee98db9726f76fc6fce4c34fde86fdb561282734f7357b554ab2381bd0a"
+      },
+      "result": {
+        "best_step": 2000,
+        "best_validation": {
+          "ce": 2.5696480462610225,
+          "ppl": 13.061226684316026,
+          "tokens": 747082
+        },
+        "final_step": 2600,
+        "initial_validation": {
+          "ce": 8.406372998075764,
+          "ppl": 4475.498396718515,
+          "tokens": 747082
+        },
+        "status": "completed",
+        "stop_reason": "early_stopping"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "lfm25",
+      "cohort": "common-korean-v1",
+      "phase": "paired",
+      "report_index": 8,
+      "training_seed": 43,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/14/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 43,
+        "validation_interval": 200,
+        "vocab_size": 125017
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/8/trials/0",
+      "historical_report_sha256": "f4b011c8f8b627ec86f86d4c90ed16e3dca5f9c8f468e1746cd90b7de2bb4fd1",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-2",
+        "learning_rate": 0.000125,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-2",
+        "model": {
+          "id": "LiquidAI/LFM2.5-2.6B",
+          "revision": "654f9463ce32b05d0429d76fe1f580b27d4c1ac0"
+        },
+        "initial_adapter_sha256": "011c2ce18d461623a0989ace7e679db23617304854751c000d3c7538d6d0cfe7"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.8704768686354405,
+          "ppl": 17.645430746319878,
+          "tokens": 740950
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 3.980181511528169,
+          "ppl": 53.526749067807955,
+          "tokens": 740950
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "lfm25",
+      "cohort": "common-korean-v1",
+      "phase": "paired",
+      "report_index": 8,
+      "training_seed": 43,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/14/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 43,
+        "validation_interval": 200,
+        "vocab_size": 125017
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/8/trials/1",
+      "historical_report_sha256": "f4b011c8f8b627ec86f86d4c90ed16e3dca5f9c8f468e1746cd90b7de2bb4fd1",
+      "trial": {
+        "alpha": 0.9,
+        "divergence": "forward_kl",
+        "id": "kd-2",
+        "learning_rate": 0.000125,
+        "method": "kd",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-2",
+        "model": {
+          "id": "LiquidAI/LFM2.5-2.6B",
+          "revision": "654f9463ce32b05d0429d76fe1f580b27d4c1ac0"
+        },
+        "initial_adapter_sha256": "011c2ce18d461623a0989ace7e679db23617304854751c000d3c7538d6d0cfe7"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.867797670421656,
+          "ppl": 17.59821841362284,
+          "tokens": 740950
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 3.980181511528169,
+          "ppl": 53.526749067807955,
+          "tokens": 740950
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "lfm25",
+      "cohort": "common-korean-v1",
+      "phase": "paired",
+      "report_index": 9,
+      "training_seed": 44,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/15/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 44,
+        "validation_interval": 200,
+        "vocab_size": 125017
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/9/trials/0",
+      "historical_report_sha256": "6639772096911f1f338752c0143a1a16cb1ab49554e5ed8be0425f0cb41bb4ab",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-2",
+        "learning_rate": 0.000125,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-2",
+        "model": {
+          "id": "LiquidAI/LFM2.5-2.6B",
+          "revision": "654f9463ce32b05d0429d76fe1f580b27d4c1ac0"
+        },
+        "initial_adapter_sha256": "45fd5ec74a093bf51d571ef3d75292f12c5478a11dd18f3829d576ac97b3217e"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.866394907691812,
+          "ppl": 17.57354959501538,
+          "tokens": 740950
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 3.980181511528169,
+          "ppl": 53.526749067807955,
+          "tokens": 740950
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "lfm25",
+      "cohort": "common-korean-v1",
+      "phase": "paired",
+      "report_index": 9,
+      "training_seed": 44,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/15/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 44,
+        "validation_interval": 200,
+        "vocab_size": 125017
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/9/trials/1",
+      "historical_report_sha256": "6639772096911f1f338752c0143a1a16cb1ab49554e5ed8be0425f0cb41bb4ab",
+      "trial": {
+        "alpha": 0.9,
+        "divergence": "forward_kl",
+        "id": "kd-2",
+        "learning_rate": 0.000125,
+        "method": "kd",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-2",
+        "model": {
+          "id": "LiquidAI/LFM2.5-2.6B",
+          "revision": "654f9463ce32b05d0429d76fe1f580b27d4c1ac0"
+        },
+        "initial_adapter_sha256": "45fd5ec74a093bf51d571ef3d75292f12c5478a11dd18f3829d576ac97b3217e"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.866445032304192,
+          "ppl": 17.574430484453906,
+          "tokens": 740950
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 3.980181511528169,
+          "ppl": 53.526749067807955,
+          "tokens": 740950
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "lfm25",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 10,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/19/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 125017
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/10/trials/0",
+      "historical_report_sha256": "2605e6625743d8f2df4578707d8dedaa78c696a48e9c8a74775f4773e99edc02",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-1",
+        "learning_rate": 2e-05,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-1",
+        "model": {
+          "id": "LiquidAI/LFM2.5-2.6B",
+          "revision": "654f9463ce32b05d0429d76fe1f580b27d4c1ac0"
+        },
+        "initial_adapter_sha256": "eca3825bc968e54e44f606baa3c5a908271157cb6e6ee4275c42406a8eb932fc"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.9337732325283024,
+          "ppl": 18.798427684370136,
+          "tokens": 740950
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 3.980181511528169,
+          "ppl": 53.526749067807955,
+          "tokens": 740950
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "lfm25",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 10,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/19/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 125017
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/10/trials/1",
+      "historical_report_sha256": "2605e6625743d8f2df4578707d8dedaa78c696a48e9c8a74775f4773e99edc02",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-2",
+        "learning_rate": 5e-05,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-2",
+        "model": {
+          "id": "LiquidAI/LFM2.5-2.6B",
+          "revision": "654f9463ce32b05d0429d76fe1f580b27d4c1ac0"
+        },
+        "initial_adapter_sha256": "eca3825bc968e54e44f606baa3c5a908271157cb6e6ee4275c42406a8eb932fc"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.894877599243436,
+          "ppl": 18.081288142457495,
+          "tokens": 740950
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 3.980181511528169,
+          "ppl": 53.526749067807955,
+          "tokens": 740950
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "lfm25",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 10,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/19/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 125017
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/10/trials/2",
+      "historical_report_sha256": "2605e6625743d8f2df4578707d8dedaa78c696a48e9c8a74775f4773e99edc02",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-3",
+        "learning_rate": 0.0001,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-3",
+        "model": {
+          "id": "LiquidAI/LFM2.5-2.6B",
+          "revision": "654f9463ce32b05d0429d76fe1f580b27d4c1ac0"
+        },
+        "initial_adapter_sha256": "eca3825bc968e54e44f606baa3c5a908271157cb6e6ee4275c42406a8eb932fc"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.8723140757688346,
+          "ppl": 17.67787885538062,
+          "tokens": 740950
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 3.980181511528169,
+          "ppl": 53.526749067807955,
+          "tokens": 740950
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "lfm25",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 10,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/19/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 125017
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/10/trials/3",
+      "historical_report_sha256": "2605e6625743d8f2df4578707d8dedaa78c696a48e9c8a74775f4773e99edc02",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-4",
+        "learning_rate": 0.0002,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-4",
+        "model": {
+          "id": "LiquidAI/LFM2.5-2.6B",
+          "revision": "654f9463ce32b05d0429d76fe1f580b27d4c1ac0"
+        },
+        "initial_adapter_sha256": "eca3825bc968e54e44f606baa3c5a908271157cb6e6ee4275c42406a8eb932fc"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.882428213982248,
+          "ppl": 17.85758260782993,
+          "tokens": 740950
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 3.980181511528169,
+          "ppl": 53.526749067807955,
+          "tokens": 740950
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "lfm25",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 10,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/19/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 125017
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/10/trials/4",
+      "historical_report_sha256": "2605e6625743d8f2df4578707d8dedaa78c696a48e9c8a74775f4773e99edc02",
+      "trial": {
+        "alpha": 0.7,
+        "divergence": "forward_kl",
+        "id": "kd-1",
+        "learning_rate": 0.0001,
+        "method": "kd",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-1",
+        "model": {
+          "id": "LiquidAI/LFM2.5-2.6B",
+          "revision": "654f9463ce32b05d0429d76fe1f580b27d4c1ac0"
+        },
+        "initial_adapter_sha256": "eca3825bc968e54e44f606baa3c5a908271157cb6e6ee4275c42406a8eb932fc"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.8791171335284305,
+          "ppl": 17.79855249576001,
+          "tokens": 740950
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 3.980181511528169,
+          "ppl": 53.526749067807955,
+          "tokens": 740950
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "lfm25",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 10,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/19/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 125017
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/10/trials/5",
+      "historical_report_sha256": "2605e6625743d8f2df4578707d8dedaa78c696a48e9c8a74775f4773e99edc02",
+      "trial": {
+        "alpha": 0.7,
+        "divergence": "forward_kl",
+        "id": "kd-2",
+        "learning_rate": 5e-05,
+        "method": "kd",
+        "temperature": 2.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-2",
+        "model": {
+          "id": "LiquidAI/LFM2.5-2.6B",
+          "revision": "654f9463ce32b05d0429d76fe1f580b27d4c1ac0"
+        },
+        "initial_adapter_sha256": "eca3825bc968e54e44f606baa3c5a908271157cb6e6ee4275c42406a8eb932fc"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.9273385635150477,
+          "ppl": 18.67785436498022,
+          "tokens": 740950
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 3.980181511528169,
+          "ppl": 53.526749067807955,
+          "tokens": 740950
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "lfm25",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 10,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/19/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 125017
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/10/trials/6",
+      "historical_report_sha256": "2605e6625743d8f2df4578707d8dedaa78c696a48e9c8a74775f4773e99edc02",
+      "trial": {
+        "alpha": 0.7,
+        "divergence": "reverse_kl",
+        "id": "kd-3",
+        "learning_rate": 5e-05,
+        "method": "kd",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-3",
+        "model": {
+          "id": "LiquidAI/LFM2.5-2.6B",
+          "revision": "654f9463ce32b05d0429d76fe1f580b27d4c1ac0"
+        },
+        "initial_adapter_sha256": "eca3825bc968e54e44f606baa3c5a908271157cb6e6ee4275c42406a8eb932fc"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.9080066123904227,
+          "ppl": 18.320242799215038,
+          "tokens": 740950
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 3.980181511528169,
+          "ppl": 53.526749067807955,
+          "tokens": 740950
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "lfm25",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 10,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/19/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 125017
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/10/trials/7",
+      "historical_report_sha256": "2605e6625743d8f2df4578707d8dedaa78c696a48e9c8a74775f4773e99edc02",
+      "trial": {
+        "alpha": 0.9,
+        "divergence": "reverse_kl",
+        "id": "kd-4",
+        "learning_rate": 2e-05,
+        "method": "kd",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-4",
+        "model": {
+          "id": "LiquidAI/LFM2.5-2.6B",
+          "revision": "654f9463ce32b05d0429d76fe1f580b27d4c1ac0"
+        },
+        "initial_adapter_sha256": "eca3825bc968e54e44f606baa3c5a908271157cb6e6ee4275c42406a8eb932fc"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.934931340988883,
+          "ppl": 18.820210913753478,
+          "tokens": 740950
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 3.980181511528169,
+          "ppl": 53.526749067807955,
+          "tokens": 740950
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "lfm25",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 11,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/20/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 125017
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/11/trials/0",
+      "historical_report_sha256": "67f2acfb521fe06df1afb45123047b735088e9c91b3029fccdc09f2e6b3c9404",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-1",
+        "learning_rate": 7.5e-05,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-1",
+        "model": {
+          "id": "LiquidAI/LFM2.5-2.6B",
+          "revision": "654f9463ce32b05d0429d76fe1f580b27d4c1ac0"
+        },
+        "initial_adapter_sha256": "eca3825bc968e54e44f606baa3c5a908271157cb6e6ee4275c42406a8eb932fc"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.879460714092959,
+          "ppl": 17.804668783132858,
+          "tokens": 740950
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 3.980181511528169,
+          "ppl": 53.526749067807955,
+          "tokens": 740950
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "lfm25",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 11,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/20/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 125017
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/11/trials/1",
+      "historical_report_sha256": "67f2acfb521fe06df1afb45123047b735088e9c91b3029fccdc09f2e6b3c9404",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-2",
+        "learning_rate": 0.000125,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-2",
+        "model": {
+          "id": "LiquidAI/LFM2.5-2.6B",
+          "revision": "654f9463ce32b05d0429d76fe1f580b27d4c1ac0"
+        },
+        "initial_adapter_sha256": "eca3825bc968e54e44f606baa3c5a908271157cb6e6ee4275c42406a8eb932fc"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.8701566763688087,
+          "ppl": 17.639781720289005,
+          "tokens": 740950
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 3.980181511528169,
+          "ppl": 53.526749067807955,
+          "tokens": 740950
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "lfm25",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 11,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/20/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 125017
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/11/trials/2",
+      "historical_report_sha256": "67f2acfb521fe06df1afb45123047b735088e9c91b3029fccdc09f2e6b3c9404",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-3",
+        "learning_rate": 0.00015,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-3",
+        "model": {
+          "id": "LiquidAI/LFM2.5-2.6B",
+          "revision": "654f9463ce32b05d0429d76fe1f580b27d4c1ac0"
+        },
+        "initial_adapter_sha256": "eca3825bc968e54e44f606baa3c5a908271157cb6e6ee4275c42406a8eb932fc"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.871567373257094,
+          "ppl": 17.664683665890724,
+          "tokens": 740950
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 3.980181511528169,
+          "ppl": 53.526749067807955,
+          "tokens": 740950
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "lfm25",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 11,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/20/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 125017
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/11/trials/3",
+      "historical_report_sha256": "67f2acfb521fe06df1afb45123047b735088e9c91b3029fccdc09f2e6b3c9404",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-4",
+        "learning_rate": 0.00025,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-4",
+        "model": {
+          "id": "LiquidAI/LFM2.5-2.6B",
+          "revision": "654f9463ce32b05d0429d76fe1f580b27d4c1ac0"
+        },
+        "initial_adapter_sha256": "eca3825bc968e54e44f606baa3c5a908271157cb6e6ee4275c42406a8eb932fc"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.902462373035013,
+          "ppl": 18.21895203766137,
+          "tokens": 740950
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 3.980181511528169,
+          "ppl": 53.526749067807955,
+          "tokens": 740950
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "lfm25",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 11,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/20/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 125017
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/11/trials/4",
+      "historical_report_sha256": "67f2acfb521fe06df1afb45123047b735088e9c91b3029fccdc09f2e6b3c9404",
+      "trial": {
+        "alpha": 0.9,
+        "divergence": "forward_kl",
+        "id": "kd-1",
+        "learning_rate": 7.5e-05,
+        "method": "kd",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-1",
+        "model": {
+          "id": "LiquidAI/LFM2.5-2.6B",
+          "revision": "654f9463ce32b05d0429d76fe1f580b27d4c1ac0"
+        },
+        "initial_adapter_sha256": "eca3825bc968e54e44f606baa3c5a908271157cb6e6ee4275c42406a8eb932fc"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.8794880691611726,
+          "ppl": 17.805155837723618,
+          "tokens": 740950
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 3.980181511528169,
+          "ppl": 53.526749067807955,
+          "tokens": 740950
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "lfm25",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 11,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/20/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 125017
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/11/trials/5",
+      "historical_report_sha256": "67f2acfb521fe06df1afb45123047b735088e9c91b3029fccdc09f2e6b3c9404",
+      "trial": {
+        "alpha": 0.9,
+        "divergence": "forward_kl",
+        "id": "kd-2",
+        "learning_rate": 0.000125,
+        "method": "kd",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-2",
+        "model": {
+          "id": "LiquidAI/LFM2.5-2.6B",
+          "revision": "654f9463ce32b05d0429d76fe1f580b27d4c1ac0"
+        },
+        "initial_adapter_sha256": "eca3825bc968e54e44f606baa3c5a908271157cb6e6ee4275c42406a8eb932fc"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.8689178963925115,
+          "ppl": 17.617943441111848,
+          "tokens": 740950
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 3.980181511528169,
+          "ppl": 53.526749067807955,
+          "tokens": 740950
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "lfm25",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 11,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/20/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 125017
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/11/trials/6",
+      "historical_report_sha256": "67f2acfb521fe06df1afb45123047b735088e9c91b3029fccdc09f2e6b3c9404",
+      "trial": {
+        "alpha": 0.9,
+        "divergence": "forward_kl",
+        "id": "kd-3",
+        "learning_rate": 0.00015,
+        "method": "kd",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-3",
+        "model": {
+          "id": "LiquidAI/LFM2.5-2.6B",
+          "revision": "654f9463ce32b05d0429d76fe1f580b27d4c1ac0"
+        },
+        "initial_adapter_sha256": "eca3825bc968e54e44f606baa3c5a908271157cb6e6ee4275c42406a8eb932fc"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.869771780946797,
+          "ppl": 17.632993555510158,
+          "tokens": 740950
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 3.980181511528169,
+          "ppl": 53.526749067807955,
+          "tokens": 740950
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "lfm25",
+      "cohort": "common-korean-v1",
+      "phase": "search",
+      "report_index": 11,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/20/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 100,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 3000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 200,
+        "vocab_size": 125017
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/11/trials/7",
+      "historical_report_sha256": "67f2acfb521fe06df1afb45123047b735088e9c91b3029fccdc09f2e6b3c9404",
+      "trial": {
+        "alpha": 0.9,
+        "divergence": "forward_kl",
+        "id": "kd-4",
+        "learning_rate": 0.00025,
+        "method": "kd",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-4",
+        "model": {
+          "id": "LiquidAI/LFM2.5-2.6B",
+          "revision": "654f9463ce32b05d0429d76fe1f580b27d4c1ac0"
+        },
+        "initial_adapter_sha256": "eca3825bc968e54e44f606baa3c5a908271157cb6e6ee4275c42406a8eb932fc"
+      },
+      "result": {
+        "best_step": 3000,
+        "best_validation": {
+          "ce": 2.896752822848175,
+          "ppl": 18.115226411762954,
+          "tokens": 740950
+        },
+        "final_step": 3000,
+        "initial_validation": {
+          "ce": 3.980181511528169,
+          "ppl": 53.526749067807955,
+          "tokens": 740950
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "historical-qwen35-pilot",
+      "phase": "search",
+      "report_index": 12,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/23/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 20,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 200,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 20,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/12/trials/0",
+      "historical_report_sha256": "c2f7c4f05839f0ccfe8555c2fd93bdb669001f5ba59ac59e7a518a928758332b",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-1",
+        "learning_rate": 2e-05,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-1",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4"
+      },
+      "result": {
+        "best_step": 200,
+        "best_validation": {
+          "ce": 2.8883675779748437,
+          "ppl": 17.963960887911938,
+          "tokens": 14308
+        },
+        "final_step": 200,
+        "initial_validation": {
+          "ce": 2.9784500168994184,
+          "ppl": 19.657324498935683,
+          "tokens": 14308
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "historical-qwen35-pilot",
+      "phase": "search",
+      "report_index": 12,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/23/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 20,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 200,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 20,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/12/trials/1",
+      "historical_report_sha256": "c2f7c4f05839f0ccfe8555c2fd93bdb669001f5ba59ac59e7a518a928758332b",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-2",
+        "learning_rate": 5e-05,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-2",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4"
+      },
+      "result": {
+        "best_step": 200,
+        "best_validation": {
+          "ce": 2.8764384981304167,
+          "ppl": 17.75094045912319,
+          "tokens": 14308
+        },
+        "final_step": 200,
+        "initial_validation": {
+          "ce": 2.9784500168994184,
+          "ppl": 19.657324498935683,
+          "tokens": 14308
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "historical-qwen35-pilot",
+      "phase": "search",
+      "report_index": 12,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/23/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 20,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 200,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 20,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/12/trials/2",
+      "historical_report_sha256": "c2f7c4f05839f0ccfe8555c2fd93bdb669001f5ba59ac59e7a518a928758332b",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-3",
+        "learning_rate": 0.0001,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-3",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4"
+      },
+      "result": {
+        "best_step": 200,
+        "best_validation": {
+          "ce": 2.8717004073742616,
+          "ppl": 17.667033827809654,
+          "tokens": 14308
+        },
+        "final_step": 200,
+        "initial_validation": {
+          "ce": 2.9784500168994184,
+          "ppl": 19.657324498935683,
+          "tokens": 14308
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "historical-qwen35-pilot",
+      "phase": "search",
+      "report_index": 12,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/23/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 20,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 200,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 20,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/12/trials/3",
+      "historical_report_sha256": "c2f7c4f05839f0ccfe8555c2fd93bdb669001f5ba59ac59e7a518a928758332b",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-4",
+        "learning_rate": 0.0002,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-4",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4"
+      },
+      "result": {
+        "best_step": 140,
+        "best_validation": {
+          "ce": 2.8810086440933396,
+          "ppl": 17.8322505058698,
+          "tokens": 14308
+        },
+        "final_step": 200,
+        "initial_validation": {
+          "ce": 2.9784500168994184,
+          "ppl": 19.657324498935683,
+          "tokens": 14308
+        },
+        "status": "completed",
+        "stop_reason": "early_stopping"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "historical-qwen35-pilot",
+      "phase": "search",
+      "report_index": 12,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/23/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 20,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 200,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 20,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/12/trials/4",
+      "historical_report_sha256": "c2f7c4f05839f0ccfe8555c2fd93bdb669001f5ba59ac59e7a518a928758332b",
+      "trial": {
+        "alpha": 0.7,
+        "divergence": "forward_kl",
+        "id": "kd-1",
+        "learning_rate": 0.0001,
+        "method": "kd",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-1",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4"
+      },
+      "result": {
+        "best_step": 200,
+        "best_validation": {
+          "ce": 2.875792586806769,
+          "ppl": 17.73947862773708,
+          "tokens": 14308
+        },
+        "final_step": 200,
+        "initial_validation": {
+          "ce": 2.9784500168994184,
+          "ppl": 19.657324498935683,
+          "tokens": 14308
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "historical-qwen35-pilot",
+      "phase": "search",
+      "report_index": 12,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/23/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 20,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 200,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 20,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/12/trials/5",
+      "historical_report_sha256": "c2f7c4f05839f0ccfe8555c2fd93bdb669001f5ba59ac59e7a518a928758332b",
+      "trial": {
+        "alpha": 0.7,
+        "divergence": "forward_kl",
+        "id": "kd-2",
+        "learning_rate": 5e-05,
+        "method": "kd",
+        "temperature": 2.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-2",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4"
+      },
+      "result": {
+        "best_step": 180,
+        "best_validation": {
+          "ce": 2.8931924608255652,
+          "ppl": 18.050844327389484,
+          "tokens": 14308
+        },
+        "final_step": 200,
+        "initial_validation": {
+          "ce": 2.9784500168994184,
+          "ppl": 19.657324498935683,
+          "tokens": 14308
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "historical-qwen35-pilot",
+      "phase": "search",
+      "report_index": 12,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/23/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 20,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 200,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 20,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/12/trials/6",
+      "historical_report_sha256": "c2f7c4f05839f0ccfe8555c2fd93bdb669001f5ba59ac59e7a518a928758332b",
+      "trial": {
+        "alpha": 0.7,
+        "divergence": "reverse_kl",
+        "id": "kd-3",
+        "learning_rate": 5e-05,
+        "method": "kd",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-3",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4"
+      },
+      "result": {
+        "best_step": 200,
+        "best_validation": {
+          "ce": 2.8853216301904965,
+          "ppl": 17.909326849501717,
+          "tokens": 14308
+        },
+        "final_step": 200,
+        "initial_validation": {
+          "ce": 2.9784500168994184,
+          "ppl": 19.657324498935683,
+          "tokens": 14308
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "historical-qwen35-pilot",
+      "phase": "search",
+      "report_index": 12,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/23/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 20,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 200,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 20,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/12/trials/7",
+      "historical_report_sha256": "c2f7c4f05839f0ccfe8555c2fd93bdb669001f5ba59ac59e7a518a928758332b",
+      "trial": {
+        "alpha": 0.9,
+        "divergence": "reverse_kl",
+        "id": "kd-4",
+        "learning_rate": 2e-05,
+        "method": "kd",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-4",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4"
+      },
+      "result": {
+        "best_step": 200,
+        "best_validation": {
+          "ce": 2.889268243249515,
+          "ppl": 17.980147692031203,
+          "tokens": 14308
+        },
+        "final_step": 200,
+        "initial_validation": {
+          "ce": 2.9784500168994184,
+          "ppl": 19.657324498935683,
+          "tokens": 14308
+        },
+        "status": "completed",
+        "stop_reason": "max_steps"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "historical-qwen35-pilot",
+      "phase": "search",
+      "report_index": 13,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/24/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 20,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 1000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 20,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/13/trials/0",
+      "historical_report_sha256": "e0785a4bda0acd5468c3570300a8c3e8afd851ecf78292e5ed8cc98b6694f6f1",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-1",
+        "learning_rate": 2e-05,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-1",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4"
+      },
+      "result": {
+        "best_step": 240,
+        "best_validation": {
+          "ce": 2.885581759057433,
+          "ppl": 17.913986188390673,
+          "tokens": 14308
+        },
+        "final_step": 300,
+        "initial_validation": {
+          "ce": 2.9784500168994184,
+          "ppl": 19.657324498935683,
+          "tokens": 14308
+        },
+        "status": "completed",
+        "stop_reason": "early_stopping"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "historical-qwen35-pilot",
+      "phase": "search",
+      "report_index": 13,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/24/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 20,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 1000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 20,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/13/trials/1",
+      "historical_report_sha256": "e0785a4bda0acd5468c3570300a8c3e8afd851ecf78292e5ed8cc98b6694f6f1",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-2",
+        "learning_rate": 5e-05,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-2",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4"
+      },
+      "result": {
+        "best_step": 220,
+        "best_validation": {
+          "ce": 2.8733261317422945,
+          "ppl": 17.695778914677422,
+          "tokens": 14308
+        },
+        "final_step": 280,
+        "initial_validation": {
+          "ce": 2.9784500168994184,
+          "ppl": 19.657324498935683,
+          "tokens": 14308
+        },
+        "status": "completed",
+        "stop_reason": "early_stopping"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "historical-qwen35-pilot",
+      "phase": "search",
+      "report_index": 13,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/24/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 20,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 1000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 20,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/13/trials/2",
+      "historical_report_sha256": "e0785a4bda0acd5468c3570300a8c3e8afd851ecf78292e5ed8cc98b6694f6f1",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-3",
+        "learning_rate": 0.0001,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-3",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4"
+      },
+      "result": {
+        "best_step": 220,
+        "best_validation": {
+          "ce": 2.8715678261150885,
+          "ppl": 17.66469166548576,
+          "tokens": 14308
+        },
+        "final_step": 280,
+        "initial_validation": {
+          "ce": 2.9784500168994184,
+          "ppl": 19.657324498935683,
+          "tokens": 14308
+        },
+        "status": "completed",
+        "stop_reason": "early_stopping"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "historical-qwen35-pilot",
+      "phase": "search",
+      "report_index": 13,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/24/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 20,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 1000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 20,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/13/trials/3",
+      "historical_report_sha256": "e0785a4bda0acd5468c3570300a8c3e8afd851ecf78292e5ed8cc98b6694f6f1",
+      "trial": {
+        "alpha": 1.0,
+        "divergence": "forward_kl",
+        "id": "ce-4",
+        "learning_rate": 0.0002,
+        "method": "ce",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "ce",
+        "trial_id": "ce-4",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4"
+      },
+      "result": {
+        "best_step": 140,
+        "best_validation": {
+          "ce": 2.8810086440933396,
+          "ppl": 17.8322505058698,
+          "tokens": 14308
+        },
+        "final_step": 200,
+        "initial_validation": {
+          "ce": 2.9784500168994184,
+          "ppl": 19.657324498935683,
+          "tokens": 14308
+        },
+        "status": "completed",
+        "stop_reason": "early_stopping"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "historical-qwen35-pilot",
+      "phase": "search",
+      "report_index": 13,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/24/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 20,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 1000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 20,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/13/trials/4",
+      "historical_report_sha256": "e0785a4bda0acd5468c3570300a8c3e8afd851ecf78292e5ed8cc98b6694f6f1",
+      "trial": {
+        "alpha": 0.7,
+        "divergence": "forward_kl",
+        "id": "kd-1",
+        "learning_rate": 0.0001,
+        "method": "kd",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-1",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4"
+      },
+      "result": {
+        "best_step": 220,
+        "best_validation": {
+          "ce": 2.872542614039676,
+          "ppl": 17.681919388937064,
+          "tokens": 14308
+        },
+        "final_step": 280,
+        "initial_validation": {
+          "ce": 2.9784500168994184,
+          "ppl": 19.657324498935683,
+          "tokens": 14308
+        },
+        "status": "completed",
+        "stop_reason": "early_stopping"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "historical-qwen35-pilot",
+      "phase": "search",
+      "report_index": 13,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/24/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 20,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 1000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 20,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/13/trials/5",
+      "historical_report_sha256": "e0785a4bda0acd5468c3570300a8c3e8afd851ecf78292e5ed8cc98b6694f6f1",
+      "trial": {
+        "alpha": 0.7,
+        "divergence": "forward_kl",
+        "id": "kd-2",
+        "learning_rate": 5e-05,
+        "method": "kd",
+        "temperature": 2.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-2",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4"
+      },
+      "result": {
+        "best_step": 220,
+        "best_validation": {
+          "ce": 2.8910769877701723,
+          "ppl": 18.012698614927135,
+          "tokens": 14308
+        },
+        "final_step": 280,
+        "initial_validation": {
+          "ce": 2.9784500168994184,
+          "ppl": 19.657324498935683,
+          "tokens": 14308
+        },
+        "status": "completed",
+        "stop_reason": "early_stopping"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "historical-qwen35-pilot",
+      "phase": "search",
+      "report_index": 13,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/24/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 20,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 1000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 20,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/13/trials/6",
+      "historical_report_sha256": "e0785a4bda0acd5468c3570300a8c3e8afd851ecf78292e5ed8cc98b6694f6f1",
+      "trial": {
+        "alpha": 0.7,
+        "divergence": "reverse_kl",
+        "id": "kd-3",
+        "learning_rate": 5e-05,
+        "method": "kd",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-3",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4"
+      },
+      "result": {
+        "best_step": 220,
+        "best_validation": {
+          "ce": 2.880948863084136,
+          "ppl": 17.831184507801723,
+          "tokens": 14308
+        },
+        "final_step": 280,
+        "initial_validation": {
+          "ce": 2.9784500168994184,
+          "ppl": 19.657324498935683,
+          "tokens": 14308
+        },
+        "status": "completed",
+        "stop_reason": "early_stopping"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    },
+    {
+      "family": "qwen35",
+      "cohort": "historical-qwen35-pilot",
+      "phase": "search",
+      "report_index": 13,
+      "training_seed": 42,
+      "frozen_seed_source": "docs/research-campaign/reports/basic-integrated-v1/training-identities-20261031T0942.json",
+      "frozen_seed_pointer": "/rows/24/seed",
+      "common_settings": {
+        "batch_size": 1,
+        "checkpoint_interval_steps": 20,
+        "device": "cuda",
+        "epochs": 100,
+        "max_steps": 1000,
+        "min_delta": 0.0001,
+        "patience": 3,
+        "seed": 42,
+        "validation_interval": 20,
+        "vocab_size": 248077
+      },
+      "source": "docs/research-campaign/reports/basic-integrated-v1/training-reports-compact-20261031T0923.json",
+      "pointer": "/reports/13/trials/7",
+      "historical_report_sha256": "e0785a4bda0acd5468c3570300a8c3e8afd851ecf78292e5ed8cc98b6694f6f1",
+      "trial": {
+        "alpha": 0.9,
+        "divergence": "reverse_kl",
+        "id": "kd-4",
+        "learning_rate": 2e-05,
+        "method": "kd",
+        "temperature": 1.0
+      },
+      "identity": {
+        "seed": null,
+        "stage": "kd",
+        "trial_id": "kd-4",
+        "model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "initial_adapter_sha256": "fb9bcc76fbf7db8db19f664119debdc43a921beae5f406cdb71ebc18acb62ff4"
+      },
+      "result": {
+        "best_step": 240,
+        "best_validation": {
+          "ce": 2.8859660484819463,
+          "ppl": 17.92087166675727,
+          "tokens": 14308
+        },
+        "final_step": 300,
+        "initial_validation": {
+          "ce": 2.9784500168994184,
+          "ppl": 19.657324498935683,
+          "tokens": 14308
+        },
+        "status": "completed",
+        "stop_reason": "early_stopping"
+      },
+      "source_sha256": "9e55d390f67f702a1a2df76a8562742dd88eb8a1c59107edd85872e995d069cd",
+      "frozen_seed_source_sha256": "8520162f5c38a1c5770175daef0d5cd375a9e28f58066c5e62631310ea8a8aa7"
+    }
+  ]
+}

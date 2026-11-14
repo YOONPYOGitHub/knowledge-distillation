@@ -1,0 +1,64 @@
+{
+  "source_id": "src-4550fe950c250f97",
+  "source_sha256": "4550fe950c250f9701166ecd725e9c51b3523d58d26962e7b01d6b5374dddd86",
+  "source_bytes": 3490,
+  "fields": {
+    "/revision": "349481ec73fff722f88e0453ca05c77a447d967c",
+    "/mechanically_exposed_rows": 17554,
+    "/accepted": 1000,
+    "/counts": {
+      "dev": 124,
+      "sealed_test": 82,
+      "train": 794
+    },
+    "/split_clusters": {
+      "dev": 90,
+      "sealed_test": 68,
+      "train": 603
+    },
+    "/sources": {
+      "acrofan": 165,
+      "hankyung": 619,
+      "wikipedia": 216
+    },
+    "/split_policy": "whole globally rebuilt clusters; hash namespaces klue-pilot-v1-selection / klue-pilot-v1-split; 80/10/10 hash buckets; no reseeding",
+    "/cluster_stats": {
+      "algorithm": "global-frequency-prefix-exact-jaccard-5char-v1",
+      "clusters": 12165,
+      "compared_candidates": 2,
+      "near_edges": 2,
+      "rows": 17554,
+      "source_title_groups": 12167,
+      "threshold": 0.85,
+      "unique_normalized_contexts": 12982
+    },
+    "/invalid_rows": 1332,
+    "/rejection_reasons": {
+      "answer_offset": 1326,
+      "title_empty": 6
+    },
+    "/cluster_members_excluded_due_to_invalid": 2839,
+    "/cross_split_cluster_overlap": 0,
+    "/document_overlap": 0,
+    "/normalized_context_overlap": 0,
+    "/limitations": [
+      "source+title document proxy lacks URL/revision; conservative overmerge possible",
+      "lexical near-duplicate threshold .85 does not detect semantic paraphrases",
+      "machine validation does not prove semantic correctness of question or answerability",
+      "no cross-corpus scan against protected prior baseline/taskprep or official heldout",
+      "machine-learning research-only source conditions; deployment rights unresolved"
+    ],
+    "/exposure": {
+      "documentation_example_split_identity": "unknown",
+      "documentation_examples_retrieved": true,
+      "full_train_machine_scan": true,
+      "full_train_validation": true,
+      "official_test_payload_read": false,
+      "official_validation_payload_read": false,
+      "postpublication_sealed_payload_read": false,
+      "prepublication_test_construction_machine_access": true,
+      "pretraining_contamination": "unknown; public train is NOT pristine unseen evaluation",
+      "selected_payload_human_chat_inspection": false
+    }
+  }
+}

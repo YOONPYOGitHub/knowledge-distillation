@@ -1,0 +1,1289 @@
+{
+  "schema": "safe-service-scientific-privacy-audit-v1",
+  "created_utc": "2026-11-14T02:08:02.072508+00:00",
+  "scope": "Read-only local historical metadata; auxiliary nonmedical dialogue, not clinical or independent heldout evidence",
+  "privacy": {
+    "raw_qa_or_generated_answer_files_opened": false,
+    "corpus_or_model_payload_opened": false,
+    "credential_files_opened": false,
+    "new_model_runs": 0,
+    "network_or_cloud_calls": 0,
+    "project_writes": 0,
+    "case_texts_or_per_case_review_findings_published": false,
+    "historical_disclosure_not_denied": true
+  },
+  "audited_parent": {
+    "report_path": "docs/published/research-closeout-20261114/SILVERCARE.md",
+    "report_sha256": "3cdd85def438a8186d332bd97c69599fd8604749a89af26edf8ffe52273ee51f",
+    "projection_path": "docs/published/research-closeout-20261114/evidence/service-results.json",
+    "projection_sha256": "0e46c26c8ebcbb9bbc5eea93f9dfe8b53ddfe332e9d109894871c98b666d6366"
+  },
+  "sources": [
+    {
+      "id": "student41",
+      "source_sha256": "bcac59d16648eaa54e022f735ce70ba6fcfda0fbc6fae07cc988a629e24c0924",
+      "source_bytes": 3127,
+      "original_included": false,
+      "projection": {
+        "/summary/initial_validation": {
+          "ce": 2.849849890713668,
+          "ppl": 17.28518697873459,
+          "tokens": 201
+        },
+        "/summary/best_validation": {
+          "ce": 1.7288385552553396,
+          "ppl": 5.634106403608484,
+          "tokens": 201
+        },
+        "/summary/best_step": 41,
+        "/summary/final_step": 41,
+        "/summary/history": [
+          {
+            "ce": 2.849849890713668,
+            "ppl": 17.28518697873459,
+            "step": 0,
+            "tokens": 201
+          },
+          {
+            "ce": 2.6373588220397037,
+            "ppl": 13.976241077009472,
+            "step": 10,
+            "tokens": 201
+          },
+          {
+            "ce": 2.082783371654909,
+            "ppl": 8.026779360913824,
+            "step": 20,
+            "tokens": 201
+          },
+          {
+            "ce": 1.827615557618402,
+            "ppl": 6.219040022482448,
+            "step": 30,
+            "tokens": 201
+          },
+          {
+            "ce": 1.7336251273084042,
+            "ppl": 5.66113910523828,
+            "step": 40,
+            "tokens": 201
+          },
+          {
+            "ce": 1.7288385552553396,
+            "ppl": 5.634106403608484,
+            "step": 41,
+            "tokens": 201
+          }
+        ],
+        "/summary/status": "completed",
+        "/summary/stop_reason": "max_steps",
+        "/identity/model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "/identity/cohort_rows": {
+          "dev": 11,
+          "train": 41
+        },
+        "/identity/adapter": {
+          "alpha": 16,
+          "dropout": 0.05,
+          "rank": 8
+        },
+        "/identity/numerical_policy": {
+          "allow_tf32": false,
+          "cublas_workspace_config": ":4096:8",
+          "cudnn_benchmark": false,
+          "cudnn_deterministic": true,
+          "deterministic_algorithms": true
+        },
+        "/elapsed_seconds": 61.929591812193394,
+        "/peak_vram_bytes": 9238711808,
+        "/accepted_auxiliary_updates": 41,
+        "/clinical_accepted_rows": 0,
+        "/medical_training": false,
+        "/status": "PASS"
+      },
+      "logical_path": "yonsei/receipts/student-gold-20261109T0315-train.json"
+    },
+    {
+      "id": "teacher41",
+      "source_sha256": "c46dd8457a801c1ce824913156507e619e94bdcc4bfe55b903bedbf833c7f719",
+      "source_bytes": 3650,
+      "original_included": false,
+      "projection": {
+        "/summary/initial_validation": {
+          "ce": 2.757958938826376,
+          "ppl": 15.76762739041548,
+          "tokens": 201
+        },
+        "/summary/best_validation": {
+          "ce": 1.694984891521397,
+          "ppl": 5.446563675300413,
+          "tokens": 201
+        },
+        "/summary/best_step": 41,
+        "/summary/final_step": 41,
+        "/summary/history": [
+          {
+            "ce": 2.757958938826376,
+            "ppl": 15.76762739041548,
+            "step": 0,
+            "tokens": 201
+          },
+          {
+            "ce": 2.60487420760577,
+            "ppl": 13.529523284572665,
+            "step": 10,
+            "tokens": 201
+          },
+          {
+            "ce": 2.113177683816027,
+            "ppl": 8.274493275640664,
+            "step": 20,
+            "tokens": 201
+          },
+          {
+            "ce": 1.83942339313564,
+            "ppl": 6.292908680364769,
+            "step": 30,
+            "tokens": 201
+          },
+          {
+            "ce": 1.7038228523671923,
+            "ppl": 5.494913534171577,
+            "step": 40,
+            "tokens": 201
+          },
+          {
+            "ce": 1.694984891521397,
+            "ppl": 5.446563675300413,
+            "step": 41,
+            "tokens": 201
+          }
+        ],
+        "/summary/status": "completed",
+        "/summary/stop_reason": "max_steps",
+        "/identity/model": {
+          "id": "Qwen/Qwen3.5-9B",
+          "revision": "c202236235762e1c871ad0ccb60c8ee5ba337b9a"
+        },
+        "/identity/cohort_rows": {
+          "dev": 11,
+          "train": 41
+        },
+        "/identity/adapter": {
+          "alpha": 16,
+          "dropout": 0.05,
+          "rank": 8
+        },
+        "/identity/numerical_policy": {
+          "allow_tf32": false,
+          "cublas_workspace_config": ":4096:8",
+          "cudnn_benchmark": false,
+          "cudnn_deterministic": true,
+          "deterministic_algorithms": true
+        },
+        "/elapsed_seconds": 62.67426171596162,
+        "/peak_vram_bytes": 18712146432,
+        "/accepted_auxiliary_updates": 41,
+        "/clinical_accepted_rows": 0,
+        "/medical_training": false,
+        "/status": "PASS"
+      },
+      "logical_path": "yonsei/receipts/auxiliary-full-20261109T0134-train-readback.json"
+    },
+    {
+      "id": "matched12-ce",
+      "source_sha256": "740282bd4ec10995310cb1b2842e78a3de96f86036b5cf3536fe55b223b3f67b",
+      "source_bytes": 15639,
+      "original_included": false,
+      "projection": {
+        "/arms/gold_ce_subset12/summary/initial_validation": {
+          "ce": 2.849849890713668,
+          "ppl": 17.28518697873459,
+          "tokens": 201
+        },
+        "/arms/gold_ce_subset12/summary/best_validation": {
+          "ce": 2.571779222630743,
+          "ppl": 13.089092144543514,
+          "tokens": 201
+        },
+        "/arms/gold_ce_subset12/summary/best_step": 12,
+        "/arms/gold_ce_subset12/summary/final_step": 12,
+        "/arms/gold_ce_subset12/summary/history": [
+          {
+            "ce": 2.849849890713668,
+            "ppl": 17.28518697873459,
+            "step": 0,
+            "tokens": 201
+          },
+          {
+            "ce": 2.571779222630743,
+            "ppl": 13.089092144543514,
+            "step": 12,
+            "tokens": 201
+          }
+        ],
+        "/arms/gold_ce_subset12/summary/status": "completed",
+        "/arms/gold_ce_subset12/summary/stop_reason": "max_steps",
+        "/arms/gold_ce_subset12/updates": 12,
+        "/arms/gold_ce_subset12/identity/model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "/arms/gold_ce_subset12/identity/limits": {
+          "batch_size": 1,
+          "epochs": 1,
+          "seconds": 1800,
+          "sequence_length": 128,
+          "updates": 12
+        },
+        "/arms/gold_ce_subset12/identity/seed": 42,
+        "/arms/gold_ce_subset12/identity/optimizer": {
+          "class": "AdamW",
+          "lr": 2e-05
+        },
+        "/arms/gold_ce_subset12/identity/initial_adapter_sha256": "d19e419d391c807e59faa28745d63316d6e465434d65bd365adc5e06f7f02692",
+        "/arms/gold_ce_subset12/identity/teacher_advantage_verified": false,
+        "/arms/gold_ce_subset12/identity/target": "provider_gold_auxiliary",
+        "/arms/teacher_response_ce_subset12/summary/initial_validation": {
+          "ce": 2.849849890713668,
+          "ppl": 17.28518697873459,
+          "tokens": 201
+        },
+        "/arms/teacher_response_ce_subset12/summary/best_validation": {
+          "ce": 2.598018987854915,
+          "ppl": 13.43709260760771,
+          "tokens": 201
+        },
+        "/arms/teacher_response_ce_subset12/summary/best_step": 12,
+        "/arms/teacher_response_ce_subset12/summary/final_step": 12,
+        "/arms/teacher_response_ce_subset12/summary/history": [
+          {
+            "ce": 2.849849890713668,
+            "ppl": 17.28518697873459,
+            "step": 0,
+            "tokens": 201
+          },
+          {
+            "ce": 2.598018987854915,
+            "ppl": 13.43709260760771,
+            "step": 12,
+            "tokens": 201
+          }
+        ],
+        "/arms/teacher_response_ce_subset12/summary/status": "completed",
+        "/arms/teacher_response_ce_subset12/summary/stop_reason": "max_steps",
+        "/arms/teacher_response_ce_subset12/updates": 12,
+        "/arms/teacher_response_ce_subset12/identity/model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "/arms/teacher_response_ce_subset12/identity/limits": {
+          "batch_size": 1,
+          "epochs": 1,
+          "seconds": 1800,
+          "sequence_length": 128,
+          "updates": 12
+        },
+        "/arms/teacher_response_ce_subset12/identity/seed": 42,
+        "/arms/teacher_response_ce_subset12/identity/optimizer": {
+          "class": "AdamW",
+          "lr": 2e-05
+        },
+        "/arms/teacher_response_ce_subset12/identity/initial_adapter_sha256": "d19e419d391c807e59faa28745d63316d6e465434d65bd365adc5e06f7f02692",
+        "/arms/teacher_response_ce_subset12/identity/teacher_advantage_verified": false,
+        "/arms/teacher_response_ce_subset12/identity/target": "admitted_teacher_response_auxiliary"
+      },
+      "logical_path": "yonsei/receipts/train12-ce-native-parent-20261109T2138.json"
+    },
+    {
+      "id": "matched12-kd",
+      "source_sha256": "ddaee4d0f194c0a9d11495fb8c1d0bdcf2b14dbac27a28538c20528b5e4230fe",
+      "source_bytes": 43011,
+      "original_included": false,
+      "projection": {
+        "/summary/initial_validation": {
+          "ce": 2.849849890713668,
+          "ppl": 17.28518697873459,
+          "tokens": 201
+        },
+        "/summary/best_validation": {
+          "ce": 2.5730011214071244,
+          "ppl": 13.105095465446862,
+          "tokens": 201
+        },
+        "/summary/best_step": 12,
+        "/summary/final_step": 12,
+        "/summary/history": [
+          {
+            "ce": 2.849849890713668,
+            "ppl": 17.28518697873459,
+            "step": 0,
+            "tokens": 201
+          },
+          {
+            "ce": 2.5730011214071244,
+            "ppl": 13.105095465446862,
+            "step": 12,
+            "tokens": 201
+          }
+        ],
+        "/summary/status": "completed",
+        "/summary/stop_reason": "max_steps",
+        "/updates": 12,
+        "/kd": {
+          "alpha": 0.5,
+          "divergence": "forward_kl",
+          "temperature": 1.0,
+          "vocab_size": 0
+        },
+        "/identity/model": {
+          "id": "Qwen/Qwen3.5-4B",
+          "revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a"
+        },
+        "/identity/seed": 42,
+        "/identity/optimizer": {
+          "class": "AdamW",
+          "lr": 2e-05
+        },
+        "/identity/initial_adapter_sha256": "d19e419d391c807e59faa28745d63316d6e465434d65bd365adc5e06f7f02692",
+        "/teacher_advantage_verified": false,
+        "/clinical_approval": false
+      },
+      "logical_path": "yonsei/backups/train12-kd-native-finalgate-20261109T215646Z-teacher_distribution_kd_subset12/result.json"
+    },
+    {
+      "id": "dev33-metadata",
+      "source_sha256": "7020a8c418b5446b673466a3ac13026f41b37a7ef82e0f9abf68778675fd9503",
+      "source_bytes": 4643,
+      "original_included": false,
+      "projection": {
+        "/coverage": {
+          "gold_ce_subset12": {
+            "cap_without_eos": 10,
+            "ended_eos": 1,
+            "output_tokens": 704,
+            "measured_tokens_per_generation_second": 6.222207867670482
+          },
+          "teacher_distribution_kd_subset12": {
+            "cap_without_eos": 11,
+            "ended_eos": 0,
+            "output_tokens": 704,
+            "measured_tokens_per_generation_second": 6.277491380558904
+          },
+          "teacher_response_ce_subset12": {
+            "cap_without_eos": 11,
+            "ended_eos": 0,
+            "output_tokens": 704,
+            "measured_tokens_per_generation_second": 6.194027687420806
+          }
+        },
+        "/paired_complete_answer_cases": 0,
+        "/pairs": [
+          {
+            "first": "gold_ce_subset12",
+            "second": "teacher_distribution_kd_subset12",
+            "definition": "first seconds minus second seconds, fixed matched case indices",
+            "case_count": 11,
+            "mean_delta_seconds": 0.09058263813230125,
+            "median_delta_seconds": 0.04053153493441641,
+            "min_delta_seconds": -0.016571328975260258,
+            "max_delta_seconds": 0.31314497208222747,
+            "first_faster_cases": 2,
+            "second_faster_cases": 9,
+            "leave_one_case_out_mean_range_seconds": [
+              0.06832640473730862,
+              0.1012980348430574
+            ],
+            "case_deltas_seconds": [
+              -0.014269065810367465,
+              0.027193037094548345,
+              -0.016571328975260258,
+              0.03997912514023483,
+              0.029533522902056575,
+              0.0525211940985173,
+              0.31314497208222747,
+              0.30592025606893003,
+              0.070993737783283,
+              0.04053153493441641,
+              0.14743203413672745
+            ]
+          },
+          {
+            "first": "gold_ce_subset12",
+            "second": "teacher_response_ce_subset12",
+            "definition": "first seconds minus second seconds, fixed matched case indices",
+            "case_count": 11,
+            "mean_delta_seconds": -0.04679571449841288,
+            "median_delta_seconds": -0.016177045879885554,
+            "min_delta_seconds": -0.3924480921123177,
+            "max_delta_seconds": 0.29934711498208344,
+            "first_faster_cases": 6,
+            "second_faster_cases": 5,
+            "leave_one_case_out_mean_range_seconds": [
+              -0.08140999744646252,
+              -0.0122304767370224
+            ],
+            "case_deltas_seconds": [
+              -0.06121532688848674,
+              0.02501627802848816,
+              -0.016177045879885554,
+              0.007709528086706996,
+              -0.03931201598607004,
+              0.013095814036205411,
+              0.29934711498208344,
+              0.2654643061105162,
+              -0.3486061890143901,
+              -0.3924480921123177,
+              -0.26762723084539175
+            ]
+          },
+          {
+            "first": "teacher_distribution_kd_subset12",
+            "second": "teacher_response_ce_subset12",
+            "definition": "first seconds minus second seconds, fixed matched case indices",
+            "case_count": 11,
+            "mean_delta_seconds": -0.13737835263071413,
+            "median_delta_seconds": -0.04045594995841384,
+            "min_delta_seconds": -0.4329796270467341,
+            "max_delta_seconds": 0.0003942830953747034,
+            "first_faster_cases": 10,
+            "second_faster_cases": 1,
+            "leave_one_case_out_mean_range_seconds": [
+              -0.15115561620332302,
+              -0.10781822518911213
+            ],
+            "case_deltas_seconds": [
+              -0.04694626107811928,
+              -0.0021767590660601854,
+              0.0003942830953747034,
+              -0.03226959705352783,
+              -0.06884553888812661,
+              -0.03942538006231189,
+              -0.013797857100144029,
+              -0.04045594995841384,
+              -0.4195999267976731,
+              -0.4329796270467341,
+              -0.4150592649821192
+            ]
+          }
+        ],
+        "/limits": [
+          "Single sequential run per arm; no randomized repeat, uncertainty estimate or causal speed winner.",
+          "All33 outputs used64 tokens, including one EOS at boundary; cap_without_eos is termination evidence, not a semantic completeness label.",
+          "No measured TTFT; generation token rate is not streaming TTFT or whole-app latency.",
+          "No common EOS-completed matched case across3 arms; cannot form a3-model full-answer quality comparison from these outputs.",
+          "No QA raw files opened or transmitted; no provider review, clinical or quality admission."
+        ]
+      },
+      "logical_path": "yonsei/review/matched12-paired-metadata-20261112T105711Z/ANALYSIS.json"
+    },
+    {
+      "id": "service-state-snapshot",
+      "source_sha256": "12ca91e295aa7d2abb390049c1bdcd06232619d43d1c160d1c89923bf2f6270a",
+      "source_bytes": 511147,
+      "original_included": false,
+      "projection": {
+        "/auxiliary_teacher_dev_review/basic_acceptable_count": 3,
+        "/auxiliary_teacher_dev_review/revision_needed_count": 8,
+        "/auxiliary_teacher_dev_review/reviewed_rows": 11,
+        "/auxiliary_teacher_dev_review/status": "REVIEW_COMPLETED_QUALITY_GATE_NOT_PASSED",
+        "/auxiliary_teacher_dev_review/clinical_safety_certification": false,
+        "/matched12_devgen_completed/capped_rows": {
+          "gold_ce_subset12": 10,
+          "teacher_distribution_kd_subset12": 11,
+          "teacher_response_ce_subset12": 11
+        },
+        "/matched12_devgen_completed/rows_per_arm": 11,
+        "/matched12_devgen_completed/new_answer_rows": 33,
+        "/matched12_devgen_completed/content_review_status": "NOT_AUTHORIZED_NEW_OUTPUTS_PRIVATE_ONLY",
+        "/private_bounded_input_app_e2e/status": "PASS_PRIVATE_BOUNDED_NONMEDICAL_UI_API_NATIVE_E2E",
+        "/private_bounded_input_app_e2e/native_metrics": {
+          "ended_eos": true,
+          "input_tokens": 20,
+          "output_tokens": 13,
+          "seconds": 2.3031760221347213
+        },
+        "/private_bounded_input_app_e2e/browser_real_js_click_verified": true,
+        "/private_bounded_input_app_e2e/display_matches_native_answer_hash": true,
+        "/private_bounded_input_app_e2e/public_release": false,
+        "/private_bounded_input_app_e2e/quality_acceptance": false,
+        "/private_bounded_input_app_e2e/clinical_release": false,
+        "/school_gate_provenance_parent/provider_policy_prohibition_established": false,
+        "/mac_model_admission/model_execution_verified": false,
+        "/mac_model_admission/fixture": {
+          "all_finite": true,
+          "cpu_fallback_enabled": false,
+          "device": "mps:0",
+          "dtype": "torch.bfloat16",
+          "scope": "random reduced-shape Qwen3.5 architecture, not restored model weights",
+          "shape": [
+            1,
+            4,
+            128
+          ],
+          "status": "PASS"
+        },
+        "/auxiliary_data_qualification/accepted_auxiliary_rows": 52,
+        "/auxiliary_data_qualification/clinical_accepted_rows": 0,
+        "/auxiliary_data_qualification/train_rows": 41,
+        "/auxiliary_data_qualification/internal_derived_dev_rows": 11,
+        "/school_ce41_composition/actual_app_switch_verified": false,
+        "/school_ce41_composition/source_adopted": false
+      },
+      "logical_path": "yonsei/STATE.json"
+    },
+    {
+      "id": "dev11-original-review",
+      "source_sha256": "af389cff58349e1422e9c0a938fab1d1e042032cbcd1730ed288a1fdb79350e3",
+      "source_bytes": 3073,
+      "original_included": false,
+      "projection": {
+        "/status": "REVIEW_COMPLETED_QUALITY_GATE_NOT_PASSED",
+        "/reviewed_rows": 11,
+        "/basic_acceptable_count": 3,
+        "/revision_needed_count": 8,
+        "/responseCE_KD_admission": false,
+        "/clinical_safety_certification": false
+      },
+      "logical_path": "yonsei/receipts/auxiliary-dev-review-20261109T0148.json"
+    },
+    {
+      "id": "policy-dev11-generation-comparison",
+      "source_sha256": "7fbfe85487cdc4df2c0894f4c0f96d895449718fe08c9d791e25d0a8b55ee2e7",
+      "source_bytes": 1684,
+      "original_included": false,
+      "projection": {
+        "/status": "GENERATION_COMPLETE_SEMANTIC_COMPARISON_PENDING",
+        "/aligned_rows": 11,
+        "/changed_outputs": 11,
+        "/alternative_nonempty": 11,
+        "/alternative_eos_ended": 11,
+        "/alternative_cap_reached": 0,
+        "/new_updates": 0,
+        "/quality_improvement_claimed": false,
+        "/responseCE_KD_admission": false
+      },
+      "logical_path": "yonsei/receipts/auxiliary-dev-policy-comparison-20261109T0154.json"
+    },
+    {
+      "id": "policy-dev11-private-review-ready",
+      "source_sha256": "7c272992ae2f89988dc0845a3a21f6f2f779446926420419182ecb809976271c",
+      "source_bytes": 1880,
+      "original_included": false,
+      "projection": {
+        "/status": "VERIFIED_AI_REVIEW_COMPLETE",
+        "/actual_content_review": true,
+        "/actual_http_judgments": 24,
+        "/calibration_passed": true,
+        "/counts": {
+          "all_dimension_pass": {
+            "A": 1,
+            "B": 1
+          },
+          "calibrations": 2,
+          "dimension_labels": {
+            "A": {
+              "PASS": 49,
+              "REVISE": 17
+            },
+            "B": {
+              "PASS": 47,
+              "REVISE": 18,
+              "UNCERTAIN": 1
+            }
+          },
+          "judgments": 24,
+          "order_consistent": 8,
+          "preference": {
+            "A": 4,
+            "B": 2,
+            "TIE": 2,
+            "UNCERTAIN": 3
+          },
+          "private_judgments": 22,
+          "rows": 11
+        },
+        "/evaluator_model": "gpt-6.1-sol",
+        "/clinical_approval": false,
+        "/human_approval": false,
+        "/training_response_admission": false,
+        "/responseCE_KD_started": false,
+        "/manifest_sha256": "a889fd50243a032a274f2d26344d414a27001574a76bb56061a568ab7f4f09a1",
+        "/verdict_sha256": "ecac5c8d00b6d41cca08bfd015d1b98d922dd9f9fcdd6854c77536810380703f"
+      },
+      "logical_path": "yonsei/review/private-ai-review-20261109T125935Z/READY.json"
+    },
+    {
+      "id": "policy-dev11-private-review-inbox",
+      "source_sha256": "d12c4b13f612f49724439de59501b97682d4e172700e0a6ba03793c17ae11bec",
+      "source_bytes": 2525,
+      "original_included": false,
+      "projection": {
+        "/parent_readback_verified": true,
+        "/counts": {
+          "judgments": 24,
+          "private_judgments": 22,
+          "calibrations": 2,
+          "rows": 11,
+          "order_consistent": 8,
+          "preference": {
+            "TIE": 2,
+            "B": 2,
+            "A": 4,
+            "UNCERTAIN": 3
+          },
+          "all_dimension_pass": {
+            "A": 1,
+            "B": 1
+          },
+          "dimension_labels": {
+            "A": {
+              "PASS": 49,
+              "REVISE": 17
+            },
+            "B": {
+              "PASS": 47,
+              "REVISE": 18,
+              "UNCERTAIN": 1
+            }
+          }
+        },
+        "/actual_content_review": true,
+        "/alternative_improvement_established": false,
+        "/review_channel_block_resolved": true,
+        "/training_response_admission": false,
+        "/clinical_approval": false,
+        "/human_approval": false,
+        "/do_not_rerun_spent_batch": true
+      },
+      "logical_path": "yonsei/automation/inbox/private-ai-review-complete-20261109T130637Z.json"
+    },
+    {
+      "id": "policy-dev11-input-mapping",
+      "source_sha256": "a889fd50243a032a274f2d26344d414a27001574a76bb56061a568ab7f4f09a1",
+      "source_bytes": 1651,
+      "original_included": false,
+      "projection": {
+        "/input_sha256": [
+          "a6357e49cb016153cac8afbf94ef1ad4892d23b571164c17992c2f25ac2ca54e",
+          "3c85cd6f80ac175849270b8ff10eea285937295b82457bae7d1da0d4dfac65bb"
+        ],
+        "/order": [
+          "AB_0_TO_10",
+          "BA_0_TO_10"
+        ],
+        "/evaluator_model": "gpt-6.1-sol",
+        "/max_judgments": 24,
+        "/automatic_retries": false
+      },
+      "logical_path": "yonsei/review/private-ai-review-20261109T125935Z/manifest.json"
+    },
+    {
+      "id": "later-quality-state",
+      "source_sha256": "12ca91e295aa7d2abb390049c1bdcd06232619d43d1c160d1c89923bf2f6270a",
+      "source_bytes": 511147,
+      "original_included": false,
+      "projection": {
+        "/private_ai_teacher_dev_review/dimension_analysis": {
+          "A": {
+            "emotion_fidelity": {
+              "PASS": 7,
+              "REVISE": 4
+            },
+            "nonmechanical_support": {
+              "PASS": 1,
+              "REVISE": 10
+            },
+            "plain_language": {
+              "PASS": 11
+            },
+            "relationship_preservation": {
+              "PASS": 11
+            },
+            "uncertainty_preservation": {
+              "PASS": 9,
+              "REVISE": 2
+            },
+            "unsupported_cause_avoidance": {
+              "PASS": 10,
+              "REVISE": 1
+            }
+          },
+          "B": {
+            "emotion_fidelity": {
+              "PASS": 7,
+              "REVISE": 4
+            },
+            "nonmechanical_support": {
+              "PASS": 3,
+              "REVISE": 8
+            },
+            "plain_language": {
+              "PASS": 10,
+              "REVISE": 1
+            },
+            "relationship_preservation": {
+              "PASS": 9,
+              "REVISE": 2
+            },
+            "uncertainty_preservation": {
+              "PASS": 8,
+              "REVISE": 3
+            },
+            "unsupported_cause_avoidance": {
+              "PASS": 10,
+              "UNCERTAIN": 1
+            }
+          }
+        },
+        "/private_ai_teacher_dev_review/alternative_improvement_established": false,
+        "/train41_private_review/status": "CONTENT_REVIEW_COMPLETE_SUBSET12_ACCEPTED_NONCLINICAL",
+        "/matched12_standard_peft_runtime/status": "COMPLETE_THREE_STANDARD_PEFT_NATIVE_LOADS_NEUTRAL_INFERENCE",
+        "/matched12_dev33_quality_review_preparation/status": "INPUT_IDENTITY_VERIFIED_AWAITING_EXACT_NEW_OUTPUT_TRANSMISSION_AUTHORIZATION",
+        "/matched12_service_candidate_handoff/consumer_transfer_verified": false,
+        "/matched12_service_candidate_handoff/service_promoted": false
+      },
+      "logical_path": "yonsei/STATE.json"
+    },
+    {
+      "id": "train41-review43-owner",
+      "source_sha256": "9455e9720f1f0e6e7857d2808651638ecec001d7a8b6760e5019b7e4ae937e92",
+      "source_bytes": 1991,
+      "original_included": false,
+      "projection": {
+        "/status": "CONTENT_REVIEW_COMPLETE_SUBSET12_ACCEPTED_NONCLINICAL",
+        "/train_rows": 41,
+        "/train_calls": 41,
+        "/neutral_calls": 2,
+        "/http200_calls": 43,
+        "/elapsed_seconds": 251.977,
+        "/dimension_counts": {
+          "emotion_fidelity": {
+            "PASS": 29,
+            "REVISE": 12
+          },
+          "nonmechanical_support": {
+            "PASS": 14,
+            "REVISE": 27
+          },
+          "plain_language": {
+            "PASS": 40,
+            "REVISE": 1
+          },
+          "relationship_preservation": {
+            "PASS": 39,
+            "REVISE": 2
+          },
+          "uncertainty_preservation": {
+            "PASS": 38,
+            "REVISE": 3
+          },
+          "unsupported_cause_avoidance": {
+            "PASS": 38,
+            "REVISE": 3
+          }
+        },
+        "/accepted_count": 12,
+        "/excluded_count": 29,
+        "/evaluator_model": "gpt-6.1-sol",
+        "/clinical_approval": false,
+        "/human_approval": false,
+        "/teacher_advantage_verified": false,
+        "/corpus_repetition_assessed": false,
+        "/spent_batch_do_not_rerun": true,
+        "/automatic_retries": 0,
+        "/responseCE_KD_started": false,
+        "/admission_sha256": "3f84b8a16cbfddd7f3ef8d9fec6f6435e82825ab5a1ab14b74631d3ff9d87fd9",
+        "/matched_comparison_sha256": "e9ae45ee7249d007c7ce96a1ab2c9799960a1d8a3d7c0f5b821150cae8e9a5eb"
+      },
+      "logical_path": "yonsei/receipts/train41-protected-review-owner-20261109T2026.json"
+    },
+    {
+      "id": "train41-acceptance12",
+      "source_sha256": "3f84b8a16cbfddd7f3ef8d9fec6f6435e82825ab5a1ab14b74631d3ff9d87fd9",
+      "source_bytes": 82802,
+      "original_included": false,
+      "projection": {
+        "/status": "ACCEPTED_12_NONCLINICAL_PER_CASE_RESPONSES",
+        "/criterion": "IN_SCOPE plus exact original six dimensions all PASS; one assessment per fixed train response",
+        "/completed_train": 41,
+        "/accepted_train": 12,
+        "/excluded_train": 29,
+        "/per_case_supportive_training_admission": true,
+        "/dev_reused_as_train": false,
+        "/heldout_accessed": false,
+        "/teacher_advantage_verified": false,
+        "/human_approval": false,
+        "/clinical_approval": false,
+        "/corpus_repetition_assessed": false,
+        "/responseCE_KD_started": false,
+        "/review_manifest_sha256": "627b4538db26dd16344efc7fff6d9d5e828fef7703eb529b0bc29eb2afae04aa",
+        "/review_scope_sha256": "e874cdb614e7885604a1755e1400ed1653e1ed6c566ecef822d59d6953674f08"
+      },
+      "logical_path": "yonsei/review/train41-owner-admission-20261109T2026/ADMISSION.private.json"
+    },
+    {
+      "id": "train41-review43-ledger",
+      "source_sha256": "a1f7d59354d5e1b828a57949bc593d421b67a1107e56e82faa6253e3e3fcc723",
+      "source_bytes": 40156,
+      "original_included": false,
+      "projection": {
+        "/status": "COMPLETE_ASSESSMENTS_NOT_ACCEPTED",
+        "/reserved_calls": 43,
+        "/elapsed_seconds": 251.977,
+        "/training_response_admission": false,
+        "/responseCE_KD_admission": false,
+        "/responseCE_KD_started": false,
+        "/clinical_approval": false,
+        "/human_approval": false,
+        "/corpus_repetition_assessed": false
+      },
+      "logical_path": "yonsei/review/train41-channel-operational-20261109T1946/ledger/receipt-43.json"
+    },
+    {
+      "id": "train41-review43-process-return",
+      "source_sha256": "f4999291a88194d334186528c59d08b030c19c629b765eca3f538c6c0cea86bf",
+      "source_bytes": 255,
+      "original_included": false,
+      "projection": {
+        "/exit_code": 0,
+        "/finished_utc": "2026-11-09T20:26:16.971812+00:00",
+        "/replay_allowed": false,
+        "/raw_output_suppressed": true
+      },
+      "logical_path": "yonsei/receipts/train41-review-process-return-20261109T2023.json"
+    },
+    {
+      "id": "train12-frozen-comparison",
+      "source_sha256": "e9ae45ee7249d007c7ce96a1ab2c9799960a1d8a3d7c0f5b821150cae8e9a5eb",
+      "source_bytes": 2139,
+      "original_included": false,
+      "projection": {
+        "/status": "COHORT_FROZEN_OPERATIONAL_CALLER_NOT_YET_REVIEWED",
+        "/cohort_count": 12,
+        "/same_order_all_arms": true,
+        "/seed": 42,
+        "/batch_size": 1,
+        "/sequence_length": 128,
+        "/max_updates_per_arm": 12,
+        "/max_epochs": 1,
+        "/original_gold_ce41_not_fair_subset_control": true,
+        "/completed_gold_ce41_preserved": true,
+        "/teacher_advantage_verified": false,
+        "/clinical_approval": false,
+        "/dev_only_for_internal_eval_selection": true,
+        "/dispatch_approved": false
+      },
+      "logical_path": "yonsei/review/train41-owner-admission-20261109T2026/MATCHED_COMPARISON.json"
+    },
+    {
+      "id": "base-ce41-dev11-generation-comparison",
+      "source_sha256": "8647ce6a99c6affa98d801b65a91d9aa283f8a42dc2d4ee6e5f2f26ef81041aa",
+      "source_bytes": 1509,
+      "original_included": false,
+      "projection": {
+        "/status": "GENERATION_COMPLETE_CONTENT_REVIEW_PENDING",
+        "/aligned_rows": 11,
+        "/new_updates": 0,
+        "/clinical_evaluation": false,
+        "/quality_rank_claimed": false,
+        "/responseCE_KD_admission": false,
+        "/arms/base/rows": 11,
+        "/arms/base/eos_ended": 0,
+        "/arms/base/cap_reached": 11,
+        "/arms/base/nonempty": 11,
+        "/arms/base/output_tokens": 704,
+        "/arms/base/generation_seconds": 111.51536888582632,
+        "/arms/base/peak_vram_bytes": 8650749952,
+        "/arms/gold_ce/rows": 11,
+        "/arms/gold_ce/eos_ended": 11,
+        "/arms/gold_ce/cap_reached": 0,
+        "/arms/gold_ce/nonempty": 11,
+        "/arms/gold_ce/output_tokens": 179,
+        "/arms/gold_ce/generation_seconds": 27.952281524892896,
+        "/arms/gold_ce/peak_vram_bytes": 8636448256,
+        "/arms/teacher/rows": 11,
+        "/arms/teacher/eos_ended": 11,
+        "/arms/teacher/cap_reached": 0,
+        "/arms/teacher/nonempty": 11,
+        "/arms/teacher/output_tokens": 249,
+        "/arms/teacher/generation_seconds": 38.85802679089829,
+        "/arms/teacher/peak_vram_bytes": 18066399232
+      },
+      "logical_path": "yonsei/receipts/student-dev-20261109T0323-comparison.json"
+    },
+    {
+      "id": "matched12-standard-peft-native-parent",
+      "source_sha256": "0c8d401ce149a6b8b8a310bd07c07a7e012d08c209548851cd9a3ad93c2fefa9",
+      "source_bytes": 5713,
+      "original_included": false,
+      "projection": {
+        "/status": "COMPLETE_THREE_STANDARD_PEFT_NATIVE_LOADS_NEUTRAL_INFERENCE",
+        "/models_loaded": 3,
+        "/neutral_generations": 3,
+        "/tensors_verified": 1488,
+        "/new_training_updates": 0,
+        "/dev_answers_regenerated": 0,
+        "/parent_acceptance": true,
+        "/quality_acceptance": false,
+        "/clinical_acceptance": false,
+        "/service_promoted": false,
+        "/provider_calls": 0,
+        "/native_returncode": 0,
+        "/result_sha256": "6bfbbde95708374283d27e51ca1061a41c58d07614791effbafb9c9cb27e65c7",
+        "/arms/gold_ce_subset12/status": "PASS",
+        "/arms/gold_ce_subset12/fixture_only": false,
+        "/arms/gold_ce_subset12/standard_peft_import": true,
+        "/arms/gold_ce_subset12/tensor_count": 496,
+        "/arms/gold_ce_subset12/post_inference_equal": true,
+        "/arms/gold_ce_subset12/generation_calls": 1,
+        "/arms/gold_ce_subset12/generation_seconds": 0.9558313849847764,
+        "/arms/gold_ce_subset12/input_tokens": 18,
+        "/arms/gold_ce_subset12/output_tokens": 4,
+        "/arms/gold_ce_subset12/max_new_tokens": 16,
+        "/arms/gold_ce_subset12/process_peak_rss_bytes": 9613934592,
+        "/arms/gold_ce_subset12/peak_vram_allocated_bytes": 8634398720,
+        "/arms/gold_ce_subset12/training_updates": 0,
+        "/arms/teacher_response_ce_subset12/status": "PASS",
+        "/arms/teacher_response_ce_subset12/fixture_only": false,
+        "/arms/teacher_response_ce_subset12/standard_peft_import": true,
+        "/arms/teacher_response_ce_subset12/tensor_count": 496,
+        "/arms/teacher_response_ce_subset12/post_inference_equal": true,
+        "/arms/teacher_response_ce_subset12/generation_calls": 1,
+        "/arms/teacher_response_ce_subset12/generation_seconds": 1.05212672194466,
+        "/arms/teacher_response_ce_subset12/input_tokens": 18,
+        "/arms/teacher_response_ce_subset12/output_tokens": 4,
+        "/arms/teacher_response_ce_subset12/max_new_tokens": 16,
+        "/arms/teacher_response_ce_subset12/process_peak_rss_bytes": 9604153344,
+        "/arms/teacher_response_ce_subset12/peak_vram_allocated_bytes": 8634398720,
+        "/arms/teacher_response_ce_subset12/training_updates": 0,
+        "/arms/teacher_distribution_kd_subset12/status": "PASS",
+        "/arms/teacher_distribution_kd_subset12/fixture_only": false,
+        "/arms/teacher_distribution_kd_subset12/standard_peft_import": true,
+        "/arms/teacher_distribution_kd_subset12/tensor_count": 496,
+        "/arms/teacher_distribution_kd_subset12/post_inference_equal": true,
+        "/arms/teacher_distribution_kd_subset12/generation_calls": 1,
+        "/arms/teacher_distribution_kd_subset12/generation_seconds": 1.0485873010475188,
+        "/arms/teacher_distribution_kd_subset12/input_tokens": 18,
+        "/arms/teacher_distribution_kd_subset12/output_tokens": 4,
+        "/arms/teacher_distribution_kd_subset12/max_new_tokens": 16,
+        "/arms/teacher_distribution_kd_subset12/process_peak_rss_bytes": 9604464640,
+        "/arms/teacher_distribution_kd_subset12/peak_vram_allocated_bytes": 8634398720,
+        "/arms/teacher_distribution_kd_subset12/training_updates": 0
+      },
+      "logical_path": "yonsei/receipts/matched12-peft-runtime-parent-20261111T0508Z.json"
+    },
+    {
+      "id": "matched12-standard-peft-native-evidence",
+      "source_sha256": "6bfbbde95708374283d27e51ca1061a41c58d07614791effbafb9c9cb27e65c7",
+      "source_bytes": 3277,
+      "original_included": false,
+      "projection": {
+        "/status": "PASS",
+        "/evidence_only": true,
+        "/parent_accepted": false,
+        "/quality_acceptance": false,
+        "/clinical_acceptance": false,
+        "/training_updates": 0,
+        "/replay_allowed": false
+      },
+      "logical_path": "yonsei/backups/matched12-peft-runtime-20261111T045226Z/result.json"
+    },
+    {
+      "id": "matched12-dev33-review-route",
+      "source_sha256": "1a568ca086aa8d82c0d8b402b8de35bb5f1253b6a09e2ac1c0d9e174835a6ff0",
+      "source_bytes": 2529,
+      "original_included": false,
+      "projection": {
+        "/status": "INPUT_IDENTITY_VERIFIED_AWAITING_EXACT_NEW_OUTPUT_TRANSMISSION_AUTHORIZATION",
+        "/answer_files": 3,
+        "/answer_rows": 33,
+        "/unique_inputs": 11,
+        "/capped_rows": 32,
+        "/input_files_verified": 8,
+        "/checks": {
+          "gold_ce_subset12": {
+            "answer_hashes_match": true,
+            "file_bytes_matches": true,
+            "file_hash_matches": true,
+            "indices_exact": true,
+            "metrics_equal": true,
+            "same_dev_inputs": true
+          },
+          "teacher_distribution_kd_subset12": {
+            "answer_hashes_match": true,
+            "file_bytes_matches": true,
+            "file_hash_matches": true,
+            "indices_exact": true,
+            "metrics_equal": true,
+            "same_dev_inputs": true
+          },
+          "teacher_response_ce_subset12": {
+            "answer_hashes_match": true,
+            "file_bytes_matches": true,
+            "file_hash_matches": true,
+            "indices_exact": true,
+            "metrics_equal": true,
+            "same_dev_inputs": true
+          }
+        },
+        "/provider_calls": 0,
+        "/remote_calls": 0,
+        "/new_generations": 0,
+        "/training_updates": 0,
+        "/zero_exposure_claim": false
+      },
+      "logical_path": "yonsei/receipts/matched12-dev33-quality-route-20261111T155226Z.json"
+    },
+    {
+      "id": "historical-raw-stdout-incident",
+      "source_sha256": "7221f490358ea35e37cef31ed9cc311f02a58560a561b71e2f466f18273f40df",
+      "source_bytes": 903,
+      "original_included": false,
+      "projection": {
+        "/affected_rows": 11,
+        "/raw_in_tool_stdout": true,
+        "/new_model_api_transmissions": 0,
+        "/credential_exposure_observed": false,
+        "/quality_approval_from_incident": false,
+        "/raw_repeated_in_report": false
+      },
+      "logical_path": "yonsei/review/matched12-dev33-review-scope-20261111T155226Z/OUTPUT_INCIDENT.json"
+    },
+    {
+      "id": "school-blocker-attribution",
+      "source_sha256": "8ddfe58498d06560022db68e0d444914f3894fc408aba10be472cd8630e668d9",
+      "source_bytes": 1699,
+      "original_included": false,
+      "projection": {
+        "/status": "APPLICATION_GATE_ATTRIBUTION_CORRECTED_NO_NATIVE_ADMISSION",
+        "/provider_policy_prohibition_established": false,
+        "/all_candidate_gates_preserved": true,
+        "/historical_private_answer_persistence_explicit": true,
+        "/new_raw_body_access": false,
+        "/native_dispatches": 0,
+        "/training_updates": 0,
+        "/generations": 0,
+        "/app_switches": 0
+      },
+      "logical_path": "yonsei/receipts/school-gate-provenance-parent-20261113T115034KST.json"
+    },
+    {
+      "id": "azure-ce41-native-model-neutral",
+      "source_sha256": "75a84c8ea5306e6fc9289b256b87b8fc13ae996ee0cf6d45413377380e20d7c7",
+      "source_bytes": 2924,
+      "original_included": false,
+      "projection": {
+        "/status": "CE41_AZURE_TRANSFER_LOAD_NEUTRAL_INFERENCE_VERIFIED_NOT_SERVICE_PROMOTED",
+        "/new_training_updates": 0,
+        "/candidate_app_integrated": false,
+        "/old_current_kept": true,
+        "/service_pointer_rollback_performed": false,
+        "/raw_input_or_answer_retained": false,
+        "/worker/status": "CANDIDATE_COMPLETE",
+        "/worker/standard_peft_restored": true,
+        "/worker/standard_peft_exact_entries": 496,
+        "/worker/generation_seconds": 1.4458181729996795,
+        "/worker/generated_tokens": 10,
+        "/worker/elapsed_seconds": 9.821702630000345,
+        "/worker/peak_vram_bytes": 11590027264,
+        "/worker/eos_terminated": true,
+        "/worker/new_training_updates": 0,
+        "/worker/raw_answer_saved": false,
+        "/worker/raw_input_saved": false,
+        "/worker/current_promoted": false,
+        "/worker/clinical_quality_acceptance": false
+      },
+      "logical_path": "silvercare/infra/ce41-model-only-20261110T015755Z/FINAL_VERIFIED_RECEIPT.private.json"
+    },
+    {
+      "id": "main-service-gpu-execution-state",
+      "source_sha256": "02ccaf6d8459b521b1856a2ccce6f3e9e2dec9fa50ee447573767bc1a032d458",
+      "source_bytes": 780397,
+      "original_included": false,
+      "projection": {
+        "/current_gpu_execution_20261110_ce41_model/status": "CE41_AZURE_CANDIDATE_TRANSFER_LOAD_NEUTRAL_VERIFIED_CURRENT_UNCHANGED",
+        "/current_gpu_execution_20261110_ce41_model/candidate_loaded": true,
+        "/current_gpu_execution_20261110_ce41_model/native_inferences": 1,
+        "/current_gpu_execution_20261110_ce41_model/metrics": {
+          "elapsed_seconds": 9.821702630000345,
+          "eos_terminated": true,
+          "generated_tokens": 10,
+          "generation_seconds": 1.4458181729996795,
+          "peak_vram_bytes": 11590027264
+        },
+        "/current_gpu_execution_20261110_ce41_model/new_training_updates": 0,
+        "/current_gpu_execution_20261110_ce41_model/candidate_app_integrated": false,
+        "/current_gpu_execution_20261110_ce41_model/current_promoted": false,
+        "/current_gpu_execution_20261110_ce41_model/quality_or_clinical_acceptance": false,
+        "/current_gpu_execution_20261110_ce41_model/service_pointer_rollback_performed": false,
+        "/current_gpu_execution_20261110_ce41_model/receipt_pin": {
+          "bytes": 2924,
+          "sha256": "75a84c8ea5306e6fc9289b256b87b8fc13ae996ee0cf6d45413377380e20d7c7"
+        }
+      },
+      "logical_path": "silvercare/state.json"
+    },
+    {
+      "id": "current-school-application-blockers",
+      "source_sha256": "12ca91e295aa7d2abb390049c1bdcd06232619d43d1c160d1c89923bf2f6270a",
+      "source_bytes": 511147,
+      "original_included": false,
+      "projection": {
+        "/school_container_containment_feasibility/status": "CURRENT_SYSTEMD_SUBSTRATE_UNAVAILABLE_SUPPORTED_ALTERNATIVE_UNVERIFIED",
+        "/school_namespace_contract_disposition/status": "STATIC_CONTRACT_DISPOSITION_VERIFIED_WITH_STORAGE_RAM_CORRECTION_NOT_ADOPTED",
+        "/school_constructor_custody_investigation/status": "PARENT_AUTHENTICATED_NEW_STATIC_CONSTRUCTOR_DISPATCH_FINDING_NOT_NATIVE",
+        "/school_switch_memory_and_guard/status": "STATIC_MEMORY_DISPOSITION_REVIEWED_AND_SOURCE_GUARD_TDD_VERIFIED_NOT_ADOPTED",
+        "/school_ce41_publisher_composition_custody/status": "CPU_COMPOSITION_VERIFIED_ACTUAL_GUEST_SUBSTRATE_REFUSED_NOT_ADOPTED",
+        "/school_source_preparation_independent_review/status": "METADATA_CUSTODY_VERIFIED_OLD_BODY_BUDGET_NOT_ADMITTED",
+        "/school_source_review_downstream_acknowledgment/status": "EXISTING_CPU_REQUEST_REVIEW_CONSUMED_NO_RUNTIME_ADMISSION"
+      },
+      "logical_path": "yonsei/STATE.json"
+    }
+  ],
+  "derived": {
+    "matched12_ppl_relative_percent": {
+      "formula": "100 * (later_ppl / baseline_ppl - 1)",
+      "B_to_C": -2.4707513139626713,
+      "A_to_C": 0.1222645598840888,
+      "A_to_B": 2.658705884420476,
+      "source_ids": [
+        "matched12-ce",
+        "matched12-kd"
+      ]
+    },
+    "train41_review43_aggregate": {
+      "source_id": "train41-review43-ledger",
+      "calls_pointer": "/calls",
+      "assessment_pointer": "/assessments",
+      "call_count": 43,
+      "call_kind_counts": {
+        "NEUTRAL": 2,
+        "TRAIN": 41
+      },
+      "http_status_counts": {
+        "200": 43
+      },
+      "call_disposition_counts": {
+        "VALIDATED": 43
+      },
+      "train_scopes": {
+        "IN_SCOPE": 41
+      },
+      "dimensions": {
+        "emotion_fidelity": {
+          "REVISE": 12,
+          "PASS": 29
+        },
+        "nonmechanical_support": {
+          "REVISE": 27,
+          "PASS": 14
+        },
+        "plain_language": {
+          "PASS": 40,
+          "REVISE": 1
+        },
+        "relationship_preservation": {
+          "PASS": 39,
+          "REVISE": 2
+        },
+        "uncertainty_preservation": {
+          "REVISE": 3,
+          "PASS": 38
+        },
+        "unsupported_cause_avoidance": {
+          "PASS": 38,
+          "REVISE": 3
+        }
+      },
+      "accepted_all_six_dimensions_count": 12,
+      "accepted_indices_match_admission": true,
+      "owner_dimension_counts_match": true,
+      "admission_disposition_counts": {
+        "EXCLUDE_REVISE_OR_UNCERTAIN": 29,
+        "ACCEPT_AUXILIARY_TRAIN_RESPONSE_PER_CASE": 12
+      },
+      "admission_dispositions_pointer": "/dispositions",
+      "case_indices_suppressed": true
+    },
+    "quality_review_distinctions": {
+      "dev11_original_basic_acceptable": 3,
+      "dev11_original_revision_needed": 8,
+      "dev11_prepost_all_six_pass_each_arm": 1,
+      "train41_later_subset_accepted": 12,
+      "not_same_cohort_or_rubric": true,
+      "review43_is_41_train_plus_2_neutral_not_43_private_cases": true,
+      "all_case_teacher_advantage_verified": false
+    }
+  },
+  "checks": [
+    {
+      "check": "parent_source_projection_student41",
+      "sha_matches": true,
+      "all_projected_values_match": true
+    },
+    {
+      "check": "parent_source_projection_teacher41",
+      "sha_matches": true,
+      "all_projected_values_match": true
+    },
+    {
+      "check": "parent_source_projection_matched12-ce",
+      "sha_matches": true,
+      "all_projected_values_match": true
+    },
+    {
+      "check": "parent_source_projection_matched12-kd",
+      "sha_matches": true,
+      "all_projected_values_match": true
+    },
+    {
+      "check": "parent_source_projection_dev33-metadata",
+      "sha_matches": true,
+      "all_projected_values_match": true
+    },
+    {
+      "check": "parent_source_projection_service-state-snapshot",
+      "sha_matches": true,
+      "all_projected_values_match": true
+    },
+    {
+      "check": "private_prepost_manifest_sha",
+      "pass": true
+    },
+    {
+      "check": "acceptance12_owner_admission_sha",
+      "pass": true
+    },
+    {
+      "check": "matched12_peft_result_sha",
+      "pass": true
+    },
+    {
+      "check": "azure_ce41_receipt_sha_state_pin",
+      "pass": true
+    },
+    {
+      "check": "accepted12_indices_equal_frozen_matched12",
+      "pass": true
+    },
+    {
+      "check": "metadata_sources_unchanged_during_audit",
+      "pass": true
+    }
+  ],
+  "limitations": [
+    "Hashes attest local metadata bytes only, not independent retrieval of cloud originals or payload authentication.",
+    "Historical receipts/state record executions; no reruns, current runtime health or clinical validation.",
+    "Older low-level admission=false snapshots do not override later narrow owner acceptance12.",
+    "No exhaustive search inside private content; source discovery by metadata names and pointers."
+  ],
+  "parent_verification": {
+    "source_projection_checks_passed": 373,
+    "source_entries_verified": 26,
+    "scope": "Parent reread original metadata SHA and exact pointer values; no model/QA/corpus execution. Private input paths/operational instructions omitted from publication."
+  }
+}
