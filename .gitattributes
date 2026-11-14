@@ -2,3 +2,4 @@
 silvercare_autoqa/** text eol=lf
 docs/autoqa/**/*.md text eol=lf
 scripts/autoqa_4way.sh text eol=lf
+scripts/autoqa_rag_compare.sh text eol=lf
