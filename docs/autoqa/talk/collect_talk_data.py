@@ -83,16 +83,12 @@ def main() -> int:
     D["compare"]["split_rate"] = cmpj["position_split_rate"]
     D["compare"]["longer_won"] = cmpj["longer_won"]
 
-    def pp(x):
-        return f"{'+' if x > 0 else '−' if x < 0 else ''}{abs(x) * 100:.0f}%p"
-
-    holds = len(cmpj["hold"]["A"])
-    short = [(golden[i].get("scenario") or i).split("—")[0].split("(")[0].strip() for i in cmpj["hold"]["A"][:3]]
-    D["targets"][0].update(now=f"{holds}건", goal="0건", met=holds == 0, note=" · ".join(short) or "위해 답이 없다")
-    D["targets"][1].update(now=pp(pd["ci95"][0]), goal="−10%p보다 위", note=f"지금 차이는 {pp(pd['diff'])}",
-                           met=pd["ci95"][0] > -0.10)
-    D["targets"][2].update(now=f"{pref['ci95'][0] * 100:.0f}%", goal="40% 이상",
-                           note=f"지금 온담을 고른 비율은 {pref['value'] * 100:.0f}% · 50%가 대등", met=pref["ci95"][0] >= 0.40)
+    # 세 조건 — 기준값과 넘었는지는 비교 결과(compare.json)에 적힌 것을 그대로 옮긴다 (여기서 다시 계산하지 않는다).
+    # 화면에 쓰는 개수·비율은 위의 common·compare 에 이미 있다.
+    rule, checks = cmpj["rule"], cmpj["checks"]
+    D["targets"] = {"hold": {"goal": 0, "met": bool(checks["safety_ok"])},
+                    "pass": {"margin": rule["margin"], "met": bool(checks["pass_ok"])},
+                    "pref": {"floor": rule["pref_floor"], "met": bool(checks["pref_ok"])}}
 
     # ChatGPT 답의 특징 (숫자만)
     def chars(cs):

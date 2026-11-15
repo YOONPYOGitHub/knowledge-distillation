@@ -95,14 +95,25 @@ h1,h2,h3{text-wrap:balance;}
 .col-from{color:var(--muted);} .col-to{color:var(--accent-text);}
 @media(max-width:900px){.fromto{grid-template-columns:1fr;}.fromto .arrow{transform:rotate(90deg);}}
 
-.stepper{display:flex;gap:clamp(.7rem,1.6vw,1.4rem);flex-wrap:wrap;}
-.step{flex:1 1 150px;display:flex;flex-direction:column;gap:.5rem;}
-.node{width:44px;height:44px;border-radius:999px;display:flex;align-items:center;justify-content:center;
-  border:1px solid var(--border);color:var(--muted);font-weight:700;font-size:19px;background:var(--surface);}
-.step.is-now .node{background:var(--accent);border-color:var(--accent);color:#fff;}
-.step .s-title{margin:0;font-weight:700;color:var(--text);font-size:21px;}
-.step.is-now .s-title{color:var(--accent-text);}
-.step .s-period{margin:0;color:var(--dim);font-size:18px;}
+/* 세 조건 점수판 — 이름을 숫자 바로 위에 붙이고, 세 카드의 줄(상태·조건·숫자·표시·한 줄)을 서로 맞춘다 */
+.goal{display:grid;grid-template-rows:subgrid;grid-row:span 5;row-gap:.6rem;
+  padding:clamp(.9rem,1.7vw,1.3rem) clamp(1rem,2vw,1.5rem);}
+.goal .pill{justify-self:start;}
+.goal .c-title{font-size:clamp(19px,1.75vw,23px);line-height:1.3;color:var(--text);}
+.goal .c-sub{text-wrap:balance;} .goal .c-sub b{display:block;color:var(--text);font-weight:700;}
+.vs{display:grid;grid-template-rows:auto auto;grid-auto-flow:column;grid-template-columns:1fr 1fr;gap:0 1rem;align-items:baseline;}
+.vs.has-tie{grid-template-columns:1fr 1fr auto;}
+.vs .who{margin:0;color:var(--muted);font-size:18px;line-height:1.4;white-space:nowrap;}
+.vs .who .sw{margin-right:.4rem;vertical-align:-1px;}
+.vs .num{margin:0;font-size:clamp(40px,4.6vw,62px);font-weight:800;line-height:1.05;color:var(--text);white-space:nowrap;}
+.vs .num .unit{font-size:.36em;font-weight:700;margin-left:.12em;color:var(--muted);}
+.vs .num.sm{font-size:clamp(24px,2.6vw,34px);color:var(--muted);}
+.marks{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem;align-items:center;min-height:12px;}
+.marks.one{grid-template-columns:1fr;}
+.marks .track{height:10px;} .marks .split{height:10px;} .marks .seg{padding:0;}
+.dots{display:flex;gap:6px;}
+.dot{width:12px;height:12px;border-radius:999px;background:var(--other);}
+.dot.me{background:var(--accent);}
 
 /* 막대 — 굵기 24px 이하, 값 쪽 끝만 둥글게, 붙은 조각 사이는 2px 틈 */
 .bars{display:flex;flex-direction:column;gap:1rem;}
@@ -159,20 +170,28 @@ details.tv th{color:var(--dim);font-weight:600;}
 .fromnow .goal{font-size:clamp(34px,4vw,52px);font-weight:800;color:var(--accent-text);line-height:1;}
 .quote{border-left:4px solid var(--accent);padding:.2rem 0 .2rem 1.2rem;margin:0;}
 .quote p{margin:0;color:var(--text);font-size:clamp(23px,2.4vw,29px);line-height:1.5;max-width:42ch;}
+/* 흐름 그림은 창 높이에 맞춰 줄인다 — 넓고 낮은 창에서 그림이 화면 밖으로 길어지지 않게 (270px = 제목·결론 줄·틈) */
+@media(min-width:901px){.dgm svg{max-height:calc(100vh - 2*clamp(2rem,5vh,3.5rem) - 270px);}}
 /* 창을 다 채우지 않고 띄운 낮은 화면 — 한 화면 안에 들어오게 여백과 큰 글자를 조금 줄인다 */
-@media(max-height:720px) and (min-width:901px){
+@media(max-height:800px) and (min-width:901px){
   .view{padding:1.1rem var(--edge);gap:.85rem;}
   .headline{font-size:clamp(30px,3.4vw,44px);}
   .stat .big{font-size:clamp(44px,5.2vw,66px);}
   .card{padding:1rem 1.3rem;gap:.45rem;}
+  .goal{padding:.9rem 1.3rem;row-gap:.4rem;} .vs .num{font-size:clamp(36px,4vw,54px);}
+  .dgm svg{max-height:calc(100vh - 270px);}
+}
+/* 더 낮은 화면 (1280×720 화면에 창으로 띄운 때) */
+@media(max-height:660px) and (min-width:901px){
+  .view{padding:.7rem var(--edge);gap:.6rem;}
+  .headline{font-size:clamp(26px,3vw,38px);}
+  .dgm svg{max-height:calc(100vh - 235px);}
 }
 /* 좁은 화면(휴대폰) — 이름과 숫자를 윗줄에, 막대를 아랫줄에 둔다 */
 @media(max-width:900px){
   .brow,.bars.names .brow{grid-template-columns:1fr auto;grid-template-areas:"name val" "bar bar";gap:.3rem .8rem;}
   .brow .b-name{grid-area:name;} .brow .b-val{grid-area:val;} .brow .track,.brow .split{grid-area:bar;}
   .bars{gap:1.1rem;} .legend{gap:.5rem 1rem;}
-  .stepper{flex-direction:column;} .step{flex:0 0 auto;flex-direction:row;align-items:center;flex-wrap:wrap;gap:.3rem .7rem;}
-  .step .s-period{flex-basis:100%;padding-left:calc(44px + .7rem);margin-top:-.4rem;}
 }
 @media print{.view{min-height:auto;break-after:page;padding:2rem;}}
 """
@@ -300,13 +319,26 @@ def legend(items: list[tuple[str, str]]) -> str:
     return '<ul class="legend">' + "".join(f'<li><span class="sw {c}"></span>{E(t)}</li>' for c, t in items) + "</ul>"
 
 
-def stepper(steps: list[dict], now: int) -> str:
-    out = ['<div class="stepper">']
-    for i, s in enumerate(steps):
-        out.append(f'<div class="step{" is-now" if i == now else ""}"><div class="node">{i + 1}</div>'
-                   f'<p class="s-title">{nb(s["title"])}</p><p class="s-period">{nb(s["when"])}</p></div>')
-    out.append("</div>")
-    return "".join(out)
+def versus(a: str, b: str, name_b: str, unit: str = "", tie: str = "") -> str:
+    """온담 대 비교 상대 — 이름을 숫자 바로 위에 붙여 어느 쪽 숫자인지 한눈에 보이게 한다."""
+    u = f'<span class="unit">{E(unit)}</span>' if unit else ""
+    t = f'<p class="who">비김</p><p class="num sm">{E(tie)}</p>' if tie else ""
+    return (f'<div class="vs{" has-tie" if tie else ""}">'
+            f'<p class="who"><span class="sw win"></span>온담</p><p class="num">{E(a)}{u}</p>'
+            f'<p class="who"><span class="sw loss"></span>{E(name_b)}</p><p class="num">{E(b)}{u}</p>{t}</div>')
+
+
+def goal_card(met: bool, title: str, numbers: str, marks: str, why: str) -> str:
+    """조건 하나 — 위에서 아래로: 넘었는지 · 조건 · 두 쪽 숫자 · 작은 표시 · 기준과 견준 한 줄."""
+    pill = '<span class="pill pill-accent">넘었습니다</span>' if met else '<span class="pill pill-ghost">아직입니다</span>'
+    return (f'<article class="card goal{" is-focus" if met else ""}">{pill}<h3 class="c-title">{nb(title)}</h3>'
+            f'{numbers}{marks}<p class="c-sub">{nb(why)}</p></article>')
+
+
+def pts(x: float) -> str:
+    """비율 차이를 %p 로. 1%p 가 안 되는 값만 소수 한 자리까지 적는다."""
+    v = abs(x) * 100
+    return f"{v:.0f}%p" if v >= 0.95 else f"{v:.1f}%p"
 
 
 def fromnow(now: str, goal: str) -> str:
@@ -423,7 +455,9 @@ def pipeline_svg() -> str:
     o.append(f'<g data-box="7"><rect x="{x}" y="{top - 14}" width="{bw}" height="{bh + 28}" rx="16" class="f-gate" stroke-width="2"/>')
     o.append(f'<text x="{x + bw / 2}" y="{top + 24}" font-size="19" text-anchor="middle" class="t-on-accent">밀리지 않는다</text>')
     o.append(f'<text x="{x + bw / 2}" y="{top + 48}" font-size="16" text-anchor="middle" style="fill:var(--accent-text)">세 조건 모두</text>')
-    for k, (a, b) in enumerate([("위해 답", "0건"), ("통과율 차이", "−10%p 안"), ("고른 비율", "40% 이상")]):
+    tg = D["targets"]                             # 기준값은 비교 결과에 적힌 것 (세 조건 화면과 같은 값)
+    for k, (a, b) in enumerate([("위해 답", f'{tg["hold"]["goal"]}건'), ("통과율 차이", f'{pts(tg["pass"]["margin"])} 안'),
+                                ("고른 비율", f'{tg["pref"]["floor"] * 100:.0f}% 이상')]):
         yy = top + 100 + k * 70
         o.append(f'<line x1="{x + 24}" y1="{yy - 28}" x2="{x + bw - 24}" y2="{yy - 28}" style="stroke:rgba(244,244,247,.18)" stroke-width="1"/>')
         o.append(f'<text x="{x + bw / 2}" y="{yy}" font-size="16" text-anchor="middle" style="fill:var(--accent-text)">{a}</text>')
@@ -598,18 +632,65 @@ def build() -> str:
                   + '<p class="c-label">위해 답부터, 그다음은 통과가 많이 느는 순서입니다</p><div class="bars tight names">' + "".join(srows) + "</div>",
                   source=D["fixfirst_source"], wide=True))
 
-    # 12 목표까지
-    tg = "".join(
-        f'<article class="card{" is-focus" if t.get("met") else ""}">'
-        f'<span class="pill {"pill-accent" if t.get("met") else "pill-ghost"}">{"넘었습니다" if t.get("met") else "남았습니다"}</span>'
-        f'<p class="c-label">{E(t["name"])}</p><div class="stat"><div class="big">{E(t["now"])}</div></div>'
-        f'<p class="c-sub">기준은 {E(t["goal"])} · {nb(t["note"])}</p></article>' for t in D["targets"])
-    n_met = sum(bool(t.get("met")) for t in D["targets"])
+    # 12 세 조건 — 큰 숫자는 두 쪽의 개수(온담 대 비교 상대)로 적고, 기준과 견준 말은 카드마다 한 줄만 둔다.
+    #    “질문을 바꿔 재면”= 95% 신뢰구간의 아래 끝. 넘었는지는 비교 결과에 적힌 판정을 그대로 쓴다.
+    tg, name_b = D["targets"], m["comparator"]
+    pd, pf = cmp["pass_diff"], cmp["pref"]
+    ov = next(x for x in cmp["criteria"] if x["name"] == "종합")
+
+    def dots(k: int, me: bool) -> str:
+        return '<div class="dots">' + f'<span class="dot{" me" if me else ""}"></span>' * min(k, 12) + "</div>"
+
+    def bar(k: int, me: bool) -> str:
+        return (f'<div class="track"><div class="fill{" is-accent" if me else ""}" style="width:{100 * k / n:.1f}%" '
+                f'title="{k}/{n}"></div></div>')
+
+    def near(x: float, ref: float) -> str:       # 기준과 1%p 안쪽으로 붙으면 소수 한 자리까지 적는다
+        return f"{x * 100:.1f}%" if abs(x - ref) < 0.0095 else f"{x * 100:.0f}%"
+
+    # ① 위해 답
+    hold_names = ", ".join(E(x) for x in D["hold_names"]["ondam"].split(" · "))
+    c1 = goal_card(
+        tg["hold"]["met"], "위해 답이 0건일 것", versus(str(og["hold"]), str(cg["hold"]), name_b, unit="건"),
+        f'<div class="marks" role="img" aria-label="위해 답 온담 {og["hold"]}건, {E(name_b)} {cg["hold"]}건">'
+        f'{dots(og["hold"], True)}{dots(cg["hold"], False)}</div>',
+        f"{hold_names} <b>{og['hold']}건이 남았습니다</b>" if og["hold"]
+        else f"온담의 위해 답이 없습니다 <b>기준 {tg['hold']['goal']}건을 지켰습니다</b>")
+    # ② 통과율
+    lo, mg = pd["lo"], tg["pass"]["margin"]
+    lo_txt = pts(lo) if abs(abs(lo) - mg) >= 0.0095 else f"{abs(lo) * 100:.1f}%p"
+    if lo >= 0:
+        pass_why = f"질문을 바꿔 재도 뒤지지 않습니다 <b>기준 {pts(mg)} 안에 들었습니다</b>"
+    elif tg["pass"]["met"]:
+        pass_why = f"질문을 바꿔 재서 뒤지더라도 {lo_txt}까지 <b>기준 {pts(mg)} 안에 들었습니다</b>"
+    else:
+        pass_why = f"질문을 바꿔 재면 {lo_txt}까지 뒤질 수 있습니다 <b>기준은 {pts(mg)} 안입니다</b>"
+    c2 = goal_card(
+        tg["pass"]["met"], "통과율이 크게 뒤지지 않을 것", versus(str(og["pass"]), str(cg["pass"]), name_b, unit=f"/{n}"),
+        f'<div class="marks" role="img" aria-label="통과 온담 {og["pass"]}/{n}, {E(name_b)} {cg["pass"]}/{n}">'
+        f'{bar(og["pass"], True)}{bar(cg["pass"], False)}</div>', pass_why)
+    # ③ 나란히 놓고 고르기
+    fl = tg["pref"]["floor"]
+    if tg["pref"]["met"]:
+        pref_why = f"질문을 바꿔 재도 온담을 고른 비율이 {near(pf['lo'], fl)} <b>기준 {fl * 100:.0f}%를 넘었습니다</b>"
+    else:
+        pref_why = (f"질문을 바꿔 재면 온담을 고른 비율이 {near(pf['lo'], fl)}까지 "
+                    f"<b>기준 {fl * 100:.0f}%에 {pts(fl - pf['lo'])} 모자랍니다</b>")
+    segs = "".join(f'<div class="seg {c}" style="flex:{v} 1 0" title="{E(t)} {v}/{n}"></div>'
+                   for c, v, t in (("s-win", ov["win"], "온담이 나음"), ("s-tie", ov["tie"], "비김"),
+                                   ("s-loss", ov["loss"], name_b + "가 나음")) if v > 0)
+    c3 = goal_card(
+        tg["pref"]["met"], "나란히 놓으면 비슷하게 뽑힐 것",
+        versus(str(ov["win"]), str(ov["loss"]), name_b, unit="번", tie=str(ov["tie"])),
+        f'<div class="marks one" role="img" aria-label="온담이 나음 {ov["win"]}, 비김 {ov["tie"]}, '
+        f'{E(name_b)}가 나음 {ov["loss"]}"><div class="split">{segs}</div></div>', pref_why)
+
+    n_met = sum(bool(t["met"]) for t in tg.values())
     head13 = {0: "세 조건, 아직 하나도 넘지 못했습니다", 1: "세 조건 중 하나를 넘었습니다", 2: "세 조건 중 둘을 넘었습니다",
               3: "세 조건을 모두 넘었습니다"}[n_met]
-    V.append(view("04 · 무엇을 고치고 다시 재나", head13, f'<div class="grid g3">{tg}</div>'
-                  + stepper(D["schedule"]["steps"], D["schedule"]["now"])
-                  + f'<span class="pill pill-accent">지금 여기 — {E(D["schedule"]["now_text"])}</span>',
+    V.append(view("04 · 무엇을 고치고 다시 재나", head13, f'<div class="grid g3 goals">{c1}{c2}{c3}</div>',
+                  lead=f"셋을 모두 넘어야 “{E(name_b)}에 밀리지 않는다”고 말합니다.",
+                  takeaway="다음 — 온담을 보강한 뒤, 같은 질문으로 다시 채점합니다." if n_met < 3 else "",
                   source=D["targets_source"], wide=True))
 
     # 13 마무리
