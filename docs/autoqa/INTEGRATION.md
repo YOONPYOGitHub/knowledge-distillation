@@ -3,7 +3,8 @@
 ## 한눈에
 
 - **온담 담당**은 온담 주소만 알려 주면 된다. autoqa 가 `/api/chat` 으로 답과 출처를 받는다 (§2).
-- **비교 모델**(ChatGPT luna 6.1) 답은 API 키가 있으면 API 로, 없으면 서식에 손으로 받는다 (§3).
+- **비교 모델**(ChatGPT) 답은 API, 손으로 채운 서식, 웹 화면 중 하나로 받는다 (§3).
+- 2026-11-15 첫 비교는 로그인 안 한 ChatGPT 웹 화면에서 받았다. 모델 이름이 나오지 않아 `chatgpt_guest` 로 적는다 (§3).
 - **검색 끈 로컬 모델** 답은 Ollama 같은 OpenAI 호환 주소로 받는다. RAG 가 보태는 몫을 잰다 (§3).
 - 돌리는 순서는 §4 한 곳에 있다. 전문가 채점·어르신 실험은 §7 에 있다.
 
@@ -98,6 +99,7 @@ python -m silvercare_autoqa generate --source ondam --base-url <온담 주소> -
 | `ondam_<모델>` | 로컬 모델로 바꾼 온담 (예: `ondam_qwen4b`, `ondam_kanana2b`) |
 | `chatgpt_luna61` | ChatGPT luna 6.1, 온담과 같은 지시문 |
 | `chatgpt_luna61_plain` | ChatGPT luna 6.1, 지시문 없이 (어르신이 그냥 물었을 때) |
+| `chatgpt_guest` | 로그인 안 한 ChatGPT 웹 화면, 질문만 (모델 이름 미공개, 2026-11-15 회차) |
 | `local_norag_<모델>` | 같은 로컬 모델, 검색 없이 |
 
 ## 3. 비교 모델 답 받기
@@ -131,6 +133,19 @@ python -m silvercare_autoqa sheet-template --out chatgpt_sheet.csv
 ```bash
 python -m silvercare_autoqa generate --source sheet --sheet chatgpt_sheet.csv --label chatgpt_luna61 --sheet-model "ChatGPT luna 6.1" --collected-at 2026-11-20 --settings "새 채팅·메모리 끔·웹 검색 끔" --out responses/chatgpt.jsonl
 ```
+
+### ChatGPT — 웹 화면에서 (2026-11-15 회차)
+
+API 키가 없고 109문항을 손으로 옮기기 어려워, 브라우저 자동화(Playwright + Edge)로 웹 화면에 질문을 넣었다.
+
+- **로그인한 화면은 쓰지 못했다.** 첫 질문부터 사람 확인(Cloudflare) 화면이 떠서 멈췄다. 사람 확인은 누르지도, 피해 가지도 않는다.
+- 그래서 **로그인 안 한 화면**에서 받았다. 문항마다 새 채팅을 열고 골든셋 질문만 그대로 넣었다(지시문 없음).
+- 웹 검색은 ChatGPT 기본값(켜짐)을 그대로 두었다. 문항 사이에 6~12초 쉬었다.
+- **모델 이름은 알 수 없다.** 화면에 모델 이름이 없고, 응답에는 '손님(guest)'·'빠른 답(instant)'만 적혀 있다.
+- 그래서 이름은 `chatgpt_guest`, 리포트에는 "ChatGPT 무료 기본(로그인 안 함)"으로 적는다. 이 답으로 "luna 6.1 에 밀리지 않는다"고 쓰지 않는다.
+- 답은 화면에 보이는 대로 옮겼다. 목록 기호는 살리고, 출처 표시(예: 'MedlinePlus +2')는 답 글에서 빼서 `meta.cite_pills` 에 따로 적었다.
+- 답마다 `meta.served_models` 에 응답에 적힌 요금제·답 방식을 남겼다. 회차 중간에 바뀌었는지 이것으로 확인한다.
+- 수집 스크립트는 레포에 올리지 않았다(ChatGPT 이용약관). 다시 받으려면 평가 담당에게 묻는다.
 
 ### 검색 끈 로컬 모델 — Ollama 등 OpenAI 호환 서버
 
@@ -180,6 +195,30 @@ python -m silvercare_autoqa run --responses responses/ondam.jsonl responses/chat
 ```bash
 python -m silvercare_autoqa compare --run runs/r1 --a ondam_cloud --b chatgpt_luna61
 ```
+
+**상용 LLM 과 견주는 회차는 두 번 채점한다.** 같은 답도 다시 채점하면 판정이 몇 개 바뀌기 때문이다.
+
+```bash
+python -m silvercare_autoqa attach-excerpts --responses responses/ondam.jsonl --knowledge <knowledge.jsonl> --out <레포 밖>/ondam_full.jsonl
+python -m silvercare_autoqa run --responses <레포 밖>/ondam_full.jsonl responses/chatgpt.jsonl --run runs/r1_j1 --pairs ondam_cloud:chatgpt_guest
+python -m silvercare_autoqa run --responses <레포 밖>/ondam_full.jsonl responses/chatgpt.jsonl --run runs/r1_j2 --pairs ondam_cloud:chatgpt_guest
+python -m silvercare_autoqa merge-rejudge --runs runs/r1_j1 runs/r1_j2 --out runs/r1 --pairs ondam_cloud:chatgpt_guest
+python -m silvercare_autoqa compare --run runs/r1 --a ondam_cloud --b chatgpt_guest
+python -m silvercare_autoqa fix-first --run runs/r1 --model ondam_cloud
+```
+
+- `attach-excerpts` 는 잘린 출처 발췌를 팀 지식 자료의 온전한 토막으로 바꿔 붙인다. 결과 파일은 레포 밖에 둔다.
+- `merge-rejudge` 는 답마다 두 채점 중 나쁜 쪽 판정을 쓴다. 갈린 답의 수를 리포트에 적는다.
+- `fix-first` 는 고칠 순서와 담당을 낸다. 담당은 추정이다 ([ONDAM_REQUEST.md](ONDAM_REQUEST.md)).
+
+온담을 고친 뒤에는 앞 회차와 견준다.
+
+```bash
+python -m silvercare_autoqa diff-runs --a runs/r1 --b runs/r2 --out runs/r2/diff_r1_r2.md
+```
+
+- 판정이 바뀐 문항을 원인별로 나눈다: 답이 바뀜 · 근거 자료가 바뀜 · 기준이 바뀜 · 채점기 흔들림.
+- 답이 바뀌어 좋아진 문항 수가 채점기 흔들림보다 작으면 효과라고 쓰지 않는다.
 
 - 결과: `runs/r1/report.md`(각자 채점) · `runs/r1/compare/<A>__vs__<B>/report.md`(직접 비교).
 - 기본 기준은 여유폭 10%p(`--margin 0.10`)·선호율 하한 40%(`--pref-floor 0.40`)다. 바꾸면 회차 전에 바꾸고 리포트에 남긴다.
@@ -248,6 +287,8 @@ python -m silvercare_autoqa import-labels --run <채점 회차> --key blind/blin
 - 결과 1: 사람과 autoqa 의 Hold 일치도(κ), 사람만 Hold 로 본 답(autoqa 가 놓친 위험).
 - 결과 2: 시스템별 응급 놓침·약 임의 변경·전문가 안내 포함률(사람 채점 기준).
 - κ 표본은 **실제 시스템 회차**에서 뽑는다. 검증용 답(모범 답안·변이)은 export-blind 가 거부한다.
+- 채점지를 둘로 나눠 낼 때는 `--exclude-key <앞 대응표>` 를 준다. 앞 채점지에 넣은 답은 다시 뽑지 않는다.
+- 답이 바뀐 문항의 라벨은 다음 회차로 옮기지 않는다. 다시 볼 목록으로 나온다.
 - 놓친 위험이 1건이라도 있거나 채점지에 틀린 값이 있으면 import-labels 는 종료코드 2 로 끝난다.
 
 어르신 사용자 실험은 [사용자 실험 실행안](../user_study/README.md) 을 따른다. `study-materials` 가 Hold 답을 빼고 실험 묶음을 만든다.

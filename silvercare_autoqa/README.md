@@ -35,6 +35,10 @@
 | `finalize` | 판정·지표·리포트 | 없음 |
 | `run` | prep → judge → import → verify → finalize 를 한 번에 | judge·verify 만큼 |
 | `compare` | 두 시스템 블라인드 직접 비교 + 비열등 판정 | 공통 문항 × 2 (순서 둘) |
+| `attach-excerpts` | 잘린 출처 발췌를 팀 지식 자료의 온전한 토막으로 바꿔 붙인다 (결과는 레포 밖) | 없음 |
+| `merge-rejudge` | 두 번 채점한 두 회차에서 답마다 나쁜 쪽 판정을 골라 새 회차를 만든다 | 없음 |
+| `diff-runs` | 두 회차의 판정 차이를 원인별로 나눈다 (답 · 근거 자료 · 기준 · 채점기 흔들림) | 없음 |
+| `fix-first` | 고칠 순서와 담당 — 고치면 통과가 가장 많이 느는 순서 | 없음 |
 | `contamination` | 골든셋이 RAG 자료·학습 데이터에 섞였는지 | 없음 |
 | `export-blind` | 약사·간호사용 블라인드 채점지 | 없음 |
 | `import-labels` | 채운 채점지 → 사람과 autoqa 의 일치도(κ)·놓친 위험 | 없음 |
@@ -70,6 +74,13 @@ python -m silvercare_autoqa run --responses ondam.jsonl chatgpt.jsonl --run runs
 python -m silvercare_autoqa compare --run runs/20261120_ondam --a ondam_cloud --b chatgpt_luna61
 ```
 
+상용 LLM 과 견주는 회차는 두 번 채점해 나쁜 쪽을 쓴다. 순서는 [INTEGRATION.md](../docs/autoqa/INTEGRATION.md) §4 에 있다.
+
+```bash
+python -m silvercare_autoqa merge-rejudge --runs runs/r1_j1 runs/r1_j2 --out runs/r1 --pairs ondam_cloud:chatgpt_guest
+python -m silvercare_autoqa fix-first --run runs/r1 --model ondam_cloud
+```
+
 다른 실행기로 채점하는 순서는 [INTEGRATION.md](../docs/autoqa/INTEGRATION.md) §6 에 있다. 순서를 바꾸면 반박 검증이 빠져 회차가 유효성 미달이 된다.
 
 약사·간호사에게 보낼 블라인드 채점지를 만들려면:
@@ -95,10 +106,13 @@ python -m silvercare_autoqa study-materials --run runs/x --out study_bundle/
 | `meta.json` | 평가기준 지문 — 지문이 다른 회차끼리는 숫자를 비교하지 않는다 |
 | `golden.yaml` | prep 때 쓴 골든셋 사본 — 다른 PC 에서도 같은 기준으로 연다 |
 | `compare/<A>__vs__<B>/` | 직접 비교 — `report.md`(비열등 판정) · `compare.json` · 요청·결과 파일 |
+| `stability.json` | 두 번 채점한 회차에만 — 답마다 두 판정과 고른 쪽 |
+| `fix_first_<모델>.md` | `fix-first` 가 낸 고칠 순서 · 담당별 문항 |
 
 ## 고칠 때 지킬 것
 
 - 판정은 `verdict.verdict_of` 한 함수만 내린다. 다른 곳에 판정 규칙을 복제하지 않는다.
+- 담당은 `routing.route` 한 함수만 정한다. 리포트의 담당별 표와 `fix-first` 가 같이 쓴다.
 - 안전 Gate 표는 `gates.py`, 결정 룰의 종류·형식 실패 여부는 `rules.RULES` 한 곳에만 적는다.
 - 안전 지적은 확신이 낮다는 이유로 낮추지 않는다. 반박 검증(`verify`)만 근거 인용으로 뒤집을 수 있다.
 - 규칙 단어 목록(`data/lexicons/*.yaml`)에 패턴을 넣을 때 확정(confirm)과 후보(hybrid)를 나눈다. 부정문에도 걸리는 패턴은 후보로만 둔다.

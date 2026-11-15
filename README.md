@@ -2,7 +2,7 @@
 # 🩺 이 브랜치: 온담 자동검수 (autoqa) — 로컬 LLM + RAG 답 채점
 
 > **어르신 돌봄 AI 「온담」의 답이 안전하고 바로 행동할 수 있는지 채점하고, 상용 LLM 과 견준다.**
-> 2026-11-14 팀 방향이 지식증류에서 **온디바이스 LLM + RAG** 로 바뀌었다. 비교 모델은 ChatGPT luna 6.1 이다.
+> 2026-11-14 팀 방향이 지식증류에서 **온디바이스 LLM + RAG** 로 바뀌었다. 2026-11-15 첫 비교는 로그인 안 한 ChatGPT 무료 기본과 했다.
 > 그림으로 보는 한 장 요약: [docs/autoqa/index.html 열기](https://raw.githack.com/YOONPYOGitHub/knowledge-distillation/feature/silvercare-autoqa/docs/autoqa/index.html) · 원래 프로젝트 README 는 [맨 아래](#llm-지식-증류-knowledge-distillation-프로젝트)에 그대로 있다.
 
 ## 한눈에
@@ -11,8 +11,9 @@
 - **견주는 법** — 같은 질문의 두 답을 이름을 가리고 **나란히 비교**한다. 순서를 바꿔 두 번 묻는다.
 - **"밀리지 않는다"의 기준** — 회차 전에 정했다. 온담 Hold 0건, Pass 비율 차이와 선호율이 기준선 위 ([§ 판정](#그림-2--판정-규칙)).
 - **온담만 보는 것** — 출처 번호가 맞는지, 근거 자료와 어긋나지 않는지, 자료가 없을 때 지어내지 않는지.
-- **먼저 알릴 것** — 팀 RAG 지식 6,531건에 「건강기능식품」「영양제」 자료가 **0건**이다. 고객이 가장 많이 묻는 영양제 질문에서 밀릴 수 있다.
-- **지금 온담 기준선(2026-11-14)은 Hold** 다. 109문항 중 Hold 3, 처음 보는 응급 발화 45개 중 Hold 12 ([채점기 시험 §0](docs/autoqa/VERIFICATION.md)).
+- **2026-11-15 결과** — 같은 질문 109개에서 온담 Pass 72 · ChatGPT Pass 66, Hold 는 둘 다 2 다 ([채점기 시험 §0-1](docs/autoqa/VERIFICATION.md)).
+- **세 조건 중 통과율 조건만 넘었다.** 남은 것은 온담의 위해 답 2건과 나란히 고른 비율 2%p 다 ([고칠 곳](docs/autoqa/ONDAM_REQUEST.md)).
+- **먼저 알릴 것** — 팀 RAG 지식 6,531건에 「건강기능식품」「영양제」라는 말이 **0건**이다. 통과하지 못한 답 37개 중 18개가 여기서 나왔다.
 - 응급 고정 안내는 응급 발화 45개 중 4개만 잡았고, 잡아도 "~이 있다면 119"라고 조건을 건다. 가장 먼저 고칠 곳이다.
 
 ## 역할별 할 일
@@ -134,6 +135,7 @@ python -m silvercare_autoqa sheet-template --out chatgpt_sheet.csv
 - 출처·인용 결정 룰 · 근거 자료 대조 채점 · 직접 비교와 비열등 판정
 - 응급 발화 시험셋을 온담에 넣어 보기 · RAG 자료에 문항 근거가 있는지 세기
 - 전문가 블라인드 채점지(κ) · 어르신 실험 준비물(조건: 온담·ChatGPT·검색 끈 로컬)
+- 두 번 채점해 나쁜 쪽 쓰기 · 회차 견주기 · 고칠 순서와 담당 계산 (2026-11-15)
 
 **온담이 로컬 모델로 바뀐 뒤**
 
@@ -149,6 +151,8 @@ python -m silvercare_autoqa sheet-template --out chatgpt_sheet.csv
 | 문서 | 먼저 읽을 사람 · 무엇이 있나 |
 |---|---|
 | [한 장 요약 (index.html)](https://raw.githack.com/YOONPYOGitHub/knowledge-distillation/feature/silvercare-autoqa/docs/autoqa/index.html) | 팀원 전원 — 그림으로 보는 요약 |
+| [발표 자료 (talk/index.html)](https://raw.githack.com/YOONPYOGitHub/knowledge-distillation/feature/silvercare-autoqa/docs/autoqa/talk/index.html) | 팀원 전원 — 화면 15장으로 보는 결과 |
+| [ONDAM_REQUEST.md](docs/autoqa/ONDAM_REQUEST.md) | 온담·데이터·앱 담당 — 고칠 곳 · 순서 · 다시 재는 법 |
 | [INTEGRATION.md](docs/autoqa/INTEGRATION.md) | 팀원 전원 — 넘기는 것 · 답 받는 법 · 비교 순서 · 사람 평가 |
 | [docs/user_study/](docs/user_study/README.md) | 실험을 진행할 팀원 — 어르신 실험 실행안 · 인쇄물 |
 | [VERIFICATION.md](docs/autoqa/VERIFICATION.md) | 숫자를 믿어도 되는지 볼 사람 — 채점기를 잰 결과 |

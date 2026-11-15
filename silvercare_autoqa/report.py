@@ -7,6 +7,12 @@
 verdict.py·gates.py 를 고치면 판정·채점 지문이 바뀌어 이미 잰 회차와 비교가 끊긴다. 그래서 영어 코드를 한글 이름으로,
 필수답 id 를 따옴표 밖으로 바꾸는 일은 여기 _claim_text·_fix_of 가 한다. verdict.py 문구가 바뀌어 꼴이 안 맞으면
 원래 글을 그대로 찍는다. 숫자·판정은 건드리지 않는다.
+
+노하우 점검(2026-11-15)에서 더한 것 — 모두 보기만 바꾼다.
+- K53: Hold·Fix 문항마다 고칠 담당을 추정해 §6 앞 표와 defects.csv 에 적는다 (규칙은 routing.py).
+- K52: defects.csv 에 온담 답을 다시 받을 때 필요한 칸(mode·출처 묶음·온담 판)을 더했다.
+- K12: 회차 정보에 모델별 끊긴 답 수를 적는다.
+- K40: 분모가 30 미만인 비율은 백분율 대신 k/n 만 적고 목표 표시를 달지 않는다.
 """
 
 from __future__ import annotations
@@ -18,6 +24,7 @@ from collections import Counter, defaultdict
 from pathlib import Path
 from typing import Any
 
+from . import routing
 from .gates import EXTRA_CODES, FIX_HINT
 from .golden import ACTION_LABEL, TYPE_LABEL
 from .metrics import RAG_TARGETS, REF_TARGETS, TARGETS
@@ -54,11 +61,27 @@ _GROUNDING_NAME = {"contradicted": "근거 자료와 어긋남", "wrong_citation
                    "fabricated": "자료가 없는데 지어내어 단정"}
 RAG_NOTE = ("RAG 지표는 출처를 돌려주는 시스템(온담)만 잰다. 목표는 팀 합의 전 잠정값이고 모델 판정에는 넣지 않는다. "
             "출처 발췌가 잘린 회차는 '자료에 없음'을 결함으로 세지 않는다.")
+# 분모가 이보다 작은 비율은 백분율·목표 표시를 찍지 않는다 (노하우 K40 — 2/18 을 11.1% 로 적으면 한 문항에 5%p 넘게 움직인다)
+SMALL_N = 30
+SMALL_TAG = "(표본 적음)"
+# 담당별 표 (노하우 K53) — 규칙은 routing.py. 추정이라고 표 제목과 설명에 모두 적는다
+OWNER_TITLE = "누가 고치나 — 담당별 Hold·Fix 문항 (추정)"
+OWNER_IDS = 8                           # 담당마다 적는 문항 수 상한 (나머지는 '외 n')
+OWNER_NOTE = ("담당은 추정이다. 답이 나간 길(mode)·골든셋 자료 범위·지적 종류로 나눴다. "
+              "문항마다 이유는 defects.csv 의 「담당(추정)」·「이유」 칸에 있다.")
+TRUNC_RULE = "FMT-TRUNC"                # 결정 룰 '문장이 끊김' — 점수로만 보는 룰이라 판정에는 들어가지 않는다
+
+
+def _small(r: dict | None) -> bool:
+    """분모가 작은 비율인가. k/n 으로 센 값만 본다 — 점수 평균(쉬운 표현·행동 가능성)은 해당 없다."""
+    return bool(r) and "k" in r and r.get("value") is not None and r["n"] < SMALL_N
 
 
 def _pct(r: dict | None) -> str:
     if not r or r.get("value") is None:
         return "—"
+    if _small(r):
+        return f"{r['k']}/{r['n']} {SMALL_TAG}"
     s = f"{r['value'] * 100:.1f}% ({r['k']}/{r['n']})"
     if r.get("ci95"):
         s += f" · 95% CI {r['ci95'][0] * 100:.0f}~{r['ci95'][1] * 100:.0f}%"
@@ -82,7 +105,14 @@ def _target_mark(name: str, r: dict, targets: dict) -> str:
     v = r.get("value")
     if v is None:
         return "—"
+    if _small(r):
+        return ""               # 표본이 적으면 목표를 넘었다·못 넘었다고 적지 않는다 (K40)
     return "✅" if v >= tgt else "❌"
+
+
+def _marked(mark: str, text: str) -> str:
+    """목표 표시와 값을 한 칸에. 표시가 없으면(표본 적음) 값만 적는다."""
+    return f"{mark} {text}".strip()
 
 
 def _clip(s: str | None, n: int) -> str:
@@ -151,6 +181,10 @@ def header_lines(out: dict) -> list[str]:
         L.append(f"⚠ {w}")
     if out["validity"]["ok"] and not meta.get("rescored"):
         L.append("회차 유효성 정상 — 채점·반박 검증이 모두 끝났다.")
+    from .stability import report_line
+    rj = report_line(meta)
+    if rj:
+        L.append(rj)
     return L
 
 
@@ -163,8 +197,9 @@ def _model_table(title: str, corner: str, names: list[str], cells: dict[str, lis
     return (title, [corner] + models, [[n] + [cells[m][i] for m in models] for i, n in enumerate(names)], note)
 
 
-def summary_tables(out: dict) -> list[tuple[str, list[str], list[list[str]], str]]:
-    """(제목, 머리줄, 행들, 설명) 목록 — md·html 이 같은 표를 그린다. 머리줄이 비면 표 없이 설명만 쓴다."""
+def summary_tables(out: dict, cases: list[dict] | None = None) -> list[tuple[str, list[str], list[list[str]], str]]:
+    """(제목, 머리줄, 행들, 설명) 목록 — md·html 이 같은 표를 그린다. 머리줄이 비면 표 없이 설명만 쓴다.
+    cases 를 주면 회차 정보에 모델별 끊긴 답 수를 적는다 (지표 묶음 out 에는 그 수가 없다)."""
     T = []
     models = list(out["models"].keys())
     mm = out["models"]
@@ -188,9 +223,9 @@ def summary_tables(out: dict) -> list[tuple[str, list[str], list[list[str]], str
     rows = []
     for name, (tgt, _, _) in TARGETS.items():
         t = f"{tgt:.0%}" if tgt <= 1 else f"{tgt:g}"
-        rows.append([name, t] + [f"{_target_mark(name, mm[m]['scorecard'][name], TARGETS)} " +
-                                 (_pct(mm[m]["scorecard"][name]) if "k" in mm[m]["scorecard"][name] else _num(mm[m]["scorecard"][name]))
-                                 for m in models])
+        rows.append([name, t] + [_marked(_target_mark(name, mm[m]["scorecard"][name], TARGETS),
+                                         _pct(mm[m]["scorecard"][name]) if "k" in mm[m]["scorecard"][name]
+                                         else _num(mm[m]["scorecard"][name])) for m in models])
     sup = "간결 전달 점수(보조)"
     if any((mm[m]["extra"].get(sup) or {}).get("value") is not None for m in models):
         rows.append([sup, "보조 4.0"] + [_num(mm[m]["extra"][sup]) if mm[m]["extra"].get(sup) else "—" for m in models])
@@ -212,7 +247,7 @@ def summary_tables(out: dict) -> list[tuple[str, list[str], list[list[str]], str
                   rows, "가장 좋은 seed 하나만 보고하지 않는다. 평균 ± 표준편차 (최소~최대, seed 수)."))
     if out.get("reference_compare"):
         tc = out["reference_compare"]
-        rows = [[name, f"{tgt:.0%}"] + [f"{_target_mark(name, tc[m][name], REF_TARGETS)} {_pct(tc[m][name])}" for m in tc]
+        rows = [[name, f"{tgt:.0%}"] + [_marked(_target_mark(name, tc[m][name], REF_TARGETS), _pct(tc[m][name])) for m in tc]
                 for name, (tgt, _, _) in REF_TARGETS.items()]
         rows.append(["생성 조건", ""] + [("⚠ 다름: " + "; ".join(tc[m]["gen_diff"])) if tc[m].get("gen_diff") else "같음"
                                        for m in tc])
@@ -245,21 +280,69 @@ def summary_tables(out: dict) -> list[tuple[str, list[str], list[list[str]], str
     else:
         T.append(("5. 짝 비교", [], [], "이 회차에는 짝 비교가 없다 (`finalize --pairs <앞 모델>:<뒤 모델>` 로 켠다)."))
     vs, val = out["verify_stats"], out["validity"]
-    T.append(("7. 회차 정보", ["항목", "값"], [
+    info = [
         ["기준", info_line(out)],
         ["반박 검증", f"지적 유지 {vs['keep']} · 지적 취소 {vs['refute']} · Hold→Fix 낮춤 {vs['downgrade']} · "
                   f"결과 없음 {vs['missing']} · 형식 오류 {vs['error']}"],
         ["답", f"{val['n_cases']}개 · 채점 대상 {val['n_judged']} (빈 답이라 채점 생략 {val['n_cases'] - val['n_judged']}) · "
               f"채점 오류·빠짐 {val['n_error']}"],
+    ]
+    cut = _truncated_text(cases)
+    if cut:
+        info.append(["끊긴 답", cut])
+    info += [
         ["답 판정 규칙", ANSWER_RULE],
-        ["읽는 법", "Pass 비율보다 안전 Gate 0건인지를 먼저 본다. 쉬운 말·길이는 판정에 넣지 않고 KPI 로만 본다"],
-    ], ""))
+        ["읽는 법", "Pass 비율보다 안전 Gate 0건인지를 먼저 본다. 쉬운 말·길이는 판정에 넣지 않고 KPI 로만 본다. "
+                 f"분모가 {SMALL_N} 미만인 비율은 k/n 만 적고 목표 표시를 달지 않는다"],
+    ]
+    T.append(("7. 회차 정보", ["항목", "값"], info, ""))
     return T
+
+
+def _truncated_text(cases: list[dict] | None) -> str:
+    """모델별 끊긴 답 수 (노하우 K12). 끊긴 답이 없으면 ''. 결정 룰이 남긴 표시를 세기만 한다."""
+    total: Counter = Counter()
+    cut: Counter = Counter()
+    for c in cases or []:
+        total[c["model"]] += 1
+        if any(h.get("rule") == TRUNC_RULE for h in (c.get("det") or {}).get("hits") or []):
+            cut[c["model"]] += 1
+    if not cut:
+        return ""
+    return (" · ".join(f"{m} {cut[m]}개(답 {total[m]}개 중)" for m in sorted(cut)) +
+            " — 결정 룰이 끝맺지 않고 끊긴 답으로 본 것이다. 출력 길이 상한에 걸렸는지 본다. 판정에는 넣지 않는다")
+
+
+def owner_table(cases: list[dict], items: dict[str, dict]) -> tuple[str, list[str], list[list[str]], str] | None:
+    """담당별 Hold·Fix 문항 표 (노하우 K53) — 출처를 돌려주는 모델만. 고칠 문항이 없으면 None.
+    md 는 §6 바로 앞에, html 은 문항별 결과 바로 앞에 같은 표를 그린다."""
+    counts = routing.owner_counts(cases, items)
+    rows = []
+    for m, owners in counts.items():
+        for owner, v in owners.items():
+            ids = v["items"]
+            rows.append([m, owner, f"Hold {v['hold']} · Fix {v['fix']}",
+                         " · ".join(f"{reason} {n}" for reason, n in v["reasons"].items()),
+                         ", ".join(ids[:OWNER_IDS]) + (f" 외 {len(ids) - OWNER_IDS}" if len(ids) > OWNER_IDS else "")])
+    if not rows:
+        return None
+    note = OWNER_NOTE
+    no_rag = sorted({c["model"] for c in cases} - set(counts))
+    if no_rag:
+        note += f" 출처를 돌려주지 않는 모델({', '.join(no_rag)})은 담당을 정하지 않는다."
+    n_part = routing.partial_evidence([c for c in cases if c["model"] in counts])
+    if n_part:
+        note += (f" ⚠ 답 {n_part}개는 채점기가 근거 자료의 일부(인용한 출처의 발췌)만 보았다. "
+                 f"「{routing.DATA_MISSING}」·「{routing.ONDAM_SEARCH}」은 실제보다 많이 잡혔을 수 있다.")
+    return (OWNER_TITLE, ["모델", "담당(추정)", "문항 수", "이유 (문항 수)", "문항"], rows, note)
 
 
 def _diff_text(d: dict | None) -> str:
     if not d or d.get("diff") is None:
         return "—"
+    t = d.get("table")
+    if d["n"] < SMALL_N and t:              # 표본이 적으면 %p 대신 두 쪽의 Pass 문항 수만 적는다 (K40)
+        return f"앞 {t['both'] + t['a_only']}/{d['n']} · 뒤 {t['both'] + t['b_only']}/{d['n']} {SMALL_TAG}"
     lo, hi = d["ci95"]
     return f"{d['diff'] * 100:+.1f}%p (95% 구간 {lo * 100:+.1f}~{hi * 100:+.1f})"
 
@@ -273,7 +356,7 @@ def _rag_tables(out: dict) -> list[tuple]:
         rows = []
         for name, (tgt, d, _) in RAG_TARGETS.items():
             t = ("≤ " if d == "<=" else "") + f"{tgt:.0%}"
-            rows.append([name, f"{t} (잠정)"] + [f"{_rag_mark(mm[m]['rag'][name], tgt, d)} {_pct(mm[m]['rag'][name])}"
+            rows.append([name, f"{t} (잠정)"] + [_marked(_rag_mark(mm[m]["rag"][name], tgt, d), _pct(mm[m]["rag"][name]))
                                                 for m in rag_models])
         rows.append(["본문 인용 비율", "참고"] + [_pct(mm[m]["rag"]["본문 인용 비율"]) for m in rag_models])
         rows.append(["핵심 정보 검색 포함률", "참고"] + [_pct(mm[m]["rag"]["핵심 정보 검색 포함률"]) for m in rag_models])
@@ -304,7 +387,7 @@ def _rag_tables(out: dict) -> list[tuple]:
 
 
 def _rag_mark(r: dict, tgt: float, d: str) -> str:
-    if not r or r.get("value") is None:
+    if not r or r.get("value") is None or _small(r):      # 표본이 적으면 목표 표시를 달지 않는다 (K40)
         return ""
     ok = r["value"] <= tgt if d == "<=" else r["value"] >= tgt
     return "✅" if ok else "⚠"
@@ -445,8 +528,9 @@ def render_md(out: dict, cases: list[dict], golden: dict) -> str:
     L = [f"# 실버케어 autoqa 회차 리포트 — {meta.get('label') or meta['created']}", "", "## 한눈에", ""]
     L += [f"- {h}" for h in summary_lines(out)]
     L.append("")
-    tables = summary_tables(out)
-    for title, head, rows, note in tables[:-1]:
+    tables = summary_tables(out, cases)
+    owners = owner_table(cases, golden["by_id"])            # §6 바로 앞 — 누가 고치는지 먼저 보고 문항 목록으로 간다
+    for title, head, rows, note in tables[:-1] + ([owners] if owners else []):
         L += [f"## {title}", ""]
         if head:
             L += _md_table(head, rows) + [""]
@@ -486,7 +570,8 @@ def render_html(out: dict, cases: list[dict], golden: dict, md_text: str = "") -
     parts.append("<h1>실버케어 autoqa 리포트</h1><h2>한눈에</h2>")
     for h in summary_lines(out):
         parts.append(f"<p class='{'warn' if h.startswith('⚠') else ''}'>{_cell(h)}</p>")
-    for title, head, rows, note in summary_tables(out):
+    owners = owner_table(cases, items)                      # 문항별 결과 바로 앞 — md 와 같은 표
+    for title, head, rows, note in summary_tables(out, cases) + ([owners] if owners else []):
         parts.append(f"<h2>{e(title.replace('`', ''))}</h2>")
         if head:
             parts.append("<div class='wrap'><table><tr>" + "".join(f"<th>{_cell(h)}</th>" for h in head) + "</tr>")
@@ -551,21 +636,37 @@ def _csv_safe(v: Any) -> str:
     return "'" + s if s[:1] in ("=", "+", "-", "@") else s
 
 
+# defects.csv 머리줄. 새 칸은 늘 맨 끝에 더한다 — 칸 순서로 읽는 사람·도구가 있어도 앞 칸이 밀리지 않게
+CSV_HEAD = ["모델", "문항", "유형", "위험", "판정", "Gate", "지적", "근거", "상태", "고치는 방법", "발화", "응답",
+            "사람 판단(맞음/틀림)", "사람 의견",
+            "담당(추정)", "이유", "mode", "출처 묶음", "온담 판"]        # 누가 고치나(K53) + 답을 다시 받을 때 필요한 것(K52)
+
+
+def _repro_cells(c: dict) -> list[str]:
+    """defects.csv 의 재현 칸 — 답이 나간 길(mode) · 인용한 출처 묶음('/' 로 이음) · 온담 판.
+    출처를 돌려주지 않는 모델은 앞의 둘이 빈다. 온담 판은 수집기가 meta.system_version 에 남겼을 때만 채워진다."""
+    rag = c.get("rag") or {}
+    fams = ((c.get("det") or {}).get("rag") or {}).get("families")
+    if fams is None:
+        fams = sorted({s.get("family") for s in rag.get("sources") or [] if s.get("family")})
+    return [rag.get("mode") or "", "/".join(fams), (c.get("meta") or {}).get("system_version") or ""]
+
+
 def write_csv(path: Path, cases: list[dict], golden: dict) -> None:
     items = golden["by_id"]
     with path.open("w", encoding="utf-8-sig", newline="") as fh:
         w = csv.writer(fh)
-        w.writerow(["모델", "문항", "유형", "위험", "판정", "Gate", "지적", "근거", "상태", "고치는 방법", "발화", "응답",
-                    "사람 판단(맞음/틀림)", "사람 의견"])
+        w.writerow(CSV_HEAD)
         for c in sorted(cases, key=lambda c: (c["result"]["verdict"] != "hold", c["result"]["verdict"] != "fix", c["item_id"])):
             it = items[c["item_id"]]
             live = _major_live(c) or [None]
+            tail = list(routing.owner_of(c, it) or ("", "")) + _repro_cells(c)      # 답 하나의 값 — 그 답의 지적 줄마다 똑같이 적는다
             for f in live:
                 w.writerow([_csv_safe(x) for x in (
                     c["model"], c["item_id"], TYPE_LABEL[it["type"]], RISK_SHORT.get(it["risk"], it["risk"]),
                     VERDICT_KO[c["result"]["verdict"]], _gate_cell(f), _claim_text(f, it) if f else "",
                     (f or {}).get("evidence", ""), STATUS_KO.get((f or {}).get("status", ""), ""),
-                    _fix_of(f, it)[0] if f else "", it["utterance"], c["response"], "", "")])
+                    _fix_of(f, it)[0] if f else "", it["utterance"], c["response"], "", "", *tail)])
 
 
 def write_reports(run: Path, out: dict, cases: list[dict], golden: dict) -> None:

@@ -144,3 +144,27 @@ def test_clean_env_drops_parent_session_vars(monkeypatch):
     env = clean_env()
     assert "CLAUDE_CODE_SDK_HAS_HOST_AUTH_REFRESH" not in env and "CLAUDECODE" not in env and env["SILVERCARE_X"] == "keep"
     assert "PATH" in env or "Path" in env or os.name != "nt"
+
+
+def _clean_cases(golden, items):
+    rows = reference_rows(golden)
+    return [{"item_id": r["item_id"], "det": det_checks(items[r["item_id"]], r["response"]).to_dict(),
+             "judgment": make_judgment(items[r["item_id"]], r["response"]), "result": {"verdict": "pass", "gates": []}}
+            for r in rows]
+
+
+def test_k26_unscored_emergency_item_is_incomplete_not_fix(golden, items):
+    """응급 문항 하나를 채점하지 못했으면 '위해 답 없음'을 말할 수 없다 — 모델 판정을 Fix 가 아니라 Incomplete 로 둔다."""
+    cases = _clean_cases(golden, items)
+    emer = next(c for c in cases if items[c["item_id"]]["risk"] == "emergency")
+    emer["judgment"], emer["result"] = None, {"verdict": "error", "gates": [], "errors": ["채점 결과 없음"]}
+    m = model_metrics(cases, items)
+    assert m["final"] == "Incomplete" and not m["missing_items"] and m["n_error"] == 1
+
+
+def test_k26_unscored_routine_item_stays_fix(golden, items):
+    """일상 문항을 채점하지 못한 것은 회차 유효성 문제다 — 안전 판정을 미룰 이유는 아니다."""
+    cases = _clean_cases(golden, items)
+    rout = next(c for c in cases if items[c["item_id"]]["risk"] == "routine")
+    rout["judgment"], rout["result"] = None, {"verdict": "error", "gates": [], "errors": ["채점 결과 없음"]}
+    assert model_metrics(cases, items)["final"] == "Fix"

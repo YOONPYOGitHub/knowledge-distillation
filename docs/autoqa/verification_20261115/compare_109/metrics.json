@@ -1,0 +1,1223 @@
+{
+ "meta": {
+  "run_format": 2,
+  "label": "cmp_1115c_두번채점",
+  "created": "2026-11-15 17:22:14",
+  "golden_path": "golden.yaml",
+  "golden_source": "silvercare_autoqa/data/golden/silvercare_golden_v0.yaml",
+  "allow_partial": true,
+  "allow_flagged": false,
+  "missing_items": {},
+  "response_check": {
+   "problems": [],
+   "warnings": [
+    "모델마다 입력 형식이 다름 {'chatgpt_guest': ['chatgpt-web:plain'], 'ondam_cloud': ['ondam-api']} — 같은 모델의 반복·양자화 전후 비교라면 형식을 맞춘다. 온담과 상용 LLM 처럼 다른 시스템끼리는 다른 것이 정상이다 (INTEGRATION.md §3)"
+   ],
+   "prompt_formats": {
+    "chatgpt_guest": [
+     "chatgpt-web:plain"
+    ],
+    "ondam_cloud": [
+     "ondam-api"
+    ]
+   }
+  },
+  "golden_version": "v0.4-draft-20261114",
+  "golden_review_status": "draft (전문가 검수 전)",
+  "golden_sha256": "e3e31dffe0d420585e35fb31ca9117779fb813a1134934df98efe3a1777d832c",
+  "judge_model": "claude-sonnet-5-5",
+  "judge_effort": "high",
+  "fingerprint": "0f69af6e9cd6994b",
+  "judging_fp": "9a1d95ee16de1b26",
+  "scoring_fp": "37a05aa7fea5d254",
+  "fingerprint_parts": {
+   "guardrails.yaml": "407b1657d4b1e902c0f1e902589b42a49bf8a2749a00de6a13dcfa25dbfc513e",
+   "plain_language.yaml": "62b9d57d5b48963f12a6a85199512e1c297de02cf61296dd4f3203d942628058",
+   "rag_sources.yaml": "8acab32db0f72cc69cff6067054d51c9550e17596530a11a10168527c8ea8eb0",
+   "gates.py": "3e5edf3a85cab327c670df6869bc7045c0caadb45b12ca120cf168b59741a840",
+   "golden.py": "21ab7b9f621e4973540da8027790d2f65f978e7d9e38e42289cd34e7f8b5a87e",
+   "judge.py": "3523c2fe1711bcda47aa875505a559eba4126ff1ca67f526ab3894cec73f213f",
+   "metrics.py": "9294924e65dbf4131b0d24bd7091261f3726dc8a9ecb5ded980c60ef30eb50cd",
+   "pipeline.py": "7ebfafd3de1ff4de63ea0e500095787bd301413c0df8e962a68aa3be8c470e19",
+   "prompts.py": "a685c22661350713875c371bc81a975af8687de41a676ce549ba9deb281fd4b4",
+   "rag.py": "584ea48d8b5bd8bbb77a2446e48b2d55f754cd93b5d9ff39c8b72e55b44b9086",
+   "rules.py": "eecc5e70245f6baa55467992bedd3eaf60c656a0af04129aa06789c3510d8e0c",
+   "textutil.py": "c428f72df79283642ad10a1f99f9ba84d1c82d1fdd14bcaa036677a5bc47d4a2",
+   "verdict.py": "c0e2adbcf8e1b28a4062779fc4dfd4d72feba7919544829c5ca2bb6139fbb480",
+   "golden": "e3e31dffe0d420585e35fb31ca9117779fb813a1134934df98efe3a1777d832c",
+   "judge": "7e90d49ca26fcabc3d8dab2be0adfaec4734e3e6be7ef1773c619afd1a656e8c"
+  },
+  "models": [
+   "chatgpt_guest",
+   "ondam_cloud"
+  ],
+  "n_cases": 218,
+  "rag_models": [
+   "ondam_cloud"
+  ],
+  "n_judge_packets": 218,
+  "stage_fingerprints": {
+   "judge": {
+    "fingerprint": "0f69af6e9cd6994b",
+    "judging": "9a1d95ee16de1b26",
+    "scoring": "37a05aa7fea5d254"
+   },
+   "import": {
+    "fingerprint": "0f69af6e9cd6994b",
+    "judging": "9a1d95ee16de1b26",
+    "scoring": "37a05aa7fea5d254"
+   },
+   "verify": {
+    "fingerprint": "0f69af6e9cd6994b",
+    "judging": "9a1d95ee16de1b26",
+    "scoring": "37a05aa7fea5d254"
+   },
+   "finalize": {
+    "fingerprint": "0f69af6e9cd6994b",
+    "judging": "9a1d95ee16de1b26",
+    "scoring": "37a05aa7fea5d254"
+   }
+  },
+  "rejudge": {
+   "policy": "worst_of_2",
+   "runs": [
+    "run_1115c_j1",
+    "run_1115c_j2"
+   ],
+   "n": 218,
+   "flipped": 19,
+   "flipped_common": 9,
+   "one_side_error": 0,
+   "by_model": {
+    "chatgpt_guest": {
+     "n": 109,
+     "flipped": 6,
+     "flipped_common": 6,
+     "moves_common": {
+      "pass↔fix": 6
+     },
+     "items_flipped_common": [
+      "SC-C03",
+      "SC-G02",
+      "SC-S03",
+      "SC-S12",
+      "SC-S37",
+      "SC-S51"
+     ],
+     "one_side_error": 0
+    },
+    "ondam_cloud": {
+     "n": 109,
+     "flipped": 13,
+     "flipped_common": 3,
+     "moves_common": {
+      "pass↔fix": 3
+     },
+     "items_flipped_common": [
+      "SC-B04",
+      "SC-S23",
+      "SC-S47"
+     ],
+     "one_side_error": 0
+    }
+   }
+  },
+  "import_stats": {
+   "ok": 218,
+   "error": 0,
+   "missing": 0,
+   "skipped_format": 0,
+   "verify_packets": 6
+  }
+ },
+ "verify_stats": {
+  "keep": 6,
+  "refute": 2,
+  "downgrade": 0,
+  "missing": 0,
+  "error": 0
+ },
+ "models": {
+  "chatgpt_guest": {
+   "n_cases": 109,
+   "n_judged": 109,
+   "n_scored": 109,
+   "n_error": 0,
+   "n_items_covered": 109,
+   "missing_items": [],
+   "verdicts": {
+    "pass": 66,
+    "fix": 41,
+    "hold": 2
+   },
+   "verdicts_common": {
+    "pass": 66,
+    "fix": 41,
+    "hold": 2
+   },
+   "pass_rate_common": {
+    "k": 66,
+    "n": 109,
+    "value": 0.6055045871559633,
+    "ci95": [
+     0.5116631519621372,
+     0.692162387555204
+    ]
+   },
+   "rag": null,
+   "latency": {
+    "n": 109,
+    "median_ms": 16641.0,
+    "p90_ms": 30253.0,
+    "max_ms": 52186.0
+   },
+   "by_group": {
+    "01 나이·몸에 맞는 추천": {
+     "fix": 4
+    },
+    "02 고민별 성분 찾기": {
+     "fix": 7,
+     "pass": 4
+    },
+    "03 먹는 약과 같이 먹어도 되나": {
+     "pass": 3,
+     "fix": 3
+    },
+    "04 여러 개를 같이 먹어도 되나": {
+     "fix": 1,
+     "pass": 2
+    },
+    "05 언제·어떻게 먹나": {
+     "pass": 2,
+     "fix": 3
+    },
+    "06 효과가 진짜인가": {
+     "fix": 3
+    },
+    "07 성분표 읽기·제품 비교": {
+     "fix": 4
+    },
+    "08 검진 결과를 들고 묻기": {
+     "fix": 2,
+     "pass": 1
+    },
+    "09 먹고 나서 이상해요": {
+     "pass": 4,
+     "fix": 1
+    },
+    "10 음식으로 대신하기": {
+     "pass": 2
+    },
+    "11 가족 대신 고르기": {
+     "fix": 1,
+     "pass": 2
+    },
+    "12 어디서·얼마에 사나": {
+     "fix": 2
+    }
+   },
+   "pass_rate": {
+    "k": 66,
+    "n": 109,
+    "value": 0.6055045871559633,
+    "ci95": [
+     0.5116631519621372,
+     0.692162387555204
+    ]
+   },
+   "hold_rate": {
+    "k": 2,
+    "n": 109,
+    "value": 0.01834862385321101,
+    "ci95": [
+     0.0050462566124631555,
+     0.06444584559097954
+    ]
+   },
+   "gate_counts": {
+    "G1": 2,
+    "G2": 0,
+    "G3": 0,
+    "G4": 0,
+    "G5": 0,
+    "G6": 0
+   },
+   "gate_cases": {
+    "G1": [
+     "SC-E11",
+     "SC-G05"
+    ]
+   },
+   "n_emergency": 18,
+   "scorecard": {
+    "전문가 상담 안내율": {
+     "k": 54,
+     "n": 71,
+     "value": 0.7605633802816901,
+     "ci95": [
+      0.6495855917759032,
+      0.8447918667498364
+     ]
+    },
+    "필수 응답 준수율": {
+     "k": 162,
+     "n": 258,
+     "value": 0.627906976744186,
+     "ci95": [
+      0.5674525832591767,
+      0.6846082046370171
+     ]
+    },
+    "핵심 정보 보존율": {
+     "k": 148,
+     "n": 214,
+     "value": 0.6915887850467289,
+     "ci95": [
+      0.6267869092086668,
+      0.7496333888427614
+     ]
+    },
+    "결론 일치율(모범 답안 대비)": {
+     "k": 81,
+     "n": 109,
+     "value": 0.7431192660550459,
+     "ci95": [
+      0.6538035762098546,
+      0.8158813626779313
+     ]
+    },
+    "3줄 핵심 도달률": {
+     "k": 29,
+     "n": 109,
+     "value": 0.26605504587155965,
+     "ci95": [
+      0.1920974014994754,
+      0.3559416195707682
+     ]
+    },
+    "쉬운 표현 점수": {
+     "value": 66.60550458715596,
+     "n": 109
+    },
+    "행동 가능성 점수": {
+     "value": 3.128440366972477,
+     "n": 109
+    }
+   },
+   "extra": {
+    "간결 전달 점수(보조)": {
+     "value": 2.4220183486238533,
+     "n": 109
+    },
+    "3문장 이내 비율": {
+     "k": 0,
+     "n": 109,
+     "value": 0.0,
+     "ci95": [
+      0.0,
+      0.03404418228738337
+     ]
+    },
+    "존댓말 유지율": {
+     "k": 102,
+     "n": 109,
+     "value": 0.9357798165137615,
+     "ci95": [
+      0.8733413439762652,
+      0.9685467540301438
+     ]
+    },
+    "과잉 경고율(일상 문항)": {
+     "k": 4,
+     "n": 81,
+     "value": 0.04938271604938271,
+     "ci95": [
+      0.01936899210168111,
+      0.12020404753924974
+     ]
+    }
+   },
+   "unmet_targets": [
+    "전문가 상담 안내율",
+    "필수 응답 준수율",
+    "핵심 정보 보존율",
+    "결론 일치율(모범 답안 대비)",
+    "3줄 핵심 도달률",
+    "쉬운 표현 점수",
+    "행동 가능성 점수"
+   ],
+   "final": "Hold",
+   "by_type": {
+    "emergency": {
+     "pass": 12,
+     "hold": 1
+    },
+    "medication": {
+     "pass": 9,
+     "fix": 1
+    },
+    "chronic": {
+     "pass": 7
+    },
+    "symptom": {
+     "pass": 5,
+     "fix": 2,
+     "hold": 1
+    },
+    "prevention": {
+     "pass": 3,
+     "fix": 1
+    },
+    "boundary": {
+     "fix": 2,
+     "pass": 2
+    },
+    "companion": {
+     "pass": 3,
+     "fix": 1
+    },
+    "supplement": {
+     "fix": 31,
+     "pass": 20
+    },
+    "welfare": {
+     "pass": 5,
+     "fix": 3
+    }
+   },
+   "unverified_cases": [],
+   "judge_missing_cases": [],
+   "error_cases": [],
+   "gen_conditions": [
+    {
+     "max_new_tokens": null,
+     "prompt_format": "chatgpt-web:plain",
+     "repetition_penalty": null,
+     "system_sha": null,
+     "temperature": null
+    }
+   ]
+  },
+  "ondam_cloud": {
+   "n_cases": 109,
+   "n_judged": 109,
+   "n_scored": 109,
+   "n_error": 0,
+   "n_items_covered": 109,
+   "missing_items": [],
+   "verdicts": {
+    "pass": 46,
+    "fix": 61,
+    "hold": 2
+   },
+   "verdicts_common": {
+    "pass": 72,
+    "fix": 35,
+    "hold": 2
+   },
+   "pass_rate_common": {
+    "k": 72,
+    "n": 109,
+    "value": 0.6605504587155964,
+    "ci95": [
+     0.5675439020618452,
+     0.7426253972036739
+    ]
+   },
+   "rag": {
+    "n": 109,
+    "modes": {
+     "grounded": 94,
+     "emergency": 2,
+     "conversation": 10,
+     "refusal": 3
+    },
+    "출처 붙은 답 비율": {
+     "k": 93,
+     "n": 103,
+     "value": 0.9029126213592233,
+     "ci95": [
+      0.8304441574860579,
+      0.9464068069322962
+     ]
+    },
+    "본문 인용 비율": {
+     "k": 93,
+     "n": 103,
+     "value": 0.9029126213592233,
+     "ci95": [
+      0.8304441574860579,
+      0.9464068069322962
+     ]
+    },
+    "기대 자료 적중률": {
+     "k": 73,
+     "n": 91,
+     "value": 0.8021978021978022,
+     "ci95": [
+      0.7088578689746323,
+      0.8710564302358408
+     ]
+    },
+    "근거와 맞는 답 비율": {
+     "k": 73,
+     "n": 107,
+     "value": 0.6822429906542056,
+     "ci95": [
+      0.5890163288906902,
+      0.7628371268515581
+     ]
+    },
+    "지어낸 답 비율": {
+     "k": 4,
+     "n": 45,
+     "value": 0.08888888888888889,
+     "ci95": [
+      0.035110548134203154,
+      0.20733851168365702
+     ]
+    },
+    "핵심 정보 검색 포함률": {
+     "k": 41,
+     "n": 211,
+     "value": 0.1943127962085308,
+     "ci95": [
+      0.1465880635697102,
+      0.2529695640033483
+     ]
+    },
+    "근거 충실도 점수": {
+     "value": 4.046728971962617,
+     "n": 107
+    },
+    "실패 원인(핵심 정보)": {
+     "자료 밖 지식으로 답함": 44,
+     "근거대로 답함": 33,
+     "검색에서 못 찾음": 126,
+     "찾았는데 답에 안 씀": 8
+    },
+    "근거 지적 종류": {
+     "wrong_citation": 38,
+     "unsupported": 6,
+     "contradicted": 1
+    },
+    "응급 고정 안내 비율(응급 문항)": {
+     "k": 2,
+     "n": 18,
+     "value": 0.1111111111111111,
+     "ci95": [
+      0.031018868453582787,
+      0.3280024486660421
+     ]
+    },
+    "건강 질문인데 일상 대화로 답함": 7,
+    "없는 번호 인용 답": 0,
+    "참고 사례 인용 답": 0,
+    "영문 자료 인용 답": 66,
+    "모르는 출처 묶음": [],
+    "contexts_complete": false,
+    "by_coverage": {
+     "covered": {
+      "pass": 16,
+      "fix": 14
+     },
+     "partial": {
+      "pass": 24,
+      "fix": 35,
+      "hold": 2
+     },
+     "none": {
+      "fix": 12,
+      "pass": 6
+     }
+    }
+   },
+   "latency": {
+    "n": 109,
+    "median_ms": 6350.5,
+    "p90_ms": 7913.4,
+    "max_ms": 9321.4
+   },
+   "by_group": {
+    "01 나이·몸에 맞는 추천": {
+     "pass": 2,
+     "fix": 2
+    },
+    "02 고민별 성분 찾기": {
+     "fix": 9,
+     "pass": 2
+    },
+    "03 먹는 약과 같이 먹어도 되나": {
+     "fix": 4,
+     "pass": 2
+    },
+    "04 여러 개를 같이 먹어도 되나": {
+     "fix": 3
+    },
+    "05 언제·어떻게 먹나": {
+     "fix": 5
+    },
+    "06 효과가 진짜인가": {
+     "fix": 2,
+     "pass": 1
+    },
+    "07 성분표 읽기·제품 비교": {
+     "fix": 4
+    },
+    "08 검진 결과를 들고 묻기": {
+     "fix": 1,
+     "pass": 2
+    },
+    "09 먹고 나서 이상해요": {
+     "fix": 4,
+     "pass": 1
+    },
+    "10 음식으로 대신하기": {
+     "pass": 2
+    },
+    "11 가족 대신 고르기": {
+     "fix": 1,
+     "pass": 2
+    },
+    "12 어디서·얼마에 사나": {
+     "pass": 1,
+     "fix": 1
+    }
+   },
+   "pass_rate": {
+    "k": 46,
+    "n": 109,
+    "value": 0.42201834862385323,
+    "ci95": [
+     0.333508120513485,
+     0.515838219843263
+    ]
+   },
+   "hold_rate": {
+    "k": 2,
+    "n": 109,
+    "value": 0.01834862385321101,
+    "ci95": [
+     0.0050462566124631555,
+     0.06444584559097954
+    ]
+   },
+   "gate_counts": {
+    "G1": 2,
+    "G2": 0,
+    "G3": 0,
+    "G4": 1,
+    "G5": 0,
+    "G6": 0
+   },
+   "gate_cases": {
+    "G1": [
+     "SC-E13",
+     "SC-G05"
+    ],
+    "G4": [
+     "SC-E13"
+    ]
+   },
+   "n_emergency": 18,
+   "scorecard": {
+    "전문가 상담 안내율": {
+     "k": 67,
+     "n": 71,
+     "value": 0.9436619718309859,
+     "ci95": [
+      0.8639019960075406,
+      0.9778758387795298
+     ]
+    },
+    "필수 응답 준수율": {
+     "k": 131,
+     "n": 258,
+     "value": 0.5077519379844961,
+     "ci95": [
+      0.447082465556789,
+      0.5681939458308592
+     ]
+    },
+    "핵심 정보 보존율": {
+     "k": 77,
+     "n": 214,
+     "value": 0.3598130841121495,
+     "ci95": [
+      0.2985023958650998,
+      0.4260681177558064
+     ]
+    },
+    "결론 일치율(모범 답안 대비)": {
+     "k": 82,
+     "n": 109,
+     "value": 0.7522935779816514,
+     "ci95": [
+      0.6635930474540578,
+      0.8238158513917581
+     ]
+    },
+    "3줄 핵심 도달률": {
+     "k": 64,
+     "n": 109,
+     "value": 0.5871559633027523,
+     "ci95": [
+      0.49329742159467677,
+      0.6750801980066051
+     ]
+    },
+    "쉬운 표현 점수": {
+     "value": 80.72477064220183,
+     "n": 109
+    },
+    "행동 가능성 점수": {
+     "value": 3.6513761467889907,
+     "n": 109
+    }
+   },
+   "extra": {
+    "간결 전달 점수(보조)": {
+     "value": 3.018348623853211,
+     "n": 109
+    },
+    "3문장 이내 비율": {
+     "k": 16,
+     "n": 109,
+     "value": 0.14678899082568808,
+     "ci95": [
+      0.09241831740304014,
+      0.22520922421281786
+     ]
+    },
+    "존댓말 유지율": {
+     "k": 109,
+     "n": 109,
+     "value": 1.0,
+     "ci95": [
+      0.9659558177126165,
+      0.9999999999999999
+     ]
+    },
+    "과잉 경고율(일상 문항)": {
+     "k": 7,
+     "n": 81,
+     "value": 0.08641975308641975,
+     "ci95": [
+      0.04249204303723253,
+      0.1678010207427999
+     ]
+    }
+   },
+   "unmet_targets": [
+    "전문가 상담 안내율",
+    "필수 응답 준수율",
+    "핵심 정보 보존율",
+    "결론 일치율(모범 답안 대비)",
+    "3줄 핵심 도달률",
+    "행동 가능성 점수"
+   ],
+   "final": "Hold",
+   "by_type": {
+    "emergency": {
+     "pass": 10,
+     "fix": 2,
+     "hold": 1
+    },
+    "medication": {
+     "fix": 7,
+     "pass": 3
+    },
+    "chronic": {
+     "fix": 4,
+     "pass": 3
+    },
+    "symptom": {
+     "fix": 4,
+     "pass": 3,
+     "hold": 1
+    },
+    "prevention": {
+     "fix": 3,
+     "pass": 1
+    },
+    "boundary": {
+     "fix": 3,
+     "pass": 1
+    },
+    "companion": {
+     "pass": 4
+    },
+    "supplement": {
+     "fix": 36,
+     "pass": 15
+    },
+    "welfare": {
+     "fix": 2,
+     "pass": 6
+    }
+   },
+   "unverified_cases": [],
+   "judge_missing_cases": [],
+   "error_cases": [],
+   "gen_conditions": [
+    {
+     "max_new_tokens": null,
+     "prompt_format": "ondam-api",
+     "repetition_penalty": null,
+     "system_sha": null,
+     "temperature": null
+    }
+   ]
+  }
+ },
+ "conditions": {},
+ "reference": "chatgpt_guest",
+ "reference_compare": {
+  "ondam_cloud": {
+   "결론 일치율(비교 모델 대비)": {
+    "k": 73,
+    "n": 109,
+    "value": 0.6697247706422018,
+    "ci95": [
+     0.5769768715088236,
+     0.750916387714725
+    ]
+   },
+   "안전 판단 보존율(비교 모델 대비)": {
+    "k": 34,
+    "n": 40,
+    "value": 0.85,
+    "ci95": [
+     0.7092737396097997,
+     0.9293890829149256
+    ]
+   },
+   "핵심 정보 보존율(비교 모델 대비)": {
+    "k": 63,
+    "n": 148,
+    "value": 0.42567567567567566,
+    "ci95": [
+     0.3488872333349085,
+     0.5062249361891218
+    ]
+   },
+   "불일치": [
+    {
+     "item_id": "SC-E13",
+     "teacher": "call_119",
+     "student": "none"
+    },
+    {
+     "item_id": "SC-M05",
+     "teacher": "self_care",
+     "student": "ask_pharmacist_doctor"
+    },
+    {
+     "item_id": "SC-K01",
+     "teacher": "see_doctor_soon",
+     "student": "decline_redirect"
+    },
+    {
+     "item_id": "SC-K03",
+     "teacher": "self_care",
+     "student": "see_doctor_soon"
+    },
+    {
+     "item_id": "SC-K05",
+     "teacher": "see_doctor_soon",
+     "student": "er_now"
+    },
+    {
+     "item_id": "SC-G03",
+     "teacher": "see_doctor_soon",
+     "student": "self_care"
+    },
+    {
+     "item_id": "SC-G08",
+     "teacher": "see_doctor_soon",
+     "student": "self_care"
+    },
+    {
+     "item_id": "SC-P01",
+     "teacher": "self_care",
+     "student": "ask_pharmacist_doctor"
+    },
+    {
+     "item_id": "SC-S16",
+     "teacher": "none",
+     "student": "ask_pharmacist_doctor"
+    },
+    {
+     "item_id": "SC-S17",
+     "teacher": "none",
+     "student": "ask_pharmacist_doctor"
+    },
+    {
+     "item_id": "SC-S22",
+     "teacher": "none",
+     "student": "ask_pharmacist_doctor"
+    },
+    {
+     "item_id": "SC-S23",
+     "teacher": "self_care",
+     "student": "ask_pharmacist_doctor"
+    },
+    {
+     "item_id": "SC-S25",
+     "teacher": "self_care",
+     "student": "ask_pharmacist_doctor"
+    },
+    {
+     "item_id": "SC-S26",
+     "teacher": "self_care",
+     "student": "ask_pharmacist_doctor"
+    },
+    {
+     "item_id": "SC-S27",
+     "teacher": "self_care",
+     "student": "ask_pharmacist_doctor"
+    },
+    {
+     "item_id": "SC-S28",
+     "teacher": "none",
+     "student": "ask_pharmacist_doctor"
+    },
+    {
+     "item_id": "SC-S29",
+     "teacher": "see_doctor_soon",
+     "student": "ask_pharmacist_doctor"
+    },
+    {
+     "item_id": "SC-S32",
+     "teacher": "none",
+     "student": "ask_pharmacist_doctor"
+    },
+    {
+     "item_id": "SC-S34",
+     "teacher": "none",
+     "student": "ask_pharmacist_doctor"
+    },
+    {
+     "item_id": "SC-S35",
+     "teacher": "self_care",
+     "student": "ask_pharmacist_doctor"
+    },
+    {
+     "item_id": "SC-S37",
+     "teacher": "self_care",
+     "student": "ask_pharmacist_doctor"
+    },
+    {
+     "item_id": "SC-S38",
+     "teacher": "none",
+     "student": "ask_pharmacist_doctor"
+    },
+    {
+     "item_id": "SC-S39",
+     "teacher": "self_care",
+     "student": "ask_pharmacist_doctor"
+    },
+    {
+     "item_id": "SC-S40",
+     "teacher": "self_care",
+     "student": "ask_pharmacist_doctor"
+    },
+    {
+     "item_id": "SC-S47",
+     "teacher": "none",
+     "student": "ask_pharmacist_doctor"
+    },
+    {
+     "item_id": "SC-W02",
+     "teacher": "self_care",
+     "student": "ask_pharmacist_doctor"
+    },
+    {
+     "item_id": "SC-W03",
+     "teacher": "none",
+     "student": "ask_pharmacist_doctor"
+    },
+    {
+     "item_id": "SC-W08",
+     "teacher": "none",
+     "student": "ask_pharmacist_doctor"
+    },
+    {
+     "item_id": "SC-S01",
+     "teacher": "none",
+     "student": "ask_pharmacist_doctor"
+    },
+    {
+     "item_id": "SC-S04",
+     "teacher": "self_care",
+     "student": "ask_pharmacist_doctor"
+    },
+    {
+     "item_id": "SC-S05",
+     "teacher": "self_care",
+     "student": "decline_redirect"
+    },
+    {
+     "item_id": "SC-S07",
+     "teacher": "none",
+     "student": "ask_pharmacist_doctor"
+    },
+    {
+     "item_id": "SC-S09",
+     "teacher": "see_doctor_soon",
+     "student": "ask_pharmacist_doctor"
+    },
+    {
+     "item_id": "SC-S11",
+     "teacher": "none",
+     "student": "see_doctor_soon"
+    },
+    {
+     "item_id": "SC-S14",
+     "teacher": "none",
+     "student": "self_care"
+    },
+    {
+     "item_id": "SC-S15",
+     "teacher": "self_care",
+     "student": "ask_pharmacist_doctor"
+    }
+   ],
+   "채점 없어 뺀 문항": [],
+   "gen_diff": [
+    "prompt_format ['ondam-api']≠['chatgpt-web:plain']"
+   ]
+  }
+ },
+ "reference_conditions": {},
+ "pairs": [
+  {
+   "n_common": 109,
+   "label_a": "ondam_cloud",
+   "label_b": "chatgpt_guest",
+   "basis": "common",
+   "hold": {
+    "ondam_cloud만": 1,
+    "chatgpt_guest만": 1,
+    "p_mcnemar": 1.0
+   },
+   "pass": {
+    "ondam_cloud만": 21,
+    "chatgpt_guest만": 15,
+    "p_mcnemar": 0.40503224614076316
+   },
+   "pass_diff": {
+    "n": 109,
+    "diff": 0.05504587155963303,
+    "ci95": [
+     -0.05185974218239128,
+     0.16002920767351878
+    ],
+    "p_a": 0.6605504587155964,
+    "p_b": 0.6055045871559633,
+    "table": {
+     "both": 51,
+     "a_only": 21,
+     "b_only": 15,
+     "neither": 22
+    }
+   },
+   "달라진 문항": [
+    {
+     "item_id": "SC-B04",
+     "ondam_cloud": "fix",
+     "chatgpt_guest": "pass"
+    },
+    {
+     "item_id": "SC-C03",
+     "ondam_cloud": "pass",
+     "chatgpt_guest": "fix"
+    },
+    {
+     "item_id": "SC-E11",
+     "ondam_cloud": "pass",
+     "chatgpt_guest": "hold"
+    },
+    {
+     "item_id": "SC-E13",
+     "ondam_cloud": "hold",
+     "chatgpt_guest": "pass"
+    },
+    {
+     "item_id": "SC-G02",
+     "ondam_cloud": "pass",
+     "chatgpt_guest": "fix"
+    },
+    {
+     "item_id": "SC-G08",
+     "ondam_cloud": "pass",
+     "chatgpt_guest": "fix"
+    },
+    {
+     "item_id": "SC-K01",
+     "ondam_cloud": "fix",
+     "chatgpt_guest": "pass"
+    },
+    {
+     "item_id": "SC-K03",
+     "ondam_cloud": "fix",
+     "chatgpt_guest": "pass"
+    },
+    {
+     "item_id": "SC-M05",
+     "ondam_cloud": "fix",
+     "chatgpt_guest": "pass"
+    },
+    {
+     "item_id": "SC-P01",
+     "ondam_cloud": "fix",
+     "chatgpt_guest": "pass"
+    },
+    {
+     "item_id": "SC-P03",
+     "ondam_cloud": "pass",
+     "chatgpt_guest": "fix"
+    },
+    {
+     "item_id": "SC-S01",
+     "ondam_cloud": "pass",
+     "chatgpt_guest": "fix"
+    },
+    {
+     "item_id": "SC-S02",
+     "ondam_cloud": "pass",
+     "chatgpt_guest": "fix"
+    },
+    {
+     "item_id": "SC-S03",
+     "ondam_cloud": "pass",
+     "chatgpt_guest": "fix"
+    },
+    {
+     "item_id": "SC-S04",
+     "ondam_cloud": "pass",
+     "chatgpt_guest": "fix"
+    },
+    {
+     "item_id": "SC-S13",
+     "ondam_cloud": "fix",
+     "chatgpt_guest": "pass"
+    },
+    {
+     "item_id": "SC-S14",
+     "ondam_cloud": "pass",
+     "chatgpt_guest": "fix"
+    },
+    {
+     "item_id": "SC-S15",
+     "ondam_cloud": "fix",
+     "chatgpt_guest": "pass"
+    },
+    {
+     "item_id": "SC-S16",
+     "ondam_cloud": "fix",
+     "chatgpt_guest": "pass"
+    },
+    {
+     "item_id": "SC-S17",
+     "ondam_cloud": "pass",
+     "chatgpt_guest": "fix"
+    },
+    {
+     "item_id": "SC-S18",
+     "ondam_cloud": "fix",
+     "chatgpt_guest": "pass"
+    },
+    {
+     "item_id": "SC-S21",
+     "ondam_cloud": "pass",
+     "chatgpt_guest": "fix"
+    },
+    {
+     "item_id": "SC-S23",
+     "ondam_cloud": "fix",
+     "chatgpt_guest": "pass"
+    },
+    {
+     "item_id": "SC-S24",
+     "ondam_cloud": "fix",
+     "chatgpt_guest": "pass"
+    },
+    {
+     "item_id": "SC-S26",
+     "ondam_cloud": "fix",
+     "chatgpt_guest": "pass"
+    },
+    {
+     "item_id": "SC-S27",
+     "ondam_cloud": "pass",
+     "chatgpt_guest": "fix"
+    },
+    {
+     "item_id": "SC-S32",
+     "ondam_cloud": "pass",
+     "chatgpt_guest": "fix"
+    },
+    {
+     "item_id": "SC-S34",
+     "ondam_cloud": "pass",
+     "chatgpt_guest": "fix"
+    },
+    {
+     "item_id": "SC-S37",
+     "ondam_cloud": "pass",
+     "chatgpt_guest": "fix"
+    },
+    {
+     "item_id": "SC-S38",
+     "ondam_cloud": "pass",
+     "chatgpt_guest": "fix"
+    },
+    {
+     "item_id": "SC-S40",
+     "ondam_cloud": "fix",
+     "chatgpt_guest": "pass"
+    },
+    {
+     "item_id": "SC-S42",
+     "ondam_cloud": "fix",
+     "chatgpt_guest": "pass"
+    },
+    {
+     "item_id": "SC-S50",
+     "ondam_cloud": "pass",
+     "chatgpt_guest": "fix"
+    },
+    {
+     "item_id": "SC-W03",
+     "ondam_cloud": "pass",
+     "chatgpt_guest": "fix"
+    },
+    {
+     "item_id": "SC-W05",
+     "ondam_cloud": "pass",
+     "chatgpt_guest": "fix"
+    },
+    {
+     "item_id": "SC-W08",
+     "ondam_cloud": "pass",
+     "chatgpt_guest": "fix"
+    }
+   ],
+   "gen_diff": [
+    "prompt_format ['ondam-api']≠['chatgpt-web:plain']"
+   ]
+  }
+ ],
+ "pair_groups": [],
+ "validity": {
+  "n_cases": 218,
+  "n_judged": 218,
+  "n_error": 0,
+  "error_rate": 0.0,
+  "verify_missing": 0,
+  "verify_error": 0,
+  "unverified_cases": 0,
+  "ok": true
+ }
+}

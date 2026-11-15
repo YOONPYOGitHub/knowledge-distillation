@@ -28,7 +28,9 @@ def response_block(case_id: str, response: str) -> str:
     return f"<<<{tag}\n{response}\n{tag}>>>"
 
 
-_EXCERPT_MAX = 900          # 근거 자료 하나를 채점 프롬프트에 싣는 길이 상한
+# 근거 자료 하나를 채점 프롬프트에 싣는 길이 상한. 팀 지식 자료의 한 토막(1,600자)이 잘리지 않게 넉넉히 둔다
+# (2026-11-15: 900자에서 잘리면 채점기가 '자료에 없음'으로 읽는다 — tools.attach_corpus_excerpts 와 짝)
+_EXCERPT_MAX = 2000
 
 
 def sources_block(case_id: str, sources: list[dict], complete: bool) -> str:

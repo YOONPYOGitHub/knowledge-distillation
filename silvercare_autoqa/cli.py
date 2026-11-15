@@ -15,6 +15,10 @@
   import          채점 결과 검증·반입 + 반박 검증 요청 생성
   verify          claude -p 로 반박 검증
   finalize        판정·지표·리포트
+  merge-rejudge   같은 답을 두 번 채점한 두 회차에서 문항마다 나쁜 쪽 판정을 골라 새 회차를 만든다
+  diff-runs       두 회차의 판정 차이를 원인별로 나눈다 (채점기 흔들림 · 기준 바뀜 · 답 바뀜)
+  fix-first       고칠 순서 — 고칠 것을 하나씩 뺐을 때 통과가 가장 많이 느는 순서 (모델을 부르지 않음)
+  attach-excerpts 온담 답의 잘린 근거 발췌를 팀 지식 자료의 온전한 토막으로 바꿔 붙인다 (자료는 이 PC 에만)
   run             prep → judge → import → verify → finalize 한 번에 (claude -p 사용)
   export-blind    전문가 블라인드 채점지 (모델 이름·autoqa 판정 숨김)
   import-labels   채운 채점지 반입 → autoqa 와 사람의 일치도(κ)·놓친 위험
@@ -361,6 +365,49 @@ def cmd_finalize(a) -> int:
     return 0 if out["validity"]["ok"] else 2
 
 
+def cmd_merge_rejudge(a) -> int:
+    from .stability import merge_worst
+    s = merge_worst(a.runs[0], a.runs[1], a.out, label=a.label)
+    print(f"두 번의 판정이 갈린 답: {s['flipped_common']}/{s['n']} (출처 지적까지 넣으면 {s['flipped']}/{s['n']})")
+    for m, v in s["by_model"].items():
+        print(f"  {m}: {v['flipped_common']}/{v['n']} {v['moves_common']} {v['items_flipped_common'][:12]}")
+    a.run = a.out
+    return cmd_finalize(a)
+
+
+def cmd_attach_excerpts(a) -> int:
+    from .corpus import attach_file
+    s = attach_file(a.responses, a.knowledge, a.out)
+    print(f"출처 {s['sources']}개 중 {s['replaced']}개를 지식 자료의 온전한 토막으로 바꿨다 · 그대로 둔 것 {s['kept']}개 {s['kept_by_kind']}")
+    print("기록:", a.out, "— 지식 자료 원문이 들어 있다. 레포에 올리지 않는다.")
+    return 0
+
+
+def cmd_fix_first(a) -> int:
+    from .fixfirst import render_md, run_fix_first
+    s = run_fix_first(a.run, a.model, basis=a.basis)
+    text = render_md(s)
+    print(text)
+    out = Path(a.out) if a.out else Path(a.run) / f"fix_first_{a.model}.md"
+    out.write_text(text, encoding="utf-8")
+    out.with_suffix(".json").write_text(json.dumps(s, ensure_ascii=False, indent=1), encoding="utf-8")
+    print("기록:", out)
+    return 0
+
+
+def cmd_diff_runs(a) -> int:
+    from .stability import diff_runs, render_diff
+    d = diff_runs(a.a, a.b)
+    text = render_diff(d)
+    print(text)
+    if a.out:
+        out = Path(a.out)
+        out.write_text(text, encoding="utf-8")
+        out.with_suffix(".json").write_text(json.dumps(d, ensure_ascii=False, indent=1), encoding="utf-8")
+        print("기록:", out, "·", out.with_suffix(".json"))
+    return 0
+
+
 def cmd_run(a) -> int:
     from .pipeline import cli_judge, import_judge
     _prep_from_args(a)
@@ -372,9 +419,15 @@ def cmd_run(a) -> int:
 
 def cmd_export_blind(a) -> int:
     from .human import export_blind
-    rep = export_blind(a.run, a.out, models=a.models.split(",") if a.models else None, sample=a.sample, seed=a.seed,
-                       strip_cites=a.strip_cites)
+    try:
+        rep = export_blind(a.run, a.out, models=a.models.split(",") if a.models else None, sample=a.sample, seed=a.seed,
+                           strip_cites=a.strip_cites, exclude_key=a.exclude_key or None)
+    except ValueError as e:
+        print(f"채점지를 만들지 못함: {e}")
+        return 1
     print(f"채점지 {rep['rows']}줄 → {rep['sheet']} (autoqa 판정별 {rep['by_autoqa_verdict']})")
+    if a.exclude_key:
+        print(f"앞 채점지에 넣은 답 {rep['excluded']}개는 뺐다 — 두 채점지는 겹치지 않는다")
     print(f"대응표 → {rep['key']}  ※ 채점이 끝날 때까지 검수자에게 주지 않는다")
     return 0
 
@@ -614,6 +667,35 @@ def main(argv: list[str] | None = None) -> int:
     s.add_argument("--rescore", action="store_true", help=rescore_help)
     s.set_defaults(fn=cmd_finalize)
 
+    s = sub.add_parser("merge-rejudge", help="같은 답을 두 번 채점한 두 회차에서 문항마다 나쁜 쪽 판정을 골라 새 회차를 만든다")
+    s.add_argument("--runs", nargs=2, required=True, metavar=("RUN_A", "RUN_B"), help="같은 응답 파일로 따로 채점한 두 회차 폴더")
+    s.add_argument("--out", required=True, help="새 회차 폴더 (비어 있어야 한다)")
+    s.add_argument("--label")
+    s.add_argument("--reference", help="비교 기준 모델 (finalize 와 같음)")
+    s.add_argument("--teacher", help="(지식증류 때 이름) --reference 와 같음")
+    s.add_argument("--pairs", help="짝 비교 목록 (finalize 와 같음)")
+    s.set_defaults(fn=cmd_merge_rejudge)
+
+    s = sub.add_parser("attach-excerpts", help="온담 답의 잘린 근거 발췌를 팀 지식 자료의 온전한 토막으로 바꿔 붙인다 (자료는 이 PC 에만)")
+    s.add_argument("--responses", required=True, help="온담 응답 JSONL")
+    s.add_argument("--knowledge", required=True, help="팀 지식 자료 knowledge.jsonl (레포 밖)")
+    s.add_argument("--out", required=True, help="바꿔 붙인 응답 JSONL (레포 밖에 둔다)")
+    s.set_defaults(fn=cmd_attach_excerpts)
+
+    s = sub.add_parser("fix-first", help="고칠 순서 — 고칠 것을 하나씩 뺐을 때 통과가 가장 많이 느는 순서 (모델을 부르지 않음)")
+    s.add_argument("--run", required=True, help="finalize 까지 끝낸 회차 폴더")
+    s.add_argument("--model", required=True, help="순서를 낼 시스템 (예: ondam_cloud)")
+    s.add_argument("--basis", choices=["common", "full"], default="common",
+                   help="common = 출처 지적을 뺀 공통 기준(상용 LLM 과 견줄 때) · full = 전체 판정")
+    s.add_argument("--out", help="결과를 적을 .md 파일 (기본: 회차 폴더의 fix_first_<모델>.md)")
+    s.set_defaults(fn=cmd_fix_first)
+
+    s = sub.add_parser("diff-runs", help="두 회차의 판정 차이를 원인별로 나눈다 (채점기 흔들림 · 기준 바뀜 · 답 바뀜)")
+    s.add_argument("--a", required=True, help="앞 회차 폴더 (finalize 까지 끝낸 것)")
+    s.add_argument("--b", required=True, help="뒤 회차 폴더")
+    s.add_argument("--out", help="결과를 적을 .md 파일 (같은 이름의 .json 도 함께 쓴다)")
+    s.set_defaults(fn=cmd_diff_runs)
+
     s = sub.add_parser("export-blind", help="전문가 블라인드 채점지 만들기 (모델 이름·autoqa 판정을 숨김)")
     s.add_argument("--run", required=True)
     s.add_argument("--out", required=True, help="채점지·대응표를 둘 폴더")
@@ -621,6 +703,8 @@ def main(argv: list[str] | None = None) -> int:
     s.add_argument("--sample", type=int, help="일부만 (예: 40 — κ 측정용, autoqa 판정별로 고르게)")
     s.add_argument("--strip-cites", action="store_true", help="답의 인용 번호 [1] 을 지운다 (온담 답인지 드러나지 않게)")
     s.add_argument("--seed", type=int, default=20261123)
+    s.add_argument("--exclude-key", action="append",
+                   help="앞서 낸 대응표(blind_key.json). 그 채점지에 넣은 답은 다시 뽑지 않는다 (여러 번 줄 수 있다)")
     s.set_defaults(fn=cmd_export_blind)
 
     s = sub.add_parser("import-labels", help="채운 채점지 반입 → autoqa 와 사람의 일치도(κ)·놓친 위험·전문가 지표")

@@ -4,6 +4,7 @@
 - materials : autoqa 회차의 세 조건 답(기본: 온담 로컬+RAG · ChatGPT luna 6.1 · 검색 끈 로컬)으로 참가자별 실험 묶음을
               만든다 (순서 상쇄 · 블라인드 · 큰 글씨 카드 · 진행 대본 · 관찰 기록지 · 입력 서식).
               Hold·검증 전 답은 어르신에게 들려주지 않는다 — 그 문항은 바꾼다.
+              대본·음성 목록의 답에서는 인용 번호·굵은 글씨 표시·시스템 이름을 뺀다 (spoken_text, 노하우 점검 K50).
 - analyze   : 채운 입력 서식 → 조건별 행동 이해율·보기 정답률·만족도, Friedman·Wilcoxon(정확검정)·Holm 보정,
               주 비교(온담 − ChatGPT, 지식증류 때는 KD − Teacher) 차이의 신뢰구간, autoqa 기술 지표와 어르신 지표의 상관(RQ1).
 통계는 의존성 없이 직접 계산한다 (팀원 PC 에 scipy 가 없어도 돈다). 리커트(5점)는 순서형이라 t-검정을 쓰지 않는다.
@@ -149,6 +150,15 @@ def _scenario(item: dict) -> str:
     return f"{item['utterance']}{ctx}"
 
 
+def spoken_text(answer: str) -> str:
+    """어르신이 듣는 글 — 답에서 인용 번호 [1] · 굵은 글씨 표시 ** · 시스템 이름을 뺀다 (노하우 점검 K50).
+    진행 대본과 음성 목록에는 이 글만 쓴다. 실행안이 "번호는 읽지 않는다 · 진행자도 어느 답이 온담인지 모른다"고
+    정했다 (docs/user_study/README.md §2). 직접 비교의 이름 가리기(compare.blind_text)와 같은 규칙이다.
+    채점은 화면의 답 원문으로 한다 — 원문은 회차의 scored.jsonl 에 그대로 있고, 대응표의 pid 로 찾는다."""
+    from .compare import blind_text
+    return blind_text(answer)
+
+
 CSS = """
 body{font-family:"Malgun Gothic","Apple SD Gothic Neo",sans-serif;color:#111;background:#fff;margin:0}
 .page{padding:28px 32px;page-break-after:always;min-height:90vh;box-sizing:border-box}
@@ -239,14 +249,15 @@ def materials(run_dir: str | Path, out_dir: str | Path, *, conditions: dict[str,
             key["trials"][code] = {"participant": pid, "item_id": iid, "condition": lab, "model": conditions[lab],
                                    "pid": c["pid"], "phase": phase, "mcq_answer": ans_no,
                                    "answer_action": _answer_action(c, it)}
-            tts_rows.append({"file": f"{code}.wav", "text": c["response"]})
+            heard = spoken_text(c["response"])       # 대본·음성 목록에는 다듬은 글만 쓴다. 원문은 회차에 있다 (pid)
+            tts_rows.append({"file": f"{code}.wav", "text": heard})
             has_audio = audio and any((audio / f"{code}{ext}").exists() for ext in (".wav", ".mp3", ".m4a"))
             musts = it.get("must_include") or []
             must = " / ".join(m["text"] for m in musts if m.get("tier") == 1) or \
                 " / ".join(m["text"] for m in musts) or "—"
             script.append(f"<h2>{html.escape(code)} {'(연습 — 집계 안 함)' if phase == 'practice' else ''}</h2>"
                           + (f"<p>음성 파일 <b>{html.escape(code)}</b> 를 들려준다. 파일이 없으면 아래 답을 읽는다.</p>" if has_audio else "")
-                          + f"<div class='ans'>{html.escape(c['response'])}</div>"
+                          + f"<div class='ans'>{html.escape(heard)}</div>"
                           f"<p class='small'>재진술 판정 기준 — 답이 권한 행동: <b>{html.escape(action_text(_answer_action(c, it)))}</b>"
                           f" · 답에 들어 있어야 할 말: {html.escape(must)} · 보기 정답 <b>{ans_no}번</b></p>")
             cards.append(f"<div class='page'><p class='small'>{html.escape(code)}</p><div class='card big'>"
@@ -269,8 +280,9 @@ def materials(run_dir: str | Path, out_dir: str | Path, *, conditions: dict[str,
                 c = by[(conditions[lab], iid)]
                 key["pref"][code] = {"participant": pid, "item_id": iid, "condition": lab, "model": conditions[lab],
                                      "pid": c["pid"], "position": n}
-                tts_rows.append({"file": f"{code}.wav", "text": c["response"]})
-                codes.append((code, c["response"]))
+                heard = spoken_text(c["response"])
+                tts_rows.append({"file": f"{code}.wav", "text": heard})
+                codes.append((code, heard))
             pref_html.append(f"<h2>선호 {j} — {html.escape(items[iid]['scenario'])}</h2><p>이야기를 읽고, 답 {len(order)}개를 차례로 들려준다. "
                              f"\"어느 답이 가장 알아듣기 쉬웠나요? 왜 그런가요?\"</p>" +
                              "".join(f"<p><b>{n}번 답</b> ({html.escape(cd)})</p><div class='ans'>{html.escape(t)}</div>"

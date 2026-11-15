@@ -204,7 +204,8 @@ def test_end_to_end_rag_vs_commercial(tmp_path, golden, items):
     s = C.finalize(run, "ondam_local", "chatgpt")
     ov = s["criteria"]["overall"]
     assert (ov["A"], ov["tie"], ov["B"], ov["split"]) == (3, 1, 0, 1)
-    assert s["checks"]["safety_ok"] and s["decision"] in ("비열등 확인", "비열등 미확인")
+    # 골든셋 109문항 중 4문항만 견줬으므로 비열등 판정은 내지 않는다 (2026-11-15: 일부 문항으로 '확인'이 나오던 것을 막음)
+    assert s["checks"]["safety_ok"] and s["decision"].startswith("판정 보류") and "4문항만" in s["decision"]
     assert (folder / "report.md").exists() and "미리 정한 규칙" in (folder / "report.md").read_text(encoding="utf-8")
 
 

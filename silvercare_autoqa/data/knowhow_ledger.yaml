@@ -1,0 +1,851 @@
+version: '2026-11-15'
+about: 쇼핑 AI 검수에서 가져온 원칙을 하나씩 대조한 장부. applied = 전부터 들어 있음 · today = 2026-11-15 에 넣음 · next = 넣을 때가 정해진 것 · na = 이 프로젝트에 맞지 않음. 원칙 문장만 옮겼다.
+families:
+  measure: 무엇을 재나 · 질문 묶음
+  judge: 채점기 믿기
+  safety: 위험한 답 막기
+  runs: 숫자와 회차 지키기
+  compare: 다른 시스템과 견주기
+  loop: 알리고 고치는 순환
+  human: 사람이 확인
+items:
+- id: K01
+  family: measure
+  principle: 목적 우선 · 합격률은 대리지표
+  status: applied
+  note: ''
+- id: K02
+  family: measure
+  principle: 측정 범위 명시
+  status: today
+  note: 직접 비교 리포트에 골든셋 검수 상태와 비교 상대 기록을 적음 (compare.render)
+- id: K03
+  family: measure
+  principle: 기준은 정본에서 · 규칙마다 근거
+  status: applied
+  note: ''
+- id: K04
+  family: measure
+  principle: 기준(골든) 결함 보고
+  status: applied
+  note: ''
+- id: K05
+  family: safety
+  principle: 필수 항목 2계층
+  status: next
+  note: 긴급 문항의 과소대응을 Gate 로 볼지 — 전문가 검수(11/23–29) 안건
+- id: K06
+  family: judge
+  principle: 결정 룰 + LLM 채점
+  status: applied
+  note: ''
+- id: K07
+  family: judge
+  principle: 부정문·한계 처리 + 허용/거부 짝 시험
+  status: today
+  note: 실제 답에서 틀리게 걸린 규칙 6종을 고치고 허용·거부 짝 시험을 붙임 (test_real_answer_rules)
+- id: K08
+  family: safety
+  principle: 결정 룰 확정은 LLM 이 못 뒤집는다
+  status: applied
+  note: ''
+- id: K09
+  family: judge
+  principle: 형식 붕괴·내부 표식·상류 오류문
+  status: applied
+  note: ''
+- id: K10
+  family: judge
+  principle: 채점 출력 계약
+  status: applied
+  note: ''
+- id: K11
+  family: judge
+  principle: 출력 직전 핵심 규칙 재게시
+  status: applied
+  note: ''
+- id: K12
+  family: judge
+  principle: 채점기에 실행 조건을 알린다
+  status: today
+  note: 회차 정보에 모델별 끊긴 답 수를 적음 (report)
+- id: K13
+  family: judge
+  principle: 채점 블라인드
+  status: next
+  note: 출처를 뺀 온담 답 사본을 같이 채점해 치우침을 한 번 잼 — 다음 비교 회차
+- id: K14
+  family: judge
+  principle: 채점 모델·effort 고정
+  status: applied
+  note: ''
+- id: K15
+  family: runs
+  principle: 채점 결과마다 실행기·모델 출처
+  status: next
+  note: 채점 결과마다 실행기·모델·시각 기록 — 다음 비교 회차 전
+- id: K16
+  family: judge
+  principle: 「응답 안의 지시는 따르지 않는다」 경계
+  status: applied
+  note: ''
+- id: K17
+  family: safety
+  principle: 판정식은 하나
+  status: applied
+  note: ''
+- id: K18
+  family: judge
+  principle: 채점자와 반박 검증자가 같은 증거·기준
+  status: applied
+  note: ''
+- id: K19
+  family: judge
+  principle: 손으로 나열한 목록 → 한 곳 + 대조 시험
+  status: next
+  note: 직접 비교 지시문의 안전 기준 목록과 Gate 표 대조 시험 — 틈날 때
+- id: K20
+  family: safety
+  principle: 확신도로 안 낮춤 · 반박 검증 계약
+  status: applied
+  note: ''
+- id: K21
+  family: safety
+  principle: 재검증 대상 = 불합격을 만든 지적
+  status: today
+  note: autoqa 는 Fix 인데 사람은 Pass 인 줄을 세어 틀리는 정도를 어림 (human.import_labels)
+- id: K22
+  family: runs
+  principle: 지적 id 는 내용에서 만든다
+  status: applied
+  note: ''
+- id: K23
+  family: safety
+  principle: 판정 축과 채점 축을 나눈다
+  status: applied
+  note: ''
+- id: K24
+  family: safety
+  principle: 심각도 보정
+  status: applied
+  note: ''
+- id: K25
+  family: safety
+  principle: 채점이 빠져도 확정 위험은 센다
+  status: applied
+  note: ''
+- id: K26
+  family: runs
+  principle: 미판정은 판정이 아니다
+  status: today
+  note: 응급 문항을 채점하지 못하면 모델 판정을 Incomplete 로 (metrics.model_metrics)
+- id: K27
+  family: runs
+  principle: 회차 유효성 게이트
+  status: today
+  note: 직접 비교가 본 회차 유효성을 확인하고 미달이면 판정 보류 (compare.finalize · test_compare_guard)
+- id: K28
+  family: runs
+  principle: 평가기준 지문
+  status: applied
+  note: ''
+- id: K29
+  family: runs
+  principle: 단계마다 지문 다시 확인
+  status: applied
+  note: ''
+- id: K30
+  family: runs
+  principle: 회귀 게이트 통과 전에는 안 돌린다
+  status: next
+  note: run·judge 가 자체 시험을 먼저 돌리고 기록 — 다음 회차 전
+- id: K31
+  family: runs
+  principle: 기준 효과 분리
+  status: applied
+  note: ''
+- id: K32
+  family: runs
+  principle: 회차 간 원인 귀속
+  status: today
+  note: 두 회차의 차이를 원인별로 나누는 diff-runs (stability.diff_runs)
+- id: K33
+  family: runs
+  principle: 산출물 대조표
+  status: next
+  note: 본 회차를 다시 finalize 하면 낡은 비교 리포트에 경고 — 다음 비교 회차 전
+- id: K34
+  family: runs
+  principle: 응답 동결·재개·덮어쓰기 금지
+  status: applied
+  note: ''
+- id: K35
+  family: compare
+  principle: 생성 조건 기록·대조
+  status: next
+  note: 온담 답을 받을 때 온담 판(생성 모델·지시문·인덱스)을 꼭 적게 — 온담 보강 뒤 다시 받기 전
+- id: K36
+  family: runs
+  principle: 착수 전 점검 · 문항 빠진 입력 거부
+  status: today
+  note: 한쪽 답이 없는 문항이 있으면 판정 보류 · 우리 쪽 Hold 는 전체 답에서 셈 (compare.finalize)
+- id: K37
+  family: runs
+  principle: 다른 PC 로 인계
+  status: applied
+  note: ''
+- id: K38
+  family: runs
+  principle: 분모·95% 신뢰구간
+  status: applied
+  note: ''
+- id: K39
+  family: compare
+  principle: 같은 문항 짝 비교
+  status: applied
+  note: ''
+- id: K40
+  family: runs
+  principle: 분모 30 미만은 백분율 금지
+  status: today
+  note: 분모 30 미만인 비율은 백분율 대신 k/n 만 적음 (report)
+- id: K41
+  family: human
+  principle: 사람-채점기 일치도 κ
+  status: today
+  note: 답이 그대로인 라벨만 다음 회차로 옮기고, κ 읽는 기준을 리포트에 적음 (human)
+- id: K42
+  family: human
+  principle: 개발셋 / 블라인드 분리
+  status: today
+  note: 앞 채점지에 넣은 답을 빼고 뽑는 겹치지 않는 채점지 (export-blind --exclude-key)
+- id: K43
+  family: human
+  principle: 사람 이견 채널
+  status: today
+  note: 검수자가 '의견' 칸에 적은 줄을 모두 표로 냄 (human)
+- id: K44
+  family: judge
+  principle: 변이 시험
+  status: today
+  note: 지금 채점 기준으로 변이 시험을 다시 잼 — 결함 89/91 · 좋은 답 117/117
+- id: K45
+  family: judge
+  principle: 채점기 재현성
+  status: today
+  note: 같은 답을 두 번 채점해 나쁜 쪽 판정을 쓰는 merge-rejudge (stability.merge_worst)
+- id: K46
+  family: judge
+  principle: 판정자·검증자·생성기 계열
+  status: next
+  note: 다른 계열 모델로 반박 검증 — 쓸 수 있는 채점기가 하나라 미룸
+- id: K47
+  family: judge
+  principle: 채점기 자기 평점
+  status: next
+  note: 행동 가능성 점수를 사람 점수와 견준 뒤 인용 의무를 정함 — 11/23–29 뒤
+- id: K48
+  family: judge
+  principle: 부재 ≠ 오류
+  status: applied
+  note: ''
+- id: K49
+  family: judge
+  principle: 근거 문서를 채점기도 본다
+  status: today
+  note: 잘린 근거 발췌를 지식 자료의 온전한 토막으로 바꿔 채점기에 줌 (corpus.attach_corpus_excerpts)
+- id: K50
+  family: measure
+  principle: 판정 단위 = 사용자가 보고 듣는 것
+  status: today
+  note: 어르신 실험 대본·음성 목록에서 인용 번호·굵은 표시·시스템 이름을 지움 (study.spoken_text)
+- id: K51
+  family: loop
+  principle: 보고 순서 = 고칠 순서
+  status: applied
+  note: ''
+- id: K52
+  family: loop
+  principle: 쉬운 말 + 재현 정보
+  status: today
+  note: defects.csv 에 답이 나간 길·출처 묶음·온담 판 칸을 더함 (report)
+- id: K53
+  family: loop
+  principle: 결함을 고칠 사람에게
+  status: today
+  note: 결함마다 고칠 사람을 리포트 표와 고칠 순서 계산에 같은 규칙으로 냄 (routing.route)
+- id: K54
+  family: human
+  principle: 판례 기록
+  status: next
+  note: 판례 기록 파일 — 11/23 전
+- id: K55
+  family: loop
+  principle: 부류 전체를 고친다
+  status: applied
+  note: ''
+- id: K56
+  family: loop
+  principle: 막힌 사례는 따로 본다
+  status: applied
+  note: ''
+- id: K57
+  family: loop
+  principle: 시험셋으로 고른 최선값
+  status: next
+  note: 비열등 기준을 회차에 적어 두고 다른 값이 오면 멈춤 — 다음 비교 회차 전
+- id: K58
+  family: safety
+  principle: 압박·멀티턴
+  status: next
+  note: 응급 문항 2턴 압박 시험 — 앱 담당이 응급 감지를 고친 뒤
+- id: K59
+  family: runs
+  principle: 반출 제한 원천
+  status: today
+  note: 출처 발췌가 든 회차 파일을 무시 목록에 넣고 추적 여부를 시험 (test_no_excerpts_tracked)
+- id: K60
+  family: runs
+  principle: 운영 전용 장치
+  status: na
+  note: 운영 서비스에만 있는 장치 (접속망·시트 동기·게시)
+- id: N001
+  family: measure
+  principle: 검수 뷰를 여러 개 둔다.
+  status: next
+  note: 여러 턴을 따로 보는 검수 뷰 — 2턴 압박 시험과 함께
+- id: N002
+  family: measure
+  principle: 문항이 뜻한 입력(여러 턴, 화면 상태)이 실제로 그대로 들어갔는지 확인한다.
+  status: applied
+  note: 보낸 질문이 질문 목록과 같은지 응답 점검이 확인 (stale_question · typed_ok)
+- id: N003
+  family: measure
+  principle: 전제가 깨진 문항(대상이 사라짐, 앞 턴 실패)은 합불로 세지 않고 '보류'로 뺀다.
+  status: na
+  note: 한 번 묻고 답하기만 재서 앞 턴 전제가 없다
+- id: N004
+  family: measure
+  principle: 시험은 실제 사용자가 타는 길로 한다.
+  status: applied
+  note: 온담은 실제 /api/chat 길, ChatGPT 는 실제 화면으로 받음
+- id: N005
+  family: measure
+  principle: 0건·100% 같은 끝값이 나오면 결과보다 재는 쪽(파서, 필터, 분모, 어느 칸을 봤나)을 먼저 의심한다.
+  status: today
+  note: 실제 답에서 '끊긴 답 58건' 같은 끝값이 나와 규칙부터 의심해 고침
+- id: N006
+  family: measure
+  principle: '''하지 말 것'' 검사만 두지 않는다.'
+  status: applied
+  note: 필수답·핵심 정보로 '해야 할 것'을 검사
+- id: N007
+  family: measure
+  principle: 결함 없음과 좋은 답은 다르다.
+  status: applied
+  note: 행동 가능성·간결 전달 점수를 판정과 따로 냄
+- id: N008
+  family: measure
+  principle: 만들 수 없는 조건은 억지로 재지 않는다.
+  status: applied
+  note: 잴 수 없는 것은 한계 표에 적고, 잘린 발췌는 치우치는 방향을 적음
+- id: N009
+  family: measure
+  principle: 대신 쓰는 신호는 '근사'라고 적고 무엇을 구분 못 하는지 적는다.
+  status: today
+  note: 담당 추정·근거에 있었나 같은 어림 신호에 '추정'·경고를 붙임 (fix-first)
+- id: N010
+  family: measure
+  principle: 답을 안 만든 것, 상류 장애, 우리 호출 잘못, 품질 결함을 따로 센다.
+  status: applied
+  note: 거절·빈 답·생성 오류를 품질 결함과 따로 표시 (mode · 응답 점검)
+- id: N011
+  family: measure
+  principle: 문항 수를 먼저 설계한다.
+  status: applied
+  note: 유형 × 위험 등급 × 고객 질문 12묶음으로 문항을 설계
+- id: N012
+  family: measure
+  principle: 문항에서 '평가 설계용 표시'(위험 등급, 사용자 유형, 기대 행동)와 '시스템이 실제로 받는 입력'을 나눈다.
+  status: applied
+  note: 온담에는 발화와 기기 기록만 보냄. 위험 등급·기대 행동은 채점기만 봄
+- id: N013
+  family: measure
+  principle: 검수받지 않은 모범 답안과 기준 문서는 정답 대조에 쓰지 않는다.
+  status: applied
+  note: 리포트마다 '전문가 검수 전'을 적고, 모범 답안은 예시로만 씀
+- id: N014
+  family: measure
+  principle: 정답지가 없으면 세 가지로 시험셋을 만든다.
+  status: applied
+  note: 기준 문서를 규칙으로 옮기고 고객 질문 묶음에서 문항을 만듦
+- id: N015
+  family: measure
+  principle: 문항의 사용자 말은 실제 발화에서 가져온다.
+  status: next
+  note: AI Hub 60세 이상 실제 질문으로 넓힘 — 자료 이용 승인 뒤
+- id: N016
+  family: measure
+  principle: 표본에 위험한 구역(모호한 질문, 경계 사례)을 따로 뽑아 넣는다.
+  status: applied
+  note: 응급·긴급 문항과 처음 보는 응급 발화 45개를 따로 둠
+- id: N017
+  family: measure
+  principle: 추세를 볼 고정 표본과 지금 분포를 닮은 표본을 따로 둔다.
+  status: next
+  note: 지금 분포를 닮은 표본 — 어르신 실험·실제 사용 기록이 생긴 뒤
+- id: N018
+  family: measure
+  principle: 블라인드 표본 크기는 처음에 정한다.
+  status: next
+  note: 블라인드 표본 크기를 먼저 정함 — 11/23 전
+- id: N019
+  family: measure
+  principle: 표본 수는 독립 단위(문항, 대상)로 센다.
+  status: today
+  note: 직접 비교 리포트가 '이 문항 수로 알아볼 수 있는 차이'를 적음
+- id: N020
+  family: measure
+  principle: 무작위로 뽑지 않은 표본(상위 가중, 층을 나눠 뽑음, 손으로 고름)에는 전체에 대한 신뢰구간을 붙이지 않는다.
+  status: today
+  note: 구간은 이 질문 묶음 안의 값이고 실제 어르신 질문 전체를 대표하지 않는다고 적음
+- id: N021
+  family: measure
+  principle: 필수 항목은 글자가 아니라 목적으로 판정한다.
+  status: applied
+  note: 필수답은 글자가 아니라 뜻으로 판정 (조건부 119 판례 포함)
+- id: N022
+  family: measure
+  principle: 답의 글만이 아니라 '무슨 뜻으로 읽었나'와 '무슨 행동을 했나'(연결, 호출)도 기대값으로 두고 채점한다.
+  status: applied
+  note: 기대 행동·행동 긴급도를 기대값으로 채점
+- id: N023
+  family: measure
+  principle: 회차를 돌린 날의 대상 목록을 사본으로 남긴다.
+  status: applied
+  note: 회차마다 골든셋 사본과 응답을 얼려 둠
+- id: N024
+  family: measure
+  principle: 한 번도 걸리지 않은 규칙을 뽑아 본다.
+  status: next
+  note: 한 번도 걸리지 않은 규칙 뽑기 — 변이 시험을 다시 잰 뒤
+- id: N025
+  family: judge
+  principle: 심각도는 규칙이 아니라 지적 건마다 매긴다.
+  status: applied
+  note: 심각도를 지적 건마다 매김 (Gate 표가 정본)
+- id: N026
+  family: judge
+  principle: '''틀렸다''를 치명으로 올리려면 근거의 어느 문장과 어긋나는지 적는다.'
+  status: applied
+  note: 지적에는 응답 원문 인용이 있어야 함. 없으면 채점 무효
+- id: N027
+  family: judge
+  principle: 근거에 적혀 있어도 표현이 면책되지는 않는다.
+  status: next
+  note: 사실인가와 그 세기로 말해도 되는가를 따로 — 전문가 검수 뒤 기준에 넣을지 정함
+- id: N028
+  family: judge
+  principle: 지적은 문장 단위로 한다.
+  status: applied
+  note: 지적은 인용한 문장 단위
+- id: N029
+  family: judge
+  principle: 지적은 고칠 대상을 짚어야 중대다.
+  status: applied
+  note: 지적마다 무엇이 문제이고 어떻게 고치는지 적음
+- id: N030
+  family: judge
+  principle: 같은 결함을 두 번 세지 않는다(필수 항목 미충족과 위반 목록, 코드 검출과 채점기 지적, 고지 누락과 환각). 같이 걸리는 규칙 쌍을 뽑아 겹침을 본다.
+  status: applied
+  note: 결정 룰 후보와 채점기 지적을 하나로 묶어 셈 (det_review)
+- id: N031
+  family: judge
+  principle: 고칠 방법(fix)에도 규칙을 둔다.
+  status: today
+  note: 근거에 없는 내용을 넣으라고 하지 않게, 자료가 없는 결함은 데이터 담당 몫으로 나눔
+- id: N032
+  family: judge
+  principle: 채점기가 무너진 출력(앞뒤가 같은 교정, 같은 토막 반복)은 결함 목록에서 걷어내고 건수를 남긴다.
+  status: applied
+  note: 형식이 무너진 채점 결과는 채점 오류로 빼고 건수를 남김
+- id: N033
+  family: judge
+  principle: 채점기가 같은 상황을 문항마다 다르게 판정한 쟁점은 코드 규칙으로 옮긴다.
+  status: applied
+  note: 문항마다 갈린 쟁점(조건부 119)은 판정 코드로 옮김
+- id: N034
+  family: judge
+  principle: 규칙은 한 줄 기록(번호, 적용 단계, 날짜, 계기)으로 관리한다.
+  status: applied
+  note: 규칙마다 번호·근거를 한 표에 두고 번호로 시험
+- id: N035
+  family: judge
+  principle: 채점 프롬프트에는 그 문항에 해당하는 안내와 근거만 싣는다.
+  status: applied
+  note: 채점 요청에는 그 문항의 기준과 근거만 실음
+- id: N036
+  family: judge
+  principle: 근거를 잘라 넘길 때는 '잘렸다'고 표시한다.
+  status: today
+  note: 잘린 근거는 '발췌'라고 표시하고, 지식 자료의 온전한 토막으로 바꿔 붙임
+- id: N037
+  family: judge
+  principle: 판정을 뒤집을 수 있는 마지막 검증은 발췌가 아니라 잘리지 않은 근거를 다시 가져와서 본다.
+  status: today
+  note: 반박 검증도 같은 온전한 근거를 봄
+- id: N038
+  family: judge
+  principle: 안전 지적을 지우려면 따로 부른 두 번이 모두 반박해야 한다.
+  status: today
+  note: 두 번 채점해 한 번이라도 Hold 가 남으면 Hold 로 둠
+- id: N039
+  family: judge
+  principle: 반박 검증기에 준 지시가 치우침을 만든다.
+  status: applied
+  note: 반박 검증은 원문 인용이 있어야 지움. 응급 안전 지적은 낮출 수 없음
+- id: N040
+  family: judge
+  principle: 채점기 출력에서 처리 흐름만 써야 하는 칸(검증 끝남 표시 등)은 받지 않는다.
+  status: applied
+  note: 출력 틀 밖의 칸은 받지 않음
+- id: N041
+  family: judge
+  principle: 예외 규칙은 좁게 건다.
+  status: today
+  note: 개인정보 규칙의 예외를 '남의 요구를 옮기며 막는 말'로 좁게 걸음
+- id: N042
+  family: judge
+  principle: 모델이 만든 2차 근거(요약, 뽑아낸 속성)는 '원문에 적힌 것'만 싣는다.
+  status: na
+  note: 모델이 만든 요약을 근거로 쓰지 않는다
+- id: N043
+  family: judge
+  principle: 채점기를 부를 때 개인 지침, 연결 도구, 스킬이 섞이지 않게 떼어 놓는다.
+  status: applied
+  note: 채점기를 개인 지침·연결 도구 없이 따로 부름
+- id: N044
+  family: judge
+  principle: 여러 문항을 한 묶음으로 채점해도 판정은 그 문항 입력만으로 내린다.
+  status: applied
+  note: 문항 하나씩 채점
+- id: N045
+  family: judge
+  principle: 사실 여부는 주장 단위로 본다.
+  status: next
+  note: 주장 단위 사실 검증 — 전체 문맥을 받은 뒤 검토
+- id: N046
+  family: safety
+  principle: 위험을 놓친 것과 위험이 없는데 병원·주의 문구를 붙인 것을 다른 규칙, 다른 등급으로 둔다.
+  status: applied
+  note: 과잉대응은 결함이 아니고 과소대응만 Hold
+- id: N047
+  family: safety
+  principle: 뚫어 보는 시험을 따로 둔다.
+  status: next
+  note: 거짓 전제를 여러 턴 밀어붙이는 시험 — 2턴 압박 시험과 함께
+- id: N048
+  family: safety
+  principle: 뚫어 보는 시험의 함정을 막는다.
+  status: next
+  note: 뚫어 보는 시험의 함정 막기 — 2턴 압박 시험과 함께
+- id: N049
+  family: safety
+  principle: 코드 검출과 채점기 판정이 갈린 건만 사람에게 올린다.
+  status: applied
+  note: 결정 룰 후보는 채점기가 확인하고, 사람 표본은 판정별로 고르게 뽑음
+- id: N050
+  family: safety
+  principle: 뚫어 보는 시험에서 다시 나온 위험 답은 회귀 문항으로 넣는다.
+  status: applied
+  note: Hold 가 난 문항은 골든셋에 남아 회차마다 다시 채점
+- id: N051
+  family: safety
+  principle: 같은 질문을 여러 번 생성해 '매번 합격하는가'를 본다(안전 문항만이라도). 말 바꾸기, 새 세션, 같은 안전 주장을 세 번 바꿔 묻기에도 답이 유지되는지 본다.
+  status: next
+  note: 응급·긴급 문항을 세 번씩 받아 매번 통과하는지 — 온담 보강 뒤 회차
+- id: N052
+  family: runs
+  principle: 사람 라벨이 붙은 고정 문항을 기준이 바뀔 때마다 다시 채점한다.
+  status: next
+  note: 사람 라벨이 붙은 문항을 기준이 바뀔 때마다 다시 채점 — 11/23–29 라벨 뒤
+- id: N053
+  family: runs
+  principle: 지문은 세 가지를 지킨다.
+  status: applied
+  note: 지문은 그 회차가 실제로 쓴 사본으로 계산. 보기만 바꾸는 코드는 지문 밖
+- id: N054
+  family: runs
+  principle: 수치마다 상태를 붙인다(측정 불가, 잠정, 확정). 채점과 반박 검증이 다 끝난 것만 확정이다.
+  status: applied
+  note: 유효성 미달·전문가 검수 전을 수치 옆에 적음
+- id: N055
+  family: runs
+  principle: 일상 점검과 정밀 검사를 나눈다.
+  status: na
+  note: 매일 도는 운영 점검이 없다
+- id: N056
+  family: runs
+  principle: 기준값(임계값)은 라벨과 실측에서 정한다.
+  status: next
+  note: 목표 수치를 전문가 라벨·어르신 실험 결과로 다시 정함 — 12월
+- id: N057
+  family: runs
+  principle: 지표에서 뺀 것은 지표 옆에 적는다.
+  status: applied
+  note: 공통 기준 판정과 전체 판정, 뺀 출처 지적 수를 나란히 적음
+- id: N058
+  family: runs
+  principle: 부분 재실행분은 지문이 같을 때만 합친다.
+  status: applied
+  note: 채점 요청 번호가 답과 근거에 묶여, 근거가 바뀌면 새로 채점
+- id: N059
+  family: runs
+  principle: 수치를 보고하기 전에 오염 점검표를 돈다.
+  status: applied
+  note: 응답 점검이 빈 답·프롬프트 섞임·생성 오류를 걸러 냄
+- id: N060
+  family: runs
+  principle: 근거 자료가 붙었는지도 회차 유효성에 넣는다.
+  status: next
+  note: 근거가 붙은 비율을 회차 유효성 조건에 — 온담이 전체 문맥을 주면
+- id: N061
+  family: runs
+  principle: 시험 실행기도 조용히 통과하면 안 된다.
+  status: applied
+  note: 실행 전 점검이 환경 문제와 코드 회귀를 나눠 알리고 실패로 끝냄
+- id: N062
+  family: runs
+  principle: 두 회차를 한꺼번에 돌리지 않는다.
+  status: applied
+  note: 같은 폴더에 다시 만들 수 없게 막음
+- id: N063
+  family: runs
+  principle: 판정을 가르는 기준값과 '왜 그 값인지'를 한 장 표로 자동 생성한다.
+  status: applied
+  note: 리포트가 목표값과 출처를 표로 냄
+- id: N064
+  family: compare
+  principle: 견주기 전에 합격선과 '이 비교로 말할 수 없는 것'을 적어 둔다.
+  status: today
+  note: 직접 비교 리포트에 '이 비교로 말할 수 없는 것'과 구간 폭 경고를 넣음
+- id: N065
+  family: compare
+  principle: 블라인드 비교는 순서를 지킨다.
+  status: today
+  note: 각자 채점을 먼저 하고 나란히 비교. '둘 다 못 씀' 수를 따로 적음
+- id: N066
+  family: compare
+  principle: 같은 과제로 한 비교와 실제 사용 기록을 합치지 않는다.
+  status: na
+  note: 실제 사용 기록이 아직 없다
+- id: N067
+  family: compare
+  principle: 비교 실행은 서로 떼어 놓는다(새 세션, 앞 대화 없음). 실행 순서를 돌린다.
+  status: applied
+  note: 질문마다 새 대화로 받고, 비교 상대를 '로그인 안 한 무료 기본'이라고 구성째 적음
+- id: N068
+  family: compare
+  principle: 시스템 비교의 분모는 '미리 배정한 전체'다.
+  status: today
+  note: 분모는 골든셋 전체. 한쪽 답이 없으면 판정 보류, 우리 쪽 Hold 는 전체 답에서 셈
+- id: N069
+  family: compare
+  principle: 근거를 찾아 답하는 시스템(RAG)의 문항은 모범 답안 대신 다섯 칸을 실행 전에 정해 둔다.
+  status: next
+  note: 자료가 부딪힐 때 무엇을 따르나 칸 — 골든셋 v1
+- id: N070
+  family: compare
+  principle: RAG는 찾는 단계와 답하는 단계를 따로 본다.
+  status: applied
+  note: 없는 출처 번호를 코드로 확정하고, 실패 원인을 찾기·답하기로 나눔
+- id: N071
+  family: compare
+  principle: 서로 견준 지표(순위, 합격률 차이)만 보지 않는다.
+  status: today
+  note: 견주기 전에 같은 답 두 번 채점이 얼마나 갈리는지부터 잼
+- id: N072
+  family: compare
+  principle: 다른 검수기의 장치를 옮길 때 네 가지를 지킨다.
+  status: applied
+  note: 옮긴 것과 안 옮긴 것을 이유와 함께 감사 기록에 적음
+- id: N073
+  family: loop
+  principle: 합격률 하나를 대표 숫자로 쓰지 않는다.
+  status: applied
+  note: 합격률 하나가 아니라 Hold 수·Gate·지표 일곱 개를 같이 냄
+- id: N074
+  family: loop
+  principle: 공유 리포트는 분량을 지킨다.
+  status: applied
+  note: 고칠 순서대로 문항을 싣고 전체는 CSV 로 냄
+- id: N075
+  family: loop
+  principle: 요약 보고문은 코드가 만든다.
+  status: applied
+  note: 리포트 첫 화면 요약을 코드가 만듦
+- id: N076
+  family: loop
+  principle: 큰 결함은 한 줄에 한 사례로 쓴다("사용자가 무엇을 하면 무엇이 나온다"). 실제 화면을 붙인다.
+  status: today
+  note: 큰 결함을 한 줄 한 사례로 발표 자료에 실음 (docs/autoqa/talk)
+- id: N077
+  family: loop
+  principle: 리포트와 라벨 시트의 발췌는 근거 문구부터 넣고 자른다.
+  status: next
+  note: 채점지 발췌를 근거 문구부터 — 11/23 전
+- id: N078
+  family: loop
+  principle: 공유본에 무엇을 넣을지 두 규칙이 서로 당긴다.
+  status: applied
+  note: 뺀 것·못 잰 것을 리포트에 적는 쪽을 따름
+- id: N079
+  family: loop
+  principle: 확정된 사양에 대한 불만은 결함이 아니라 '사양 반대 신호'로 따로 센다.
+  status: applied
+  note: 기준이 엄격해 갈리는 문항은 전문가 검수 안건으로 따로 적음
+- id: N080
+  family: human
+  principle: 사람끼리 일치도를 먼저 본다(κ 0.7 이상). 그다음 채점기와 사람을 견준다(κ 0.6 이상). 기준이 바뀌면 다시 맞춘다.
+  status: next
+  note: 약사·간호사 두 사람의 일치도를 먼저 봄 — 11/23–29
+- id: N081
+  family: human
+  principle: κ는 다섯 가지를 지켜 읽는다.
+  status: next
+  note: κ 를 묶는 법 두 가지·영역별로 — 11/23–29
+- id: N082
+  family: human
+  principle: 사람 라벨 시트에는 판정에 필요한 근거(그때의 원문, 근거 발췌)를 같이 싣는다.
+  status: next
+  note: 채점지에 판정에 필요한 근거를 실음 — 11/23 전
+- id: N083
+  family: human
+  principle: 기준이나 누구 몫인지가 바뀌어 대상이 달라진 사람 라벨은 기계가 옮기지 않는다.
+  status: today
+  note: 답이 바뀐 라벨은 옮기지 않고 다시 볼 목록으로 냄 (human)
+- id: N084
+  family: human
+  principle: 결함 등재는 사람이 한다.
+  status: applied
+  note: 리포트에 골든셋 검수 상태를 늘 적음
+- id: N085
+  family: human
+  principle: 선례집을 규칙대로 쓴다.
+  status: next
+  note: 판례 기록 — 11/23 전
+- id: N086
+  family: loop
+  principle: 「이것부터 고치면」 표를 만든다.
+  status: today
+  note: 고칠 것을 하나씩 뺐을 때 통과가 가장 많이 느는 순서를 계산 (fix-first)
+- id: N087
+  family: loop
+  principle: 고칠 순서를 정하기 전에 그 결함을 실제로 겪는 사람이 얼마나 되는지 사용 기록으로 견준다.
+  status: next
+  note: 고객 질문 빈도로 무게를 달기 — 사용 기록이 생긴 뒤
+- id: N088
+  family: loop
+  principle: 결함을 넘기기 전에 그 시스템이 실제로 받은 값이나 실제 화면을 본 증거를 붙인다.
+  status: today
+  note: 넘기는 결함마다 답이 나간 길(mode)·돌려받은 출처를 붙임
+- id: N089
+  family: loop
+  principle: 합불을 '고칠 사람' 단위(영역)로 낸다.
+  status: today
+  note: 통과를 고칠 사람 단위로 냄 (fix-first 담당별)
+- id: N090
+  family: loop
+  principle: 결함을 네 갈래로 나눠 다른 곳에 보낸다.
+  status: today
+  note: 지식이 없음 · 모자람 · 못 찾음 · 답 쓰는 규칙으로 갈라 다른 담당에게 보냄
+- id: N091
+  family: loop
+  principle: 실제 사용자 불만을 회귀 문항으로 만들고 이슈별 상태표를 낸다(풀림, 안 풀림, 상류 대기, 계측만). 신고는 신고자가 고른 분류가 아니라 내용으로 다시 나눈다.
+  status: na
+  note: 아직 실제 사용자 불만이 없다 (어르신 실험 뒤 다시 봄)
+- id: N092
+  family: loop
+  principle: '''이번에 안 나왔다''를 ''고쳐졌다''로 쓰지 않는다.'
+  status: today
+  note: 좋아진 문항은 '이번 회차에 안 나옴'으로 적음 (diff-runs)
+- id: N093
+  family: loop
+  principle: 결함 수가 줄면 사라진 항목을 이름으로 뽑는다.
+  status: today
+  note: 사라진 결함을 문항 이름으로 뽑음 (diff-runs)
+- id: N094
+  family: loop
+  principle: 고치기 전에 효과를 무엇으로 잴지 적는다.
+  status: today
+  note: 고치기 전에 무엇으로 다시 잴지 요청서에 적음
+- id: N095
+  family: loop
+  principle: 기준 변경은 회차 경계에서만 넣는다.
+  status: applied
+  note: 기준이 바뀌면 지문이 달라 앞 회차에 섞이지 않음
+- id: N096
+  family: loop
+  principle: 기준을 풀 때는 같은 채점 결과에 판정식만 다시 돌린다.
+  status: today
+  note: 규칙을 고친 전후를 같은 답으로 대조해 바뀐 판정을 모두 읽음
+- id: N097
+  family: loop
+  principle: 규칙 후보는 사람 라벨에 모두 대어 보고 고른다.
+  status: next
+  note: 규칙 후보를 사람 라벨에 대어 고름 — 11/23–29 뒤
+- id: N098
+  family: loop
+  principle: 실제 사용자 조사로 엄격함을 다시 나눈다.
+  status: next
+  note: 어르신 실험 결과로 엄격함을 다시 나눔 — 12월
+- id: N099
+  family: loop
+  principle: 자동검수 합격률은 '미리 보는 지표'로만 쓴다.
+  status: next
+  note: 통과율을 어르신 실험 지표와 나란히 봄 — 12월 (study-analyze)
+- id: N100
+  family: loop
+  principle: 실제 대화 1건마다 '풀림, 일부 풀림, 안 풀림, 범위 밖'과 안 풀린 까닭을 판정한다.
+  status: na
+  note: 실제 대화 기록이 없다
+- id: N101
+  family: loop
+  principle: RAG 시스템은 못 답한 질문을 주마다 모아 갈래를 나눈다(이미 풀림, 지식이 없음, 지식은 있는데 못 찾음, 범위 밖이라 기권이 맞음, 시험용 질문). 기권 기록을 공부할 목록으로 쓴다.
+  status: today
+  note: 못 답한 까닭을 갈래로 나누고, 온담 답을 지식에 다시 넣지 않게 요청서에 적음
+- id: N102
+  family: loop
+  principle: 개선의 첫 질문은 '무엇을 더 넣을까'가 아니다.
+  status: today
+  note: '더 넣기 전에 켜져 있는지부터: 일상 대화 길·거절·출처 0개를 먼저 셈'
+- id: N103
+  family: loop
+  principle: 고치기 전에 다섯 가지를 본다.
+  status: today
+  note: 고치기 전에 그 방향의 상한을 싸게 잼 (fix-first)
+- id: N104
+  family: loop
+  principle: 검수 도구를 뚫어 보는 감사도 절차로 한다.
+  status: applied
+  note: 감사 지적도 코드로 확인한 뒤 고치고, 고친 것과 남긴 것을 나눠 적음
+- id: N105
+  family: loop
+  principle: 결함 장부를 하나로 둔다.
+  status: next
+  note: 회차를 넘는 결함 장부 하나 — 온담 보강 회차부터
+- id: N106
+  family: loop
+  principle: 자동 개선은 제안 초안까지만 한다.
+  status: applied
+  note: autoqa 는 고칠 곳을 제안만 하고, 온담은 담당이 고침
+- id: N107
+  family: loop
+  principle: 리포트와 안내문을 그 도구를 만들지 않은 사람 눈으로 따로 검토한다.
+  status: applied
+  note: 처음 읽는 사람 검토와 문서 자동 검사
+- id: N108
+  family: loop
+  principle: 두 시스템을 견줄 때는 둘에 똑같이 물을 수 있는 기준만 쓴다.
+  status: applied
+  note: 견줄 때는 둘에 똑같이 물을 수 있는 기준만 씀 (공통 기준 판정)

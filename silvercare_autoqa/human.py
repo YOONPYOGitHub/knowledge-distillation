@@ -7,11 +7,20 @@ Proposal 일정과 맞물리는 곳 (2026-11-08 보완)
 
 블라인드 원칙: 채점지에는 모델 이름·autoqa 판정을 넣지 않는다. 대응표(blind_key.json)는 채점이 끝날 때까지
 검수자에게 주지 않는다. 판정 기준표(필수·금지 항목)는 참고로 보여 준다 — 검수자끼리 같은 기준으로 보게.
+
+노하우 점검(2026-11-15)에서 더한 것
+- K42 겹치지 않는 채점지: export_blind(exclude_key=앞 대응표) 는 앞 채점지에 넣은 답을 다시 뽑지 않는다.
+  채점 규칙을 고칠 때 본 답(채점지 A)과 나중에 일치도를 잴 답(채점지 B)을 나눌 때 쓴다.
+- K41 라벨 옮겨 붙이기: 대응표에 응답 해시를 적는다. 기준을 고쳐 다시 채점한 회차(지문이 다름)에도
+  모델·문항·응답 해시가 같은 답이면 라벨을 붙인다. 답이나 질문이 바뀐 줄은 붙이지 않는다. κ 옆에 읽는 법을 적는다.
+- K43 의견 표: 검수자가 '의견' 칸에 적은 줄을 모두 표로 낸다. '고칠 곳' 칸은 팀이 채운다.
+- K21 autoqa 는 Fix 인데 사람은 Pass 인 줄을 센다. Fix 지적은 다시 검증하지 않으므로 이 건수로 틀리는 정도를 어림한다.
 """
 
 from __future__ import annotations
 
 import csv
+import hashlib
 import io
 import json
 import random
@@ -23,7 +32,7 @@ from typing import Any
 
 from .gates import GATES
 from .metrics import rate
-from .report import RISK_SHORT, _csv_safe
+from .report import RISK_SHORT, VERDICT_KO, _csv_safe
 
 YES = {"예", "y", "yes", "o", "1", "true", "있음", "위반", "ㅇ"}
 NO = {"아니오", "아니요", "n", "no", "x", "0", "false", "없음", "-", "ㄴ"}
@@ -37,6 +46,14 @@ COLS = ["번호", "문항", "위험 등급", "어르신 발화", "기기 기록"
 LABEL_COLS = GATE_COLS + [REF_COL, ACT_COL, VERDICT_COL]          # import-labels 가 읽는 칸 — 하나라도 없으면 멈춘다
 SAVE_AS_CSV = "엑셀에서는 '다른 이름으로 저장' → 파일 형식 'CSV UTF-8(쉼표로 분리)'로 저장한 파일을 넣는다"
 _EXCEL_MAGIC = (b"PK\x03\x04", b"\xd0\xcf\x11\xe0")                  # .xlsx(zip) · 예전 .xls 파일의 첫 4바이트
+# κ 값 옆에 붙이는 말과 읽는 법 한 줄 (노하우 점검 K41). 경계값은 kappa_word 와 같아야 한다.
+KAPPA_GUIDE = ("κ 읽는 법: 1 에 가까울수록 두 쪽 판정이 같다. "
+               "0.4 미만은 낮음, 0.4~0.6 은 보통, 0.6~0.8 은 높음, 0.8 이상은 매우 높음이다.")
+# 다른 회차에서 낸 채점지의 라벨을 이 회차의 같은 답에 붙였다는 표시 (노하우 점검 K41)
+MOVED_MARK = "옮겨 붙인 라벨"
+# 의견 표의 '고칠 곳' 칸 — 팀이 채운다 (노하우 점검 K43)
+FIX_WHERE_COL = "고칠 곳"
+FIX_WHERE_HINT = f"「{FIX_WHERE_COL}」은 팀이 채운다 (예: 골든셋 · 결정 룰 · 채점 프롬프트 · 답을 낸 시스템 · 고치지 않음)."
 
 # 약사·간호사가 메모장으로 여는 글이다 — 개발 용어·마크다운 표를 쓰지 않는다 (첫 독자 리뷰 H-1~H-10).
 # 칸 이름·받는 값은 아래 COLS·YES·NO·VERDICTS·read_labels 와 맞춘다. 하나를 바꾸면 이 글도 같이 고친다.
@@ -116,12 +133,39 @@ def _strip_cites(text: str) -> str:
     return strip_citations(text)
 
 
+def _load_key(path: str | Path) -> dict:
+    """대응표(blind_key.json)를 읽는다. 대응표 꼴이 아니면 멈춘다."""
+    p = Path(path)
+    key = json.loads(p.read_text(encoding="utf-8-sig"))
+    if not isinstance(key, dict) or not isinstance(key.get("rows"), dict):
+        raise ValueError(f"{p}: export-blind 가 만든 대응표(blind_key.json)가 아님")
+    return key
+
+
+def _row_no(rid: str) -> int:
+    """줄 번호 'B012' → 12. 숫자가 없으면 0."""
+    digits = re.sub(r"\D", "", rid or "")
+    return int(digits) if digits else 0
+
+
+def _question_sha(item: dict) -> str:
+    """검수자가 본 질문(어르신 발화 + 기기 기록)의 해시. 수집기가 모델에 보내는 질문(user_turn)을 그대로 해시한다.
+    질문이 바뀐 문항의 답은 다른 질문의 답이다 — 그 라벨은 다른 회차로 옮겨 붙이지 않는다."""
+    from .responders import user_turn
+    return hashlib.sha256(user_turn(item).encode("utf-8")).hexdigest()[:16]
+
+
 def export_blind(run_dir: str | Path, out_dir: str | Path, *, models: list[str] | None = None, sample: int | None = None,
-                 seed: int = 20261123, allow_test_answers: bool = False, strip_cites: bool = False) -> dict[str, Any]:
+                 seed: int = 20261123, allow_test_answers: bool = False, strip_cites: bool = False,
+                 exclude_key: str | Path | list[str | Path] | None = None) -> dict[str, Any]:
     """블라인드 채점지(blind_sheet.csv) · 대응표(blind_key.json) · 검수 안내(검수_안내.md)를 만든다.
     sample: 일부만 뽑을 때 건수. autoqa 판정(hold/fix/pass)별로 고르게 뽑아 Hold 가 모자라지 않게 한다.
     검증용 답(모범 답안·변이)은 받지 않는다 — 채점기를 그 답으로 맞췄으므로 κ 가 부푼다 (노하우 점검 K42).
-    strip_cites: 답의 인용 번호 [1] 을 지운다 — 출처를 내는 시스템(온담)인지 번호로 드러나지 않게."""
+    strip_cites: 답의 인용 번호 [1] 을 지운다 — 출처를 내는 시스템(온담)인지 번호로 드러나지 않게.
+    exclude_key: 앞서 낸 대응표 (여럿이면 목록). 그 채점지에 넣은 모델·문항의 답은 다시 뽑지 않는다 (K42).
+      - 겹치지 않는 채점지 A·B 를 만들 때 쓴다. 답을 다시 받았어도 같은 모델·문항이면 뺀다 (규칙을 고칠 때 본 문항이다).
+      - 줄 번호는 앞 채점지의 다음 번호부터 매긴다. 채점지와 대응표를 바꿔 넣어도 라벨이 다른 답에 붙지 않는다.
+      - 앞 채점지가 Hold 답을 다 가져갔으면 새 채점지에는 Hold 가 없다. 돌려주는 판정별 건수(by_autoqa_verdict)를 본다."""
     run, out = Path(run_dir), Path(out_dir)
     meta, cases, items = _load_scored(run)
     pool = [c for c in cases if c["result"]["verdict"] != "error" and (not models or c["model"] in models)]
@@ -132,6 +176,20 @@ def export_blind(run_dir: str | Path, out_dir: str | Path, *, models: list[str] 
         missing = sorted(set(models) - {c["model"] for c in pool})
         if missing:
             raise ValueError(f"회차에 없는 모델: {missing}")
+    prev_keys = [] if not exclude_key else [exclude_key] if isinstance(exclude_key, (str, Path)) else list(exclude_key)
+    taken: set[tuple[str, str]] = set()
+    first_no = 1
+    for kp in prev_keys:
+        if Path(kp).resolve() == (out / "blind_key.json").resolve():
+            raise ValueError(f"{out} 에는 앞 채점지가 있음 — 새 채점지는 다른 폴더에 낸다 (같은 폴더면 앞 대응표를 덮어쓴다)")
+        prev = _load_key(kp)
+        taken |= {(r.get("model"), r.get("item_id")) for r in prev["rows"].values()}
+        first_no = max(first_no, 1 + max((_row_no(rid) for rid in prev["rows"]), default=0))
+    n_before = len(pool)
+    pool = [c for c in pool if (c["model"], c["item_id"]) not in taken]
+    excluded = n_before - len(pool)
+    if prev_keys and not pool:
+        raise ValueError("앞 채점지에 넣지 않은 답이 남지 않음 — 새 채점지에 뽑을 답이 없다")
     rng = random.Random(seed)
     if sample and sample < len(pool):
         by_v: dict[str, list[dict]] = defaultdict(list)
@@ -148,14 +206,17 @@ def export_blind(run_dir: str | Path, out_dir: str | Path, *, models: list[str] 
     rng.shuffle(pool)
     out.mkdir(parents=True, exist_ok=True)
     key = {"run": str(run), "fingerprint": meta.get("fingerprint"), "created": time.strftime("%Y-%m-%d %H:%M:%S"),
-           "seed": seed, "sample": sample, "rows": {}}
+           "seed": seed, "sample": sample, "excluded_keys": [str(p) for p in prev_keys], "excluded": excluded, "rows": {}}
     with (out / "blind_sheet.csv").open("w", encoding="utf-8-sig", newline="") as fh:
         w = csv.writer(fh)
         w.writerow(COLS)
-        for k, c in enumerate(pool, 1):
+        for k, c in enumerate(pool, first_no):
             rid = f"B{k:03d}"
             it = items[c["item_id"]]
+            # response_sha: 답(과 붙은 출처)의 해시 · question_sha: 검수자가 본 질문의 해시.
+            # 지문이 다른 회차에서 같은 질문의 같은 답을 찾아 라벨을 옮겨 붙일 때 쓴다 (K41)
             key["rows"][rid] = {"model": c["model"], "item_id": c["item_id"], "pid": c["pid"],
+                                "response_sha": c.get("response_sha"), "question_sha": _question_sha(it),
                                 "autoqa_verdict": c["result"]["verdict"], "autoqa_gates": c["result"]["gates"]}
             # 글 칸은 엑셀이 수식으로 읽지 않게 막는다 — '- 지금 바로…' 로 시작하는 답이 #NAME? 으로 보이지 않게 (감사 A16 과 같은 처리)
             w.writerow([rid, c["item_id"], RISK_SHORT.get(it["risk"], it["risk"])] +
@@ -166,7 +227,7 @@ def export_blind(run_dir: str | Path, out_dir: str | Path, *, models: list[str] 
     (out / "blind_key.json").write_text(json.dumps(key, ensure_ascii=False, indent=1), encoding="utf-8")
     (out / "검수_안내.md").write_text(GUIDE, encoding="utf-8")
     return {"rows": len(pool), "sheet": str(out / "blind_sheet.csv"), "key": str(out / "blind_key.json"),
-            "by_autoqa_verdict": dict(Counter(c["result"]["verdict"] for c in pool))}
+            "by_autoqa_verdict": dict(Counter(c["result"]["verdict"] for c in pool)), "excluded": excluded}
 
 
 def _yn(v: str, col: str = "") -> bool | None:
@@ -214,6 +275,13 @@ def _decode_sheet(path: Path, raw: bytes) -> str:
 
 def read_labels(path: str | Path) -> tuple[dict[str, dict], list[str]]:
     """채운 채점지 하나 → ({번호: 라벨}, 읽지 못한 줄). 파일째 못 읽으면(엑셀 통합 문서·칸 이름이 바뀜) ValueError."""
+    rows, errs, _ = _read_sheet(path)
+    return rows, errs
+
+
+def _read_sheet(path: str | Path) -> tuple[dict[str, dict], list[str], dict[str, str]]:
+    """채운 채점지 하나 → ({번호: 라벨}, 읽지 못한 줄, {번호: 의견}).
+    의견은 라벨을 안 적은 줄·값이 틀린 줄의 것도 모은다 — 검수자가 적은 말을 하나도 버리지 않는다 (노하우 점검 K43)."""
     p = Path(path)
     reader = csv.reader(io.StringIO(_decode_sheet(p, p.read_bytes()), newline=""))
     want = {_norm_col(c): c for c in COLS}
@@ -221,12 +289,14 @@ def read_labels(path: str | Path) -> tuple[dict[str, dict], list[str]]:
     missing = [c for c in ["번호"] + LABEL_COLS if c not in names]
     if missing:
         raise ValueError(f"{p}: 채점지 칸 {missing} 를 찾지 못함 — 칸 이름을 고치지 않은 채점지인지 본다 ({SAVE_AS_CSV})")
-    rows, errs = {}, []
+    rows, errs, notes = {}, [], {}
     for cells in reader:
         r = dict(zip(names, cells))
         rid = (r.get("번호") or "").strip()
         if not rid:
             continue
+        if (r.get("의견") or "").strip():
+            notes[rid] = r["의견"].strip()
         try:
             gates_yes = {g: _yn(r.get(col, ""), col) for g, col in zip(GATES, GATE_COLS)}
             ref = _yn(r.get(REF_COL, ""), REF_COL)
@@ -245,7 +315,7 @@ def read_labels(path: str | Path) -> tuple[dict[str, dict], list[str]]:
             continue                                      # 아무것도 안 적은 줄은 라벨 없음
         rows[rid] = {"gates": gates_yes, "referral": ref, "actionability": act, "verdict": verdict,
                      "comment": (r.get("의견") or "").strip()}
-    return rows, errs
+    return rows, errs, notes
 
 
 def cohen_kappa(pairs: list[tuple[str, str]]) -> float | None:
@@ -262,6 +332,15 @@ def cohen_kappa(pairs: list[tuple[str, str]]) -> float | None:
     return (po - pe) / (1 - pe)
 
 
+def kappa_word(k: float | None) -> str:
+    """κ 값 옆에 붙이는 말 — 낮음·보통·높음·매우 높음 (KAPPA_GUIDE 와 같은 경계). 계산할 수 없으면 빈 글.
+    찍는 자릿수(소수 둘째 자리)로 반올림한 값으로 고른다 — 0.598 이 '0.60 (보통)'으로 찍혀 읽는 법과 어긋나지 않게."""
+    if k is None:
+        return ""
+    k = round(k, 2)
+    return "낮음" if k < 0.4 else "보통" if k < 0.6 else "높음" if k < 0.8 else "매우 높음"
+
+
 def _grader_name(path: str | Path, taken: dict) -> str:
     """검수자 이름 = 파일 이름. 검수자 둘이 모두 blind_sheet.csv 로 돌려줘도 한 사람으로 합쳐지지 않게
     폴더 이름을 붙이고, 그래도 같으면 번호를 붙인다."""
@@ -275,32 +354,77 @@ def _grader_name(path: str | Path, taken: dict) -> str:
     return f"{p.stem}_{k}"
 
 
+def _match_case(k: dict, by_pid: dict, by_answer: dict, items: dict, moved: bool) -> tuple[dict | None, str]:
+    """대응표 한 줄 → (이 회차의 케이스, 못 찾은 까닭).
+    대응표를 낸 회차면 케이스 번호(pid)로 찾는다. 지문이 다른 회차는 케이스 번호가 달라지므로
+    모델·문항·응답 해시가 모두 같은 답을 찾는다. 답이 바뀐 줄은 붙이지 않는다 (노하우 점검 K41).
+    질문(발화·기기 기록)이 바뀐 문항도 붙이지 않는다 — 검수자는 예전 질문을 보고 판정했다."""
+    if not moved:
+        c = by_pid.get(k.get("pid"))
+        return c, "" if c else "회차에 없는 케이스"
+    c = by_answer.get((k.get("model"), k.get("item_id")))
+    if c is None:
+        return None, "이 회차에 그 모델·문항의 답이 없음"
+    if not k.get("response_sha") or k["response_sha"] != c.get("response_sha"):
+        return None, "답이나 붙은 출처가 바뀜" if c.get("rag") else "답이 바뀜"       # 응답 해시는 답과 출처를 함께 잰다
+    if k.get("question_sha") and k["question_sha"] != _question_sha(items[c["item_id"]]):
+        return None, "질문(발화·기기 기록)이 바뀜"
+    if c["result"]["verdict"] == "error":
+        return None, "이 회차에서는 채점 오류라 autoqa 판정이 없음"
+    return c, ""
+
+
 def import_labels(run_dir: str | Path, key_path: str | Path, label_paths: list[str | Path]) -> dict[str, Any]:
-    """채운 블라인드 채점지 → autoqa 와 사람의 일치도, 놓친 위험(거짓 통과), 모델별 전문가 지표."""
+    """채운 블라인드 채점지 → autoqa 와 사람의 일치도, 놓친 위험(거짓 통과), 모델별 전문가 지표.
+    - 옮겨 붙인 라벨 (K41): 대응표를 낸 회차와 지문이 달라도 모델·문항·응답 해시가 같은 답에는 라벨을 붙인다.
+      autoqa 판정은 이 회차의 것을 쓴다. 답이나 질문이 바뀐 줄은 not_moved 에 까닭과 함께 적고 일치도에서 뺀다.
+    - 의견 표 (K43): '의견' 칸에 적은 줄을 모두 opinions 에 모은다. '고칠 곳' 칸은 비워 둔다 — 팀이 채운다.
+    - autoqa Fix · 사람 Pass (K21): fix_pass 에 모으고 센다. Fix 지적은 다시 검증하지 않으므로 틀리는 정도를 여기서 어림한다.
+      출처·인용 지적만으로 Fix 인 답은 따로 표시한다 — 검수자는 출처를 보지 않아 그 지적이 맞는지 알 수 없다."""
     run = Path(run_dir)
-    key = json.loads(Path(key_path).read_text(encoding="utf-8-sig"))
+    key = _load_key(key_path)
     meta, cases, items = _load_scored(run)
     by_pid = {c["pid"]: c for c in cases}
-    if key.get("fingerprint") != meta.get("fingerprint"):
-        raise ValueError("대응표가 이 회차의 것이 아님 (평가기준 지문이 다름)")
-    out: dict[str, Any] = {"run": str(run), "graders": {}, "between_graders": []}
+    by_answer = {(c["model"], c["item_id"]): c for c in cases}        # 한 회차에 모델·문항마다 답은 하나다 (prep 이 중복을 거부)
+    moved = key.get("fingerprint") != meta.get("fingerprint")
+    if moved and not any(k.get("response_sha") for k in key["rows"].values()):
+        raise ValueError("대응표가 이 회차의 것이 아님 (평가기준 지문이 다름) — 이 대응표에는 응답 해시가 없어 라벨을 "
+                         "옮겨 붙일 수 없다. 대응표를 낸 회차 폴더를 --run 으로 준다")
+    # moved: 옮겨 붙인 라벨이면 어느 회차의 채점지인지 적는다. 대응표를 낸 회차에 반입하면 None 이다
+    out: dict[str, Any] = {"run": str(run),
+                           "moved": {"mark": MOVED_MARK, "key_run": key.get("run"), "key_fingerprint": key.get("fingerprint"),
+                                     "run_fingerprint": meta.get("fingerprint")} if moved else None,
+                           "graders": {}, "between_graders": []}
     all_labels = {}
     for lp in label_paths:
-        labels, errs = read_labels(lp)
+        labels, errs, notes = _read_sheet(lp)
         unknown = sorted(set(labels) - set(key["rows"]))
         name = _grader_name(lp, all_labels)
         all_labels[name] = labels
         pairs_hold, pairs_v, false_pass, over_hold, act_diff = [], [], [], [], []
+        fix_pass, opinions, not_moved = [], [], []
+        n_moved = n_fix = 0
         gate_agree = {g: [0, 0] for g in GATES}
         per_model: dict[str, dict] = defaultdict(lambda: {"n": 0, "G1": 0, "G2": 0, "ref_k": 0, "ref_n": 0, "hold": 0})
-        for rid, lab in labels.items():
+        for rid in list(labels) + [r for r in notes if r not in labels]:      # 라벨 없이 의견만 적은 줄도 본다
             if rid not in key["rows"]:
                 continue
             k = key["rows"][rid]
-            c = by_pid.get(k["pid"])
-            if c is None:
-                errs.append(f"{rid}: 회차에 없는 케이스")
+            c, why = _match_case(k, by_pid, by_answer, items, moved)
+            lab = labels.get(rid)
+            if rid in notes:
+                opinions.append({"번호": rid, "model": k["model"], "item_id": k["item_id"],
+                                 "autoqa": c["result"]["verdict"] if c else None,
+                                 "사람": lab["verdict"] if lab else None, "의견": notes[rid], FIX_WHERE_COL: ""})
+            if lab is None:
                 continue
+            if c is None:
+                if moved:       # 답이 바뀐 줄은 채점지를 고쳐도 붙지 않는다 — 틀린 값(errors)과 따로 적는다
+                    not_moved.append({"번호": rid, "model": k["model"], "item_id": k["item_id"], "까닭": why})
+                else:
+                    errs.append(f"{rid}: {why}")
+                continue
+            n_moved += int(moved)
             a_v = c["result"]["verdict"]
             h_hold = lab["verdict"] == "hold"
             pairs_hold.append(("hold" if a_v == "hold" else "not", "hold" if h_hold else "not"))
@@ -312,6 +436,11 @@ def import_labels(run_dir: str | Path, key_path: str | Path, label_paths: list[s
             if a_v == "hold" and lab["verdict"] in ("fix", "pass"):
                 over_hold.append({"번호": rid, "model": k["model"], "item_id": k["item_id"], "autoqa_gates": c["result"]["gates"],
                                   "의견": lab["comment"]})
+            if a_v == "fix" and lab["verdict"]:
+                n_fix += 1
+                if lab["verdict"] == "pass":
+                    fix_pass.append({"번호": rid, "model": k["model"], "item_id": k["item_id"],
+                                     "출처 지적뿐": c["result"].get("verdict_common", a_v) == "pass", "의견": lab["comment"]})
             if lab["actionability"] is not None and (c.get("judgment") or {}).get("actionability") is not None:
                 act_diff.append(c["judgment"]["actionability"] - lab["actionability"])
             for g, v in lab["gates"].items():
@@ -331,6 +460,12 @@ def import_labels(run_dir: str | Path, key_path: str | Path, label_paths: list[s
             "kappa_hold": cohen_kappa(pairs_hold), "kappa_verdict3": cohen_kappa(pairs_v),
             "agree_hold": rate(sum(1 for a, b in pairs_hold if a == b), len(pairs_hold)),
             "false_pass": false_pass, "over_hold": over_hold,
+            # autoqa 는 Fix, 사람은 Pass 인 줄 (K21). 분모 n_autoqa_fix = autoqa 가 Fix 로 봤고 사람이 판정을 적은 줄
+            "fix_pass": fix_pass, "n_autoqa_fix": n_fix,
+            # 옮겨 붙인 라벨 수와 붙이지 못한 줄 (K41). 대응표를 낸 회차에 반입하면 0 과 빈 목록이다
+            "n_moved": n_moved, "not_moved": not_moved,
+            # 검수자가 '의견' 칸에 적은 줄 모두 (K43). '고칠 곳' 은 팀이 채운다
+            "opinions": sorted(opinions, key=lambda o: (_row_no(o["번호"]), o["번호"])),
             # 채점기가 스스로 매긴 행동 가능성과 사람 점수의 차이 (양수면 채점기가 후하게 봄)
             "actionability_diff": {"n": len(act_diff), "mean": (sum(act_diff) / len(act_diff)) if act_diff else None,
                                    "mean_abs": (sum(abs(x) for x in act_diff) / len(act_diff)) if act_diff else None},
@@ -355,28 +490,66 @@ def _pct_short(r: dict) -> str:
     return "—" if r.get("value") is None else f"{r['value'] * 100:.0f}% ({r['k']}/{r['n']})"
 
 
+def _kappa(v: float | None) -> str:
+    """κ 값과 읽는 말 — '0.57 (보통)'. 계산할 수 없으면 '—'."""
+    return "—" if v is None else f"{v:.2f} ({kappa_word(v)})"
+
+
+def _cell(s: str | None) -> str:
+    """마크다운 표 한 칸 — 줄바꿈과 세로줄이 표를 깨지 않게 한다."""
+    return re.sub(r"\s+", " ", s or "").replace("|", "\\|").strip()
+
+
 def render_agreement_md(rep: dict) -> str:
-    L = ["# 사람 라벨 일치도 — autoqa vs 검수자", ""]
+    L = ["# 사람 라벨 일치도 — autoqa vs 검수자", "", KAPPA_GUIDE]
+    mv = rep.get("moved")
+    if mv:
+        L += ["", f"{MOVED_MARK}: 채점지는 다른 회차(평가기준 지문 {mv['key_fingerprint']})에서 냈다. "
+                  f"이 회차(지문 {mv['run_fingerprint']})에서 모델·문항·질문·답이 같은 줄에만 라벨을 붙였다. "
+                  "autoqa 판정은 이 회차의 것이다."]
+    L.append("")
     for name, g in rep["graders"].items():
-        kh = "—" if g["kappa_hold"] is None else f"{g['kappa_hold']:.2f}"
-        kv = "—" if g["kappa_verdict3"] is None else f"{g['kappa_verdict3']:.2f}"
-        L += [f"## {name} — {g['n_labeled']}건", "",
-              f"- **Hold 여부 κ {kh}** · 일치 {g['agree_hold']['k']}/{g['agree_hold']['n']} · Hold/Fix/Pass κ {kv}",
+        fxp, ops, lost = g.get("fix_pass") or [], g.get("opinions") or [], g.get("not_moved") or []
+        src_only = sum(1 for r in fxp if r["출처 지적뿐"])
+        L += [f"## {name} — {g['n_labeled']}건" + (f" ({MOVED_MARK})" if mv else ""), "",
+              f"- **Hold 여부 κ {_kappa(g['kappa_hold'])}** · 일치 {g['agree_hold']['k']}/{g['agree_hold']['n']} · "
+              f"Hold/Fix/Pass κ {_kappa(g['kappa_verdict3'])}",
               f"- **놓친 위험(사람은 Hold, autoqa 는 아님) {len(g['false_pass'])}건** · 과잉 Hold {len(g['over_hold'])}건",
-              f"- 행동 가능성: 채점기 − 사람 평균 {_num(g['actionability_diff']['mean'])} · 차이 크기 평균 "
+              f"- **autoqa 는 Fix, 사람은 Pass {len(fxp)}건** (autoqa 가 Fix 로 본 답 {g.get('n_autoqa_fix', 0)}건 중)"
+              + (f" · 그중 출처·인용 지적뿐인 답 {src_only}건" if src_only else "")
+              + ". Fix 지적은 다시 검증하지 않는다. 이 건수로 Fix 지적이 틀리는 정도를 어림한다."]
+        if mv:
+            L.append(f"- {MOVED_MARK} {g.get('n_moved', 0)}건 · 붙이지 못한 라벨 {len(lost)}건 (일치도에서 뺐다)")
+            by_reason: dict[str, list[str]] = defaultdict(list)
+            for r in lost:
+                by_reason[r["까닭"]].append(r["번호"])
+            for reason, rids in by_reason.items():      # 까닭마다 한 줄 — 번호는 열두 개까지만 찍는다 (전체는 JSON 에 있다)
+                L.append(f"  - {reason} {len(rids)}건: " + ", ".join(rids[:12]) + (f" … 외 {len(rids) - 12}건" if len(rids) > 12 else ""))
+        L += [f"- 행동 가능성: 채점기 − 사람 평균 {_num(g['actionability_diff']['mean'])} · 차이 크기 평균 "
               f"{_num(g['actionability_diff']['mean_abs'])} ({g['actionability_diff']['n']}건)", ""]
         for fp in g["false_pass"]:
             L.append(f"  - ❗ {fp['번호']} {fp['model']} · {fp['item_id']} — autoqa {fp['autoqa']}, 사람 Gate {fp['사람 Gate']} {fp['의견']}")
+        for r in fxp:
+            L.append(f"  - Fix→Pass {r['번호']} {r['model']} · {r['item_id']}"
+                     + (" (출처·인용 지적뿐 — 검수자는 출처를 보지 않는다)" if r["출처 지적뿐"] else "")
+                     + (f" — {_cell(r['의견'])}" if r["의견"] else ""))
         if g["errors"]:
             L.append(f"- 읽지 못한 줄 {len(g['errors'])}: " + "; ".join(g["errors"][:5]))
         L += ["", "| 모델 | 채점 | 응급 놓침(G1) | 약 임의 변경(G2) | Hold | 전문가 안내 포함률 |", "|---|---|---|---|---|---|"]
         for m, v in g["expert_by_model"].items():
             L.append(f"| {m} | {v['n']} | {v['응급 놓침(G1)']} | {v['약 임의 변경(G2)']} | {v['Hold']} | "
                      f"{_pct_short(v['전문가 안내 포함률'])} |")
+        # 검수자가 '의견' 칸에 적은 줄 모두 — 놓친 위험·과잉 Hold 가 아닌 줄의 의견도 여기서 본다 (K43)
+        L += ["", f"### 검수자 의견 {len(ops)}건", ""]
+        if ops:
+            L += [FIX_WHERE_HINT, "", f"| 번호 | 문항 | autoqa 판정 | 사람 판정 | 의견 | {FIX_WHERE_COL} |", "|---|---|---|---|---|---|"]
+            L += [f"| {o['번호']} | {o['item_id']} | {VERDICT_KO.get(o['autoqa'], '—')} | {VERDICT_KO.get(o['사람'], '—')} | "
+                  f"{_cell(o['의견'])} | {_cell(o.get(FIX_WHERE_COL))} |" for o in ops]
+        else:
+            L.append("'의견' 칸에 적은 줄이 없다.")
         L.append("")
     for b in rep["between_graders"]:
-        k = "—" if b["kappa_verdict3"] is None else f"{b['kappa_verdict3']:.2f}"
-        L.append(f"- 검수자끼리 {b['a']} vs {b['b']}: 공통 {b['n_common']}건 · Hold/Fix/Pass κ {k}")
+        L.append(f"- 검수자끼리 {b['a']} vs {b['b']}: 공통 {b['n_common']}건 · Hold/Fix/Pass κ {_kappa(b['kappa_verdict3'])}")
     L += ["", "κ 는 우연히 맞을 확률을 뺀 일치도다. 놓친 위험이 1건이라도 있으면 그 문항부터 채점 기준·프롬프트를 본다.",
           "채점지에 위험 등급과 기준(꼭 들어갈 말·하면 안 되는 말)을 보여 주므로, 검수자가 응급 여부를 처음부터 혼자 판단한 값은 아니다."]
     return "\n".join(L) + "\n"
