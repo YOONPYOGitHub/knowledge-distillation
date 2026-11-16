@@ -15,7 +15,7 @@ from typing import Any, Iterable
 
 from .golden import load_golden, validate_golden
 from .responders import APP_SYSTEM
-from .textutil import nfc
+from .textutil import find_echo, nfc
 
 # 응답에 이 문장이 보이면 시스템 프롬프트가 답에 섞인 것 (팀 UI 백엔드는 prompt 까지 붙여 돌려준다)
 _LEAK_PROBES = [ln.strip("- ").strip()[:18] for ln in APP_SYSTEM.splitlines() if len(ln.strip()) > 20][:4]
@@ -184,7 +184,7 @@ def check_rows(rows: list[dict], golden: dict, problems: list[tuple[str, str]] |
         dup = sorted(k for k, v in c.items() if v > 1)
         empty = [r["item_id"] for r in rs if not str(r["response"]).strip()]
         leak = [r["item_id"] for r in rs if any(p and p in str(r["response"]) for p in _LEAK_PROBES)]
-        echo = [r["item_id"] for r in rs if any(mk in str(r["response"]) for mk in echo_marks)]
+        echo = [r["item_id"] for r in rs if find_echo(str(r["response"]), echo_marks)]
         gen_err = [r["item_id"] for r in rs if (r.get("meta") or {}).get("error")]
         # 답을 받은 뒤 골든셋 질문을 고쳤으면 그 답은 다른 질문의 답이다 — 수집기가 보낸 질문(meta.message)과 대조
         from .responders import user_turn

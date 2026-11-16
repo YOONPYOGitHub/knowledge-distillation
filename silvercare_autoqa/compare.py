@@ -241,7 +241,7 @@ def preference_ci(scores: list[float], *, seed: int = 7, boot: int = BOOT) -> di
 
 
 def finalize(run_dir: str | Path, a: str, b: str, *, margin: float = DEFAULT_MARGIN,
-             pref_floor: float = DEFAULT_PREF_FLOOR) -> dict:
+             pref_floor: float = DEFAULT_PREF_FLOOR, basis: str | None = None) -> dict:
     from .pipeline import _load
 
     run = Path(run_dir)
@@ -276,7 +276,9 @@ def finalize(run_dir: str | Path, a: str, b: str, *, margin: float = DEFAULT_MAR
     from .metrics import compare_basis
     ca = [by[a][r["item_id"]] for r in done]
     cb = [by[b][r["item_id"]] for r in done]
-    basis = compare_basis(ca, cb)
+    # basis 를 주면 그 기준으로 센다 — 같은 앱에서 검색만 끈 시스템은 출처 칸이 있어도 출처를 낼 수 없으므로
+    # 공통 기준으로 견준다 (11/16 검색 있음 대 검색 없음). 주지 않으면 출처를 내는지로 정한다.
+    basis = basis or compare_basis(ca, cb)
     va = {r["item_id"]: case_verdict(by[a][r["item_id"]], basis) for r in done}
     vb = {r["item_id"]: case_verdict(by[b][r["item_id"]], basis) for r in done}
     valid = [r for r in done if va[r["item_id"]] != "error" and vb[r["item_id"]] != "error"]

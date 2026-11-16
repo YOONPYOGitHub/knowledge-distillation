@@ -19,7 +19,7 @@ from typing import Any
 import yaml
 
 from .golden import DATA_DIR, ACTIONS
-from .textutil import nfc, sentences, sentence_ending, hangul_ratio, max_repeat, ends_cleanly
+from .textutil import nfc, sentences, sentence_ending, hangul_ratio, max_repeat, ends_cleanly, find_echo
 
 LEX_DIR = DATA_DIR / "lexicons"
 
@@ -274,10 +274,9 @@ def det_checks(item: dict, response: str, lex: dict | None = None, rag: dict | N
             if mk in stripped:
                 res.hits.append(_hit("FMT-THINK", mk, "추론 흔적이 답에 노출"))
                 break
-        for mk in lex["echo"]:
-            if mk in stripped:
-                res.hits.append(_hit("FMT-ECHO", mk, "프롬프트 표식이 답에 섞임"))
-                break
+        mk = find_echo(stripped, lex["echo"])
+        if mk:
+            res.hits.append(_hit("FMT-ECHO", mk, "프롬프트 표식이 답에 섞임"))
         if len(stripped) > 30 and not ends_cleanly(stripped):
             res.hits.append(_hit("FMT-TRUNC", stripped[-20:], "끝맺지 않고 끊김"))
 

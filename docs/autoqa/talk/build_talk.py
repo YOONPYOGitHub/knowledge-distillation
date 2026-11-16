@@ -111,7 +111,8 @@ h1,h2,h3{text-wrap:balance;}
 .marks{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem;align-items:center;min-height:12px;}
 .marks.one{grid-template-columns:1fr;}
 .marks .track{height:10px;} .marks .split{height:10px;} .marks .seg{padding:0;}
-.dots{display:flex;gap:6px;}
+.goal-lite{gap:.35rem;padding:.8rem 1.2rem;} .goal-lite .vs .num{font-size:clamp(30px,3.2vw,44px);}
+.dots{display:flex;flex-wrap:wrap;gap:6px;}
 .dot{width:12px;height:12px;border-radius:999px;background:var(--other);}
 .dot.me{background:var(--accent);}
 
@@ -319,12 +320,12 @@ def legend(items: list[tuple[str, str]]) -> str:
     return '<ul class="legend">' + "".join(f'<li><span class="sw {c}"></span>{E(t)}</li>' for c, t in items) + "</ul>"
 
 
-def versus(a: str, b: str, name_b: str, unit: str = "", tie: str = "") -> str:
+def versus(a: str, b: str, name_b: str, unit: str = "", tie: str = "", name_a: str = "온담") -> str:
     """온담 대 비교 상대 — 이름을 숫자 바로 위에 붙여 어느 쪽 숫자인지 한눈에 보이게 한다."""
     u = f'<span class="unit">{E(unit)}</span>' if unit else ""
     t = f'<p class="who">비김</p><p class="num sm">{E(tie)}</p>' if tie else ""
     return (f'<div class="vs{" has-tie" if tie else ""}">'
-            f'<p class="who"><span class="sw win"></span>온담</p><p class="num">{E(a)}{u}</p>'
+            f'<p class="who"><span class="sw win"></span>{E(name_a)}</p><p class="num">{E(a)}{u}</p>'
             f'<p class="who"><span class="sw loss"></span>{E(name_b)}</p><p class="num">{E(b)}{u}</p>{t}</div>')
 
 
@@ -509,7 +510,7 @@ def build() -> str:
     V.append(view("OPENING · 오늘 볼 것", "네 가지를 차례로 봅니다", '<div class="grid g2">'
                   + card("무엇을 어떻게 재나", "판정 세 갈래와 여섯 단계", num="01")
                   + card("채점기를 믿어도 되나", "채점기부터 시험했다", num="02")
-                  + card("온담은 지금 어디인가", "ChatGPT와 같은 질문으로", num="03")
+                  + card("온담은 지금 어디인가", "온디바이스 두 버전과 ChatGPT를 같은 질문으로", num="03")
                   + card("무엇을 고치고 다시 재나", "고칠 곳 · 담당 · 목표", num="04") + "</div>"))
 
     # 3 판정 세 갈래
@@ -562,45 +563,119 @@ def build() -> str:
                   + '<div class="bars tight">' + frows + "</div>",
                   source=D["knowhow"]["source"], wide=True))
 
-    # 8 통과율·Hold
-    V.append(view("03 · 온담은 지금 어디인가", f'같은 질문 {n}개,<br>통과는 {og["pass"]} 대 {cg["pass"]}',
-                  meter_rows([{"name": "온담", "k": og["pass"], "n": n, "accent": True},
-                              {"name": m["comparator"], "k": cg["pass"], "n": n}])
-                  + '<div class="grid g2">'
-                  + stat(str(og["hold"]), "온담의 위해 답 (Hold)", unit="건", focus=True, note=D["hold_names"]["ondam"])
-                  + stat(str(cg["hold"]), m["comparator"] + "의 위해 답 (Hold)", unit="건", note=D["hold_names"]["chatgpt"])
-                  + "</div>"
-                  + table_view(["", "Pass", "Fix", "Hold"], [["온담", og["pass"], og["fix"], og["hold"]],
-                                                           [m["comparator"], cg["pass"], cg["fix"], cg["hold"]]]),
-                  takeaway=("통과는 온담이 더 많습니다.<br>위해 답은 두 쪽 모두 남았습니다." if og["pass"] >= cg["pass"]
-                            else "통과는 아직 " + m["comparator"] + "가 더 많습니다."),
-                  source=m["common_source"].format(n=n)))
+    # 8 세 곳의 통과·위해 답 — 검색 있는 온담 · 검색 없는 온담 · ChatGPT
+    sy = D["systems"]
+    sa, sc, sb = sy
+    first = max(sy, key=lambda s: s["pass"])
 
-    # 9 나란히
+    def few(names: str, k: int = 3) -> str:     # 이름은 셋까지만 — 나머지는 '외 N건'
+        xs = [x for x in names.split(" · ") if x]
+        return " · ".join(xs[:k]) + (f" 외 {len(xs) - k}건" if len(xs) > k else "")
+
+    def iga(w: str) -> str:            # 받침이 있으면 '이', 없으면(ChatGPT 포함) '가'
+        c = w[-1]
+        return w + ("이" if "가" <= c <= "힣" and (ord(c) - 0xAC00) % 28 else "가")
+    t8 = (f"통과는 {iga(first['name'])} 가장 많습니다." if sum(s["pass"] == first["pass"] for s in sy) == 1
+          else "통과가 가장 많은 곳이 둘 이상입니다.")
+    t8 += (" 검색 있는 온담은 위해 답이 없습니다." if sa["hold"] == 0 else
+           f" 검색 있는 온담의 위해 답 {sa['hold']}건 중 {sa['hold_emergency']}건이 응급 질문입니다." if sa.get("hold_emergency")
+           else f" 검색 있는 온담은 위해 답이 {sa['hold']}건입니다.")
+    V.append(view("03 · 온담은 지금 어디인가", f"같은 질문 {n}개를 세 곳에 물었습니다",
+                  meter_rows([{"name": s["name"], "k": s["pass"], "n": n, "accent": i == 0} for i, s in enumerate(sy)])
+                  .replace('class="bars"', 'class="bars tight"', 1)
+                  + '<div class="grid g3 tight">'
+                  + "".join(stat(str(s["hold"]), s["name"] + " · 위해 답", unit="건", focus=i == 0,
+                                 note=few(s["hold_names"]) if s["hold"] else "") for i, s in enumerate(sy))
+                  + "</div>",
+                  lead="막대는 통과(Pass) 비율 · 아래 숫자는 위해 답(Hold) 수",
+                  takeaway=t8, source=m["systems_source"].format(n=n)
+                  + (f" · {m['n_golden']}문항 중 {m['n_golden'] - n}문항은 검색 있는 온담 서버가 꺼져 받지 못해 뺐다"
+                     if n < m["n_golden"] else ""), wide=True))
+
+    # 8-2 비교 ① 같은 모델에서 검색만 뺐을 때 — 지식 검색이 답을 낫게 했나
+    cr2 = D["compare_rag"]
+    ov2 = next(x for x in cr2["criteria"] if x["name"] == "종합")
+    rows2, tv2 = [], []
+    for cr in cr2["criteria"]:
+        rows2.append(split_row(cr["name"], [("s-win", cr["win"], "검색 있음이 나음"), ("s-tie", cr["tie"], "비김"),
+                                            ("s-loss", cr["loss"], "검색 없음이 나음")], n,
+                               f'{cr["win"]} <small>: {cr["loss"]}</small>'))
+        tv2.append([cr["name"], cr["win"], cr["tie"], cr["loss"]])
+    if sa["pass"] > sc["pass"] and sa["hold"] > sc["hold"]:
+        head82 = "지식 검색을 붙이니<br>통과도 늘고 위해 답도 늘었습니다"
+    elif sa["pass"] > sc["pass"]:
+        head82 = "지식 검색을 붙이니<br>통과가 늘었습니다"
+    elif sa["hold"] > sc["hold"]:
+        head82 = "지식 검색을 붙여도 통과는 늘지 않고<br>위해 답이 늘었습니다"
+    else:
+        head82 = "지식 검색이 있어도 없어도<br>비슷했습니다"
+    wait = ""
+    if sa.get("median_sec") and sc.get("median_sec"):
+        wait = versus(f'{sa["median_sec"]:.0f}', f'{sc["median_sec"]:.0f}', "검색 없는 온담", unit="초", name_a="검색 있는 온담")
+    cards82 = ('<div class="grid g3 tight">'
+               + f'<article class="card goal-lite"><p class="c-label">통과</p>'
+                 f'{versus(str(sa["pass"]), str(sc["pass"]), "검색 없는 온담", unit=f"/{n}", name_a="검색 있는 온담")}</article>'
+               + f'<article class="card goal-lite"><p class="c-label">위해 답</p>'
+                 f'{versus(str(sa["hold"]), str(sc["hold"]), "검색 없는 온담", unit="건", name_a="검색 있는 온담")}</article>'
+               + (f'<article class="card goal-lite"><p class="c-label">답 하나 기다린 시간 (가운데 값)</p>{wait}</article>' if wait else "")
+               + "</div>")
+    V.append(view("03 · 비교 ① 지식 검색이 도움이 됐나", head82,
+                  cards82 + '<div class="bars tight">' + "".join(rows2) + "</div>"
+                  + legend([("win", "검색 있음이 나음"), ("tie", "비김"), ("loss", "검색 없음이 나음")])
+                  + table_view(["기준", "검색 있음이 나음", "비김", "검색 없음이 나음"], tv2),
+                  source="같은 Qwen3.5-4B에서 지식 검색만 뺐다 · 두 답을 이름 가리고 나란히 · 기다린 시간은 시험 서버에서 잰 값",
+                  wide=True))
+
+    # 9 비교 ② 나란히 — 검색 있는 온담 대 ChatGPT
     rows, tv = [], []
     for cr in cmp["criteria"]:
         rows.append(split_row(cr["name"], [("s-win", cr["win"], "온담이 나음"), ("s-tie", cr["tie"], "비김"),
                                            ("s-loss", cr["loss"], m["comparator"] + "가 나음")], n,
                               f'{cr["win"]} <small>: {cr["loss"]}</small>'))
         tv.append([cr["name"], cr["win"], cr["tie"], cr["loss"]])
-    V.append(view("03 · 온담은 지금 어디인가", "온담은 짧고 쉽게,<br>ChatGPT는 빠짐없이",
+    PHRASE = {"안전": "안전하게", "정확성": "빠짐없이", "바로 할 일": "할 일을 또렷하게", "짧고 쉽게": "짧고 쉽게"}
+    part = [cr for cr in cmp["criteria"] if cr["name"] in PHRASE]
+    best_a = max(part, key=lambda cr: cr["win"] - cr["loss"])
+    best_b = min(part, key=lambda cr: cr["win"] - cr["loss"])
+    if all(cr["loss"] > cr["win"] for cr in cmp["criteria"]):
+        head9 = f"다섯 기준 모두<br>{m['comparator']}가 더 많이 뽑혔습니다"
+    elif best_a["win"] > best_a["loss"] and best_b["loss"] > best_b["win"]:
+        head9 = f"온담은 {PHRASE[best_a['name']]},<br>{m['comparator']}는 {PHRASE[best_b['name']]}"
+    else:
+        head9 = "기준마다 나란히 놓고 골랐습니다"
+    V.append(view("03 · 비교 ② ChatGPT에 밀리지 않나", head9,
                   '<div class="bars">' + "".join(rows) + "</div>"
-                  + legend([("win", "온담이 나음"), ("tie", "비김"), ("loss", m["comparator"] + "가 나음")])
+                  + legend([("win", "검색 있는 온담이 나음"), ("tie", "비김"), ("loss", m["comparator"] + "가 나음")])
                   + table_view(["기준", "온담이 나음", "비김", m["comparator"] + "가 나음"], tv),
+                  lead="검색 있는 온담 대 " + m["comparator"] + " — 같은 질문의 두 답을 이름 가리고 나란히",
                   source=cmp["source"].format(n=n), wide=True))
 
-    # 10 ChatGPT 도 넘지 못한 기준
+    # 10 ChatGPT 도 넘지 못한 기준 (숫자는 회차에서 뽑는다)
     cn = D["chatgpt_notes"]
+    longer = int(cn["cards"][2]["value"].rstrip("자")) > 1.3 * int(cn["cards"][2]["sub"].split()[-1].rstrip("자"))
+    shown = cn["cards"] if longer else cn["cards"][:2]
     cc = "".join(f'<article class="card"><div class="stat"><div class="big">{E(x["value"])}</div></div>'
-                 f'<h3 class="c-title">{nb(x["title"])}</h3><p class="c-sub">{nb(x["sub"])}</p></article>' for x in cn["cards"])
-    V.append(view("03 · 온담은 지금 어디인가", "상용 서비스도 어르신 기준은 넘지 못했습니다", f'<div class="grid g3">{cc}</div>',
-                  takeaway=cn["takeaway"], wide=True))
+                 f'<h3 class="c-title">{nb(x["title"])}</h3><p class="c-sub">{nb(x["sub"])}</p></article>' for x in shown)
+    falls = cg["hold"] > 0 or not cn["cards"][1]["value"].startswith("0/")
+    V.append(view("03 · 온담은 지금 어디인가",
+                  "상용 서비스도 어르신 기준은 넘지 못했습니다" if falls else "상용 서비스의 답은 길고 자세했습니다",
+                  f'<div class="grid g{len(shown)}">{cc}</div>',
+                  takeaway=cn["takeaway"] if longer else "어르신 기준으로 재면 상용 서비스에서도 고칠 곳이 나옵니다.", wide=True))
 
-    # 11 밀리는 곳
+    # 11 고칠 곳 — 같은 손으로 고치는 것끼리 묶어 큰 것부터
+    WORD = {1: "한", 2: "두", 3: "세", 4: "네"}
+    top = D["gaps"][:4]
     gp = "".join(f'<article class="card"><span class="pill pill-ghost">{E(g["owner"])}</span>'
                  f'<div class="stat"><div class="big">{E(g["big"])}<span class="unit">{E(g["unit"])}</span></div></div>'
-                 f'<h3 class="c-title">{nb(g["title"])}</h3><p class="c-sub">{nb(g["sub"])}</p></article>' for g in D["gaps"])
-    V.append(view("04 · 무엇을 고치고 다시 재나", "온담이 고칠 곳은 네 군데입니다", f'<div class="grid g4">{gp}</div>',
+                 f'<h3 class="c-title">{nb(g["title"])}{" <span class=" + chr(34) + "pill pill-accent mini" + chr(34) + ">위해 답</span>" if g.get("hold") else ""}</h3>'
+                 f'<p class="c-sub">{nb(g["sub"])}</p></article>' for g in top)
+    if any(g.get("hold") for g in top):
+        head11 = "검색 있는 온담이 고칠 곳,<br>위해 답이 걸린 것부터"
+    elif len(D["gaps"]) > len(top):
+        head11 = f"검색 있는 온담이 고칠 곳,<br>큰 것부터 {WORD[len(top)]} 군데"
+    else:
+        head11 = f"검색 있는 온담이 고칠 곳은 {WORD.get(len(top), len(top))} 군데입니다"
+    V.append(view("04 · 무엇을 고치고 다시 재나", head11, f'<div class="grid g{max(2, len(top))}">{gp}</div>',
                   takeaway="고칠 곳마다 담당과 다시 잴 방법을 정했습니다.", wide=True))
 
     # 11-2 이것부터 고치면 — 고칠 순서를 계산으로
@@ -639,7 +714,7 @@ def build() -> str:
     ov = next(x for x in cmp["criteria"] if x["name"] == "종합")
 
     def dots(k: int, me: bool) -> str:
-        return '<div class="dots">' + f'<span class="dot{" me" if me else ""}"></span>' * min(k, 12) + "</div>"
+        return '<div class="dots">' + f'<span class="dot{" me" if me else ""}"></span>' * min(k, 30) + "</div>"
 
     def bar(k: int, me: bool) -> str:
         return (f'<div class="track"><div class="fill{" is-accent" if me else ""}" style="width:{100 * k / n:.1f}%" '
@@ -649,7 +724,7 @@ def build() -> str:
         return f"{x * 100:.1f}%" if abs(x - ref) < 0.0095 else f"{x * 100:.0f}%"
 
     # ① 위해 답
-    hold_names = ", ".join(E(x) for x in D["hold_names"]["ondam"].split(" · "))
+    hold_names = E(few(D["hold_names"]["ondam"]).replace(" · ", ", "))
     c1 = goal_card(
         tg["hold"]["met"], "위해 답이 0건일 것", versus(str(og["hold"]), str(cg["hold"]), name_b, unit="건"),
         f'<div class="marks" role="img" aria-label="위해 답 온담 {og["hold"]}건, {E(name_b)} {cg["hold"]}건">'
@@ -689,7 +764,7 @@ def build() -> str:
     head13 = {0: "세 조건, 아직 하나도 넘지 못했습니다", 1: "세 조건 중 하나를 넘었습니다", 2: "세 조건 중 둘을 넘었습니다",
               3: "세 조건을 모두 넘었습니다"}[n_met]
     V.append(view("04 · 무엇을 고치고 다시 재나", head13, f'<div class="grid g3 goals">{c1}{c2}{c3}</div>',
-                  lead=f"셋을 모두 넘어야 “{E(name_b)}에 밀리지 않는다”고 말합니다.",
+                  lead="검색 있는 온담이 셋을 모두 넘어야 “밀리지 않는다”고 말합니다.",
                   takeaway="다음 — 온담을 보강한 뒤, 같은 질문으로 다시 채점합니다." if n_met < 3 else "",
                   source=D["targets_source"], wide=True))
 

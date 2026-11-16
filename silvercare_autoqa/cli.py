@@ -11,7 +11,7 @@
   corpus-coverage 골든셋 문항의 근거가 팀 RAG 지식 자료에 있는지 핵심어로 잼 (자료는 이 PC 에만)
   compare         두 시스템 블라인드 직접 비교 + 비열등 판정 (채점 끝난 회차에서)
   prep            회차 만들기 (결정 룰 + 채점 요청 packet)
-  judge           claude -p 로 채점 (기본 Sonnet 5.5 · effort high)
+  judge           claude -p 로 채점 (기본 Opus 5.5 · effort high)
   import          채점 결과 검증·반입 + 반박 검증 요청 생성
   verify          claude -p 로 반박 검증
   finalize        판정·지표·리포트
@@ -122,7 +122,9 @@ def cmd_generate(a) -> int:
     elif a.source == "ondam":
         if not a.base_url or "127.0.0.1:8000" in a.base_url:
             raise SystemExit("--source ondam 은 --base-url 에 온담 주소가 필요 (예: https://<온담 주소> 또는 http://127.0.0.1:<로컬 포트>)")
-        rows = R.ondam_api(items, a.base_url, a.label, pause=a.pause)
+        failed = [] if a.keep_going else None
+        rows = R.ondam_api(items, a.base_url, a.label, pause=a.pause, timeout=a.timeout,
+                           save_to=a.out + ".part", resume=a.resume, failed=failed)
     elif a.source == "openai-api":
         rows = R.openai_api(items, a.model, a.label, system=a.system, max_output_tokens=a.max_output_tokens,
                             reasoning_effort=a.reasoning_effort)
@@ -139,6 +141,10 @@ def cmd_generate(a) -> int:
         raise SystemExit(f"알 수 없는 source {a.source}")
     R.write_jsonl(rows, a.out)
     print(f"응답 {len(rows)}건 → {a.out}")
+    if a.source == "ondam" and failed:
+        Path(a.out + ".failed.json").write_text(json.dumps(failed, ensure_ascii=False, indent=1), encoding="utf-8")
+        print(f"⚠ 서버 오류로 받지 못한 문항 {len(failed)}개: {[f['item_id'] for f in failed]} — --resume 으로 다시 물을 수 있다")
+        return 3
     from .tools import check_responses
     rep = check_responses(a.out, a.golden)
     if not rep["ok"]:
@@ -341,7 +347,8 @@ def cmd_compare(a) -> int:
         return 0
     if not a.finalize_only:
         print("채점:", C.judge(a.run, a.a, a.b, workers=a.workers, claude_bin=a.claude_bin))
-    s = C.finalize(a.run, a.a, a.b, margin=a.margin, pref_floor=a.pref_floor)
+    s = C.finalize(a.run, a.a, a.b, margin=a.margin, pref_floor=a.pref_floor,
+                   basis=None if a.basis == "auto" else a.basis)
     pd, pref = s["pass_diff"], s["criteria"]["overall"]["pref_a"]
     print(f"판정: {s['decision']} · Hold {a.a} {len(s['hold']['A'])} / {a.b} {len(s['hold']['B'])} · "
           f"Pass 차이 {pd.get('diff')} 구간 {pd.get('ci95')} · 선호율 {pref.get('value')} 구간 {pref.get('ci95')}")
@@ -556,6 +563,12 @@ def main(argv: list[str] | None = None) -> int:
     s.add_argument("--no-think", action="store_true",
                    help="--source openai: 질문 끝에 /no_think 를 붙임 (Ollama 의 Qwen3 처럼 생각 과정을 먼저 쓰는 모델)")
     s.add_argument("--pause", type=float, default=0.5, help="--source ondam: 요청 사이 쉬는 초 (서비스 부담 줄이기)")
+    s.add_argument("--timeout", type=int, default=150,
+                   help="--source ondam: 한 문항을 기다리는 초. 검색이 느린 서버는 서버 설정(/api/config 의 request_timeout_ms)보다 길게")
+    s.add_argument("--resume", action="store_true",
+                   help="--source ondam: <out>.part 에 이미 받은 문항은 다시 묻지 않고 이어 받는다")
+    s.add_argument("--keep-going", action="store_true",
+                   help="--source ondam: 서버 오류가 계속되는 문항은 건너뛰고 다음 문항을 받는다 (끝나면 <out>.failed.json · 종료 코드 3)")
     s.add_argument("--model-path", help="--source hf: 체크포인트 폴더 또는 Hugging Face 모델 id")
     s.add_argument("--revision", help="--source hf: 모델 revision(커밋 해시) 고정")
     s.add_argument("--chat", choices=["auto", "on", "off"], default="auto", help="--source hf: chat template 사용")
@@ -632,6 +645,9 @@ def main(argv: list[str] | None = None) -> int:
     s.add_argument("--claude-bin")
     s.add_argument("--margin", type=float, default=0.10, help="Pass 비율 차이 비열등 여유폭 (기본 0.10 = 10%%p) — 회차 전에 정한다")
     s.add_argument("--pref-floor", type=float, default=0.40, help="선호율 95%% 구간 하한 기준 (기본 0.40) — 회차 전에 정한다")
+    s.add_argument("--basis", choices=["auto", "common", "full"], default="auto",
+                   help="각자 채점 판정을 어느 기준으로 셀지. auto=둘 다 출처를 내면 전체, 아니면 공통(출처 지적 제외). "
+                        "같은 앱에서 검색만 끈 시스템과 견줄 때는 common")
     s.add_argument("--prep-only", action="store_true", help="요청 파일만 만든다 (다른 실행기로 채점할 때)")
     s.add_argument("--finalize-only", action="store_true", help="채점은 건너뛰고 결과로 판정만")
     s.add_argument("--items", help="이 문항만 비교 (쉼표로). 일부만 보면 비열등 판정은 '일부 문항'으로 표시된다")

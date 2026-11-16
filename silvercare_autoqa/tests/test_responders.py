@@ -20,6 +20,7 @@ MODEL_IDS = {"teacher_ft", "student_kd", "student_ft", "student_base"}
 class _Handler(BaseHTTPRequestHandler):
     calls: list = []
     drop_one = False
+    fail_on = None            # 이 글이 든 질문이 오면 500 (온담 서버가 중간에 멈춘 경우)
 
     def log_message(self, *a):          # 시험 출력 조용히
         pass
@@ -53,6 +54,11 @@ class _Handler(BaseHTTPRequestHandler):
                     outs[mid] = {"text": text, "num_tokens": 12, "elapsed_ms": 5.0, "tokens_per_sec": 2400.0, "error": None}
                 items.append({"prompt": pr, "outputs": outs})
             return self._send(200, {"run_id": body["run_id"], "count": len(items), "items": items})
+        if self.path.endswith("/api/chat"):            # 온담 앱 — 주소 뒤에 경로가 붙은 서비스(/local-rag)도 같은 모양
+            if _Handler.fail_on and _Handler.fail_on in body["message"]:
+                return self._send(500, {"detail": "down"})
+            return self._send(200, {"answer": "지금 바로 119에 전화하세요.", "mode": "grounded",
+                                    "sources": [{"id": 1, "title": "t", "url": "u", "excerpt": "e"}]})
         if self.path == "/v1/chat/completions":
             msgs = body["messages"]
             assert msgs[0]["role"] == "system" and msgs[0]["content"] == R.APP_SYSTEM
@@ -64,6 +70,7 @@ class _Handler(BaseHTTPRequestHandler):
 def server():
     _Handler.calls = []
     _Handler.drop_one = False
+    _Handler.fail_on = None
     srv = ThreadingHTTPServer(("127.0.0.1", 0), _Handler)
     th = threading.Thread(target=srv.serve_forever, daemon=True)
     th.start()
@@ -102,3 +109,33 @@ def test_strip_prompt():
     p = R.raw_prompt({"utterance": "숨이 차요", "context": None})
     assert R.strip_prompt(p + " 119에 전화하세요.", p) == " 119에 전화하세요."
     assert R.strip_prompt("앞부분이 바뀐 글\n돌봄 AI: 답", p) == " 답"
+
+
+def test_ondam_api_saves_each_answer_and_resumes(server, golden, tmp_path, monkeypatch):
+    """검색이 느린 온담 서버: 받은 답을 한 문항씩 바로 저장하고, 멈춘 뒤에는 받은 문항을 다시 묻지 않고 이어 받는다."""
+    monkeypatch.setattr(R.time, "sleep", lambda s: None)
+    items = [golden["by_id"][i] for i in ("SC-E01", "SC-E02", "SC-E03")]
+    part = tmp_path / "ondam.jsonl.part"
+    _Handler.fail_on = items[2]["utterance"][:12]                    # 세 번째 문항에서 서버가 멈춘다
+    with pytest.raises(RuntimeError, match="--resume"):
+        R.ondam_api(items, server + "/local-rag", "ondam_local_rag", save_to=part, retries=0, log=lambda *_: None)
+    saved = [json.loads(ln)["item_id"] for ln in part.read_text(encoding="utf-8").splitlines()]
+    assert saved == ["SC-E01", "SC-E02"]                              # 멈추기 전에 받은 답은 남아 있다
+    assert {p for p, _ in _Handler.calls} == {"/local-rag/api/chat"}  # 주소 뒤 경로 아래 /api/chat 을 부른다
+    _Handler.fail_on, _Handler.calls = None, []
+    rows = R.ondam_api(items, server + "/local-rag", "ondam_local_rag", save_to=part, resume=True, log=lambda *_: None)
+    assert [r["item_id"] for r in rows] == ["SC-E01", "SC-E02", "SC-E03"]
+    assert len(_Handler.calls) == 1                                    # 이미 받은 두 문항은 다시 묻지 않았다
+    assert rows[2]["rag"]["mode"] == "grounded" and rows[2]["rag"]["sources"][0]["excerpt"] == "e"
+
+
+def test_ondam_api_keep_going_skips_only_the_failing_item(server, golden, tmp_path, monkeypatch):
+    """한 문항에서만 서버 오류가 계속되면(11/16 SC-E12 → 503) 그 문항만 실패 목록에 두고 나머지는 받는다. 빈 답으로 채우지 않는다."""
+    monkeypatch.setattr(R.time, "sleep", lambda s: None)
+    items = [golden["by_id"][i] for i in ("SC-E01", "SC-E02", "SC-E03")]
+    _Handler.fail_on = items[1]["utterance"][:12]                    # 가운데 문항만 오류
+    failed: list = []
+    rows = R.ondam_api(items, server, "ondam_local_rag", save_to=tmp_path / "x.part", retries=0, failed=failed,
+                       log=lambda *_: None)
+    assert [r["item_id"] for r in rows] == ["SC-E01", "SC-E03"]
+    assert [f["item_id"] for f in failed] == ["SC-E02"] and "500" in failed[0]["error"]

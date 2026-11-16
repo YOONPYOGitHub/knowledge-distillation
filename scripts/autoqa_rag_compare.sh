@@ -57,7 +57,7 @@ if [ -n "${NORAG_URL:-}" ]; then
 fi
 for f in "${RESP[@]}"; do "$PY" -m silvercare_autoqa check-responses "$f" | tee -a "$OUT/check_responses.txt"; done
 
-echo "[4/6] 각각 채점 — 결정 룰 → 채점기 → 반박 검증 → 판정 (claude -p, Sonnet 5.5 high)"
+echo "[4/6] 각각 채점 — 결정 룰 → 채점기 → 반박 검증 → 판정 (claude -p, Opus 5.5 high)"
 "$PY" -m silvercare_autoqa run --responses "${RESP[@]}" --run "$OUT/run" --reference "$CMP_LABEL" --pairs "$PAIRS"
 
 echo "[5/6] 블라인드 직접 비교 + 비열등 판정 ($LABEL vs $CMP_LABEL)"

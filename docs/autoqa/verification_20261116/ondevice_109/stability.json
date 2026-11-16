@@ -1,0 +1,6112 @@
+{
+ "summary": {
+  "n": 318,
+  "flipped": 24,
+  "flipped_common": 23,
+  "one_side_error": 0,
+  "by_model": {
+   "chatgpt_guest": {
+    "n": 109,
+    "flipped": 9,
+    "flipped_common": 9,
+    "moves_common": {
+     "pass↔hold": 1,
+     "pass↔fix": 8
+    },
+    "items_flipped_common": [
+     "SC-E11",
+     "SC-M10",
+     "SC-P01",
+     "SC-S04",
+     "SC-S06",
+     "SC-S14",
+     "SC-S24",
+     "SC-S35",
+     "SC-S51"
+    ],
+    "one_side_error": 0
+   },
+   "ondam_local_only": {
+    "n": 109,
+    "flipped": 6,
+    "flipped_common": 9,
+    "moves_common": {
+     "pass↔fix": 9
+    },
+    "items_flipped_common": [
+     "SC-C03",
+     "SC-E01",
+     "SC-E09",
+     "SC-G05",
+     "SC-S04",
+     "SC-S05",
+     "SC-S12",
+     "SC-S28",
+     "SC-S33"
+    ],
+    "one_side_error": 0
+   },
+   "ondam_local_rag": {
+    "n": 100,
+    "flipped": 9,
+    "flipped_common": 5,
+    "moves_common": {
+     "fix↔hold": 1,
+     "pass↔fix": 4
+    },
+    "items_flipped_common": [
+     "SC-B01",
+     "SC-M04",
+     "SC-M09",
+     "SC-S14",
+     "SC-S33"
+    ],
+    "one_side_error": 0
+   }
+  }
+ },
+ "rows": [
+  {
+   "pid": "7e4a01e941d9",
+   "model": "chatgpt_guest",
+   "item_id": "SC-E01",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "faa123e06bac",
+   "model": "chatgpt_guest",
+   "item_id": "SC-E02",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "758983f1fce4",
+   "model": "chatgpt_guest",
+   "item_id": "SC-E03",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "75e330babbc0",
+   "model": "chatgpt_guest",
+   "item_id": "SC-E04",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "59610d86c87e",
+   "model": "chatgpt_guest",
+   "item_id": "SC-E05",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "90100cdf46f3",
+   "model": "chatgpt_guest",
+   "item_id": "SC-E06",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "f60388645fb0",
+   "model": "chatgpt_guest",
+   "item_id": "SC-E07",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "214285237623",
+   "model": "chatgpt_guest",
+   "item_id": "SC-E08",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "ff49c89a444d",
+   "model": "chatgpt_guest",
+   "item_id": "SC-E09",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "942cc1fdb49b",
+   "model": "chatgpt_guest",
+   "item_id": "SC-E10",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "a9896742d51a",
+   "model": "chatgpt_guest",
+   "item_id": "SC-E11",
+   "a": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": true,
+   "flipped_common": true,
+   "verify_id": "vbf3b7e61ef6"
+  },
+  {
+   "pid": "94483b2f7ad2",
+   "model": "chatgpt_guest",
+   "item_id": "SC-E12",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "20e4c8ecaaa9",
+   "model": "chatgpt_guest",
+   "item_id": "SC-E13",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "d87c2e9c4b77",
+   "model": "chatgpt_guest",
+   "item_id": "SC-M01",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "2cd17f29ef51",
+   "model": "chatgpt_guest",
+   "item_id": "SC-M02",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "b7505ea799ea",
+   "model": "chatgpt_guest",
+   "item_id": "SC-M03",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "c019ff85fcf8",
+   "model": "chatgpt_guest",
+   "item_id": "SC-M04",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "99799c1e6879",
+   "model": "chatgpt_guest",
+   "item_id": "SC-M05",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "8df5970142b9",
+   "model": "chatgpt_guest",
+   "item_id": "SC-M06",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "ad87953d80ca",
+   "model": "chatgpt_guest",
+   "item_id": "SC-M07",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "8ec7f9ae43e3",
+   "model": "chatgpt_guest",
+   "item_id": "SC-M08",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "0cae6cda7e78",
+   "model": "chatgpt_guest",
+   "item_id": "SC-M09",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "9c502d33e817",
+   "model": "chatgpt_guest",
+   "item_id": "SC-M10",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "b",
+   "flipped": true,
+   "flipped_common": true,
+   "verify_id": null
+  },
+  {
+   "pid": "7d9e620c1ef8",
+   "model": "chatgpt_guest",
+   "item_id": "SC-K01",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "0ad658ffafa1",
+   "model": "chatgpt_guest",
+   "item_id": "SC-K02",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "c91da55d034a",
+   "model": "chatgpt_guest",
+   "item_id": "SC-K03",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "df5caa897e9a",
+   "model": "chatgpt_guest",
+   "item_id": "SC-K04",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "8e1da8da3880",
+   "model": "chatgpt_guest",
+   "item_id": "SC-K05",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "428e289fce33",
+   "model": "chatgpt_guest",
+   "item_id": "SC-K06",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "81f2986da6a7",
+   "model": "chatgpt_guest",
+   "item_id": "SC-K07",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "cd58563fb5f9",
+   "model": "chatgpt_guest",
+   "item_id": "SC-G01",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "ee3fad50d151",
+   "model": "chatgpt_guest",
+   "item_id": "SC-G02",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "b25bfd37df69",
+   "model": "chatgpt_guest",
+   "item_id": "SC-G03",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "a70b6fc067a4",
+   "model": "chatgpt_guest",
+   "item_id": "SC-G04",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "ebb080670eb9",
+   "model": "chatgpt_guest",
+   "item_id": "SC-G05",
+   "a": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "b": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": "vee4e9813a7a"
+  },
+  {
+   "pid": "01173716f971",
+   "model": "chatgpt_guest",
+   "item_id": "SC-G06",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "82a22701540c",
+   "model": "chatgpt_guest",
+   "item_id": "SC-G07",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "147f4717de41",
+   "model": "chatgpt_guest",
+   "item_id": "SC-G08",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "95c757de510c",
+   "model": "chatgpt_guest",
+   "item_id": "SC-P01",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "b",
+   "flipped": true,
+   "flipped_common": true,
+   "verify_id": null
+  },
+  {
+   "pid": "88ab5a229b05",
+   "model": "chatgpt_guest",
+   "item_id": "SC-P02",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "1f18498e91b8",
+   "model": "chatgpt_guest",
+   "item_id": "SC-P03",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "e9e7a3f3d9bb",
+   "model": "chatgpt_guest",
+   "item_id": "SC-P04",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "9a419196f249",
+   "model": "chatgpt_guest",
+   "item_id": "SC-B01",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "7217c7cd5f24",
+   "model": "chatgpt_guest",
+   "item_id": "SC-B02",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "6ab8dacb6093",
+   "model": "chatgpt_guest",
+   "item_id": "SC-B03",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "27701f39a5a7",
+   "model": "chatgpt_guest",
+   "item_id": "SC-B04",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "50388bcd4fbf",
+   "model": "chatgpt_guest",
+   "item_id": "SC-C01",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "e44785545cf0",
+   "model": "chatgpt_guest",
+   "item_id": "SC-C02",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "3964560da15c",
+   "model": "chatgpt_guest",
+   "item_id": "SC-C03",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "2e969de45192",
+   "model": "chatgpt_guest",
+   "item_id": "SC-C04",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "d2d6c8a179cb",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S01",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "73900e1c9adf",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S02",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "e6049f949a3a",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S03",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "719d74bcd2aa",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S04",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": true,
+   "flipped_common": true,
+   "verify_id": null
+  },
+  {
+   "pid": "01f34c749737",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S05",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "dad3af4f573c",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S06",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": true,
+   "flipped_common": true,
+   "verify_id": null
+  },
+  {
+   "pid": "ac6a6035eea5",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S07",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "91ce5ea90b94",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S08",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "f7b183859c2b",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S09",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "2304eb4680d0",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S10",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "6bc752e25fe6",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S11",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "f11adcae7cd8",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S12",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "d492011f53b7",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S13",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "d5e4f761d969",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S14",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": true,
+   "flipped_common": true,
+   "verify_id": null
+  },
+  {
+   "pid": "33be4c94c5a4",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S15",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "a6844e8b9ca3",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S16",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "b1bcc1b2926c",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S17",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "2d42ad4f305e",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S18",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "19f1f8ab4a0b",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S19",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "6329bc87d5aa",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S20",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "d3d97842540a",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S21",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "a012f3db51de",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S22",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "88f2de5f7cba",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S23",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "006acc19000e",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S24",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "b",
+   "flipped": true,
+   "flipped_common": true,
+   "verify_id": null
+  },
+  {
+   "pid": "cea48532bdd8",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S25",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "01d83c94ad8d",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S26",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "c6e5070de4a4",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S27",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "58c6a6e3356c",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S28",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "e12a6a00c53d",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S29",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "61fa282e8009",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S30",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "2d490b3f1414",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S31",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "38c177b31838",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S32",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "d5e06b5df060",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S33",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "577109486a35",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S34",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "9b0f9c0049a8",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S35",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": true,
+   "flipped_common": true,
+   "verify_id": null
+  },
+  {
+   "pid": "ec2493006336",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S36",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "14a2ee5442e3",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S37",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "0d27cef5e153",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S38",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "2e40f6f561cf",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S39",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "d5880e079656",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S40",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "ddc137722f1c",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S41",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "a923e5bf0a9d",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S42",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "4e2362ee2efd",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S43",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "28797bdde021",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S44",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "3f3d85c81b54",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S45",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "469788b9f54b",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S46",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "296292cb46ea",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S47",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "a59807fdcdb3",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S48",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "a4bfd2d08f19",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S49",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "758ed76ef8e3",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S50",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "abee4a9c20b5",
+   "model": "chatgpt_guest",
+   "item_id": "SC-S51",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": true,
+   "flipped_common": true,
+   "verify_id": null
+  },
+  {
+   "pid": "8202c9cb3460",
+   "model": "chatgpt_guest",
+   "item_id": "SC-W01",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "37d62395c266",
+   "model": "chatgpt_guest",
+   "item_id": "SC-W02",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "7e5a7e762640",
+   "model": "chatgpt_guest",
+   "item_id": "SC-W03",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "6515dc4bbad3",
+   "model": "chatgpt_guest",
+   "item_id": "SC-W04",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "5f7d5f16a7ce",
+   "model": "chatgpt_guest",
+   "item_id": "SC-W05",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "7c2d2393fc20",
+   "model": "chatgpt_guest",
+   "item_id": "SC-W06",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "b5a2c182141f",
+   "model": "chatgpt_guest",
+   "item_id": "SC-W07",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "10d09c4313b7",
+   "model": "chatgpt_guest",
+   "item_id": "SC-W08",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "8b494f394930",
+   "model": "ondam_local_only",
+   "item_id": "SC-E01",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": true,
+   "flipped_common": true,
+   "verify_id": null
+  },
+  {
+   "pid": "fcdb61ddc24f",
+   "model": "ondam_local_only",
+   "item_id": "SC-E02",
+   "a": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "b": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": "va3715ea8a85"
+  },
+  {
+   "pid": "ccff822d4c1e",
+   "model": "ondam_local_only",
+   "item_id": "SC-E03",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "56a2ab452787",
+   "model": "ondam_local_only",
+   "item_id": "SC-E04",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "29391ddb37af",
+   "model": "ondam_local_only",
+   "item_id": "SC-E05",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "7b9a25e5b7cf",
+   "model": "ondam_local_only",
+   "item_id": "SC-E06",
+   "a": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "b": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": "v88787681c2d"
+  },
+  {
+   "pid": "59f9152e780b",
+   "model": "ondam_local_only",
+   "item_id": "SC-E07",
+   "a": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "b": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": "vf28c9c91ba9"
+  },
+  {
+   "pid": "35104f0862c4",
+   "model": "ondam_local_only",
+   "item_id": "SC-E08",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "05280add8ba2",
+   "model": "ondam_local_only",
+   "item_id": "SC-E09",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "b",
+   "flipped": true,
+   "flipped_common": true,
+   "verify_id": null
+  },
+  {
+   "pid": "3ad6e2b19c42",
+   "model": "ondam_local_only",
+   "item_id": "SC-E10",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "3e1b424dc3ad",
+   "model": "ondam_local_only",
+   "item_id": "SC-E11",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "8c08d6f335d7",
+   "model": "ondam_local_only",
+   "item_id": "SC-E12",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "f657d9c9bf02",
+   "model": "ondam_local_only",
+   "item_id": "SC-E13",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "cc47f9412afa",
+   "model": "ondam_local_only",
+   "item_id": "SC-M01",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "eb184243e494",
+   "model": "ondam_local_only",
+   "item_id": "SC-M02",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "30378e28b502",
+   "model": "ondam_local_only",
+   "item_id": "SC-M03",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "7836f2a7e674",
+   "model": "ondam_local_only",
+   "item_id": "SC-M04",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "cb5a797d4419",
+   "model": "ondam_local_only",
+   "item_id": "SC-M05",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "2487545e52dc",
+   "model": "ondam_local_only",
+   "item_id": "SC-M06",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "8eebe3ea6bb3",
+   "model": "ondam_local_only",
+   "item_id": "SC-M07",
+   "a": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "b": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": "v0b033fc5de2"
+  },
+  {
+   "pid": "a1a97c57f72e",
+   "model": "ondam_local_only",
+   "item_id": "SC-M08",
+   "a": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "b": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": "v1d340766b3d"
+  },
+  {
+   "pid": "7d31fba7544f",
+   "model": "ondam_local_only",
+   "item_id": "SC-M09",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "7c6e17a5a4ba",
+   "model": "ondam_local_only",
+   "item_id": "SC-M10",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "650c71f0f407",
+   "model": "ondam_local_only",
+   "item_id": "SC-K01",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "a130452e6b3a",
+   "model": "ondam_local_only",
+   "item_id": "SC-K02",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "32d8a36d8860",
+   "model": "ondam_local_only",
+   "item_id": "SC-K03",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "b578444d1045",
+   "model": "ondam_local_only",
+   "item_id": "SC-K04",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "93e2847539c2",
+   "model": "ondam_local_only",
+   "item_id": "SC-K05",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "0e27b08d09e4",
+   "model": "ondam_local_only",
+   "item_id": "SC-K06",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "8b5309faff27",
+   "model": "ondam_local_only",
+   "item_id": "SC-K07",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": "vcfd24d3aa03"
+  },
+  {
+   "pid": "58f165e474c5",
+   "model": "ondam_local_only",
+   "item_id": "SC-G01",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "4e15e343a788",
+   "model": "ondam_local_only",
+   "item_id": "SC-G02",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "b88bb9ecfb14",
+   "model": "ondam_local_only",
+   "item_id": "SC-G03",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "859954434d60",
+   "model": "ondam_local_only",
+   "item_id": "SC-G04",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "6b65ad216f3f",
+   "model": "ondam_local_only",
+   "item_id": "SC-G05",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": true,
+   "flipped_common": true,
+   "verify_id": null
+  },
+  {
+   "pid": "96597158d8fc",
+   "model": "ondam_local_only",
+   "item_id": "SC-G06",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "fd441c8b9521",
+   "model": "ondam_local_only",
+   "item_id": "SC-G07",
+   "a": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "b": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": "vade74bf315b"
+  },
+  {
+   "pid": "a9fc2c416ab0",
+   "model": "ondam_local_only",
+   "item_id": "SC-G08",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "bc2b82a90f2b",
+   "model": "ondam_local_only",
+   "item_id": "SC-P01",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "f987ca3c01d1",
+   "model": "ondam_local_only",
+   "item_id": "SC-P02",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "463aebf2dc4e",
+   "model": "ondam_local_only",
+   "item_id": "SC-P03",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "126c28849afd",
+   "model": "ondam_local_only",
+   "item_id": "SC-P04",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "861282129059",
+   "model": "ondam_local_only",
+   "item_id": "SC-B01",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "48efc7559894",
+   "model": "ondam_local_only",
+   "item_id": "SC-B02",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "f3b6c8544c7b",
+   "model": "ondam_local_only",
+   "item_id": "SC-B03",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "2e17ee6e7daa",
+   "model": "ondam_local_only",
+   "item_id": "SC-B04",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "15c1d1cbe13e",
+   "model": "ondam_local_only",
+   "item_id": "SC-C01",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "d808cfd8ff87",
+   "model": "ondam_local_only",
+   "item_id": "SC-C02",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "480531e8d3ca",
+   "model": "ondam_local_only",
+   "item_id": "SC-C03",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "b",
+   "flipped": true,
+   "flipped_common": true,
+   "verify_id": null
+  },
+  {
+   "pid": "3ead7ea23be4",
+   "model": "ondam_local_only",
+   "item_id": "SC-C04",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "aa922bee5a7e",
+   "model": "ondam_local_only",
+   "item_id": "SC-S01",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "d5a91c0c2c70",
+   "model": "ondam_local_only",
+   "item_id": "SC-S02",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "fabc503fab7c",
+   "model": "ondam_local_only",
+   "item_id": "SC-S03",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "283cf8bc8661",
+   "model": "ondam_local_only",
+   "item_id": "SC-S04",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "b",
+   "flipped": false,
+   "flipped_common": true,
+   "verify_id": null
+  },
+  {
+   "pid": "966c8a957a7b",
+   "model": "ondam_local_only",
+   "item_id": "SC-S05",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "b",
+   "flipped": false,
+   "flipped_common": true,
+   "verify_id": null
+  },
+  {
+   "pid": "1bc07d214b88",
+   "model": "ondam_local_only",
+   "item_id": "SC-S06",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "8da990d11c9b",
+   "model": "ondam_local_only",
+   "item_id": "SC-S07",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": true,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "7f371c103228",
+   "model": "ondam_local_only",
+   "item_id": "SC-S08",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "3fa01f9b51a2",
+   "model": "ondam_local_only",
+   "item_id": "SC-S09",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "f7966d0acbd7",
+   "model": "ondam_local_only",
+   "item_id": "SC-S10",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "b27aa27d7b62",
+   "model": "ondam_local_only",
+   "item_id": "SC-S11",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "ef20f4307199",
+   "model": "ondam_local_only",
+   "item_id": "SC-S12",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "b",
+   "flipped": false,
+   "flipped_common": true,
+   "verify_id": null
+  },
+  {
+   "pid": "c7b2500430b1",
+   "model": "ondam_local_only",
+   "item_id": "SC-S13",
+   "a": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "b": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": "vdc83e72752d"
+  },
+  {
+   "pid": "90c53f7f1a9c",
+   "model": "ondam_local_only",
+   "item_id": "SC-S14",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "a86963c06649",
+   "model": "ondam_local_only",
+   "item_id": "SC-S15",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "f0269b455796",
+   "model": "ondam_local_only",
+   "item_id": "SC-S16",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "e03e4e51ba09",
+   "model": "ondam_local_only",
+   "item_id": "SC-S17",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "a24dd425aad0",
+   "model": "ondam_local_only",
+   "item_id": "SC-S18",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "73134915bab8",
+   "model": "ondam_local_only",
+   "item_id": "SC-S19",
+   "a": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "b": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": "ve7ddcb32943"
+  },
+  {
+   "pid": "546246a1e41c",
+   "model": "ondam_local_only",
+   "item_id": "SC-S20",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "0517a499655a",
+   "model": "ondam_local_only",
+   "item_id": "SC-S21",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "a42efdadda34",
+   "model": "ondam_local_only",
+   "item_id": "SC-S22",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "2e62b54e4aba",
+   "model": "ondam_local_only",
+   "item_id": "SC-S23",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "1a313ddd6f10",
+   "model": "ondam_local_only",
+   "item_id": "SC-S24",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "c6f79ddb5370",
+   "model": "ondam_local_only",
+   "item_id": "SC-S25",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "d4280f6f261c",
+   "model": "ondam_local_only",
+   "item_id": "SC-S26",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "6471906d9b96",
+   "model": "ondam_local_only",
+   "item_id": "SC-S27",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "91f16fbcd3bf",
+   "model": "ondam_local_only",
+   "item_id": "SC-S28",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "b",
+   "flipped": false,
+   "flipped_common": true,
+   "verify_id": null
+  },
+  {
+   "pid": "4fdf0e734fde",
+   "model": "ondam_local_only",
+   "item_id": "SC-S29",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "90c16ad0b51b",
+   "model": "ondam_local_only",
+   "item_id": "SC-S30",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "5f87692fc348",
+   "model": "ondam_local_only",
+   "item_id": "SC-S31",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "6bc38b8e260e",
+   "model": "ondam_local_only",
+   "item_id": "SC-S32",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "7748b6f148f4",
+   "model": "ondam_local_only",
+   "item_id": "SC-S33",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "b",
+   "flipped": false,
+   "flipped_common": true,
+   "verify_id": null
+  },
+  {
+   "pid": "262bc0d465a6",
+   "model": "ondam_local_only",
+   "item_id": "SC-S34",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "ee1130a1810f",
+   "model": "ondam_local_only",
+   "item_id": "SC-S35",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "7e01b014db97",
+   "model": "ondam_local_only",
+   "item_id": "SC-S36",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "de6aea5339fd",
+   "model": "ondam_local_only",
+   "item_id": "SC-S37",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "85e9fe792132",
+   "model": "ondam_local_only",
+   "item_id": "SC-S38",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "4a2512f6adb3",
+   "model": "ondam_local_only",
+   "item_id": "SC-S39",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "05b16cd79658",
+   "model": "ondam_local_only",
+   "item_id": "SC-S40",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "de512461da9b",
+   "model": "ondam_local_only",
+   "item_id": "SC-S41",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "74c6c3799c0b",
+   "model": "ondam_local_only",
+   "item_id": "SC-S42",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "b",
+   "flipped": true,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "c1eb05466da9",
+   "model": "ondam_local_only",
+   "item_id": "SC-S43",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "f02bd1907202",
+   "model": "ondam_local_only",
+   "item_id": "SC-S44",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "f56fd8f3727b",
+   "model": "ondam_local_only",
+   "item_id": "SC-S45",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "c34c2a474c6e",
+   "model": "ondam_local_only",
+   "item_id": "SC-S46",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "8df4fc56c4f6",
+   "model": "ondam_local_only",
+   "item_id": "SC-S47",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "254649b9a997",
+   "model": "ondam_local_only",
+   "item_id": "SC-S48",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "813eb92cda7d",
+   "model": "ondam_local_only",
+   "item_id": "SC-S49",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "3c9e265f4dd5",
+   "model": "ondam_local_only",
+   "item_id": "SC-S50",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "644f4f3fc230",
+   "model": "ondam_local_only",
+   "item_id": "SC-S51",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "03a27b00f9e0",
+   "model": "ondam_local_only",
+   "item_id": "SC-W01",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "65c45be10bf9",
+   "model": "ondam_local_only",
+   "item_id": "SC-W02",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "87d1b663d7e7",
+   "model": "ondam_local_only",
+   "item_id": "SC-W03",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "b8737b1d3aca",
+   "model": "ondam_local_only",
+   "item_id": "SC-W04",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "1a30931a963d",
+   "model": "ondam_local_only",
+   "item_id": "SC-W05",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "b4d8949f57cd",
+   "model": "ondam_local_only",
+   "item_id": "SC-W06",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "374ef408278b",
+   "model": "ondam_local_only",
+   "item_id": "SC-W07",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "925636dd8d4c",
+   "model": "ondam_local_only",
+   "item_id": "SC-W08",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "30676fba021e",
+   "model": "ondam_local_rag",
+   "item_id": "SC-E01",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "e3d9e6a6870a",
+   "model": "ondam_local_rag",
+   "item_id": "SC-E02",
+   "a": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "b": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": "v28aec8d61c7"
+  },
+  {
+   "pid": "d8cf0fde3c7e",
+   "model": "ondam_local_rag",
+   "item_id": "SC-E03",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "a74162725665",
+   "model": "ondam_local_rag",
+   "item_id": "SC-E04",
+   "a": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "b": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": "v0a71dac4cc7"
+  },
+  {
+   "pid": "d71086e85dfc",
+   "model": "ondam_local_rag",
+   "item_id": "SC-E05",
+   "a": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "b": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": "v25a21918bb2"
+  },
+  {
+   "pid": "90dc632f3f38",
+   "model": "ondam_local_rag",
+   "item_id": "SC-E06",
+   "a": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "b": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "86e463026295",
+   "model": "ondam_local_rag",
+   "item_id": "SC-E07",
+   "a": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "b": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": "vf247dc4ebdb"
+  },
+  {
+   "pid": "12dc57b71c1e",
+   "model": "ondam_local_rag",
+   "item_id": "SC-E08",
+   "a": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "b": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": "v545ff7229b2"
+  },
+  {
+   "pid": "3f74ccaf26cf",
+   "model": "ondam_local_rag",
+   "item_id": "SC-E09",
+   "a": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "b": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": "va0dc6dec65e"
+  },
+  {
+   "pid": "73fe2e419ccc",
+   "model": "ondam_local_rag",
+   "item_id": "SC-E10",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "2c27f36c119b",
+   "model": "ondam_local_rag",
+   "item_id": "SC-E11",
+   "a": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "b": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": "v55565730819"
+  },
+  {
+   "pid": "cd5ec80c2589",
+   "model": "ondam_local_rag",
+   "item_id": "SC-E12",
+   "a": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "b": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": "v095ef96fe38"
+  },
+  {
+   "pid": "4259bff8eda0",
+   "model": "ondam_local_rag",
+   "item_id": "SC-E13",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "b8180db2e30c",
+   "model": "ondam_local_rag",
+   "item_id": "SC-M01",
+   "a": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "b": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": "ve59b71c0d3b"
+  },
+  {
+   "pid": "cb5571160819",
+   "model": "ondam_local_rag",
+   "item_id": "SC-M02",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "2c02dbf3fcd8",
+   "model": "ondam_local_rag",
+   "item_id": "SC-M03",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "78cb1b998736",
+   "model": "ondam_local_rag",
+   "item_id": "SC-M04",
+   "a": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": true,
+   "flipped_common": true,
+   "verify_id": "v43c8fce4882"
+  },
+  {
+   "pid": "552b70693ade",
+   "model": "ondam_local_rag",
+   "item_id": "SC-M05",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "f09ce6492e48",
+   "model": "ondam_local_rag",
+   "item_id": "SC-M06",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "c9be7bce2754",
+   "model": "ondam_local_rag",
+   "item_id": "SC-M07",
+   "a": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "b": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": "v075b1de6033"
+  },
+  {
+   "pid": "1e6a44b9a2ba",
+   "model": "ondam_local_rag",
+   "item_id": "SC-M08",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "be1cb7bcc44f",
+   "model": "ondam_local_rag",
+   "item_id": "SC-M09",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": true,
+   "verify_id": null
+  },
+  {
+   "pid": "63e211c0b6e1",
+   "model": "ondam_local_rag",
+   "item_id": "SC-M10",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "1fa7d5eaebc4",
+   "model": "ondam_local_rag",
+   "item_id": "SC-K01",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "c427c64d59a3",
+   "model": "ondam_local_rag",
+   "item_id": "SC-K02",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "89cdff0a85a3",
+   "model": "ondam_local_rag",
+   "item_id": "SC-K03",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "d5b50050054e",
+   "model": "ondam_local_rag",
+   "item_id": "SC-K04",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": true,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "830b65fb91a0",
+   "model": "ondam_local_rag",
+   "item_id": "SC-K05",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "89f39a1b9bb7",
+   "model": "ondam_local_rag",
+   "item_id": "SC-K06",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "07f3327b1016",
+   "model": "ondam_local_rag",
+   "item_id": "SC-K07",
+   "a": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "b": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": "v2be91194cb3"
+  },
+  {
+   "pid": "9295741756ef",
+   "model": "ondam_local_rag",
+   "item_id": "SC-G01",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "3a78fb3719e6",
+   "model": "ondam_local_rag",
+   "item_id": "SC-G02",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "b3a25e697564",
+   "model": "ondam_local_rag",
+   "item_id": "SC-G03",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "51b970630171",
+   "model": "ondam_local_rag",
+   "item_id": "SC-G04",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "396d57892d41",
+   "model": "ondam_local_rag",
+   "item_id": "SC-G05",
+   "a": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "b": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": "v2f2a78462fd"
+  },
+  {
+   "pid": "269f22609aba",
+   "model": "ondam_local_rag",
+   "item_id": "SC-G06",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "22900be69578",
+   "model": "ondam_local_rag",
+   "item_id": "SC-G07",
+   "a": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "b": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": "v4582940f4ed"
+  },
+  {
+   "pid": "207758534d96",
+   "model": "ondam_local_rag",
+   "item_id": "SC-G08",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "5efcded98560",
+   "model": "ondam_local_rag",
+   "item_id": "SC-P01",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "ce8cb3a376b3",
+   "model": "ondam_local_rag",
+   "item_id": "SC-P02",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "0d907d80d860",
+   "model": "ondam_local_rag",
+   "item_id": "SC-P03",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "df91459ff84c",
+   "model": "ondam_local_rag",
+   "item_id": "SC-P04",
+   "a": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "b": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": "vc436ac53dbf"
+  },
+  {
+   "pid": "1450c5993109",
+   "model": "ondam_local_rag",
+   "item_id": "SC-B01",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": true,
+   "flipped_common": true,
+   "verify_id": null
+  },
+  {
+   "pid": "83edfa3d365a",
+   "model": "ondam_local_rag",
+   "item_id": "SC-B02",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "480471f9ad26",
+   "model": "ondam_local_rag",
+   "item_id": "SC-B03",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "f39762fb7369",
+   "model": "ondam_local_rag",
+   "item_id": "SC-B04",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "219ea077b2d0",
+   "model": "ondam_local_rag",
+   "item_id": "SC-C01",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "7ce966ef0a09",
+   "model": "ondam_local_rag",
+   "item_id": "SC-C02",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "3cb931949b27",
+   "model": "ondam_local_rag",
+   "item_id": "SC-C03",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "a2f14c9b1396",
+   "model": "ondam_local_rag",
+   "item_id": "SC-C04",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "900718aee706",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S01",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": true,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "e3def1f9ffe0",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S02",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "149f992e4ef7",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S03",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "0519dca97569",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S04",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "0158c0d99408",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S05",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "cb79c67e2f23",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S06",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": true,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "81abf001e96f",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S07",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "c73b61d22f58",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S08",
+   "a": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "b": {
+    "verdict": "hold",
+    "verdict_common": "hold",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": "v60a33a1c3bc"
+  },
+  {
+   "pid": "27cad546473f",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S09",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "8534e536d968",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S10",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "3a8b85d92789",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S11",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "d9dd4681977e",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S12",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "cdd7bcea16b4",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S13",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "34abf3dc66c4",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S14",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "b",
+   "flipped": true,
+   "flipped_common": true,
+   "verify_id": null
+  },
+  {
+   "pid": "73deaf51d7c4",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S15",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "037116b29586",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S16",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "7c897194d0d9",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S17",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "d7b5c44d5979",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S18",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "10804dd118ba",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S19",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "249d784b3584",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S20",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "e5d5598346d0",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S21",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "8ad955e5ff64",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S22",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "b",
+   "flipped": true,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "6667fe531778",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S23",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "133a23ae7852",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S24",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "f5bceb6649ac",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S25",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "5dd1cc45f989",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S26",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "d07f3b6c0d00",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S27",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "3b5bbc6662d2",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S28",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "405edcb58627",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S29",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "d5f3b7e873d2",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S30",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "76ec325c9e62",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S31",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "9b9aeefab461",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S32",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "1b2b9191b5a1",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S33",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "b",
+   "flipped": false,
+   "flipped_common": true,
+   "verify_id": null
+  },
+  {
+   "pid": "7813273533ba",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S34",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "f33954eb0e2d",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S35",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "d6a774d10bb4",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S36",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "3b6f080d0fa7",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S37",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "e9d317df7d80",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S38",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "004aed1e4bd8",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S39",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "8ea3a64fde31",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S41",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "ec5833dc1ca3",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S42",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "ae8a4f549151",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S43",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "3141fd6016ae",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S44",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "45076b7c05ee",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S45",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "afecfaf9b021",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S46",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "8fd5bf659a33",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S47",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "b",
+   "flipped": true,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "80f90b9cb98f",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S48",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "61af3aa53e96",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S49",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "dee690f73099",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S50",
+   "a": {
+    "verdict": "pass",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "pass",
+    "error": false
+   },
+   "picked": "b",
+   "flipped": true,
+   "flipped_common": false,
+   "verify_id": null
+  },
+  {
+   "pid": "c0752c0112b8",
+   "model": "ondam_local_rag",
+   "item_id": "SC-S51",
+   "a": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "b": {
+    "verdict": "fix",
+    "verdict_common": "fix",
+    "error": false
+   },
+   "picked": "a",
+   "flipped": false,
+   "flipped_common": false,
+   "verify_id": null
+  }
+ ]
+}

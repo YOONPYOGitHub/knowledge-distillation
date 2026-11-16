@@ -79,7 +79,7 @@ flowchart LR
 
 채점기를 부르는 방식은 둘이다. 둘 다 같은 검사 함수를 지난다.
 
-- `claude-cli`: 채점하는 PC 의 Claude Code 를 `claude -p --model claude-sonnet-5-5 --effort high --json-schema … --tools ""` 로 부른다.
+- `claude-cli`: 채점하는 PC 의 Claude Code 를 `claude -p --model claude-opus-5-5 --effort high --json-schema … --tools ""` 로 부른다.
   - 도구를 모두 끄고 빈 폴더에서 실행한다.
   - 개인 지침(`~/.claude/CLAUDE.md`)·MCP(Claude Code 에 붙인 확장 도구)·스킬도 끈다(`--strict-mcp-config --disable-slash-commands --setting-sources local`).
   - 채점 규칙은 파일(`--system-prompt-file`)로 넘긴다.

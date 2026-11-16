@@ -232,20 +232,45 @@ def write_jsonl(rows: list[dict], path: str | Path) -> None:
 # ───────────────────────────── RAG 전환 뒤 수집기 ─────────────────────────────
 
 def ondam_api(items: Iterable[dict], base_url: str, label: str, *, timeout: int = 150, pause: float = 0.5,
-              retries: int = 2, log=print) -> list[dict]:
+              retries: int = 2, log=print, save_to: str | Path | None = None, resume: bool = False,
+              failed: list | None = None) -> list[dict]:
     """온담 앱 POST /api/chat 으로 답과 출처를 받는다 (한 문항씩, 대화 이력 없이).
 
     - 앱 뒤의 생성 모델(Azure·로컬 LLM)이 바뀌어도 받는 방법은 같다. 어떤 모델이었는지는 --label 과 기록으로 남긴다.
+      주소 뒤에 경로가 붙은 서비스(예: https://<주소>/local-rag)는 그 경로 아래 /api/chat 을 부른다.
     - 422(제공자 안전 거절 등)는 어르신 화면에 뜨는 안내 문구를 답으로 남기고 meta.refusal 에 표시한다.
     - 그 밖의 서버 오류는 다시 시도하고, 끝내 실패하면 멈춘다 (서버 문제를 빈 답으로 채점하지 않는다 — 감사 A04).
     - 서비스에 부담을 주지 않게 요청 사이에 pause 초를 쉰다.
+    - save_to 를 주면 받은 답을 한 문항씩 그 파일에 바로 덧붙인다. resume=True 면 그 파일에 이미 있는 문항(같은 label)은
+      다시 묻지 않는다 — 검색이 느린 서버에서 중간에 멈춰도 받은 답을 잃지 않는다.
     """
     import requests
 
     url = base_url.rstrip("/") + "/api/chat"
-    rows = []
+    rows: list[dict] = []
     items = list(items)
+    part = Path(save_to) if save_to else None
+    have: dict[str, dict] = {}
+    if part and resume and part.exists():
+        for ln in part.read_text(encoding="utf-8").splitlines():
+            if ln.strip():
+                r = json.loads(ln)
+                if r.get("model") == label:
+                    have[r["item_id"]] = r
+        log(f"  이어 받기: 이미 받은 답 {len(have)}건은 다시 묻지 않음")
+    elif part:
+        part.write_text("", encoding="utf-8")
+
+    def keep(row: dict) -> None:
+        rows.append(row)
+        if part:
+            with part.open("a", encoding="utf-8") as f:
+                f.write(json.dumps(row, ensure_ascii=False) + "\n")
+
     for k, it in enumerate(items, 1):
+        if it["id"] in have:
+            rows.append(have[it["id"]])
+            continue
         body = {"message": user_turn(it), "history": []}
         last = ""
         for attempt in range(retries + 1):
@@ -267,11 +292,11 @@ def ondam_api(items: Iterable[dict], base_url: str, label: str, *, timeout: int 
                 if isinstance(data.get("contexts"), list):          # 평가용으로 전체 문맥을 주면 함께 받는다
                     rag["contexts"] = data["contexts"]
                     rag["contexts_complete"] = True
-                rows.append({"model": label, "item_id": it["id"], "response": answer.strip(), "rag": rag,
-                             "meta": {"source": "ondam-api", "base_url": base_url, "prompt_format": "ondam-api",
-                                      "message": body["message"], "mode": data.get("mode"), "elapsed_ms": round(elapsed, 1),
-                                      "medical_caution": bool(data.get("medical_caution")),
-                                      "display_notice": data.get("display_notice") or ""}})
+                keep({"model": label, "item_id": it["id"], "response": answer.strip(), "rag": rag,
+                      "meta": {"source": "ondam-api", "base_url": base_url, "prompt_format": "ondam-api",
+                               "message": body["message"], "mode": data.get("mode"), "elapsed_ms": round(elapsed, 1),
+                               "medical_caution": bool(data.get("medical_caution")),
+                               "display_notice": data.get("display_notice") or ""}})
                 break
             if r.status_code == 422:
                 try:
@@ -279,18 +304,23 @@ def ondam_api(items: Iterable[dict], base_url: str, label: str, *, timeout: int 
                 except ValueError:
                     detail = None
                 text = detail if isinstance(detail, str) else json.dumps(detail, ensure_ascii=False)[:300]
-                rows.append({"model": label, "item_id": it["id"], "response": text or "",
-                             "rag": {"mode": "refusal", "sources": []},
-                             "meta": {"source": "ondam-api", "base_url": base_url, "prompt_format": "ondam-api",
-                                      "message": body["message"], "mode": "refusal", "refusal": "http_422",
-                                      "elapsed_ms": round(elapsed, 1)}})
+                keep({"model": label, "item_id": it["id"], "response": text or "",
+                      "rag": {"mode": "refusal", "sources": []},
+                      "meta": {"source": "ondam-api", "base_url": base_url, "prompt_format": "ondam-api",
+                               "message": body["message"], "mode": "refusal", "refusal": "http_422",
+                               "elapsed_ms": round(elapsed, 1)}})
                 break
             last = f"HTTP {r.status_code}: {r.text[:120]}"
             time.sleep(2 + 2 * attempt)
         else:
-            raise RuntimeError(f"{it['id']}: 온담 API 실패 — {last} (서비스 상태를 확인하고 다시 실행)")
-        if k % 10 == 0 or k == len(items):
-            log(f"  온담 {k}/{len(items)}")
+            if failed is not None:      # 그 문항만 건너뛰고 다음 문항으로 — 실패 목록은 부른 쪽이 기록하고 나중에 다시 묻는다
+                failed.append({"item_id": it["id"], "error": last})
+                log(f"  {label} {k}/{len(items)} {it['id']} 실패 — {last[:90]}")
+                time.sleep(pause)
+                continue
+            hint = " — 받은 답은 저장됨, --resume 으로 이어 받기" if part else ""
+            raise RuntimeError(f"{it['id']}: 온담 API 실패 — {last} (서비스 상태를 확인하고 다시 실행{hint})")
+        log(f"  {label} {k}/{len(items)} {it['id']} {rows[-1]['meta']['elapsed_ms'] / 1000:.0f}초")
         time.sleep(pause)
     return rows
 

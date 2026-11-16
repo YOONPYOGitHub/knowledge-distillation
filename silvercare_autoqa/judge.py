@@ -1,7 +1,7 @@
 """채점기 실행·검증.
 
 실행 방식은 둘이다.
-- claude-cli : 이 PC 의 Claude Code 를 `claude -p` 로 직접 부른다 (기본 Sonnet 5.5 · effort high).
+- claude-cli : 이 PC 의 Claude Code 를 `claude -p` 로 직접 부른다 (기본 Opus 5.5 · effort high, 11/15 회차까지는 Sonnet 5.5).
 - packets    : 채점 요청을 파일(packet)로 떨궈 두고, 다른 실행기(사람·다른 에이전트·서버)가 결과 파일을 채우면 읽어 들인다.
 두 방식 모두 결과는 validate_judgment 한 곳을 지난다. 형식이 하나라도 틀리면 그 케이스는 judge_error 로
 분모에서 빠지고 리포트에 따로 나온다 (fail-closed — 부분 응답을 만점으로 채우지 않는다).
@@ -24,7 +24,7 @@ import re
 from .prompts import ACTION_ENUM, COVERAGE_HANDLING, GROUNDING_TYPES, judge_schema, verify_schema, schema_json
 from .textutil import grounded, nfc, norm_len
 
-DEFAULT_MODEL = "claude-sonnet-5-5"
+DEFAULT_MODEL = "claude-opus-5-5"          # 2026-11-16 Sonnet 5.5 → Opus 5.5 (사용자 결정)
 DEFAULT_EFFORT = "high"
 # 채점기 호출 격리: 이 PC 의 개인 지침(~/.claude/CLAUDE.md)·MCP 서버·스킬 목록을 채점기에 넣지 않는다.
 # 2026-11-08 실측 — 격리 전에는 짧은 요청에도 39,280토큰이 붙었고, 개인 전역 지침이 채점 맥락에 들어갔다

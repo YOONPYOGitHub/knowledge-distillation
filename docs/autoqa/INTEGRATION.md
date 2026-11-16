@@ -73,6 +73,9 @@ python -m silvercare_autoqa generate --source ondam --base-url <온담 주소> -
 - 질문 하나에 대화 이력 없이 한 번 묻는다. 요청 사이에 0.5초 쉰다(`--pause`).
 - 422(제공자 안전 거절 등)는 어르신 화면에 뜨는 안내 문구를 답으로 남기고 `meta.refusal` 에 표시한다.
 - 그 밖의 서버 오류가 계속되면 멈춘다. 서버 문제를 빈 답으로 채점하지 않는다.
+- 주소 뒤에 경로가 붙은 서비스도 된다. 예: `--base-url https://<온담 주소>/local-rag` 는 `/local-rag/api/chat` 을 부른다.
+- 받은 답은 한 문항씩 `<out>.part` 에 바로 저장한다. 멈추면 같은 명령에 `--resume` 을 붙여 이어 받는다.
+- 검색이 느린 서버는 `--timeout` 을 늘린다. 11/16 로컬 RAG 판은 한 문항에 2~3분 걸려 `--timeout 660` 으로 받았다.
 
 응답 파일 한 줄은 이렇게 생겼다 (RAG 가 없는 모델은 `rag` 가 없다):
 
@@ -241,7 +244,7 @@ python -m silvercare_autoqa contamination --train <knowledge.jsonl 또는 학습
 
 ## 6. 채점하는 곳 — Claude Code 로그인
 
-- 채점은 `claude -p`(Claude Code, 기본 Sonnet 5.5 · effort high)로 한다. 채점하는 PC 에 `claude` 로그인이 살아 있어야 한다.
+- 채점은 `claude -p`(Claude Code, 기본 Opus 5.5 · effort high, 11/15 회차까지는 Sonnet 5.5)로 한다. 채점하는 PC 에 `claude` 로그인이 살아 있어야 한다.
 - 로그인은 `python -m silvercare_autoqa preflight --judge` 로 확인한다(Sonnet 1회 호출).
 - 채점기는 격리해서 부른다. 개인 지침(`~/.claude/CLAUDE.md`)·MCP 서버·스킬 목록을 넣지 않는다.
 - 채점 규칙은 파일로 넘긴다(`--system-prompt-file`). 그래서 어느 PC 에서 돌려도 채점기가 보는 내용이 같다.

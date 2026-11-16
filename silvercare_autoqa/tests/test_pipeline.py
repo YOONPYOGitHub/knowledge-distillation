@@ -106,7 +106,7 @@ def _fake_claude(tmp_path: Path) -> str:
         assert open(sp, encoding="utf-8").read().splitlines() == ["시스템", "둘째 줄"]
         assert "--strict-mcp-config" in args and "--disable-slash-commands" in args   # 개인 지침·MCP 격리
         assert args[args.index("--setting-sources") + 1] == "local"
-        assert args[args.index("--model") + 1] == "claude-sonnet-5-5"
+        assert args[args.index("--model") + 1] == "claude-opus-5-5"
         assert args[args.index("--effort") + 1] == "high"
         user = sys.stdin.read()
         cid = user.split("[CASE ")[1].split("]")[0] if "[CASE " in user else "x"

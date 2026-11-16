@@ -5,7 +5,7 @@
 - 이 폴더는 autoqa 를 직접 돌리거나 고치는 사람용이다. 팀원은 먼저 [연결 안내](../docs/autoqa/INTEGRATION.md) 를 본다. 역할별 할 일은 [README](../README.md#역할별-할-일) 에 있다.
 - 골든셋으로 온담·ChatGPT·검색 끈 로컬 모델의 답을 각각 채점하고 직접 비교한다. 답마다, 모델마다 **Pass / Fix / Hold** 를 낸다.
 - 2026-11-14 팀 방향이 지식증류에서 온디바이스 LLM + RAG 로 바뀌었다. 지식증류 때 수집기(`kd-ui`)와 4-way 스크립트는 남겨 두었다.
-- 채점은 채점하는 PC 의 Claude Code(`claude -p`, 기본 `claude-sonnet-5-5` · effort `high`)로 한다. 시험(`pytest`)은 네트워크·LLM 없이 돈다.
+- 채점은 채점하는 PC 의 Claude Code(`claude -p`, 기본 `claude-opus-5-5` · effort `high` — 11/15 회차까지는 Sonnet 5.5)로 한다. 시험(`pytest`)은 네트워크·LLM 없이 돈다.
 - 명령 전체는 아래 「명령」 표가 정본이다. 판정 규칙은 [DESIGN.md](../docs/autoqa/DESIGN.md), 고친 기록은 [AUDIT_LOG.md](../docs/autoqa/AUDIT_LOG.md) 에 있다.
 
 ## 준비

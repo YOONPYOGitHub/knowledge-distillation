@@ -207,3 +207,16 @@ def max_repeat(text: str) -> tuple[int, str]:
         if c >= 3 and c * 4 / n >= LOOP_GRAM_SHARE and c > best:
             best, best_s = c, " ".join(g)
     return best, best_s
+
+
+def find_echo(text: str, marks: list[str]) -> str | None:
+    """프롬프트 표식이 답에 섞였으면 그 표식을, 아니면 None.
+    '어르신:'·'돌봄 AI:'·'user:' 같은 차례 표식은 줄 맨 앞에 올 때만 센다 — 목록 제목 '**65 세 이상 어르신:**' 은
+    차례 표식이 아니다 (2026-11-16 실제 답 오판). '### 시스템'·'<|im_start|>'·'[기기 기록]' 은 어디에 있어도 센다."""
+    for mk in marks:
+        if mk.endswith(":") and not mk.startswith(("#", "<", "[")):
+            if re.search(r"(?m)^[ \t>]*" + re.escape(mk), text):
+                return mk
+        elif mk in text:
+            return mk
+    return None

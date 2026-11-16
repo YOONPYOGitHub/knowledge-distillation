@@ -1,10 +1,13 @@
-"""발표 자료의 숫자를 채점 회차에서 뽑아 talk_data.json 에 적는다 (글은 건드리지 않는다).
+"""발표 자료의 숫자를 채점 회차에서 뽑아 talk_data.json 에 적는다 (사람이 쓴 문장은 건드리지 않는다).
 
 쓰려면:
-    python docs/autoqa/talk/collect_talk_data.py --run <두 번 채점해 합친 회차 폴더> --a ondam_cloud --b chatgpt_guest
+    python docs/autoqa/talk/collect_talk_data.py --run <두 번 채점해 합친 회차 폴더> \
+        --a ondam_local_rag --b chatgpt_guest --c ondam_local_only [--mutation <변이 시험 mutation_score.json>] \
+        [--knowledge <팀 지식 자료 knowledge.jsonl>]
     python docs/autoqa/talk/build_talk.py
 
-회차 폴더에는 finalize·compare 가 끝나 있어야 한다. 답 원문은 읽기만 하고 옮기지 않는다 (숫자만 적는다).
+- A = 우리 시스템(지식 검색 있음), B = 비교 상대(ChatGPT), C = 같은 모델에서 검색만 뺀 것. 비교는 A 대 B · A 대 C 두 가지.
+- 회차 폴더에는 finalize 와 두 compare 가 끝나 있어야 한다. 답 원문은 읽기만 하고 옮기지 않는다 (숫자만 적는다).
 """
 
 from __future__ import annotations
@@ -19,90 +22,128 @@ from pathlib import Path
 HERE = Path(__file__).resolve().parent
 sys.path.insert(0, str(HERE.parents[2]))
 
+from silvercare_autoqa import routing as RT  # noqa: E402
 from silvercare_autoqa.fixfirst import run_fix_first  # noqa: E402
 
 SHORT = {
-    "응급 고정 안내 글이 조건을 달거나 응급처치가 없음": "응급 고정 안내 글",
-    "응급 고정 안내 글에 고칠 내용이 있음": "응급 고정 안내 글",
-    "응급이 아닌 질문에 응급 고정 안내가 나감": "응급이 아닌데 응급 안내",
-    "응급 감지가 안 걸려 일반 답으로 감": "응급을 알아채지 못함",
-    "응급 답에 빠진 안내": "응급 답에 빠진 안내",
-    "꼭 넣을 안전 문장이 빠짐": "빠진 안전 문장",
-    "평범한 질문을 거절": "평범한 질문을 거절함",
-    "건강 질문이 일상 대화 길로 가 자료를 찾지 않음": "건강 질문이 일상 대화로 빠짐",
-    "자료는 있는데 찾아오지 못함": "있는 자료를 못 찾아옴",
-    "지시문·답 쓰는 규칙": "답 쓰는 규칙",
-    "지식 자료에 근거가 없음": "지식 자료가 없음",
+    RT.APP_FIXED_TEXT: "응급 고정 안내 글",
+    RT.APP_FIXED_OTHER: "응급 고정 안내 글",
+    RT.APP_FALSE_ALARM: "응급이 아닌데 응급 안내",
+    RT.APP_MISSED: "응급을 알아채지 못함",
+    RT.ONDAM_EMERGENCY_LINE: "응급 답에 빠진 안내",
+    RT.ONDAM_SAFETY_LINE: "빠진 안전 문장",
+    RT.ONDAM_REFUSAL: "평범한 질문을 거절함",
+    RT.ONDAM_CONVERSATION: "건강 질문이 일상 대화로 빠짐",
+    RT.ONDAM_SEARCH: "있는 자료를 못 찾아옴",
+    RT.ONDAM_RULES: "답 쓰는 규칙",
+    RT.DATA_MISSING: "지식 자료가 없음",
+}
+# 고칠 곳 카드 — 같은 손으로 고치는 것끼리 묶는다 (카드 제목, 한 줄 설명)
+GAP_GROUP = {
+    RT.DATA_MISSING: ("data", "지식 자료가 없음"),
+    RT.ONDAM_REFUSAL: ("path", "자료를 찾지 않은 답"),
+    RT.ONDAM_CONVERSATION: ("path", "자료를 찾지 않은 답"),
+    RT.ONDAM_SAFETY_LINE: ("safety", "빠진 안전 문장"),
+    RT.ONDAM_SEARCH: ("search", "있는 자료를 못 찾아옴"),
+    RT.ONDAM_RULES: ("rules", "답 쓰는 규칙"),
+    RT.ONDAM_EMERGENCY_LINE: ("emergency", "응급 답에 빠진 안내"),
+    RT.APP_FIXED_TEXT: ("app", "응급 고정 안내"),
+    RT.APP_FIXED_OTHER: ("app", "응급 고정 안내"),
+    RT.APP_FALSE_ALARM: ("app", "응급 고정 안내"),
+    RT.APP_MISSED: ("app", "응급을 알아채지 못함"),
 }
 CRIT = [("safety", "안전"), ("accuracy", "정확성"), ("action", "바로 할 일"), ("plain", "짧고 쉽게"), ("overall", "종합")]
+NAMES = {"ondam_local_rag": ("검색 있는 온담", "온디바이스 Qwen3.5-4B + 지식 검색"),
+         "ondam_local_only": ("검색 없는 온담", "같은 Qwen3.5-4B, 지식 검색만 뺐다"),
+         "chatgpt_guest": ("ChatGPT", "로그인 안 한 무료 기본 · 11/15 에 받은 답")}
+JUDGE_NAME = {"claude-opus-5-5": "Claude Opus 5.5", "claude-sonnet-5-5": "Claude Sonnet 5.5"}
 
 
 def main() -> int:
     ap = argparse.ArgumentParser()
     ap.add_argument("--run", required=True)
-    ap.add_argument("--a", default="ondam_cloud")
+    ap.add_argument("--a", default="ondam_local_rag")
     ap.add_argument("--b", default="chatgpt_guest")
+    ap.add_argument("--c", default="ondam_local_only")
+    ap.add_argument("--mutation", help="Opus 로 다시 잰 변이 시험 mutation_score.json")
+    ap.add_argument("--knowledge", help="팀 지식 자료 knowledge.jsonl (‘영양제’가 든 토막 수를 센다)")
     a = ap.parse_args()
     run = Path(a.run)
     meta = json.loads((run / "meta.json").read_text(encoding="utf-8"))
     cases = [json.loads(ln) for ln in (run / "scored.jsonl").read_text(encoding="utf-8").splitlines() if ln.strip()]
-    A = {c["item_id"]: c for c in cases if c["model"] == a.a}
-    B = {c["item_id"]: c for c in cases if c["model"] == a.b}
-    common = sorted(set(A) & set(B))
-    cmpj = json.loads((run / "compare" / f"{a.a}__vs__{a.b}" / "compare.json").read_text(encoding="utf-8"))
-    golden = {}
+    by = {m: {c["item_id"]: c for c in cases if c["model"] == m} for m in (a.a, a.b, a.c)}
+    A, B, C = by[a.a], by[a.b], by[a.c]
+    common = sorted(set(A) & set(B) & set(C))
     import yaml
-    for it in yaml.safe_load((run / "golden.yaml").read_text(encoding="utf-8"))["items"]:
-        golden[it["id"]] = it
+    golden = {it["id"]: it for it in yaml.safe_load((run / "golden.yaml").read_text(encoding="utf-8"))["items"]}
 
-    def counts(cs):
+    def cmpj(x: str, y: str) -> dict:
+        return json.loads((run / "compare" / f"{x}__vs__{y}" / "compare.json").read_text(encoding="utf-8"))
+
+    def counts(cs) -> dict:
         c = Counter(x["result"]["verdict_common"] for x in cs)
         return {"pass": c.get("pass", 0), "fix": c.get("fix", 0), "hold": c.get("hold", 0)}
 
+    def names(ids) -> str:
+        return " · ".join((golden[i].get("scenario") or i).split("—")[0].split("(")[0].strip() for i in ids) or "없음"
+
+    def holds(M) -> list[str]:
+        return sorted(i for i in common if M[i]["result"]["verdict_common"] == "hold")
+
+    def median_sec(M) -> float | None:
+        el = [(M[i].get("meta") or {}).get("elapsed_ms") for i in common]
+        el = [e for e in el if isinstance(e, (int, float))]
+        return round(statistics.median(el) / 1000, 1) if el else None
+
     D = json.loads((HERE / "talk_data.json").read_text(encoding="utf-8"))
     n = len(common)
-    D["meta"]["n_common"], D["meta"]["n_golden"] = n, len(golden)
-    D["meta"]["fingerprint"] = meta["fingerprint"]
-    D["meta"]["run_label"] = meta.get("label")
+    D["meta"].update(n_common=n, n_golden=len(golden), fingerprint=meta["fingerprint"], run_label=meta.get("label"),
+                     judge=JUDGE_NAME.get(meta["judge_model"], meta["judge_model"]), comparator=NAMES[a.b][0])
     rj = meta.get("rejudge") or {}
     D["rejudge"] = {"n": rj.get("n", len(cases)), "flipped": rj.get("flipped_common", 0),
                     "by_model": {m: {"n": v["n"], "flipped": v["flipped_common"]} for m, v in (rj.get("by_model") or {}).items()}}
-    D["common"] = {"ondam": counts([A[i] for i in common]), "chatgpt": counts([B[i] for i in common])}
+    D["common"] = {"ondam": counts([A[i] for i in common]), "chatgpt": counts([B[i] for i in common]),
+                   "nosearch": counts([C[i] for i in common])}
     D["ondam_full"] = counts(list(A.values()))
-    D["hold_items"] = {"ondam": sorted(i for i, c in A.items() if c["result"]["verdict_common"] == "hold"),
-                       "chatgpt": sorted(i for i, c in B.items() if c["result"]["verdict_common"] == "hold")}
-    def names(ids):
-        return " · ".join((golden[i].get("scenario") or i).split("—")[0].split("(")[0].strip() for i in ids) or "없음"
-    D["hold_names"] = {"ondam": names(D["hold_items"]["ondam"]), "chatgpt": names(D["hold_items"]["chatgpt"])}
-    D["compare"]["criteria"] = [{"name": name, "win": cmpj["criteria"][k]["A"], "tie": cmpj["criteria"][k]["tie"],
-                                 "loss": cmpj["criteria"][k]["B"]} for k, name in CRIT]
-    pd, pref = cmpj["pass_diff"], cmpj["criteria"]["overall"]["pref_a"]
-    D["compare"]["decision"] = cmpj["decision"]
-    D["compare"]["pass_diff"] = {"diff": pd["diff"], "lo": pd["ci95"][0], "hi": pd["ci95"][1]}
-    D["compare"]["pref"] = {"value": pref["value"], "lo": pref["ci95"][0], "hi": pref["ci95"][1]}
-    D["compare"]["split_rate"] = cmpj["position_split_rate"]
-    D["compare"]["longer_won"] = cmpj["longer_won"]
+    D["hold_items"] = {"ondam": holds(A), "chatgpt": holds(B), "nosearch": holds(C)}
+    D["hold_names"] = {k: names(v) for k, v in D["hold_items"].items()}
+    D["systems"] = [{"key": m, "name": NAMES[m][0], "sub": NAMES[m][1], **counts([by[m][i] for i in common]),
+                     "hold_names": names(holds(by[m])), "median_sec": median_sec(by[m]) if m != a.b else None,
+                     "hold_emergency": sum(golden[i].get("risk") == "emergency" for i in holds(by[m]))}
+                    for m in (a.a, a.c, a.b)]
 
-    # 세 조건 — 기준값과 넘었는지는 비교 결과(compare.json)에 적힌 것을 그대로 옮긴다 (여기서 다시 계산하지 않는다).
-    # 화면에 쓰는 개수·비율은 위의 common·compare 에 이미 있다.
-    rule, checks = cmpj["rule"], cmpj["checks"]
-    D["targets"] = {"hold": {"goal": 0, "met": bool(checks["safety_ok"])},
-                    "pass": {"margin": rule["margin"], "met": bool(checks["pass_ok"])},
-                    "pref": {"floor": rule["pref_floor"], "met": bool(checks["pref_ok"])}}
+    def pair(x: str, y: str) -> dict:
+        j = cmpj(x, y)
+        pd, pref = j["pass_diff"], j["criteria"]["overall"]["pref_a"]
+        return {"criteria": [{"name": nm, "win": j["criteria"][k]["A"], "tie": j["criteria"][k]["tie"], "loss": j["criteria"][k]["B"]}
+                             for k, nm in CRIT],
+                "decision": j["decision"], "pass_diff": {"diff": pd["diff"], "lo": pd["ci95"][0], "hi": pd["ci95"][1]},
+                "pref": {"value": pref["value"], "lo": pref["ci95"][0], "hi": pref["ci95"][1]},
+                "split_rate": j["position_split_rate"], "longer_won": j["longer_won"], "n_pairs": j["n_complete"],
+                "rule": j["rule"], "checks": j["checks"]}
+
+    src_ab = D["compare"].get("source", "")
+    D["compare"] = {**pair(a.a, a.b), "source": src_ab}
+    D["compare_rag"] = {**pair(a.a, a.c), "source": src_ab}
+    j = D["compare"]
+    D["targets"] = {"hold": {"goal": 0, "met": bool(j["checks"]["safety_ok"])},
+                    "pass": {"margin": j["rule"]["margin"], "met": bool(j["checks"]["pass_ok"])},
+                    "pref": {"floor": j["rule"]["pref_floor"], "met": bool(j["checks"]["pref_ok"])}}
 
     # ChatGPT 답의 특징 (숫자만)
-    def chars(cs):
-        return int(statistics.median(len(c["response"]) for c in cs))
+    def chars(M) -> int:
+        return int(statistics.median(len(M[i]["response"]) for i in common))
     ban = sum(1 for i in common if (B[i]["det"]["kpi"].get("banmal_sentences") or 0) > 0)
-    cards = D["chatgpt_notes"]["cards"]
-    cards[1]["value"] = f"{ban}/{n}"
-    cards[2]["value"] = f"{chars([B[i] for i in common])}자"
-    cards[2]["sub"] = f"온담은 {chars([A[i] for i in common])}자"
-    D["chatgpt_notes"]["action"] = {
-        "ondam": round(statistics.mean(A[i]["judgment"]["actionability"] for i in common if A[i].get("judgment")), 1),
-        "chatgpt": round(statistics.mean(B[i]["judgment"]["actionability"] for i in common if B[i].get("judgment")), 1)}
+    cn = D["chatgpt_notes"]
+    cn["cards"] = [
+        {"title": "ChatGPT의 위해 답", "sub": D["hold_names"]["chatgpt"], "value": f"{len(D['hold_items']['chatgpt'])}건"},
+        {"title": "어르신께 반말로 답한 문항", "sub": "“몇 살이야?” “추천해.” 같은 말", "value": f"{ban}/{n}"},
+        {"title": "답 하나의 길이 (가운데 값)", "sub": f"검색 있는 온담은 {chars(A)}자", "value": f"{chars(B)}자"},
+    ]
+    act = lambda M: round(statistics.mean(M[i]["judgment"]["actionability"] for i in common if M[i].get("judgment")), 1)  # noqa: E731
+    cn["action"] = {"ondam": act(A), "chatgpt": act(B), "nosearch": act(C)}
 
-    # 이것부터 고치면 — 담당·고칠 것은 routing.route 가 정한다 (리포트의 담당별 표와 같은 규칙)
+    # 고칠 곳 — 담당·고칠 것은 routing.route 가 정한다 (리포트의 담당별 표와 같은 규칙)
     ff = run_fix_first(run, a.a)
     D["fixfirst"] = {"n": ff["n"], "pass": ff["pass"], "hold": ff["hold"],
                      "steps": [{"owner": o["owner"], "what": SHORT.get(o["what"], o["what"]), "items": len(o["items"]),
@@ -113,20 +154,45 @@ def main() -> int:
     D["supplement"] = {"n": len(sup), "pass": sum(c["result"]["verdict_common"] == "pass" for c in sup)}
     D["modes"] = dict(Counter(((c.get("rag") or {}).get("mode") or "?") for c in A.values()))
 
-    def gain_of(what):
-        return sum(o["gain"] for o in ff["order"] if o["what"] == what)
-    g = D["gaps"]
-    miss = [i for o in ff["order"] if o["what"] == "지식 자료에 근거가 없음" for i in o["items"]]
-    sup_miss = sum(golden[i].get("type") == "supplement" for i in miss)
-    g[0].update(big=str(len(miss)), unit="문항", title="지식 자료가 없음",
-                sub=f"그중 영양제 질문이 {sup_miss}개 · “영양제”라는 말이 든 지식 자료는 0건")
-    ref, conv = gain_of("평범한 질문을 거절"), gain_of("건강 질문이 일상 대화 길로 가 자료를 찾지 않음")
-    g[1].update(big=str(ref + conv), unit="문항", title="자료를 찾지 않은 답", sub=f"평범한 건강 질문을 거절했거나({ref}) 일상 대화로 받아 넘겼다({conv})")
-    g[3].update(big=str(gain_of("꼭 넣을 안전 문장이 빠짐")), unit="문항")
+    groups: dict[str, dict] = {}
+    for o in ff["order"]:
+        key, title = GAP_GROUP.get(o["what"], ("other", SHORT.get(o["what"], o["what"])))
+        g = groups.setdefault(key, {"owner": o["owner"], "title": title, "items": [], "hold": 0, "parts": Counter()})
+        g["items"] += o["items"]
+        g["hold"] += len(o["hold_cleared"])
+        g["parts"][o["what"]] += len(o["items"])
+    kn_supp = None
+    if a.knowledge:
+        kn_supp = sum(1 for ln in open(a.knowledge, encoding="utf-8") if "영양제" in ln or "건강기능식품" in ln)
+
+    def sub_of(key: str, g: dict) -> str:
+        if key == "data":
+            s = f"그중 영양제 질문이 {sum(golden[i].get('type') == 'supplement' for i in g['items'])}개"
+            return s + (f" · “영양제”라는 말이 든 지식 자료는 {kn_supp}건" if kn_supp is not None else "")
+        if key == "path":
+            return f"평범한 건강 질문을 거절했거나({g['parts'][RT.ONDAM_REFUSAL]}) 일상 대화로 받아 넘겼다({g['parts'][RT.ONDAM_CONVERSATION]})"
+        if key == "rules" and g["hold"]:
+            return f"약 먹는 법을 잘못 안내한 위해 답 {g['hold']}건 포함 · 결론·금지답·형식"
+        if key == "app" and RT.APP_MISSED in g["parts"]:
+            return "응급 질문인데 119 안내가 아예 없었다 — 앱의 응급 감지가 걸리지 않았다"
+        return {"safety": "“약은 스스로 끊지 마세요” 같은 말", "search": "지식 자료에는 있는데 검색이 가져오지 못했다",
+                "rules": "결론·금지답·형식 같은 답 쓰는 규칙",
+                "emergency": "응급 증상인데 ‘지금 바로 119’ 대신 병원 상담이나 ‘~하면 119’로 답했다",
+                "app": "앱이 정해 둔 응급 안내 글"}.get(key, "")
+    ordered = sorted(groups.items(), key=lambda kv: (-(kv[1]["hold"] > 0), -len(kv[1]["items"])))
+    D["gaps"] = [{"owner": g["owner"], "big": str(len(g["items"])), "unit": "문항", "title": g["title"], "sub": sub_of(k, g),
+                  "hold": g["hold"]} for k, g in ordered]
     D["fixfirst_source"] = "채점 결과에서 그 지적을 뺀 계산이다 · 고친 뒤에는 같은 질문으로 다시 잰다 · 담당은 추정"
+
+    if a.mutation:
+        ms = json.loads(Path(a.mutation).read_text(encoding="utf-8"))
+        D["validation"].update(mutants=ms["defects_detected"], good=ms["good_passed"], gate=ms["gate_attributed"],
+                               missed=[f"{x['model']} {x['item_id']}" for x in ms.get("missed") or []],
+                               false_alarms=[f"{x['model']} {x['item_id']}" for x in ms.get("false_alarms") or []])
     (HERE / "talk_data.json").write_text(json.dumps(D, ensure_ascii=False, indent=1) + "\n", encoding="utf-8", newline="\n")
     print("적음:", HERE / "talk_data.json")
-    print(json.dumps({k: D[k] for k in ("common", "ondam_full", "rejudge", "hold_items", "supplement", "modes")}, ensure_ascii=False))
+    print(json.dumps({k: D[k] for k in ("common", "rejudge", "hold_items", "supplement", "modes")}, ensure_ascii=False))
+    print("검색 있음 대 ChatGPT:", D["compare"]["decision"], "· 검색 있음 대 검색 없음:", D["compare_rag"]["decision"])
     return 0
 
 
