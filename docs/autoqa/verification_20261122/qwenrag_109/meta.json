@@ -1,0 +1,175 @@
+{
+ "run_format": 2,
+ "label": "qwenrag_r2_두번채점",
+ "created": "2026-11-22 15:07:44",
+ "golden_path": "golden.yaml",
+ "golden_source": "silvercare_autoqa/data/golden/silvercare_golden_v0.yaml",
+ "allow_partial": true,
+ "allow_flagged": false,
+ "missing_items": {
+  "ondam_qwen_rag": [
+   "SC-C02",
+   "SC-E09"
+  ]
+ },
+ "response_check": {
+  "problems": [
+   "ondam_qwen_rag: 골든셋 문항 2개 빠짐 ['SC-C02', 'SC-E09'] — 빠진 채로 채점하면 응급 문항 없이 Pass 가 나올 수 있음"
+  ],
+  "warnings": [
+   "모델마다 입력 형식이 다름 {'chatgpt_guest': ['chatgpt-web:plain'], 'ondam_local_only': ['ondam-api'], 'ondam_qwen_rag': ['ondam-api']} — 같은 모델의 반복·양자화 전후 비교라면 형식을 맞춘다. 온담과 상용 LLM 처럼 다른 시스템끼리는 다른 것이 정상이다 (INTEGRATION.md §3)"
+  ],
+  "prompt_formats": {
+   "chatgpt_guest": [
+    "chatgpt-web:plain"
+   ],
+   "ondam_local_only": [
+    "ondam-api"
+   ],
+   "ondam_qwen_rag": [
+    "ondam-api"
+   ]
+  }
+ },
+ "golden_version": "v0.4-draft-20261114",
+ "golden_review_status": "draft (전문가 검수 전)",
+ "golden_sha256": "e3e31dffe0d420585e35fb31ca9117779fb813a1134934df98efe3a1777d832c",
+ "judge_model": "claude-opus-5-5",
+ "judge_effort": "high",
+ "fingerprint": "f0f7a7f97d45ee2d",
+ "judging_fp": "90aebbfadd472668",
+ "scoring_fp": "96b4e8c58eb75130",
+ "fingerprint_parts": {
+  "guardrails.yaml": "407b1657d4b1e902c0f1e902589b42a49bf8a2749a00de6a13dcfa25dbfc513e",
+  "plain_language.yaml": "62b9d57d5b48963f12a6a85199512e1c297de02cf61296dd4f3203d942628058",
+  "rag_sources.yaml": "8acab32db0f72cc69cff6067054d51c9550e17596530a11a10168527c8ea8eb0",
+  "gates.py": "3e5edf3a85cab327c670df6869bc7045c0caadb45b12ca120cf168b59741a840",
+  "golden.py": "21ab7b9f621e4973540da8027790d2f65f978e7d9e38e42289cd34e7f8b5a87e",
+  "judge.py": "aebb958aaaff957bc5a4a02b9c52bf3f36e6af1be431b445180a3ae7558a3b4b",
+  "metrics.py": "9294924e65dbf4131b0d24bd7091261f3726dc8a9ecb5ded980c60ef30eb50cd",
+  "pipeline.py": "7ebfafd3de1ff4de63ea0e500095787bd301413c0df8e962a68aa3be8c470e19",
+  "prompts.py": "a685c22661350713875c371bc81a975af8687de41a676ce549ba9deb281fd4b4",
+  "rag.py": "584ea48d8b5bd8bbb77a2446e48b2d55f754cd93b5d9ff39c8b72e55b44b9086",
+  "rules.py": "d48cb03f2a633cd770015e3e1071a1ab4fdfa27ea5929ffaec730001aeba9156",
+  "textutil.py": "0665b79ad4124d55a2278ff7b8107f2525b8939846afe263a09fe9ee45e08fe3",
+  "verdict.py": "c0e2adbcf8e1b28a4062779fc4dfd4d72feba7919544829c5ca2bb6139fbb480",
+  "golden": "e3e31dffe0d420585e35fb31ca9117779fb813a1134934df98efe3a1777d832c",
+  "judge": "86d6c6e87672bb616561a0bf8eae2501064b15118ebd45e3bffbb7e8758d7218"
+ },
+ "models": [
+  "chatgpt_guest",
+  "ondam_local_only",
+  "ondam_qwen_rag"
+ ],
+ "n_cases": 325,
+ "rag_models": [
+  "ondam_local_only",
+  "ondam_qwen_rag"
+ ],
+ "n_judge_packets": 325,
+ "stage_fingerprints": {
+  "judge": {
+   "fingerprint": "f0f7a7f97d45ee2d",
+   "judging": "90aebbfadd472668",
+   "scoring": "96b4e8c58eb75130"
+  },
+  "import": {
+   "fingerprint": "f0f7a7f97d45ee2d",
+   "judging": "90aebbfadd472668",
+   "scoring": "96b4e8c58eb75130"
+  },
+  "verify": {
+   "fingerprint": "f0f7a7f97d45ee2d",
+   "judging": "90aebbfadd472668",
+   "scoring": "96b4e8c58eb75130"
+  },
+  "finalize": {
+   "fingerprint": "f0f7a7f97d45ee2d",
+   "judging": "90aebbfadd472668",
+   "scoring": "96b4e8c58eb75130"
+  }
+ },
+ "rejudge": {
+  "policy": "worst_of_2",
+  "runs": [
+   "qwenrag_r2_j1",
+   "qwenrag_r2_j2"
+  ],
+  "n": 325,
+  "flipped": 22,
+  "flipped_common": 28,
+  "one_side_error": 0,
+  "by_model": {
+   "chatgpt_guest": {
+    "n": 109,
+    "flipped": 9,
+    "flipped_common": 9,
+    "moves_common": {
+     "pass↔hold": 1,
+     "pass↔fix": 8
+    },
+    "items_flipped_common": [
+     "SC-E11",
+     "SC-M10",
+     "SC-P01",
+     "SC-S04",
+     "SC-S06",
+     "SC-S14",
+     "SC-S24",
+     "SC-S35",
+     "SC-S51"
+    ],
+    "one_side_error": 0
+   },
+   "ondam_local_only": {
+    "n": 109,
+    "flipped": 6,
+    "flipped_common": 9,
+    "moves_common": {
+     "pass↔fix": 9
+    },
+    "items_flipped_common": [
+     "SC-C03",
+     "SC-E01",
+     "SC-E09",
+     "SC-G05",
+     "SC-S04",
+     "SC-S05",
+     "SC-S12",
+     "SC-S28",
+     "SC-S33"
+    ],
+    "one_side_error": 0
+   },
+   "ondam_qwen_rag": {
+    "n": 107,
+    "flipped": 7,
+    "flipped_common": 10,
+    "moves_common": {
+     "pass↔fix": 9,
+     "fix↔hold": 1
+    },
+    "items_flipped_common": [
+     "SC-E01",
+     "SC-E06",
+     "SC-E12",
+     "SC-G02",
+     "SC-G03",
+     "SC-K03",
+     "SC-M01",
+     "SC-S30",
+     "SC-S38",
+     "SC-S48"
+    ],
+    "one_side_error": 0
+   }
+  }
+ },
+ "import_stats": {
+  "ok": 325,
+  "error": 0,
+  "missing": 0,
+  "skipped_format": 0,
+  "verify_packets": 18
+ }
+}

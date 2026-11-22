@@ -52,9 +52,18 @@ GAP_GROUP = {
     RT.APP_FALSE_ALARM: ("app", "응급 고정 안내"),
     RT.APP_MISSED: ("app", "응급을 알아채지 못함"),
 }
+TYPE_LABEL = {"emergency": "응급", "symptom": "증상 상담", "chronic": "만성질환 관리", "medication": "약 먹는 법",
+              "prevention": "예방·생활", "supplement": "영양제", "companion": "말벗(일상 대화)",
+              "boundary": "조심할 요청(진단·개인정보)", "welfare": "복지 안내"}
+# 막힌 이유 — 채점 지적의 종류(cat)를 사람이 읽는 말로. 한 답에 여럿일 수 있다
+REASON_KEY = {"fact": "fact", "content": "content", "conclusion": "conclusion", "safety_must": "safety",
+              "gate": "gate", "format": "format"}
+REASON_LABEL = {"fact": "사실과 다른 말", "content": "꼭 할 말이 빠지거나 뒤집힘", "conclusion": "결론이 모범 답안과 다름",
+                "safety": "안전 안내가 빠짐", "gate": "위해 답", "format": "답 형식이 깨짐", "other": "그 밖의 이유"}
 CRIT = [("safety", "안전"), ("accuracy", "정확성"), ("action", "바로 할 일"), ("plain", "짧고 쉽게"), ("overall", "종합")]
-NAMES = {"ondam_local_rag": ("검색 있는 온담", "온디바이스 Qwen3.5-4B + 지식 검색"),
-         "ondam_local_only": ("검색 없는 온담", "같은 Qwen3.5-4B, 지식 검색만 뺐다"),
+NAMES = {"ondam_qwen_rag": ("검색 있는 온담", "최종판 · Qwen + 지식 검색"),
+         "ondam_local_rag": ("검색 있는 온담", "온디바이스 Qwen3.5-4B + 지식 검색"),
+         "ondam_local_only": ("검색 없는 온담", "11/16 판 · Qwen3.5-4B, 지식 검색 없음"),
          "chatgpt_guest": ("ChatGPT", "로그인 안 한 무료 기본 · 11/15 에 받은 답")}
 JUDGE_NAME = {"claude-opus-5-5": "Claude Opus 5.5", "claude-sonnet-5-5": "Claude Sonnet 5.5"}
 
@@ -183,6 +192,26 @@ def main() -> int:
     D["gaps"] = [{"owner": g["owner"], "big": str(len(g["items"])), "unit": "문항", "title": g["title"], "sub": sub_of(k, g),
                   "hold": g["hold"]} for k, g in ordered]
     D["fixfirst_source"] = "채점 결과에서 그 지적을 뺀 계산이다 · 고친 뒤에는 같은 질문으로 다시 잰다 · 담당은 추정"
+
+    # ChatGPT 대비 어디서·왜 밀리나 — ① 질문 종류별 통과 ② ChatGPT 는 통과, 우리는 못 넘은 답의 막힌 이유
+    def is_pass(M, i):
+        return M[i]["result"]["verdict_common"] == "pass"
+    bt = []
+    for t in sorted({golden[i]["type"] for i in common}):
+        ids_t = [i for i in common if golden[i]["type"] == t]
+        bt.append({"type": t, "label": TYPE_LABEL.get(t, t), "n": len(ids_t),
+                   "a": sum(is_pass(A, i) for i in ids_t), "b": sum(is_pass(B, i) for i in ids_t)})
+    D["by_type"] = sorted(bt, key=lambda x: (x["a"] - x["b"], (x["a"] - x["b"]) / x["n"]))   # 통과 수 차이가 큰 종류부터
+    gap = [i for i in common if is_pass(B, i) and not is_pass(A, i)]
+    reasons: dict[str, dict] = {}
+    for i in gap:
+        for key in sorted({REASON_KEY.get(f.get("cat"), "other") for f in RT._blocking(A[i]) if f.get("cat") != "grounding"}):
+            r = reasons.setdefault(key, {"key": key, "label": REASON_LABEL[key], "items": []})
+            r["items"].append(i)
+    D["why_gap"] = {"n": len(gap), "n_reverse": sum(1 for i in common if is_pass(A, i) and not is_pass(B, i)),
+                    "reasons": [{"key": r["key"], "label": r["label"], "count": len(r["items"]), "items": r["items"],
+                                 "examples": [names([i]) for i in r["items"][:2]]}
+                                for r in sorted(reasons.values(), key=lambda r: -len(r["items"]))]}
 
     if a.mutation:
         ms = json.loads(Path(a.mutation).read_text(encoding="utf-8"))

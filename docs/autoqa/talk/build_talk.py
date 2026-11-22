@@ -111,6 +111,9 @@ h1,h2,h3{text-wrap:balance;}
 .marks{display:grid;grid-template-columns:1fr 1fr;gap:0 1rem;align-items:center;min-height:12px;}
 .marks.one{grid-template-columns:1fr;}
 .marks .track{height:10px;} .marks .split{height:10px;} .marks .seg{padding:0;}
+.pairbars{display:flex;flex-direction:column;gap:3px;min-width:0;} .pairbars .track{height:9px;}
+.bars.dense{gap:.3rem;} .legend .note{color:var(--dim);}
+.brow.why{row-gap:.1rem;} .brow.why .b-ex{grid-column:2 / 4;color:var(--dim);font-size:17px;line-height:1.3;}
 .goal-lite{gap:.35rem;padding:.8rem 1.2rem;} .goal-lite .vs .num{font-size:clamp(30px,3.2vw,44px);}
 .dots{display:flex;flex-wrap:wrap;gap:6px;}
 .dot{width:12px;height:12px;border-radius:999px;background:var(--other);}
@@ -191,7 +194,8 @@ details.tv th{color:var(--dim);font-weight:600;}
 /* 좁은 화면(휴대폰) — 이름과 숫자를 윗줄에, 막대를 아랫줄에 둔다 */
 @media(max-width:900px){
   .brow,.bars.names .brow{grid-template-columns:1fr auto;grid-template-areas:"name val" "bar bar";gap:.3rem .8rem;}
-  .brow .b-name{grid-area:name;} .brow .b-val{grid-area:val;} .brow .track,.brow .split{grid-area:bar;}
+  .brow .b-name{grid-area:name;} .brow .b-val{grid-area:val;} .brow .track,.brow .split,.brow .pairbars{grid-area:bar;}
+  .brow.why .b-ex{grid-column:1 / -1;}
   .bars{gap:1.1rem;} .legend{gap:.5rem 1rem;}
 }
 @media print{.view{min-height:auto;break-after:page;padding:2rem;}}
@@ -623,7 +627,7 @@ def build() -> str:
                   cards82 + '<div class="bars tight">' + "".join(rows2) + "</div>"
                   + legend([("win", "검색 있음이 나음"), ("tie", "비김"), ("loss", "검색 없음이 나음")])
                   + table_view(["기준", "검색 있음이 나음", "비김", "검색 없음이 나음"], tv2),
-                  source="같은 Qwen3.5-4B에서 지식 검색만 뺐다 · 두 답을 이름 가리고 나란히 · 기다린 시간은 시험 서버에서 잰 값",
+                  source=m.get("rag_source", "같은 Qwen3.5-4B에서 지식 검색만 뺐다 · 두 답을 이름 가리고 나란히 · 기다린 시간은 시험 서버에서 잰 값"),
                   wide=True))
 
     # 9 비교 ② 나란히 — 검색 있는 온담 대 ChatGPT
@@ -649,6 +653,42 @@ def build() -> str:
                   + table_view(["기준", "온담이 나음", "비김", m["comparator"] + "가 나음"], tv),
                   lead="검색 있는 온담 대 " + m["comparator"] + " — 같은 질문의 두 답을 이름 가리고 나란히",
                   source=cmp["source"].format(n=n), wide=True))
+
+    # 9-2 어디서 밀리나 — 질문 종류별 통과 (ChatGPT 대비 많이 밀리는 종류부터)
+    bt, an = D["by_type"], sa["name"]
+    trows = []
+    for t in bt:
+        pa, pb = 100 * t["a"] / t["n"], 100 * t["b"] / t["n"]
+        trows.append(f'<div class="brow"><span class="b-name">{E(t["label"])} <small class="own">{t["n"]}문항</small></span>'
+                     f'<div class="pairbars" role="img" aria-label="{E(t["label"])} 통과 {E(an)} {t["a"]}, {E(m["comparator"])} {t["b"]} ({t["n"]}문항 중)">'
+                     f'<div class="track"><div class="fill is-accent" style="width:{pa:.1f}%"></div></div>'
+                     f'<div class="track"><div class="fill" style="width:{pb:.1f}%"></div></div></div>'
+                     f'<span class="b-val">{t["a"]} <small>: {t["b"]}</small></span></div>')
+    behind = [t for t in bt if t["b"] - t["a"] >= max(3, 0.3 * t["n"])]          # 통과 수로 3개 넘게, 30% 넘게 밀린 종류
+    close = [t for t in bt if abs(t["a"] - t["b"]) <= 0.1 * t["n"] and t["n"] >= 5]
+    head92 = (f'{"·".join(t["label"] for t in behind[:2])} 질문에서 가장 크게 밀립니다' if behind
+              else "질문 종류마다<br>ChatGPT와 견줬습니다")
+    t92 = (f'{"·".join(t["label"] for t in close)} 질문은 ChatGPT와 비슷합니다.' if close else "")
+    V.append(view("03 · 비교 ② ChatGPT에 밀리지 않나", head92,
+                  '<div class="bars tight names dense">' + "".join(trows) + "</div>"
+                  + legend([("win", an + " 통과"), ("loss", m["comparator"] + " 통과")])
+                    .replace("</ul>", '<li class="note">오른쪽 숫자는 통과한 문항 수 · 통과 수 차이가 큰 종류부터</li></ul>'),
+                  takeaway=t92, wide=True))
+
+    # 9-3 무엇이 모자랐나 — ChatGPT 는 통과했는데 우리는 못 넘은 답의 막힌 이유
+    wg = D["why_gap"]
+    rrows = "".join(
+        f'<div class="brow why"><span class="b-name">{E(r["label"])}</span>'
+        f'<div class="track"><div class="fill is-accent" style="width:{100 * r["count"] / max(1, wg["n"]):.1f}%"></div></div>'
+        f'<span class="b-val">{r["count"]}<small>문항</small></span>'
+        f'<span class="b-ex">예: {E(" · ".join(r["examples"]))}</span></div>' for r in wg["reasons"])
+    t93 = f'가장 많은 이유는 「{wg["reasons"][0]["label"]}」입니다.' if wg["reasons"] else ""
+    if wg.get("n_reverse"):
+        t93 += f' 반대로 {an}만 통과한 문항은 {wg["n_reverse"]}개입니다.'
+    V.append(view("03 · 비교 ② ChatGPT에 밀리지 않나", f'온담만 못 넘은 {wg["n"]}문항, 무엇이 모자랐나',
+                  '<div class="bars tight names">' + rrows + "</div>",
+                  takeaway=t93, source=f"ChatGPT는 통과하고 {an}은 못 넘은 문항 · 한 답에 이유가 여럿일 수 있다 · 출처 표시 지적은 뺐다",
+                  wide=True))
 
     # 10 ChatGPT 도 넘지 못한 기준 (숫자는 회차에서 뽑는다)
     cn = D["chatgpt_notes"]
